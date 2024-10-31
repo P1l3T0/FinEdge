@@ -28,5 +28,6 @@ namespace FinEdgeBackend.Models
         public decimal? TotalBudget { get; set; }
         public string? Currency { get; set; }
         public Methodology Methodology { get; set; }
+        public ICollection<RefreshToken>? RefreshTokens { get; set; }
     }
 }
