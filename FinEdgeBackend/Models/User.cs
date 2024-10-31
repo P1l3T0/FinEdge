@@ -26,7 +26,9 @@ namespace FinEdgeBackend.Models
         public string? Password { get; set; }
         public DateTime? DateCreated { get; set; }
         public decimal? TotalBudget { get; set; }
+        public decimal? Total { get; set; }
         public string? Currency { get; set; }
-        public Methodology Methodology { get; set; }
+        public MethodologyType Methodology { get; set; }
+        public ICollection<Accounts>? Accounts { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace FinEdgeBackend.Enums
 {
-    public enum Methodology
+    public enum MethodologyType
     {
         ZeroBasedBudgeting,
         PayYourselfFirst,
