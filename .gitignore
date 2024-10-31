@@ -440,4 +440,7 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
+# Ignore migrations
+Migrations/
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode
