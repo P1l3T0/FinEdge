@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using FinEdgeBackend.DTOs;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace FinEdgeBackend.Controllers
 {
