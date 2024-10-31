@@ -21,6 +21,7 @@ namespace FinEdgeBackend.Migrations
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TotalBudget = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Methodology = table.Column<int>(type: "int", nullable: false)

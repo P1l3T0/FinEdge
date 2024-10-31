@@ -60,6 +60,9 @@ namespace FinEdgeBackend.Migrations
                     b.Property<string>("Currency")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -91,17 +94,12 @@ namespace FinEdgeBackend.Migrations
             modelBuilder.Entity("FinEdgeBackend.Models.RefreshToken", b =>
                 {
                     b.HasOne("FinEdgeBackend.Models.User", "User")
-                        .WithMany("RefreshTokens")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FinEdgeBackend.Models.User", b =>
-                {
-                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }
