@@ -1,8 +1,6 @@
 using FinEdgeBackend.Data;
 using FinEdgeBackend.Interfaces;
-using FinEdgeBackend.Data;
-using FinEdgeBackend.Interfaces;
-//using FinEdgeBackend.Services;
+using FinEdgeBackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -22,7 +20,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = "https://localhost:7207/",
+            ValidIssuer = "https://localhost:7167/",
             ValidAudience = "your-api-identifier",
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("e3d6623891a3c57d8fec2ff34d9f7c91adb38a43a2b8ac7cf1d62b65a2f23c0f"))
         };
@@ -51,10 +49,10 @@ builder.Services!.AddDbContext<DataContext>(opt =>
 });
 builder.Services.AddHttpContextAccessor();
 
-//builder.Services!.AddScoped<IUserService, UserService>();
-//builder.Services!.AddScoped<IJwtService, JwtService>();
-//builder.Services!.AddScoped<IAuthService, AuthService>();
-//builder.Services!.AddScoped<IRefreshTokenService, RefreshTokenService>();
+builder.Services!.AddScoped<IUserService, UserService>();
+builder.Services!.AddScoped<IJwtService, JwtService>();
+builder.Services!.AddScoped<IAuthService, AuthService>();
+builder.Services!.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
 var app = builder.Build();
 
