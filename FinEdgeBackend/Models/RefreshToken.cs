@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace FinEdgeBackend.Models
 {
@@ -10,6 +11,8 @@ namespace FinEdgeBackend.Models
         public bool IsRevoked { get; set; }
         public int UserId { get; set; }
         public DateTime ExpiryDate { get; set; }
+
+        [JsonIgnore]
         public User? User { get; set; }
     }
 }

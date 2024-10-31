@@ -24,10 +24,9 @@ namespace FinEdgeBackend.Models
         [MaxLength(100)]
         [JsonIgnore]
         public string? Password { get; set; }
-        public DateTime? DateCreated { get; } = DateTime.UtcNow;
+        public DateTime? DateCreated { get; set; }
         public decimal? TotalBudget { get; set; }
         public string? Currency { get; set; }
         public Methodology Methodology { get; set; }
-        public ICollection<RefreshToken>? RefreshTokens { get; set; }
     }
 }
