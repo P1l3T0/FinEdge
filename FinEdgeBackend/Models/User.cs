@@ -7,7 +7,7 @@ namespace FinEdgeBackend.Models
     public class User
     {
         [Key]
-        public int Id { get; set; }
+        public int ID { get; set; }
  
         [Required]
         public string? Name { get; set; }
