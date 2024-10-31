@@ -27,10 +27,7 @@
 
 	<ItemGroup>
 		<Folder Include="Controllers\" />
-		<Folder Include="Models\" />
-		<Folder Include="Interfaces\" />
 		<Folder Include="Data\" />
-		<Folder Include="DTOs\" />
 		<Folder Include="Services\" />
 	</ItemGroup>
 
