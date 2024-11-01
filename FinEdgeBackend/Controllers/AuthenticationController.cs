@@ -55,16 +55,16 @@ namespace FinEdgeBackend.Controllers
 
             storedToken.IsRevoked = true;
 
-            string newRefreshToken = _jwtService.GenerateRefreshToken(storedToken.UserId);
+            string newRefreshToken = _jwtService.GenerateRefreshToken(storedToken.UserID);
 
             RefreshToken newRefreshTokenEntity = await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken
             {
                 Token = newRefreshToken,
                 ExpiryDate = DateTime.UtcNow.AddDays(7),
-                UserId = storedToken.UserId,
+                UserID = storedToken.UserID,
             });
 
-            User? user = await _userService.GetUserByIdAsync(storedToken.UserId);
+            User? user = await _userService.GetUserByIdAsync(storedToken.UserID);
 
             return Ok(user);
         }
@@ -91,7 +91,7 @@ namespace FinEdgeBackend.Controllers
             {
                 Token = refreshToken,
                 ExpiryDate = DateTime.UtcNow.AddDays(1),
-                UserId = user.ID
+                UserID = user.ID
             });
 
             CreateCookie("AccessToken", accessToken);

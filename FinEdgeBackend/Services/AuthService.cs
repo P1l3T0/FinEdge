@@ -27,14 +27,14 @@ namespace FinEdgeBackend.Services
 
             if (user is null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
             {
-                return null;
+                return null!;
             }
 
             RefreshToken storedToken = await _refreshTokenService.GetRefreshTokenByUserIdAsync(user.ID);
 
             if (storedToken is null)
             {
-                return null;
+                return null!;
             }
 
             storedToken.IsRevoked = true;

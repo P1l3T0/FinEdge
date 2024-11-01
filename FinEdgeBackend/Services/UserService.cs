@@ -29,7 +29,10 @@ namespace FinEdgeBackend.Services
 
         public async Task<User> GetUserByIdAsync(int userID)
         {
-            User? user = await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID);
+            User? user = await _dataContext.Users
+                .Include(u => u.Accounts)
+                .FirstOrDefaultAsync(u => u.ID == userID);
+
             return user!;
         }
 

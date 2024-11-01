@@ -24,7 +24,7 @@ namespace FinEdgeBackend.Services
 
         public async Task<RefreshToken> GetRefreshTokenByUserIdAsync(int userID)
         {
-            RefreshToken? refreshToken = await _dataContext.RefreshTokens.FirstOrDefaultAsync(t => t.UserId == userID && t.IsRevoked == false);
+            RefreshToken? refreshToken = await _dataContext.RefreshTokens.FirstOrDefaultAsync(t => t.UserID == userID && t.IsRevoked == false);
             return refreshToken!;
         }
     }
