@@ -25,7 +25,7 @@ namespace FinEdgeBackend.Models
         [JsonIgnore]
         public string? Password { get; set; }
         public DateTime? DateCreated { get; set; }
-        public decimal? TotalBalance { get; set; }
+        public decimal? TotalBalance { get; set; } = 0;
         public MethodologyType? MethodologyType { get; set; }
         public ICollection<Account>? Accounts { get; set; }
     }
