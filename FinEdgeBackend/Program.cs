@@ -1,6 +1,8 @@
 using FinEdgeBackend.Data;
 using FinEdgeBackend.Interfaces;
+using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Services;
+using FinEdgeBackend.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -52,6 +54,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services!.AddScoped<IUserService, UserService>();
 builder.Services!.AddScoped<IJwtService, JwtService>();
 builder.Services!.AddScoped<IAuthService, AuthService>();
+builder.Services!.AddScoped<IAccountService, AccountService>();
 builder.Services!.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
 var app = builder.Build();

@@ -1,7 +1,7 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.User;
 using FinEdgeBackend.Models;
 
-namespace FinEdgeBackend.Interfaces
+namespace FinEdgeBackend.Interfaces.Auth
 {
     public interface IAuthService
     {

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using FinEdgeBackend.DTOs;
-using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
+using FinEdgeBackend.DTOs.User;
+using FinEdgeBackend.Interfaces.Auth;
+using FinEdgeBackend.Interfaces;
 
 namespace FinEdgeBackend.Controllers
 {
@@ -17,34 +18,30 @@ namespace FinEdgeBackend.Controllers
         [Route("get")]
         public async Task<IActionResult> GetCurrentUser()
         {
-            User user = await _userService.GetCurrentUserAsync();
-            return Ok(user);
+            User currentUser = await _userService.GetCurrentUserAsync();
+            return Ok(currentUser);
         }
 
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> UpddateUser([FromBody] UpdateDTO updatedUser)
+        public async Task<IActionResult> UpddateUser([FromBody] UpdateDTO updatedDTO)
         {
-            if (string.IsNullOrEmpty(updatedUser.Name) || string.IsNullOrEmpty(updatedUser.Surname) ||
-                string.IsNullOrEmpty(updatedUser.Email) || string.IsNullOrEmpty(updatedUser.Password))
+            if (string.IsNullOrEmpty(updatedDTO.Name) || string.IsNullOrEmpty(updatedDTO.Surname) ||
+                string.IsNullOrEmpty(updatedDTO.Email) || string.IsNullOrEmpty(updatedDTO.Password))
             {
                 return BadRequest("One or more of the fields are empty!");
             }
 
-            if (!_userService.Validate(updatedUser.Email, updatedUser.Password, isCurrentUser: true))
+            if (!_userService.Validate(updatedDTO.Email, updatedDTO.Password, isCurrentUser: true))
             {
                 return BadRequest("Email already in user or Password is to weak!");
             }
 
-            User user = await _userService.GetCurrentUserAsync();
+            User currentUser = await _userService.GetCurrentUserAsync();
 
-            user.Name = updatedUser.Name;
-            user.Surname = updatedUser.Surname;
-            user.Email = updatedUser.Email;
-            user.Password = BCrypt.Net.BCrypt.HashPassword(updatedUser.Password);
+            await _userService.UpdateCurrentUserAsync(updatedDTO, currentUser);
 
-            await _userService.UpdateUserAsync(user);
-            return Ok(user);
+            return Ok(currentUser);
         }
 
         [HttpDelete]

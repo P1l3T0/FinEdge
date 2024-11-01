@@ -1,6 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 
-namespace FinEdgeBackend.Interfaces
+namespace FinEdgeBackend.Interfaces.Auth
 {
     public interface IJwtService
     {

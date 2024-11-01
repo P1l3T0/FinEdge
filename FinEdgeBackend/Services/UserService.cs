@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FinEdgeBackend.Data;
-using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.RegularExpressions;
+using FinEdgeBackend.Interfaces.Auth;
+using FinEdgeBackend.Interfaces;
+using FinEdgeBackend.DTOs.User;
 
 namespace FinEdgeBackend.Services
 {
@@ -20,16 +22,24 @@ namespace FinEdgeBackend.Services
             return user;
         }
 
-        public async Task<User> UpdateUserAsync(User user)
+        public async Task<User> UpdateCurrentUserAsync(UpdateDTO updatedDTO, User currentUser)
         {
-            _dataContext.Users.Update(user);
+            currentUser.Name = updatedDTO.Name;
+            currentUser.Surname = updatedDTO.Surname;
+            currentUser.Email = updatedDTO.Email;
+            currentUser.Password = BCrypt.Net.BCrypt.HashPassword(updatedDTO.Password);
+
+            _dataContext.Users.Update(currentUser);
             await _dataContext.SaveChangesAsync();
-            return user;
+            return currentUser;
         }
 
         public async Task<User> GetUserByIdAsync(int userID)
         {
-            User? user = await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == userID);
+            User? user = await _dataContext.Users
+                .Include(u => u.Accounts)
+                .FirstOrDefaultAsync(u => u.ID == userID);
+
             return user!;
         }
 
@@ -54,8 +64,8 @@ namespace FinEdgeBackend.Services
                 JwtSecurityToken token = _jwtService.Verify(jwt!);
                 int.TryParse(_jwtService.GetUserIdFromToken(token), out int userID);
 
-                User user = await GetUserByIdAsync(userID);
-                return user;
+                User currentUser = await GetUserByIdAsync(userID);
+                return currentUser;
             }
             catch (Exception ex)
             {
@@ -69,9 +79,9 @@ namespace FinEdgeBackend.Services
             return users;
         }
 
-        public void DeleteUser(User user)
+        public void DeleteUser(User currentUser)
         {
-            _dataContext.Users.Remove(user);
+            _dataContext.Users.Remove(currentUser);
             _dataContext.SaveChanges();
         }
 

@@ -1,4 +1,4 @@
-﻿namespace FinEdgeBackend.DTOs
+﻿namespace FinEdgeBackend.DTOs.User
 {
     public class UpdateDTO
     {

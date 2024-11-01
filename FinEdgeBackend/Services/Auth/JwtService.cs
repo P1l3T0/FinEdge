@@ -1,12 +1,12 @@
 ﻿using System.Text;
 using System.Security.Cryptography;
 using System.IdentityModel.Tokens.Jwt;
-using FinEdgeBackend.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using FinEdgeBackend.Data;
 using System.Security.Claims;
+using FinEdgeBackend.Interfaces.Auth;
 
-namespace FinEdgeBackend.Services
+namespace FinEdgeBackend.Services.Auth
 {
     public class JwtService(DataContext dataContext) : IJwtService
     {
@@ -18,10 +18,10 @@ namespace FinEdgeBackend.Services
             SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
             SigningCredentials credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
 
-            Claim[] claims = 
+            Claim[] claims =
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userID.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) 
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
             JwtHeader header = new JwtHeader(credentials);
