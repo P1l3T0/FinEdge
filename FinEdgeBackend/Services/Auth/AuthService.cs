@@ -1,8 +1,9 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.User;
 using FinEdgeBackend.Interfaces;
+using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Models;
 
-namespace FinEdgeBackend.Services
+namespace FinEdgeBackend.Services.Auth
 {
     public class AuthService(IUserService userService, IRefreshTokenService refreshTokenService) : IAuthService
     {
