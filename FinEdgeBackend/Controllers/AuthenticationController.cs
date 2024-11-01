@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using FinEdgeBackend.DTOs;
-using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
+using FinEdgeBackend.DTOs.User;
+using FinEdgeBackend.Interfaces.Auth;
+using FinEdgeBackend.Interfaces;
 
 namespace FinEdgeBackend.Controllers
 {
