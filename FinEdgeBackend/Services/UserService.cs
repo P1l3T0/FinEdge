@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text.RegularExpressions;
 using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Interfaces;
+using FinEdgeBackend.DTOs.User;
 
 namespace FinEdgeBackend.Services
 {
@@ -21,11 +22,16 @@ namespace FinEdgeBackend.Services
             return user;
         }
 
-        public async Task<User> UpdateUserAsync(User user)
+        public async Task<User> UpdateCurrentUserAsync(UpdateDTO updatedDTO, User currentUser)
         {
-            _dataContext.Users.Update(user);
+            currentUser.Name = updatedDTO.Name;
+            currentUser.Surname = updatedDTO.Surname;
+            currentUser.Email = updatedDTO.Email;
+            currentUser.Password = BCrypt.Net.BCrypt.HashPassword(updatedDTO.Password);
+
+            _dataContext.Users.Update(currentUser);
             await _dataContext.SaveChangesAsync();
-            return user;
+            return currentUser;
         }
 
         public async Task<User> GetUserByIdAsync(int userID)

@@ -1,11 +1,12 @@
-﻿using FinEdgeBackend.Models;
+﻿using FinEdgeBackend.DTOs.User;
+using FinEdgeBackend.Models;
 
 namespace FinEdgeBackend.Interfaces
 {
     public interface IUserService
     {
         Task<User> CreateUserAsync(User user);
-        Task<User> UpdateUserAsync(User user);
+        Task<User> UpdateCurrentUserAsync(UpdateDTO updateDTO, User currentUser);
         Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserByIdAsync(int userID);
         Task<User> GetUserByNameAsync(string name);

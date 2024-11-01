@@ -24,27 +24,23 @@ namespace FinEdgeBackend.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> UpddateUser([FromBody] UpdateDTO updatedUser)
+        public async Task<IActionResult> UpddateUser([FromBody] UpdateDTO updatedDTO)
         {
-            if (string.IsNullOrEmpty(updatedUser.Name) || string.IsNullOrEmpty(updatedUser.Surname) ||
-                string.IsNullOrEmpty(updatedUser.Email) || string.IsNullOrEmpty(updatedUser.Password))
+            if (string.IsNullOrEmpty(updatedDTO.Name) || string.IsNullOrEmpty(updatedDTO.Surname) ||
+                string.IsNullOrEmpty(updatedDTO.Email) || string.IsNullOrEmpty(updatedDTO.Password))
             {
                 return BadRequest("One or more of the fields are empty!");
             }
 
-            if (!_userService.Validate(updatedUser.Email, updatedUser.Password, isCurrentUser: true))
+            if (!_userService.Validate(updatedDTO.Email, updatedDTO.Password, isCurrentUser: true))
             {
                 return BadRequest("Email already in user or Password is to weak!");
             }
 
             User currentUser = await _userService.GetCurrentUserAsync();
 
-            currentUser.Name = updatedUser.Name;
-            currentUser.Surname = updatedUser.Surname;
-            currentUser.Email = updatedUser.Email;
-            currentUser.Password = BCrypt.Net.BCrypt.HashPassword(updatedUser.Password);
+            await _userService.UpdateCurrentUserAsync(updatedDTO, currentUser);
 
-            await _userService.UpdateUserAsync(currentUser);
             return Ok(currentUser);
         }
 
