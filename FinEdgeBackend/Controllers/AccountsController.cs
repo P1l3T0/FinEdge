@@ -23,12 +23,12 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("Error with the account fields!");
             }
 
-            User? user = await _userService.GetCurrentUserAsync();
-            user.TotalBalance += accountDto.Balance;
+            User? currentUser = await _userService.GetCurrentUserAsync();
+            currentUser.TotalBalance += accountDto.Balance;
 
-            await _accountService.CreateAsync(new Account
+            await _accountService.CreateAccountAsync(new Account
             {
-                UserID = user.ID,
+                UserID = currentUser.ID,
                 Name = accountDto.Name,
                 Balance = accountDto.Balance,
                 Currency = accountDto.Currency,
@@ -37,6 +37,16 @@ namespace FinEdgeBackend.Controllers
             });
 
             return Created();
+        }
+
+        [HttpGet]
+        [Route("user/get-all")]
+        public async Task<IActionResult> GetAccountsForUser()
+        {
+            User? currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Account> accounts = await _accountService.GetAllAccountsForUserAsync(currentUser);
+
+            return Ok(accounts);
         }
     }
 }
