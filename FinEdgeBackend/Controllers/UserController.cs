@@ -18,8 +18,8 @@ namespace FinEdgeBackend.Controllers
         [Route("get")]
         public async Task<IActionResult> GetCurrentUser()
         {
-            User user = await _userService.GetCurrentUserAsync();
-            return Ok(user);
+            User currentUser = await _userService.GetCurrentUserAsync();
+            return Ok(currentUser);
         }
 
         [HttpPut]
@@ -37,15 +37,15 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("Email already in user or Password is to weak!");
             }
 
-            User user = await _userService.GetCurrentUserAsync();
+            User currentUser = await _userService.GetCurrentUserAsync();
 
-            user.Name = updatedUser.Name;
-            user.Surname = updatedUser.Surname;
-            user.Email = updatedUser.Email;
-            user.Password = BCrypt.Net.BCrypt.HashPassword(updatedUser.Password);
+            currentUser.Name = updatedUser.Name;
+            currentUser.Surname = updatedUser.Surname;
+            currentUser.Email = updatedUser.Email;
+            currentUser.Password = BCrypt.Net.BCrypt.HashPassword(updatedUser.Password);
 
-            await _userService.UpdateUserAsync(user);
-            return Ok(user);
+            await _userService.UpdateUserAsync(currentUser);
+            return Ok(currentUser);
         }
 
         [HttpDelete]

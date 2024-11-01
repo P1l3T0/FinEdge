@@ -58,8 +58,8 @@ namespace FinEdgeBackend.Services
                 JwtSecurityToken token = _jwtService.Verify(jwt!);
                 int.TryParse(_jwtService.GetUserIdFromToken(token), out int userID);
 
-                User user = await GetUserByIdAsync(userID);
-                return user;
+                User currentUser = await GetUserByIdAsync(userID);
+                return currentUser;
             }
             catch (Exception ex)
             {
@@ -73,9 +73,9 @@ namespace FinEdgeBackend.Services
             return users;
         }
 
-        public void DeleteUser(User user)
+        public void DeleteUser(User currentUser)
         {
-            _dataContext.Users.Remove(user);
+            _dataContext.Users.Remove(currentUser);
             _dataContext.SaveChanges();
         }
 

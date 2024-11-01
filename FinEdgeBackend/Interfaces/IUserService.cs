@@ -15,6 +15,6 @@ namespace FinEdgeBackend.Interfaces
         bool ValidateEmail(string email);
         bool ValidatePassword(string password);
         bool UserExists(string email);
-        void DeleteUser(User user);
+        void DeleteUser(User currentUser);
     }
 }
