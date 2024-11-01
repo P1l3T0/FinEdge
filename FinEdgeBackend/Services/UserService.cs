@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FinEdgeBackend.Data;
-using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.RegularExpressions;
+using FinEdgeBackend.Interfaces.Auth;
+using FinEdgeBackend.Interfaces;
 
 namespace FinEdgeBackend.Services
 {
