@@ -2,8 +2,8 @@
 {
     public enum AccountType
     {
-        Income,
-        Expenses,
-        Saving
+        Regular,
+        Savings, 
+        Debt
     }
 }
