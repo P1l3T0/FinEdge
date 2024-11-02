@@ -29,7 +29,7 @@ namespace FinEdgeBackend.Services
             return account!;
         }
 
-        public async Task<ICollection<Account>> GetAllAccountsForUserAsync(User currentUser)
+        public async Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser)
         {
             ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.UserID == currentUser.ID).ToListAsync();
             return accounts;
@@ -37,7 +37,8 @@ namespace FinEdgeBackend.Services
 
         public void DeleteAccount(Account account)
         {
-            throw new NotImplementedException();
+            _dataContext.Accounts.Remove(account);
+            _dataContext.SaveChanges();
         }
     }
 }

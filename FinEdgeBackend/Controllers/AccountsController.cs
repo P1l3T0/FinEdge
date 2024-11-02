@@ -23,7 +23,7 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("Error with the account fields!");
             }
 
-            User? currentUser = await _userService.GetCurrentUserAsync();
+            User currentUser = await _userService.GetCurrentUserAsync();
             currentUser.TotalBalance += accountDto.Balance;
 
             await _accountService.CreateAccountAsync(new Account
@@ -40,13 +40,37 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpGet]
-        [Route("user/get-all")]
-        public async Task<IActionResult> GetAccountsForUser()
+        [Route("get")]
+        public async Task<IActionResult> GetAccount([FromQuery] int accountID)
         {
-            User? currentUser = await _userService.GetCurrentUserAsync();
-            ICollection<Account> accounts = await _accountService.GetAllAccountsForUserAsync(currentUser);
+            User currentUser = await _userService.GetCurrentUserAsync();
+            Account account = await _accountService.GetAccountById(accountID);
+
+            return Ok(account);
+        }
+
+        [HttpGet]
+        [Route("get-all")]
+        public async Task<IActionResult> GetAccounts()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Account> accounts = await _accountService.GetAllAccountsForCurrentUserAsync(currentUser);
 
             return Ok(accounts);
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteAccount([FromQuery] int accountID)
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            Account account = await _accountService.GetAccountById(accountID);
+
+            currentUser.TotalBalance -= account.Balance;    
+
+            _accountService.DeleteAccount(account);
+
+            return NoContent();
         }
     }
 }
