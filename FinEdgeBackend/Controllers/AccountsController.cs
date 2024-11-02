@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FinEdgeBackend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class AccountsController(IUserService userService, IAccountService accountService) : Controller
     {
         private readonly IUserService _userService = userService;

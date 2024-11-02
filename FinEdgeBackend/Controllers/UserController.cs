@@ -7,7 +7,7 @@ using FinEdgeBackend.Interfaces;
 namespace FinEdgeBackend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController(IUserService userService, IJwtService jwtService, IRefreshTokenService refreshTokenService) : Controller
     {
         private readonly IUserService _userService = userService;

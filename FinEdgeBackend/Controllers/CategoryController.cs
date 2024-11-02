@@ -8,6 +8,13 @@ namespace FinEdgeBackend.Controllers
     [Route("[controller]")]
     public class CategoryController : Controller
     {
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> CreateAccount([FromBody] AccountDTO accountDto)
+        {
 
+
+            return Created();
+        }
     }
 }
