@@ -53,7 +53,7 @@ namespace FinEdgeBackend.Controllers
         public async Task<IActionResult> GetAccounts()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
-            ICollection<Account> accounts = await _accountService.GetAllAccountsForCurrentUserAsync(currentUser);
+            ICollection<Account> accounts = currentUser.Accounts!;
 
             return Ok(accounts);
         }
