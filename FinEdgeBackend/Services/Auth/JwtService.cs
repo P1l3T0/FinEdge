@@ -30,7 +30,7 @@ namespace FinEdgeBackend.Services.Auth
                 audience: "your-api-identifier",
                 claims: claims,
                 notBefore: null,
-                expires: DateTime.UtcNow.AddMinutes(15)
+                expires: DateTime.Now.AddMinutes(15)
             );
 
             JwtSecurityToken accessToken = new JwtSecurityToken(header, payload);

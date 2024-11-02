@@ -32,7 +32,7 @@ namespace FinEdgeBackend.Controllers
                 Name = accountDto.Name,
                 Balance = accountDto.Balance,
                 Currency = accountDto.Currency,
-                DateCreated = DateTime.UtcNow,
+                DateCreated = DateTime.Now,
                 AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!),
             });
 

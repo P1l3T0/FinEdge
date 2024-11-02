@@ -49,7 +49,7 @@ namespace FinEdgeBackend.Controllers
         {
             RefreshToken storedToken = await _refreshTokenService.GetRefreshTokenAsync(refreshToken);
 
-            if (storedToken is null || storedToken.ExpiryDate < DateTime.UtcNow || storedToken.IsRevoked)
+            if (storedToken is null || storedToken.ExpiryDate < DateTime.Now || storedToken.IsRevoked)
             {
                 return Unauthorized("Invalid or expired refresh token.");
             }
@@ -61,7 +61,7 @@ namespace FinEdgeBackend.Controllers
             RefreshToken newRefreshTokenEntity = await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken
             {
                 Token = newRefreshToken,
-                ExpiryDate = DateTime.UtcNow.AddDays(7),
+                ExpiryDate = DateTime.Now.AddDays(7),
                 UserID = storedToken.UserID,
             });
 
@@ -91,7 +91,7 @@ namespace FinEdgeBackend.Controllers
             await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken
             {
                 Token = refreshToken,
-                ExpiryDate = DateTime.UtcNow.AddDays(1),
+                ExpiryDate = DateTime.Now.AddDays(1),
                 UserID = user.ID
             });
 
@@ -110,7 +110,7 @@ namespace FinEdgeBackend.Controllers
                 SameSite = SameSiteMode.None,
                 Domain = "localhost",
                 Path = "/",
-                Expires = DateTime.UtcNow.AddDays(1)
+                Expires = DateTime.Now.AddDays(1)
             });
 
             return NoContent();
