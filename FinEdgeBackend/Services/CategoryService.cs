@@ -21,7 +21,7 @@ namespace FinEdgeBackend.Services
         {
             category.Name = categoryDto.Name;
             category.Currency = categoryDto.Currency;
-            category.Balance = categoryDto.Balance;
+            //category.Balance = categoryDto.Balance;
             category.Budget = categoryDto.Budget;
             category.IsIncome = categoryDto.IsIncome;
 
@@ -51,36 +51,58 @@ namespace FinEdgeBackend.Services
             await _dataContext.SaveChangesAsync();
         }
 
-        public decimal GetBalanceForCategory(Category category)
+        public decimal GetBalanceForExpenditureCategory(Category category)
         {
-            return (decimal)category.Balance!;
+            return !category.IsIncome ? (decimal)category.Balance! : 0;
         }
 
-        public decimal GetBudgetForCategory(Category category)
+        public decimal GetBalanceForIncomeCategory(Category category)
         {
-            return (decimal)category.Budget!;
+            return category.IsIncome ? (decimal)category.Balance! : 0;
         }
 
-        public decimal GetBalanceForAllCategories(ICollection<Category> categories)
+        public decimal GetBudgetForExpenditureCategory(Category category)
         {
-            decimal balance = 0;
+            return !category.IsIncome ? (decimal)category.Budget! : 0;
+        }
 
-            foreach (Category category in categories)
-            {
-                balance += (decimal)category.Balance!;
-            }
+        public decimal GetBudgetForIncomeCategory(Category category)
+        {
+            return category.IsIncome ? (decimal)category.Budget! : 0;
+        }
+
+        public decimal GetBalanceForAllExpenditureCategories(ICollection<Category> categories)
+        {
+            decimal balance = categories
+                .Where(category => !category.IsIncome)
+                .Sum(category => category.Balance ?? 0);
 
             return balance;
         }
 
-        public decimal GetBudgetForAllCategories(ICollection<Category> categories)
+        public decimal GetBalanceForAllIncomeCategories(ICollection<Category> categories)
         {
-            decimal budget = 0;
+            decimal balance = categories
+                .Where(category => category.IsIncome)
+                .Sum(category => category.Balance ?? 0);
 
-            foreach (Category category in categories)
-            {
-                budget += (decimal)category.Budget!;
-            }
+            return balance;
+        }
+
+        public decimal GetBudgetForAllExpenditureCategories(ICollection<Category> categories)
+        {
+            decimal budget = categories
+                .Where(category => !category.IsIncome)
+                .Sum(category => category.Budget ?? 0);
+
+            return budget;
+        }
+
+        public decimal GetBudgetForAllIncomeCategories(ICollection<Category> categories)
+        {
+            decimal budget = categories
+                .Where(category => category.IsIncome)
+                .Sum(category => category.Budget ?? 0);
 
             return budget;
         }
