@@ -17,10 +17,9 @@ namespace FinEdgeBackend.Controllers
         [Route("create")]
         public async Task<IActionResult> CreateAccount([FromBody] AccountDTO accountDto)
         {
-            if (string.IsNullOrEmpty(accountDto.Name) || string.IsNullOrEmpty(accountDto.AccountType) || 
-                decimal.IsNegative((decimal)accountDto.Balance!) || !accountDto.Balance.HasValue)
+            if (!_accountService.Validate(accountDto))
             {
-                return BadRequest("Error with the account fields!");
+                return BadRequest("Error with the account fields");
             }
 
             User currentUser = await _userService.GetCurrentUserAsync();
@@ -43,7 +42,6 @@ namespace FinEdgeBackend.Controllers
         [Route("get")]
         public async Task<IActionResult> GetAccount([FromQuery] int accountID)
         {
-            User currentUser = await _userService.GetCurrentUserAsync();
             Account account = await _accountService.GetAccountById(accountID);
 
             return Ok(account);
@@ -59,6 +57,22 @@ namespace FinEdgeBackend.Controllers
             return Ok(accounts);
         }
 
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> UpdateAccount([FromQuery] int accountID, [FromBody] AccountDTO accountDto)
+        {
+            if (!_accountService.Validate(accountDto))
+            {
+                return BadRequest("Error with the account fields");
+            }
+
+            Account account = await _accountService.GetAccountById(accountID);
+
+            await _accountService.UpdateAccountAsync(accountDto, account);
+
+            return Created();
+        }
+
         [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteAccount([FromQuery] int accountID)
@@ -66,7 +80,7 @@ namespace FinEdgeBackend.Controllers
             User currentUser = await _userService.GetCurrentUserAsync();
             Account account = await _accountService.GetAccountById(accountID);
 
-            currentUser.TotalBalance -= account.Balance;    
+            currentUser.TotalBalance -= account.Balance;
 
             _accountService.DeleteAccount(account);
 

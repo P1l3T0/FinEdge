@@ -1,13 +1,15 @@
-﻿using FinEdgeBackend.Models;
+﻿using FinEdgeBackend.DTOs;
+using FinEdgeBackend.Models;
 
 namespace FinEdgeBackend.Interfaces
 {
     public interface IAccountService
     {
         Task<Account> CreateAccountAsync(Account account);
-        Task<Account> UpdateAccountAsync(int accountID, Account account);
+        Task<Account> UpdateAccountAsync(AccountDTO accountDto, Account account);
         Task<Account> GetAccountById(int accountID);
         Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser);
+        bool Validate(AccountDTO accountDto);
         void DeleteAccount(Account account);
     }
 }
