@@ -7,8 +7,12 @@ namespace FinEdgeBackend.Interfaces
     {
         Task<Category> CreateCategoryAsync(Category category);
         Task<Category> UpdateCategoryAsync(CategoryDTO categoryDto, Category category);
-        Task<Category> GetCategoryById(int categoryID);
-        Task<ICollection<Category>> GetAllCategoriesForCurrentUser(User currentUser);
+        Task<Category> GetCategoryByIdAsync(int categoryID);
+        Task<ICollection<Category>> GetAllCategoriesForCurrentUserAsync(User currentUser);
+        decimal GetBalanceForCategory(Category category);
+        decimal GetBudgetForCategory(Category category);
+        decimal GetBalanceForAllCategories(ICollection<Category> categories);
+        decimal GetBudgetForAllCategories(ICollection<Category> categories);
         bool Validate(CategoryDTO categoryDto);
         void DeleteCategory(Category category);
     }
