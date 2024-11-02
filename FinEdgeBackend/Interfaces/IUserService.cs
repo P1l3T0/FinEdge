@@ -12,10 +12,10 @@ namespace FinEdgeBackend.Interfaces
         Task<User> GetUserByNameAsync(string name);
         Task<User> GetCurrentUserAsync();
         Task<ICollection<User>> GetAllUsersAsync();
+        Task DeleteUserAsync(User currentUser);
         bool Validate(string email, string password, bool isCurrentUser);
         bool ValidateEmail(string email);
         bool ValidatePassword(string password);
         bool UserExists(string email);
-        void DeleteUser(User currentUser);
     }
 }

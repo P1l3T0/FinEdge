@@ -42,6 +42,12 @@ namespace FinEdgeBackend.Services
             return accounts;
         }
 
+        public async Task DeleteAccountAsync(Account account)
+        {
+            _dataContext.Accounts.Remove(account);
+            await _dataContext.SaveChangesAsync();
+        }
+
         public bool Validate(AccountDTO accountDto)
         {
             if (string.IsNullOrEmpty(accountDto.Name) || string.IsNullOrEmpty(accountDto.AccountType) ||
@@ -51,12 +57,6 @@ namespace FinEdgeBackend.Services
             }
 
             return true;
-        }
-
-        public void DeleteAccount(Account account)
-        {
-            _dataContext.Accounts.Remove(account);
-            _dataContext.SaveChanges();
         }
     }
 }

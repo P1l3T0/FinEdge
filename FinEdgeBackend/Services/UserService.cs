@@ -79,10 +79,10 @@ namespace FinEdgeBackend.Services
             return users;
         }
 
-        public void DeleteUser(User currentUser)
+        public async Task DeleteUserAsync(User currentUser)
         {
             _dataContext.Users.Remove(currentUser);
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
         }
 
         public bool Validate(string email, string password, bool isCurrentUser)

@@ -82,7 +82,7 @@ namespace FinEdgeBackend.Controllers
 
             currentUser.TotalBalance -= account.Balance;
 
-            _accountService.DeleteAccount(account);
+            await _accountService.DeleteAccountAsync(account);
 
             return NoContent();
         }
