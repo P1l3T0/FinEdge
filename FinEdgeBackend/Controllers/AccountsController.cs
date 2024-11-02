@@ -78,8 +78,8 @@ namespace FinEdgeBackend.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteAccount([FromQuery] int accountID)
         {
-            User currentUser = await _userService.GetCurrentUserAsync();
             Account account = await _accountService.GetAccountByIdAsync(accountID);
+            User currentUser = account.User!;
 
             currentUser.TotalBalance -= account.Balance;
 

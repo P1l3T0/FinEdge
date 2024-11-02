@@ -41,7 +41,7 @@ namespace FinEdgeBackend.Services
 
         public async Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser)
         {
-            ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.UserID == currentUser.ID).ToListAsync();
+            ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.User == currentUser).ToListAsync();
             return accounts;
         }
 
