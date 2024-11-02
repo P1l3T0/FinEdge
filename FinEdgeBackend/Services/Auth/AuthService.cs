@@ -10,7 +10,7 @@ namespace FinEdgeBackend.Services.Auth
         private readonly IUserService _userService = userService;
         private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
 
-        public async Task<User> Register(RegisterDTO registerDto)
+        public async Task<User> RegisterAsync(RegisterDTO registerDto)
         {
             return await _userService.CreateUserAsync(new User
             {
@@ -22,7 +22,7 @@ namespace FinEdgeBackend.Services.Auth
             });
         }
 
-        public async Task<User> Login(LoginDTO loginDto)
+        public async Task<User> LoginAsync(LoginDTO loginDto)
         {
             User user = await _userService.GetUserByEmailAsync(loginDto.Email!);
 

@@ -30,7 +30,7 @@ namespace FinEdgeBackend.Services
             return account;
         }
 
-        public async Task<Account> GetAccountById(int accountID)
+        public async Task<Account> GetAccountByIdAsync(int accountID)
         {
             Account? account = await _dataContext.Accounts!.FirstOrDefaultAsync(a => a.ID == accountID);
             return account!;

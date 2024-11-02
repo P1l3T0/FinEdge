@@ -24,7 +24,7 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("Invalid Email or Password!");
             }
 
-            User? user = await _authService.Register(registerDto);
+            User? user = await _authService.RegisterAsync(registerDto);
 
             return await GenerateAuthResponse(user);
         }
@@ -33,7 +33,7 @@ namespace FinEdgeBackend.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
         {
-            User? user = await _authService.Login(loginDto);
+            User? user = await _authService.LoginAsync(loginDto);
 
             if (user is null)
             {

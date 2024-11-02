@@ -42,7 +42,7 @@ namespace FinEdgeBackend.Controllers
         [Route("get")]
         public async Task<IActionResult> GetAccount([FromQuery] int accountID)
         {
-            Account account = await _accountService.GetAccountById(accountID);
+            Account account = await _accountService.GetAccountByIdAsync(accountID);
 
             return Ok(account);
         }
@@ -66,7 +66,7 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("Error with the account fields");
             }
 
-            Account account = await _accountService.GetAccountById(accountID);
+            Account account = await _accountService.GetAccountByIdAsync(accountID);
 
             await _accountService.UpdateAccountAsync(accountDto, account);
 
@@ -78,7 +78,7 @@ namespace FinEdgeBackend.Controllers
         public async Task<IActionResult> DeleteAccount([FromQuery] int accountID)
         {
             User currentUser = await _userService.GetCurrentUserAsync();
-            Account account = await _accountService.GetAccountById(accountID);
+            Account account = await _accountService.GetAccountByIdAsync(accountID);
 
             currentUser.TotalBalance -= account.Balance;
 
