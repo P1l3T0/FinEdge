@@ -1,4 +1,5 @@
 ﻿using FinEdgeBackend.Enums;
+using System.Text.Json.Serialization;
 
 namespace FinEdgeBackend.Models
 {
@@ -11,5 +12,8 @@ namespace FinEdgeBackend.Models
         public decimal? Balance { get; set; }
         public DateTime? DateCreated { get; set; }
         public AccountType? AccountType { get; set; }
+
+        [JsonIgnore]
+        public User? User { get; set; }
     }
 }

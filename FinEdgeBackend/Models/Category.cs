@@ -1,4 +1,6 @@
-﻿namespace FinEdgeBackend.Models
+﻿using System.Text.Json.Serialization;
+
+namespace FinEdgeBackend.Models
 {
     public class Category
     {
@@ -10,5 +12,8 @@
         public decimal? Budget { get; set; }
         public bool IsIncome { get; set; }
         public DateTime? DateCreated { get; set; }
+
+        [JsonIgnore]
+        public User? User { get; set; }
     }
 }

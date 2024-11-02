@@ -26,7 +26,8 @@ namespace FinEdgeBackend.Models
         public string? Password { get; set; }
         public DateTime? DateCreated { get; set; }
         public decimal? TotalBalance { get; set; } = 0;
-        public MethodologyType? MethodologyType { get; set; }
-        public ICollection<Account>? Accounts { get; set; }
+        public MethodologyType? MethodologyType { get; set; } = Enums.MethodologyType.FiftyThirtyTwenty;
+        public ICollection<Account>? Accounts { get; set; } = new List<Account>();
+        public ICollection<Category>? Categories { get; set; } = new List<Category>();
     }
 }

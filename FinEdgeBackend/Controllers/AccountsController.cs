@@ -28,6 +28,7 @@ namespace FinEdgeBackend.Controllers
             await _accountService.CreateAccountAsync(new Account
             {
                 UserID = currentUser.ID,
+                User = currentUser,
                 Name = accountDto.Name,
                 Balance = accountDto.Balance,
                 Currency = accountDto.Currency,
