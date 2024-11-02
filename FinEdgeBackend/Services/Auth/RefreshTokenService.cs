@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FinEdgeBackend.Data;
-using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
+using FinEdgeBackend.Interfaces.Auth;
 
-namespace FinEdgeBackend.Services
+namespace FinEdgeBackend.Services.Auth
 {
     public class RefreshTokenService(DataContext dataContext) : IRefreshTokenService
     {
@@ -13,7 +13,7 @@ namespace FinEdgeBackend.Services
         {
             _dataContext.RefreshTokens.Add(refreshToken);
             await _dataContext.SaveChangesAsync();
-            return refreshToken;    
+            return refreshToken;
         }
 
         public async Task<RefreshToken> GetRefreshTokenAsync(string refreshToken)
@@ -24,7 +24,7 @@ namespace FinEdgeBackend.Services
 
         public async Task<RefreshToken> GetRefreshTokenByUserIdAsync(int userID)
         {
-            RefreshToken? refreshToken = await _dataContext.RefreshTokens.FirstOrDefaultAsync(t => t.UserId == userID && t.IsRevoked == false);
+            RefreshToken? refreshToken = await _dataContext.RefreshTokens.FirstOrDefaultAsync(t => t.UserID == userID && t.IsRevoked == false);
             return refreshToken!;
         }
     }

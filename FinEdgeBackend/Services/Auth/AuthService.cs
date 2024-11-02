@@ -1,8 +1,9 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.User;
 using FinEdgeBackend.Interfaces;
+using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Models;
 
-namespace FinEdgeBackend.Services
+namespace FinEdgeBackend.Services.Auth
 {
     public class AuthService(IUserService userService, IRefreshTokenService refreshTokenService) : IAuthService
     {
@@ -27,14 +28,14 @@ namespace FinEdgeBackend.Services
 
             if (user is null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
             {
-                return null;
+                return null!;
             }
 
             RefreshToken storedToken = await _refreshTokenService.GetRefreshTokenByUserIdAsync(user.ID);
 
             if (storedToken is null)
             {
-                return null;
+                return null!;
             }
 
             storedToken.IsRevoked = true;

@@ -1,6 +1,6 @@
 ﻿using FinEdgeBackend.Models;
 
-namespace FinEdgeBackend.Interfaces
+namespace FinEdgeBackend.Interfaces.Auth
 {
     public interface IRefreshTokenService
     {
