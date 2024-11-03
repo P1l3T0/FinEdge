@@ -7,7 +7,7 @@ using FinEdgeBackend.Interfaces;
 namespace FinEdgeBackend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController(IUserService userService, IJwtService jwtService, IRefreshTokenService refreshTokenService) : Controller
     {
         private readonly IUserService _userService = userService;
@@ -55,7 +55,7 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("User does not exist!");
             }
 
-            _userService.DeleteUser(currentUser);
+            await _userService.DeleteUserAsync(currentUser);
 
             return Ok("User deletedd succesfully");
         }
@@ -68,7 +68,7 @@ namespace FinEdgeBackend.Controllers
 
             foreach (User user in userToDelete)
             {
-                _userService.DeleteUser(user);
+                await _userService.DeleteUserAsync(user);
             }
 
             return Ok("Users deletedd succesfully");

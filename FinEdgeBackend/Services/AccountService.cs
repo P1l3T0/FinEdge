@@ -30,16 +30,25 @@ namespace FinEdgeBackend.Services
             return account;
         }
 
-        public async Task<Account> GetAccountById(int accountID)
+        public async Task<Account> GetAccountByIdAsync(int accountID)
         {
-            Account? account = await _dataContext.Accounts!.FirstOrDefaultAsync(a => a.ID == accountID);
+            Account? account = await _dataContext.Accounts!
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(a => a.ID == accountID);
+
             return account!;
         }
 
         public async Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser)
         {
-            ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.UserID == currentUser.ID).ToListAsync();
+            ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.User == currentUser).ToListAsync();
             return accounts;
+        }
+
+        public async Task DeleteAccountAsync(Account account)
+        {
+            _dataContext.Accounts.Remove(account);
+            await _dataContext.SaveChangesAsync();
         }
 
         public bool Validate(AccountDTO accountDto)
@@ -51,12 +60,6 @@ namespace FinEdgeBackend.Services
             }
 
             return true;
-        }
-
-        public void DeleteAccount(Account account)
-        {
-            _dataContext.Accounts.Remove(account);
-            _dataContext.SaveChanges();
         }
     }
 }

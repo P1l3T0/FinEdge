@@ -5,7 +5,7 @@ namespace FinEdgeBackend.Interfaces.Auth
 {
     public interface IAuthService
     {
-        Task<User> Register(RegisterDTO registerDto);
-        Task<User> Login(LoginDTO loginDto);
+        Task<User> RegisterAsync(RegisterDTO registerDto);
+        Task<User> LoginAsync(LoginDTO loginDto);
     }
 }

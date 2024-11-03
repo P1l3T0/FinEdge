@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FinEdgeBackend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class AccountsController(IUserService userService, IAccountService accountService) : Controller
     {
         private readonly IUserService _userService = userService;
@@ -28,10 +28,11 @@ namespace FinEdgeBackend.Controllers
             await _accountService.CreateAccountAsync(new Account
             {
                 UserID = currentUser.ID,
+                User = currentUser,
                 Name = accountDto.Name,
                 Balance = accountDto.Balance,
                 Currency = accountDto.Currency,
-                DateCreated = DateTime.UtcNow,
+                DateCreated = DateTime.Now,
                 AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!),
             });
 
@@ -42,7 +43,7 @@ namespace FinEdgeBackend.Controllers
         [Route("get")]
         public async Task<IActionResult> GetAccount([FromQuery] int accountID)
         {
-            Account account = await _accountService.GetAccountById(accountID);
+            Account account = await _accountService.GetAccountByIdAsync(accountID);
 
             return Ok(account);
         }
@@ -52,7 +53,7 @@ namespace FinEdgeBackend.Controllers
         public async Task<IActionResult> GetAccounts()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
-            ICollection<Account> accounts = await _accountService.GetAllAccountsForCurrentUserAsync(currentUser);
+            ICollection<Account> accounts = currentUser.Accounts!;
 
             return Ok(accounts);
         }
@@ -66,23 +67,23 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("Error with the account fields");
             }
 
-            Account account = await _accountService.GetAccountById(accountID);
+            Account account = await _accountService.GetAccountByIdAsync(accountID);
 
             await _accountService.UpdateAccountAsync(accountDto, account);
 
-            return Created();
+            return NoContent();
         }
 
         [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteAccount([FromQuery] int accountID)
         {
-            User currentUser = await _userService.GetCurrentUserAsync();
-            Account account = await _accountService.GetAccountById(accountID);
+            Account account = await _accountService.GetAccountByIdAsync(accountID);
+            User currentUser = account.User!;
 
             currentUser.TotalBalance -= account.Balance;
 
-            _accountService.DeleteAccount(account);
+            await _accountService.DeleteAccountAsync(account);
 
             return NoContent();
         }
