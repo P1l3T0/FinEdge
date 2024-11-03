@@ -1,29 +1,61 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.Data;
+using FinEdgeBackend.DTOs;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinEdgeBackend.Services
 {
-    public class SubcategoryService : ISubcategoryService
+    public class SubcategoryService(DataContext dataContext) : ISubcategoryService
     {
-        public Task<Subcategory> CreateSubcategoryAsync(Subcategory subcategory)
+        private readonly DataContext _dataContext = dataContext;
+
+        public async Task<Subcategory> CreateSubcategoryAsync(Subcategory subcategory)
         {
-            throw new NotImplementedException();
+            _dataContext.Subcategories.Add(subcategory);
+            await _dataContext.SaveChangesAsync();
+            return subcategory;
         }
 
-        public Task<Subcategory> UpdateSubcategoryAsync(SubcategoryDTO subcategoryDto, Subcategory subcategory)
+        public async Task<Subcategory> UpdateSubcategoryAsync(SubcategoryDTO subcategoryDto, Subcategory subcategory)
         {
-            throw new NotImplementedException();
+            subcategory.Name = subcategoryDto.Name;
+
+            _dataContext.Subcategories.Update(subcategory);
+            await _dataContext.SaveChangesAsync();
+            return null!;
         }
 
-        public Task<Subcategory> GetSubcategoriesByCategoryIdAsync(int categoryID)
+        public async Task<Subcategory> GetSubcategoryByIdAsync(int subcategoryID)
         {
-            throw new NotImplementedException();
+            Subcategory? subcategory = await _dataContext.Subcategories.FirstOrDefaultAsync(sc => sc.ID == subcategoryID);
+
+            return subcategory!;
         }
 
-        public Task DeleteSubcategoryAsync(Subcategory subcategory)
+        public async Task<ICollection<Subcategory>> GetSubcategoriesByCategoryIdAsync(int categoryID)
         {
-            throw new NotImplementedException();
+            Category? category = await _dataContext.Categories
+                .Include(c => c.Subcategories)
+                .FirstOrDefaultAsync(c => c.ID == categoryID);
+
+            return category!.Subcategories!;
+        }
+
+        public async Task DeleteSubcategoryAsync(Subcategory subcategory)
+        {
+            _dataContext.Subcategories.Remove(subcategory);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public bool Validate(SubcategoryDTO subcategoryDto)
+        {
+            if (string.IsNullOrEmpty(subcategoryDto.Name))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

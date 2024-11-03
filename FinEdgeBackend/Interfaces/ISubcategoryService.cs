@@ -7,7 +7,9 @@ namespace FinEdgeBackend.Interfaces
     {
         Task<Subcategory> CreateSubcategoryAsync(Subcategory subcategory);
         Task<Subcategory> UpdateSubcategoryAsync(SubcategoryDTO subcategoryDto, Subcategory subcategory);
-        Task<Subcategory> GetSubcategoriesByCategoryIdAsync(int categoryID);
+        Task<Subcategory> GetSubcategoryByIdAsync(int subcategoryID);
+        Task<ICollection<Subcategory>> GetSubcategoriesByCategoryIdAsync(int categoryID);
         Task DeleteSubcategoryAsync(Subcategory subcategory);
+        bool Validate(SubcategoryDTO subcategoryDto);
     }
 }
