@@ -10,17 +10,20 @@ namespace FinEdgeBackend.Models
         public int ID { get; set; }
 
         [Required]
+        public int UserID { get; set; }
+
+        [Required]
         public int AccountID { get; set; }
 
         [Required]
         public int CategoryID { get; set; }
 
         [Required]
-        public string Name { get; set; } = null!;
+        public string? Name { get; set; } 
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Amount { get; set; }
+        public decimal? Amount { get; set; }
 
         [Required]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
@@ -30,5 +33,8 @@ namespace FinEdgeBackend.Models
 
         [JsonIgnore]
         public Category? Category { get; set; }
+
+        [JsonIgnore]
+        public User? User { get; set; }
     }
 }
