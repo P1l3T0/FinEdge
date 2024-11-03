@@ -38,7 +38,8 @@ namespace FinEdgeBackend.Services
         {
             User? user = await _dataContext.Users
                 .Include(u => u.Accounts)
-                .Include(u => u.Categories)
+                .Include(u => u.Categories)!
+                    .ThenInclude(c => c.Subcategories)
                 .FirstOrDefaultAsync(u => u.ID == userID);
 
             return user!;

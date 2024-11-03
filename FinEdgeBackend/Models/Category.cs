@@ -12,6 +12,7 @@ namespace FinEdgeBackend.Models
         public decimal? Budget { get; set; } = 0;
         public bool IsIncome { get; set; }
         public DateTime? DateCreated { get; set; }
+        public ICollection<Subcategory>? Subcategories { get; set; } = new List<Subcategory>();
 
         [JsonIgnore]
         public User? User { get; set; }
