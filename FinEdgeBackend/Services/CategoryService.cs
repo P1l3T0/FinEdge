@@ -103,7 +103,7 @@ namespace FinEdgeBackend.Services
 
         public bool Validate(CategoryDTO categoryDto)
         {
-            if (string.IsNullOrEmpty(categoryDto.Name))
+            if (string.IsNullOrEmpty(categoryDto.Name) || decimal.IsNegative((decimal)categoryDto.Budget!))
             {
                 return false;
             }
