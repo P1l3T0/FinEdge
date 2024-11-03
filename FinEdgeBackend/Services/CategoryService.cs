@@ -21,7 +21,6 @@ namespace FinEdgeBackend.Services
         {
             category.Name = categoryDto.Name;
             category.Currency = categoryDto.Currency;
-            //category.Balance = categoryDto.Balance;
             category.Budget = categoryDto.Budget;
             category.IsIncome = categoryDto.IsIncome;
 

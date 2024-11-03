@@ -71,7 +71,7 @@ namespace FinEdgeBackend.Controllers
 
             await _accountService.UpdateAccountAsync(accountDto, account);
 
-            return Created();
+            return NoContent();
         }
 
         [HttpDelete]

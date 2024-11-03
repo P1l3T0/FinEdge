@@ -14,9 +14,9 @@ namespace FinEdgeBackend.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> CreateAccount([FromBody] CategoryDTO accountDto)
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryDTO categoryDto)
         {
-            if (!_categoryService.Validate(accountDto))
+            if (!_categoryService.Validate(categoryDto))
             {
                 return BadRequest("Category must have name and be a positive number!");
             }
@@ -27,10 +27,10 @@ namespace FinEdgeBackend.Controllers
             {
                 UserID = currentUser.ID,
                 User = currentUser,
-                Name = accountDto.Name,
-                Currency = accountDto.Currency,
-                Budget = accountDto.Budget,
-                IsIncome = accountDto.IsIncome,
+                Name = categoryDto.Name,
+                Currency = categoryDto.Currency,
+                Budget = categoryDto.Budget,
+                IsIncome = categoryDto.IsIncome,
                 DateCreated = DateTime.Now
             });
 
@@ -71,6 +71,22 @@ namespace FinEdgeBackend.Controllers
                 TotalBalance = totalBalance,
                 TotalBudget = totalBudget
             });
+        }
+
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> UpdateCategory([FromQuery] int categoryID, [FromBody] CategoryDTO categoryDto)
+        {
+            if (!_categoryService.Validate(categoryDto))
+            {
+                return BadRequest("Error with the account fields");
+            }
+
+            Category category = await _categoryService.GetCategoryByIdAsync(categoryID);
+
+            await _categoryService.UpdateCategoryAsync(categoryDto, category);
+
+            return NoContent();
         }
 
         [HttpDelete]
