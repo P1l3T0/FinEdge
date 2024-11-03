@@ -61,6 +61,12 @@ namespace FinEdgeBackend.Services
             await _dataContext.SaveChangesAsync();
         }
 
+        public async Task DeleteAllCategoriesAsync(ICollection<Category> categories)
+        {
+            _dataContext.Categories.RemoveRange(categories);
+            await _dataContext.SaveChangesAsync();
+        }
+
         public decimal GetBalanceForExpenditureCategory(Category category)
         {
             return !category.IsIncome ? (decimal)category.Balance! : 0;

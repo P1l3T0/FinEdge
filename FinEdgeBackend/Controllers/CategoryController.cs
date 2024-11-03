@@ -72,5 +72,27 @@ namespace FinEdgeBackend.Controllers
                 TotalBudget = totalBudget
             });
         }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteCategory([FromQuery] int categoryID)
+        {
+            Category category = await _categoryService.GetCategoryByIdAsync(categoryID);
+
+            await _categoryService.DeleteCategoryAsync(category);
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("delete-all")]
+        public async Task<IActionResult> DeleteAllCategories()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+
+            await _categoryService.DeleteAllCategoriesAsync(currentUser.Categories!);
+
+            return NoContent();
+        }
     }
 }
