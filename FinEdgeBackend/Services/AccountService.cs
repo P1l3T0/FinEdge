@@ -41,7 +41,7 @@ namespace FinEdgeBackend.Services
 
         public async Task<Account> GetAccountByNameAsync(string accountName)
         {
-            Account? account = await _dataContext.Accounts.
+            Account? account = await _dataContext.Accounts
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(a => a.Name == accountName);
 
