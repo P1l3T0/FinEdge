@@ -39,6 +39,15 @@ namespace FinEdgeBackend.Services
             return account!;
         }
 
+        public async Task<Account> GetAccountByNameAsync(string accountName)
+        {
+            Account? account = await _dataContext.Accounts.
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(a => a.Name == accountName);
+
+            return account!;
+        }
+
         public async Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser)
         {
             ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.User == currentUser).ToListAsync();

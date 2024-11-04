@@ -8,6 +8,7 @@ namespace FinEdgeBackend.Interfaces
         Task<Category> CreateCategoryAsync(Category category);
         Task<Category> UpdateCategoryAsync(CategoryDTO categoryDto, Category category);
         Task<Category> GetCategoryByIdAsync(int categoryID);
+        Task<Category> GetCategoryByNameAsync(string categoryName);
         ICollection<Category> GetExpenditureCategories(ICollection<Category> categories);
         ICollection<Category> GetIncomeCategories(ICollection<Category> categories);
         Task DeleteCategoryAsync(Category category);

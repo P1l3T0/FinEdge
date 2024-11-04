@@ -38,6 +38,15 @@ namespace FinEdgeBackend.Services
             return category!;
         }
 
+        public async Task<Category> GetCategoryByNameAsync(string categoryName)
+        {
+            Category? category = await _dataContext.Categories
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(c => c.Name == categoryName);
+
+            return category!;
+        }
+
         public async Task<ICollection<Category>> GetAllCategoriesForCurrentUserAsync(User currentUser)
         {
             ICollection<Category> categories = await _dataContext.Categories.Where(c => c.User == currentUser).ToListAsync();
