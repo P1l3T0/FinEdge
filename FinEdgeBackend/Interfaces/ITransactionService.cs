@@ -6,13 +6,13 @@ namespace FinEdgeBackend.Interfaces
     public interface ITransactionService
     {
         Task CreateTransactionAsync(Transaction transaction);
-        Task<Transaction> GetTransactionByIdAsync(int id);
+        Task<Transaction> GetTransactionByIdAsync(int transactionID);
         Task<ICollection<Transaction>> GetAllTransactionsAsync();
+        Task<ICollection<Transaction>> GetAllExpenditureTransactionsAsync();
+        Task<ICollection<Transaction>> GetAllIncomeTransactionsAsync();
         Task<ICollection<Transaction>> GetAllTransactionsForCategoryAsync(Category category);
         Task<ICollection<Transaction>> GetAllTransactionsForAccountAsync(Account account);
-        Task<ICollection<Transaction>> GetAllExpenditureTransactionsAsync(Category category);
-        Task<ICollection<Transaction>> GetAllIncomeTransactionsAsync(Category category);
-        Task UpdateTranssactionAsync(TransactionDTO transactioDto, Transaction transaction);
+        Task UpdateTranssactionAsync(TransactionDTO transactioDto, Transaction transaction, Category category, Account account);
         Task DeleteTransactionAsync(Transaction transaction);
         bool Validate(TransactionDTO transactionDto);
     }

@@ -40,6 +40,7 @@ namespace FinEdgeBackend.Services
                 .Include(u => u.Accounts)
                 .Include(u => u.Categories)!
                     .ThenInclude(c => c.Subcategories)
+                .Include(u => u.Transactions)
                 .FirstOrDefaultAsync(u => u.ID == userID);
 
             return user!;
