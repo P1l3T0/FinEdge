@@ -21,10 +21,10 @@ namespace FinEdgeBackend.Models
         public string? Currency { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal? Balance { get; set; } 
+        public decimal? Balance { get; set; } = 0;
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal? Budget { get; set; } 
+        public decimal? Budget { get; set; } = 0;
 
         public bool IsIncome { get; set; }
 

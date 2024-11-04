@@ -16,7 +16,13 @@ namespace FinEdgeBackend.Models
         public int AccountID { get; set; }
 
         [Required]
+        public string? AccountName { get; set; }
+
+        [Required]
         public int CategoryID { get; set; }
+
+        [Required]
+        public string? CategoryName { get; set; }
 
         [Required]
         public string? Name { get; set; } 

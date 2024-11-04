@@ -19,7 +19,7 @@ namespace FinEdgeBackend.Models
         public string? Currency { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal? Balance { get; set; }
+        public decimal? Balance { get; set; } = 0;
 
         [Required]
         public DateTime DateCreated { get; set; } = DateTime.Now;
