@@ -7,7 +7,7 @@ namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TransactionController(ITransactionService transactionService ,ICategoryService categoryService, IAccountService accountService) : Controller
+    public class TransactionController(ITransactionService transactionService ,ICategoryService categoryService, IAccountService accountService, IUserService userService) : Controller
     {
         private readonly ITransactionService _transactionService = transactionService;
         private readonly ICategoryService _categoryService = categoryService;
@@ -36,8 +36,8 @@ namespace FinEdgeBackend.Controllers
             } 
             else
             {
-            account.Balance -= transactionDto.Amount;
-            currentUser.TotalBalance -= transactionDto.Amount;
+                account.Balance -= transactionDto.Amount;
+                currentUser.TotalBalance -= transactionDto.Amount;
             }
 
             await _transactionService.CreateTransactionAsync(new Transaction
@@ -55,6 +55,36 @@ namespace FinEdgeBackend.Controllers
             });
 
             return Created();
+        }
+
+        [HttpGet]
+        [Route("get/all")]
+        public async Task<IActionResult> GetAllTransactions()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Transaction> transactions = await _transactionService.GetAllTransactionsAsync(currentUser);
+
+            return Ok(transactions);
+        }
+
+        [HttpGet]
+        [Route("get/expenditure")]
+        public async Task<IActionResult> GetExpenditureTransactions()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Transaction> expenditureTransactions = await _transactionService.GetAllExpenditureTransactionsAsync(currentUser);
+
+            return Ok(expenditureTransactions);
+        }
+
+        [HttpGet]
+        [Route("get/income")]
+        public async Task<IActionResult> GetIncomeTransactions()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Transaction> incomeTransactions = await _transactionService.GetAllIncomeTransactionsAsync(currentUser);
+
+            return Ok(incomeTransactions);
         }
     }
 }
