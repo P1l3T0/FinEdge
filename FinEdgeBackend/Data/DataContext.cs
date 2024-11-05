@@ -36,16 +36,16 @@ namespace FinEdgeBackend.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.Category)
-                .WithMany(c => c.Transactions)
-                .HasForeignKey(c => c.CategoryID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Account)
                 .WithMany(a => a.Transactions)
                 .HasForeignKey(t => t.AccountID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Category)
+                .WithMany(c => c.Transactions)
+                .HasForeignKey(t => t.CategoryID)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.User)

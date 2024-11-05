@@ -31,6 +31,10 @@ namespace FinEdgeBackend.Models
 
         public ICollection<Subcategory> Subcategories { get; set; } = new List<Subcategory>();
 
+        [Required]
+        [JsonIgnore]
+        public int TransactionID { get; set; }
+
         [JsonIgnore]
         public User? User { get; set; }
 
