@@ -11,10 +11,7 @@ namespace FinEdgeBackend.Models
         [Required]
         public int UserID { get; set; }
 
-        [Required]
-        public int TransactionID { get; set; }
-
-        [Required]
+        [Required] 
         public string? Name { get; set; } 
 
         [Required]
@@ -26,6 +23,7 @@ namespace FinEdgeBackend.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal? Budget { get; set; } = 0;
 
+        [Required]
         public bool IsIncome { get; set; }
 
         [Required]
@@ -37,6 +35,6 @@ namespace FinEdgeBackend.Models
         public User? User { get; set; }
 
         [JsonIgnore]
-        public ICollection<Transaction>? Transactions { get; set; }
+        public ICollection<Transaction>? Transactions { get; set; } = new List<Transaction>();
     }
 }
