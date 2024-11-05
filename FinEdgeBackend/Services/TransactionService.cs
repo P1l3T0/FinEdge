@@ -20,7 +20,12 @@ namespace FinEdgeBackend.Services
 
         public async Task<Transaction> GetTransactionByIdAsync(int transactionID)
         {
-            Transaction? transaction = await _dataContext.Transactions.FirstOrDefaultAsync(t => t.ID == transactionID);
+            Transaction? transaction = await _dataContext.Transactions
+                .Include(t => t.Account)
+                .Include(t => t.Category)
+                .Include(t => t.User)
+                .FirstOrDefaultAsync(t => t.ID == transactionID);
+
             return transaction!;
         }
 

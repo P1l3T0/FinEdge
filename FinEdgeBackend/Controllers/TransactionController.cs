@@ -86,5 +86,32 @@ namespace FinEdgeBackend.Controllers
 
             return Ok(incomeTransactions);
         }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteTransaction([FromQuery] int transactionID)
+        {
+            Transaction transaction = await _transactionService.GetTransactionByIdAsync(transactionID);
+            Category category = transaction.Category!;
+            Account account = transaction.Account!;
+            User currentUser = transaction.User!;
+
+            category.Balance -= transaction.Amount;
+
+            if (category.IsIncome)
+            {
+                account.Balance -= transaction.Amount;
+                currentUser.TotalBalance -= transaction.Amount;
+            }
+            else
+            {
+                account.Balance += transaction.Amount;
+                currentUser.TotalBalance += transaction.Amount;
+            }
+
+            await _transactionService.DeleteTransactionAsync(transaction);
+
+            return NoContent();
+        }
     }
 }
