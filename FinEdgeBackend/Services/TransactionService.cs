@@ -24,19 +24,19 @@ namespace FinEdgeBackend.Services
             return transaction!;
         }
 
-        public async Task<ICollection<Transaction>> GetAllTransactionsAsync()
+        public async Task<ICollection<Transaction>> GetAllTransactionsAsync(User currentUser)
         {
-            return await _dataContext.Transactions.ToListAsync();
+            return await _dataContext.Transactions.Where(t => t.User == currentUser).ToListAsync();
         }
 
-        public async Task<ICollection<Transaction>> GetAllExpenditureTransactionsAsync()
+        public async Task<ICollection<Transaction>> GetAllExpenditureTransactionsAsync(User currentUser)
         {
-            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == false).ToListAsync();
+            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == false && t.User == currentUser).ToListAsync();
         }
 
-        public async Task<ICollection<Transaction>> GetAllIncomeTransactionsAsync()
+        public async Task<ICollection<Transaction>> GetAllIncomeTransactionsAsync(User currentUser)
         {
-            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == true).ToListAsync();
+            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == true && t.User == currentUser).ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllTransactionsForAccountAsync(Account account)

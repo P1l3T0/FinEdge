@@ -10,14 +10,13 @@ namespace FinEdgeBackend.Services
     {
         private readonly DataContext _dataContext = dataContext;
 
-        public async Task<Category> CreateCategoryAsync(Category category)
+        public async Task CreateCategoryAsync(Category category)
         {
             _dataContext.Categories.Add(category);
             await _dataContext.SaveChangesAsync();
-            return null!;
         }
 
-        public async Task<Category> UpdateCategoryAsync(CategoryDTO categoryDto, Category category)
+        public async Task UpdateCategoryAsync(CategoryDTO categoryDto, Category category)
         {
             category.Name = categoryDto.Name;
             category.Currency = categoryDto.Currency;
@@ -26,23 +25,22 @@ namespace FinEdgeBackend.Services
 
             _dataContext.Categories.Update(category);
             await _dataContext.SaveChangesAsync();
-            return null!;
         }
 
-        public async Task<Category> GetCategoryByIdAsync(int categoryID)
+        public async Task<Category> GetCategoryForCurrentUserByIdAsync(int categoryID, User currentUser)
         {
             Category? category = await _dataContext.Categories
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.ID == categoryID);
+                .FirstOrDefaultAsync(c => c.ID == categoryID && c.User == currentUser);
 
             return category!;
         }
 
-        public async Task<Category> GetCategoryByNameAsync(string categoryName)
+        public async Task<Category> GetCategoryForCurrentUserByNameAsync(string categoryName, User currentUser)
         {
             Category? category = await _dataContext.Categories
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.Name == categoryName);
+                .FirstOrDefaultAsync(c => c.Name == categoryName && c.User == currentUser);
 
             return category!;
         }
