@@ -12,6 +12,7 @@ namespace FinEdgeBackend.Controllers
         private readonly ITransactionService _transactionService = transactionService;
         private readonly ICategoryService _categoryService = categoryService;
         private readonly IAccountService _accountService = accountService;
+        private readonly IUserService _userService = userService;
 
         [HttpPost]
         [Route("create")]
@@ -22,13 +23,22 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("Error with the transactionDto fields");
             }
 
-            Category category = await _categoryService.GetCategoryByNameAsync(transactionDto.CategoryName!);
-            Account account = await _accountService.GetAccountByNameAsync(transactionDto.AccountName!);
-            User currentUser = category.User!;
+            User currentUser = await _userService.GetCurrentUserAsync();
+            Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
+            Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
 
             category.Balance += transactionDto.Amount;
+
+            if (category.IsIncome)
+            {
+                account.Balance += transactionDto.Amount;
+                currentUser.TotalBalance += transactionDto.Amount;
+            } 
+            else
+            {
             account.Balance -= transactionDto.Amount;
             currentUser.TotalBalance -= transactionDto.Amount;
+            }
 
             await _transactionService.CreateTransactionAsync(new Transaction
             {
