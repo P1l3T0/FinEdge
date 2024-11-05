@@ -7,10 +7,11 @@ namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class SubcategoryController(ISubcategoryService subcategoryService, ICategoryService categoryService) : Controller
+    public class SubcategoryController(ISubcategoryService subcategoryService, ICategoryService categoryService, IUserService userService) : Controller
     {
         private readonly ISubcategoryService _subcategoryService = subcategoryService;
         private readonly ICategoryService _categoryService = categoryService;
+        private readonly IUserService _userService = userService;
 
         [HttpPost]
         [Route("create")]
@@ -21,16 +22,15 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("Subcategory must have a name!");
             }
 
-            Category category = await _categoryService.GetCategoryByIdAsync(categoryID);
+            User currentUser = await _userService.GetCurrentUserAsync();
+            Category category = await _categoryService.GetCategoryForCurrentUserByIdAsync(categoryID, currentUser);
 
-            Subcategory subcategory = await _subcategoryService.CreateSubcategoryAsync(new Subcategory
+            await _subcategoryService.CreateSubcategoryAsync(new Subcategory
             {
                 Name = subcategoryDto.Name,
                 CategoryID = categoryID,
                 Category = category
             });
-
-            category.Subcategories!.Add(subcategory);
 
             return Created();
         }
