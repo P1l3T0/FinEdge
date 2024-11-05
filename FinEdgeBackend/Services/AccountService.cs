@@ -11,13 +11,14 @@ namespace FinEdgeBackend.Services
     {
         private readonly DataContext _dataContext = dataContext;
 
-        public async Task CreateAccountAsync(Account account)
+        public async Task<Account> CreateAccountAsync(Account account)
         {
             _dataContext.Accounts.Add(account);
             await _dataContext.SaveChangesAsync();
+            return account;
         }
 
-        public async Task UpdateAccountAsync(AccountDTO accountDto, Account account)
+        public async Task<Account> UpdateAccountAsync(AccountDTO accountDto, Account account)
         {
             account.Name = accountDto.Name;
             account.Currency = accountDto.Currency;
@@ -26,6 +27,7 @@ namespace FinEdgeBackend.Services
 
             _dataContext.Accounts.Update(account);
             await _dataContext.SaveChangesAsync();
+            return account;
         }
 
         public async Task<Account> GetAccountByIdAsync(int accountID)
@@ -37,11 +39,11 @@ namespace FinEdgeBackend.Services
             return account!;
         }
 
-        public async Task<Account> GetAccountForCurrentUserByNameAsync(string accountName, User currentUser)
+        public async Task<Account> GetAccountByNameAsync(string accountName)
         {
             Account? account = await _dataContext.Accounts
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(a => a.Name == accountName && a.User == currentUser);
+                .FirstOrDefaultAsync(a => a.Name == accountName);
 
             return account!;
         }

@@ -10,18 +10,20 @@ namespace FinEdgeBackend.Services
     {
         private readonly DataContext _dataContext = dataContext;
 
-        public async Task CreateSubcategoryAsync(Subcategory subcategory)
+        public async Task<Subcategory> CreateSubcategoryAsync(Subcategory subcategory)
         {
             _dataContext.Subcategories.Add(subcategory);
             await _dataContext.SaveChangesAsync();
+            return subcategory;
         }
 
-        public async Task UpdateSubcategoryAsync(SubcategoryDTO subcategoryDto, Subcategory subcategory)
+        public async Task<Subcategory> UpdateSubcategoryAsync(SubcategoryDTO subcategoryDto, Subcategory subcategory)
         {
             subcategory.Name = subcategoryDto.Name;
 
             _dataContext.Subcategories.Update(subcategory);
             await _dataContext.SaveChangesAsync();
+            return null!;
         }
 
         public async Task<Subcategory> GetSubcategoryByIdAsync(int subcategoryID)
