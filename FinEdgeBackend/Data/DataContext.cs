@@ -11,6 +11,7 @@ namespace FinEdgeBackend.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<CategorySnapshot> CategorySnapshots { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,6 +53,12 @@ namespace FinEdgeBackend.Data
                 .WithMany(u => u.Transactions)
                 .HasForeignKey(t => t.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CategorySnapshot>()
+                .HasOne(cs => cs.Category)           
+                .WithMany(c => c.CategorySnapshots)  
+                .HasForeignKey(cs => cs.CategoryID)  
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<RefreshToken>().HasOne(rt => rt.User);
             modelBuilder.Entity<User>().Property(u => u.MethodologyType).HasConversion<string>();

@@ -40,5 +40,8 @@ namespace FinEdgeBackend.Models
 
         [JsonIgnore]
         public ICollection<Transaction>? Transactions { get; set; } = new List<Transaction>();
+
+        [JsonIgnore]
+        public ICollection<CategorySnapshot>? CategorySnapshots { get; set; } = new List<CategorySnapshot>();
     }
 }
