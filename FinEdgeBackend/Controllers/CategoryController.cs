@@ -22,6 +22,12 @@ namespace FinEdgeBackend.Controllers
             }
 
             User currentUser = await _userService.GetCurrentUserAsync();
+            Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(categoryDto.Name!, currentUser);
+
+            if (category is not null)
+            {
+                return BadRequest($"Category '{category.Name}' already exist!");
+            }
 
             await _categoryService.CreateCategoryAsync(new Category
             {

@@ -31,27 +31,27 @@ namespace FinEdgeBackend.Services
 
         public async Task<ICollection<Transaction>> GetAllTransactionsAsync(User currentUser)
         {
-            return await _dataContext.Transactions.Where(t => t.User == currentUser).ToListAsync();
+            return await _dataContext.Transactions.Where(t => t.User!.Equals(currentUser)).ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllExpenditureTransactionsAsync(User currentUser)
         {
-            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == false && t.User == currentUser).ToListAsync();
+            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == false && t.User!.Equals(currentUser)).ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllIncomeTransactionsAsync(User currentUser)
         {
-            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == true && t.User == currentUser).ToListAsync();
+            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == true && t.User!.Equals(currentUser)).ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllTransactionsForAccountAsync(Account account)
         {
-            return await _dataContext.Transactions.Where(t => t.Account == account).ToListAsync();
+            return await _dataContext.Transactions.Where(t => t.Account!.Equals(account)).ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllTransactionsForCategoryAsync(Category category)
         {
-            return await _dataContext.Transactions.Where(t => t.Category == category).ToListAsync();
+            return await _dataContext.Transactions.Where(t => t.Category!.Equals(category)).ToListAsync();
         }
 
         public async Task UpdateTranssactionAsync(TransactionDTO transactionDto, Transaction transaction, Category category, Account account)

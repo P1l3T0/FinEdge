@@ -31,7 +31,7 @@ namespace FinEdgeBackend.Services
         {
             Category? category = await _dataContext.Categories
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.ID == categoryID && c.User == currentUser);
+                .FirstOrDefaultAsync(c => c.ID == categoryID && c.User!.Equals(currentUser));
 
             return category!;
         }
@@ -40,14 +40,14 @@ namespace FinEdgeBackend.Services
         {
             Category? category = await _dataContext.Categories
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.Name == categoryName && c.User == currentUser);
+                .FirstOrDefaultAsync(c => c.Name == categoryName && c.User!.Equals(currentUser));
 
             return category!;
         }
 
         public async Task<ICollection<Category>> GetAllCategoriesForCurrentUserAsync(User currentUser)
         {
-            ICollection<Category> categories = await _dataContext.Categories.Where(c => c.User == currentUser).ToListAsync();
+            ICollection<Category> categories = await _dataContext.Categories.Where(c => c.User!.Equals(currentUser)).ToListAsync();
             return categories;
         }
 

@@ -41,14 +41,14 @@ namespace FinEdgeBackend.Services
         {
             Account? account = await _dataContext.Accounts
                 .Include(c => c.User)
-                .FirstOrDefaultAsync(a => a.Name == accountName && a.User == currentUser);
+                .FirstOrDefaultAsync(a => a.Name == accountName && a.User!.Equals(currentUser));
 
             return account!;
         }
 
         public async Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser)
         {
-            ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.User == currentUser).ToListAsync();
+            ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.User!.Equals(currentUser)).ToListAsync();
             return accounts;
         }
 

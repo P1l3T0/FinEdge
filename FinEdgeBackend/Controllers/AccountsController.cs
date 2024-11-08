@@ -23,6 +23,13 @@ namespace FinEdgeBackend.Controllers
             }
 
             User currentUser = await _userService.GetCurrentUserAsync();
+            Account account = await _accountService.GetAccountForCurrentUserByNameAsync(accountDto.Name!, currentUser);
+
+            if (account is not null)
+            {
+                return BadRequest($"Account '{account.Name}' already exist!");
+            }
+
             currentUser.TotalBalance += accountDto.Balance;
 
             await _accountService.CreateAccountAsync(new Account
