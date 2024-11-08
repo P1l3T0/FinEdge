@@ -76,6 +76,48 @@ namespace FinEdgeBackend.Controllers
             return Ok(incomeTransactions);
         }
 
+        [HttpGet]
+        [Route("get/income/amount")]
+        public async Task<IActionResult> GetIncomeBalance()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Transaction> incomeTransactions = await _transactionService.GetAllIncomeTransactionsAsync(currentUser);
+
+            decimal dailyIncome = _transactionService.GetDailyBalanceForTransactions(incomeTransactions);
+            (decimal weeklyIncome, decimal weeklyAverage) = _transactionService.GetWeeklyBalanceForTransactions(incomeTransactions);
+            (decimal monthIncome, decimal monthAverage) = _transactionService.GetMontlyBalanceForTransactions(incomeTransactions);
+
+            return Ok(new
+            {
+                DailyIncome = dailyIncome,
+                WeeklyIncome = weeklyIncome,
+                WeeklyAverage = weeklyAverage,
+                MonthlyIncome = monthIncome,
+                MonthlyAverage = monthAverage
+            });
+        }
+
+        [HttpGet]
+        [Route("get/expenditure/amount")]
+        public async Task<IActionResult> GetExpenditureBalance()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Transaction> expenditureTransactions = await _transactionService.GetAllExpenditureTransactionsAsync(currentUser);
+
+            decimal dailySpendings = _transactionService.GetDailyBalanceForTransactions(expenditureTransactions);
+            (decimal weeklySpendings, decimal weeklyAverage) = _transactionService.GetWeeklyBalanceForTransactions(expenditureTransactions);
+            (decimal monthSpendings, decimal monthAverage) = _transactionService.GetMontlyBalanceForTransactions(expenditureTransactions);
+
+            return Ok(new
+            {
+                DailySpendings = dailySpendings,
+                WeeklySpendings = weeklySpendings,
+                WeeklyAverage = weeklyAverage,
+                MonthlySpendings = monthSpendings,
+                MonthlyAverage = monthAverage
+            });
+        }
+
         [HttpPut]
         [Route("update")]
         public async Task<IActionResult> UpdateTransaction([FromQuery] int transactionID, [FromBody] TransactionDTO transactionDto)

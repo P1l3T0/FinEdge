@@ -111,6 +111,32 @@ namespace FinEdgeBackend.Services
             await _dataContext.SaveChangesAsync();
         }
 
+        public decimal GetDailyBalanceForTransactions(ICollection<Transaction> transactions)
+        {
+            return transactions.Where(t => t.CreatedDate.Date == DateTime.Today.Date).Sum(t => t.Amount ?? 0);
+        }
+
+        public (decimal weeklyBalance, decimal weeklyAverage) GetWeeklyBalanceForTransactions(ICollection<Transaction> transactions)
+        {
+            decimal weeklyBalance = transactions.Where(t => t.CreatedDate >= DateTime.Now.AddDays(-7)).Sum(t => t.Amount ?? 0);
+            decimal weeklyAverage = decimal.Round(weeklyBalance / 7, 2);
+
+            return (weeklyBalance, weeklyAverage);
+        }
+
+        public (decimal monthBalance, decimal monthAverage) GetMontlyBalanceForTransactions(ICollection<Transaction> transactions)
+        {
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime endOfMonth = DateTime.Now;
+
+            int daysInCurrentMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+
+            decimal monthBalance = transactions.Where(t => t.CreatedDate >= startOfMonth && t.CreatedDate <= endOfMonth).Sum(t => t.Amount ?? 0);
+            decimal monthAverage = decimal.Round(monthBalance / daysInCurrentMonth, 2);
+
+            return (monthBalance, monthAverage);
+        }
+
         public bool Validate(TransactionDTO transactionDto)
         {
             if (decimal.IsNegative((decimal)transactionDto.Amount!) || !transactionDto.Amount.HasValue ||
