@@ -27,18 +27,7 @@ namespace FinEdgeBackend.Controllers
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
             Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
 
-            category.Balance += transactionDto.Amount;
-
-            if (category.IsIncome)
-            {
-                account.Balance += transactionDto.Amount;
-                currentUser.TotalBalance += transactionDto.Amount;
-            } 
-            else
-            {
-                account.Balance -= transactionDto.Amount;
-                currentUser.TotalBalance -= transactionDto.Amount;
-            }
+            await _transactionService.UpdateUserBalanceAsync(true, transactionDto, null, currentUser, category, account);
 
             await _transactionService.CreateTransactionAsync(new Transaction
             {
@@ -115,18 +104,7 @@ namespace FinEdgeBackend.Controllers
             Account account = transaction.Account!;
             User currentUser = transaction.User!;
 
-            category.Balance -= transaction.Amount;
-
-            if (category.IsIncome)
-            {
-                account.Balance -= transaction.Amount;
-                currentUser.TotalBalance -= transaction.Amount;
-            }
-            else
-            {
-                account.Balance += transaction.Amount;
-                currentUser.TotalBalance += transaction.Amount;
-            }
+            await _transactionService.UpdateUserBalanceAsync(false, null, transaction, currentUser, category, account);
 
             await _transactionService.DeleteTransactionAsync(transaction);
 

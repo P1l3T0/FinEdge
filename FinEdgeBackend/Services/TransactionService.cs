@@ -54,10 +54,10 @@ namespace FinEdgeBackend.Services
             return await _dataContext.Transactions.Where(t => t.Category == category).ToListAsync();
         }
 
-        public async Task UpdateTranssactionAsync(TransactionDTO transactioDto, Transaction transaction, Category category, Account account)
+        public async Task UpdateTranssactionAsync(TransactionDTO transactionDto, Transaction transaction, Category category, Account account)
         {
-            transaction.Name = transactioDto.Name;
-            transaction.Amount = transactioDto.Amount;
+            transaction.Name = transactionDto.Name;
+            transaction.Amount = transactionDto.Amount;
             transaction.AccountID = account.ID;
             transaction.Account = account;
             transaction.AccountName = account.Name;
@@ -69,6 +69,42 @@ namespace FinEdgeBackend.Services
             await _dataContext.SaveChangesAsync();
         }
 
+        public async Task UpdateUserBalanceAsync(bool isNewTransaction, TransactionDTO? transactioDto, Transaction? transaction, User currentUser, Category category, Account account)
+        {
+            if (isNewTransaction)
+            {
+                category.Balance += transactioDto!.Amount;
+
+                if (category.IsIncome)
+                {
+                    account.Balance += transactioDto.Amount;
+                    currentUser.TotalBalance += transactioDto.Amount;
+                }
+                else
+                {
+                    account.Balance -= transactioDto.Amount;
+                    currentUser.TotalBalance -= transactioDto.Amount;
+                }
+            }
+            else
+            {
+                category.Balance -= transaction!.Amount;
+
+                if (category.IsIncome)
+                {
+                    account.Balance -= transaction.Amount;
+                    currentUser.TotalBalance -= transaction.Amount;
+                }
+                else
+                {
+                    account.Balance += transaction.Amount;
+                    currentUser.TotalBalance += transaction.Amount;
+                }
+            }
+
+            await _dataContext.SaveChangesAsync();
+        }
+
         public async Task DeleteTransactionAsync(Transaction transaction)
         {
             _dataContext.Transactions.Remove(transaction);
@@ -77,8 +113,8 @@ namespace FinEdgeBackend.Services
 
         public bool Validate(TransactionDTO transactionDto)
         {
-            if (decimal.IsNegative((decimal)transactionDto.Amount!) || !transactionDto.Amount.HasValue || 
-                string.IsNullOrEmpty(transactionDto.Name) || string.IsNullOrEmpty(transactionDto.AccountName) || string.IsNullOrEmpty(transactionDto.CategoryName)) 
+            if (decimal.IsNegative((decimal)transactionDto.Amount!) || !transactionDto.Amount.HasValue ||
+                string.IsNullOrEmpty(transactionDto.Name) || string.IsNullOrEmpty(transactionDto.AccountName) || string.IsNullOrEmpty(transactionDto.CategoryName))
             {
                 return false;
             }

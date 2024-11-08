@@ -13,6 +13,7 @@ namespace FinEdgeBackend.Interfaces
         Task<ICollection<Transaction>> GetAllTransactionsForCategoryAsync(Category category);
         Task<ICollection<Transaction>> GetAllTransactionsForAccountAsync(Account account);
         Task UpdateTranssactionAsync(TransactionDTO transactioDto, Transaction transaction, Category category, Account account);
+        Task UpdateUserBalanceAsync(bool isNewTransaction, TransactionDTO? transactioDto, Transaction? transaction, User currentUser, Category category, Account account);
         Task DeleteTransactionAsync(Transaction transaction);
         bool Validate(TransactionDTO transactionDto);
     }
