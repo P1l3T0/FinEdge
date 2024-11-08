@@ -87,6 +87,25 @@ namespace FinEdgeBackend.Controllers
             return Ok(incomeTransactions);
         }
 
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> UpdateTransaction([FromQuery] int transactionID, [FromBody] TransactionDTO transactionDto)
+        {
+            if (!_transactionService.Validate(transactionDto))
+            {
+                return BadRequest("Error with the transactionDto fields");
+            }
+
+            User currentUser = await _userService.GetCurrentUserAsync();
+            Transaction transaction = await _transactionService.GetTransactionByIdAsync(transactionID);
+            Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
+            Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
+
+            await _transactionService.UpdateTranssactionAsync(transactionDto, transaction, category, account);
+
+            return NoContent();
+        }
+
         [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteTransaction([FromQuery] int transactionID)

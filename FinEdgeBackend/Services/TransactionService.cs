@@ -60,8 +60,10 @@ namespace FinEdgeBackend.Services
             transaction.Amount = transactioDto.Amount;
             transaction.AccountID = account.ID;
             transaction.Account = account;
+            transaction.AccountName = account.Name;
             transaction.CategoryID = category.ID;
             transaction.Category = category;
+            transaction.CategoryName = category.Name;
 
             _dataContext.Transactions.Update(transaction);
             await _dataContext.SaveChangesAsync();
