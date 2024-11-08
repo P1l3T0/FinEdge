@@ -22,6 +22,12 @@ namespace FinEdgeBackend.Controllers
             }
 
             User currentUser = await _userService.GetCurrentUserAsync();
+            Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(categoryDto.Name!, currentUser);
+
+            if (category is not null)
+            {
+                return BadRequest($"Category '{category.Name}' already exist!");
+            }
 
             await _categoryService.CreateCategoryAsync(new Category
             {
@@ -82,7 +88,8 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("Error with the account fields");
             }
 
-            Category category = await _categoryService.GetCategoryByIdAsync(categoryID);
+            User currentUser = await _userService.GetCurrentUserAsync();
+            Category category = await _categoryService.GetCategoryForCurrentUserByIdAsync(categoryID, currentUser);
 
             await _categoryService.UpdateCategoryAsync(categoryDto, category);
 
@@ -93,7 +100,8 @@ namespace FinEdgeBackend.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteCategory([FromQuery] int categoryID)
         {
-            Category category = await _categoryService.GetCategoryByIdAsync(categoryID);
+            User currentUser = await _userService.GetCurrentUserAsync();
+            Category category = await _categoryService.GetCategoryForCurrentUserByIdAsync(categoryID, currentUser);
 
             await _categoryService.DeleteCategoryAsync(category);
 

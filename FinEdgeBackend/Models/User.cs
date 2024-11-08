@@ -1,5 +1,6 @@
 ﻿using FinEdgeBackend.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace FinEdgeBackend.Models
@@ -8,7 +9,7 @@ namespace FinEdgeBackend.Models
     {
         [Key]
         public int ID { get; set; }
- 
+
         [Required]
         public string? Name { get; set; }
 
@@ -24,10 +25,19 @@ namespace FinEdgeBackend.Models
         [MaxLength(100)]
         [JsonIgnore]
         public string? Password { get; set; }
-        public DateTime? DateCreated { get; set; }
+
+        [Required]
+        public DateTime DateCreated { get; set; } = DateTime.Now;
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal? TotalBalance { get; set; } = 0;
-        public MethodologyType? MethodologyType { get; set; } = Enums.MethodologyType.FiftyThirtyTwenty;
-        public ICollection<Account>? Accounts { get; set; } = new List<Account>();
-        public ICollection<Category>? Categories { get; set; } = new List<Category>();
+
+        [Required]
+        public MethodologyType MethodologyType { get; set; } = MethodologyType.FiftyThirtyTwenty;
+
+        public ICollection<Account> Accounts { get; set; } = new List<Account>();
+        public ICollection<Category> Categories { get; set; } = new List<Category>();
+        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
+
 }

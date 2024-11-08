@@ -22,7 +22,7 @@ namespace FinEdgeBackend.Services
             return user;
         }
 
-        public async Task<User> UpdateCurrentUserAsync(UpdateDTO updatedDTO, User currentUser)
+        public async Task UpdateCurrentUserAsync(UpdateDTO updatedDTO, User currentUser)
         {
             currentUser.Name = updatedDTO.Name;
             currentUser.Surname = updatedDTO.Surname;
@@ -31,7 +31,6 @@ namespace FinEdgeBackend.Services
 
             _dataContext.Users.Update(currentUser);
             await _dataContext.SaveChangesAsync();
-            return currentUser;
         }
 
         public async Task<User> GetUserByIdAsync(int userID)
@@ -40,6 +39,7 @@ namespace FinEdgeBackend.Services
                 .Include(u => u.Accounts)
                 .Include(u => u.Categories)!
                     .ThenInclude(c => c.Subcategories)
+                .Include(u => u.Transactions)
                 .FirstOrDefaultAsync(u => u.ID == userID);
 
             return user!;
