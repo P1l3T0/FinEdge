@@ -1,33 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import Register from './Pages/Register'
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import { getCurrentUserEnddPoint } from './endpoints';
+
+type User = {
+  name: string;
+  email: string;
+  password: string
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentUser, setCurrentUser] = useState<User | undefined>();
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${getCurrentUserEnddPoint}`, { withCredentials: true })
+  //     .then((res: AxiosResponse<User>) => {
+  //       setCurrentUser(res.data);
+  //     })
+  //     .catch((err: AxiosError) => {
+  //       console.log(`No user logged in  ${err.message}`);
+  //     });
+  // }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Register setCurrentUser={setCurrentUser} />
     </>
   )
 }
