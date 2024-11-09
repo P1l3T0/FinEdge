@@ -33,9 +33,9 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
     setIsButtonDisabled(emailError || passwordError);
   }, [emailError, passwordError]);
 
-  // if (shouldRedirect) {
-  //   return <Navigate to="/home" replace />;
-  // }
+  if (shouldRedirect) {
+    return <Navigate to="/home" replace />;
+  }
 
   const handleChange = async (e: TextBoxChangeEvent) => {
     const name: string = e.target.name as string;
