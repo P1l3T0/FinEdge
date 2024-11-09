@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useState, SyntheticEvent, useEffect } from 'react'
-import { registerEndPoint } from '../endpoints';
+import { registerEndPoint } from '../../endpoints';
 import { Navigate } from "react-router-dom";
 import { Button } from "@progress/kendo-react-buttons";
 import { TextBox, TextBoxChangeEvent, } from "@progress/kendo-react-inputs";

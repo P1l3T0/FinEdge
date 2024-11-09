@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import Register from './Pages/Register'
+import Register from './Pages/Authentication/Register'
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { getCurrentUserEnddPoint } from './endpoints';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
-import Logout from './Pages/Logout';
-import Login from './Pages/Login';
+import Logout from './Pages/Authentication/Logout';
+import Login from './Pages/Authentication/Login';
 
 type User = {
   name: string;

@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { logoutEndPoint } from "../endpoints";
+import { logoutEndPoint } from "../../endpoints";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@progress/kendo-react-buttons";
