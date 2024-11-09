@@ -19,7 +19,7 @@ const Navbar = ({ user }: { user: User }) => {
         ) : (
           <>
             <Link to="/register">Register</Link>
-            {/* <Link to="/login">Login</Link> */}
+            <Link to="/login">Login</Link>
           </>
         )}
       </div>

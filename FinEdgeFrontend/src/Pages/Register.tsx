@@ -70,7 +70,7 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    debugger
+
     await axios
       .post(`${registerEndPoint}`, user, { withCredentials: true })
       .then((res: AxiosResponse<User>) => {

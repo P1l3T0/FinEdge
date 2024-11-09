@@ -6,6 +6,7 @@ import { Button } from "@progress/kendo-react-buttons";
 
 type User = {
   name: string;
+  surname: string
   email: string;
   password: string
 }

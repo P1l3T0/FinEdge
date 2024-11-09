@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
 import Logout from './Pages/Logout';
+import Login from './Pages/Login';
 
 type User = {
   name: string;
@@ -36,7 +37,7 @@ function App() {
           <Route path="/home" element={<Home user={currentUser as User} />} />
           {/* <Route path="/update" element={<Update user={currentUser as User} setCurrentUser={setCurrentUser} />} /> */}
           <Route path="/register" element={<Register setCurrentUser={setCurrentUser} />} />
-          {/* <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} /> */}
+          <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
           <Route path="/logout" element={<Logout setCurrentUser={setCurrentUser} />} />
         </Routes>
       </BrowserRouter>

@@ -37,3 +37,7 @@
 .k-textbox {
   width: 200px;
 }
+
+.navbar a {
+  margin: .25rem;
+}
