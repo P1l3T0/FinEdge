@@ -26,7 +26,7 @@ namespace FinEdgeBackend.Services.Auth
 
             JwtHeader header = new JwtHeader(credentials);
             JwtPayload payload = new JwtPayload(
-                issuer: "https://localhost:7207/",
+                issuer: "https://localhost:7167/",
                 audience: "your-api-identifier",
                 claims: claims,
                 notBefore: null,
