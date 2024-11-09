@@ -3,6 +3,8 @@ using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Services;
 using FinEdgeBackend.Services.Auth;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -39,6 +41,19 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHangfire(config => config
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.Zero,
+        UseRecommendedIsolationLevel = true,
+        DisableGlobalLocks = true
+    }));
+
 builder.Services.AddAuthorization();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -49,6 +64,10 @@ builder.Services!.AddDbContext<DataContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddHangfire(config => config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddHangfireServer();
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services!.AddScoped<IUserService, UserService>();
@@ -58,6 +77,7 @@ builder.Services!.AddScoped<IAccountService, AccountService>();
 builder.Services!.AddScoped<ICategoryService, CategoryService>();
 builder.Services!.AddScoped<ISubcategoryService, SubcategoryService>();
 builder.Services!.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<ISnapshotService, SnapshotService>();
 builder.Services!.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
 var app = builder.Build();

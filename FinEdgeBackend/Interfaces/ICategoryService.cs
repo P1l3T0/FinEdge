@@ -9,6 +9,7 @@ namespace FinEdgeBackend.Interfaces
         Task UpdateCategoryAsync(CategoryDTO categoryDto, Category category);
         Task<Category> GetCategoryForCurrentUserByIdAsync(int categoryID, User currentUser);
         Task<Category> GetCategoryForCurrentUserByNameAsync(string categoryName, User currentUser);
+        Task<ICollection<Category>> GetAllCategoriesForCurrentUserAsync(User user);    
         ICollection<Category> GetExpenditureCategories(ICollection<Category> categories);
         ICollection<Category> GetIncomeCategories(ICollection<Category> categories);
         Task DeleteCategoryAsync(Category category);
@@ -21,6 +22,8 @@ namespace FinEdgeBackend.Interfaces
         decimal GetBalanceForIncomeCategories(ICollection<Category> categories);
         decimal GetBudgetForExpenditureCategories(ICollection<Category> categories);
         decimal GetBudgetForIncomeCategories(ICollection<Category> categories);
+        decimal GetMonthlyBalanceForIncomeCategories(Category category);
+        decimal GetMonthlyBalanceForExpenditureCategories(Category category);
         bool Validate(CategoryDTO categoryDto);
     }
 }

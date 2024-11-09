@@ -113,6 +113,26 @@ namespace FinEdgeBackend.Services
             return categories.Sum(category => category.Budget ?? 0);
         }
 
+        public decimal GetMonthlyBalanceForIncomeCategories(Category category)
+        {
+            return category.Transactions!
+                .Where(t => t.CategoryID == category.ID
+                    && t.CreatedDate.Month == DateTime.Now.Month
+                    && t.CreatedDate.Year == DateTime.Now.Year
+                    && t.Category!.IsIncome)
+                .Sum(t => t.Amount ?? 0);
+        }
+
+        public decimal GetMonthlyBalanceForExpenditureCategories(Category category)
+        {
+            return category.Transactions!
+                .Where(t => t.CategoryID == category.ID
+                    && t.CreatedDate.Month == DateTime.Now.Month
+                    && t.CreatedDate.Year == DateTime.Now.Year
+                    && !t.Category!.IsIncome)
+                .Sum(t => t.Amount ?? 0);
+        }
+
         public bool Validate(CategoryDTO categoryDto)
         {
             if (string.IsNullOrEmpty(categoryDto.Name) || decimal.IsNegative((decimal)categoryDto.Budget!))
