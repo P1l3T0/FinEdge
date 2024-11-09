@@ -5,6 +5,7 @@ import { getCurrentUserEnddPoint } from './endpoints';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
+import Logout from './Pages/Logout';
 
 type User = {
   name: string;
@@ -16,16 +17,16 @@ type User = {
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>();
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${getCurrentUserEnddPoint}`, { withCredentials: true })
-  //     .then((res: AxiosResponse<User>) => {
-  //       setCurrentUser(res.data);
-  //     })
-  //     .catch((err: AxiosError) => {
-  //       console.log(`No user logged in  ${err.message}`);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`${getCurrentUserEnddPoint}`, { withCredentials: true })
+      .then((res: AxiosResponse<User>) => {
+        setCurrentUser(res.data);
+      })
+      .catch((err: AxiosError) => {
+        console.log(`No user logged in  ${err.message}`);
+      });
+  }, []);
 
   return (
     <>
@@ -36,7 +37,7 @@ function App() {
           {/* <Route path="/update" element={<Update user={currentUser as User} setCurrentUser={setCurrentUser} />} /> */}
           <Route path="/register" element={<Register setCurrentUser={setCurrentUser} />} />
           {/* <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} /> */}
-          {/* <Route path="/logout" element={<Logout setCurrentUser={setCurrentUser} />} /> */}
+          <Route path="/logout" element={<Logout setCurrentUser={setCurrentUser} />} />
         </Routes>
       </BrowserRouter>
     </>

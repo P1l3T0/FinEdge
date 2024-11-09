@@ -14,7 +14,7 @@ const Navbar = ({ user }: { user: User }) => {
           <>
             <Link to="/home">Home</Link>
             {/* <Link to="/update">Update</Link> */}
-            {/* <Link to="/logout">Log out</Link> */}
+            <Link to="/logout">Log out</Link>
           </>
         ) : (
           <>
