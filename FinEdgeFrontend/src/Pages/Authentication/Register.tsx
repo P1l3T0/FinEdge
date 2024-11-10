@@ -6,45 +6,35 @@ import { Button } from "@progress/kendo-react-buttons";
 import { TextBox, TextBoxChangeEvent, } from "@progress/kendo-react-inputs";
 import { Tooltip } from "@progress/kendo-react-tooltip";
 import "@progress/kendo-theme-default/dist/all.css";
+import Questions from '../Questions/Questions';
+import { getMethodologyString, User } from '../../Helpers/Helpers';
 
 const validEmail = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
 const validPassword = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,}$');
 
-export type User = {
-  name: string;
-  surname: string;
-  email: string;
-  password: string
-}
-
 const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
   const [emailError, setEmailError] = useState<boolean>(true);
   const [passwordError, setPasswordError] = useState<boolean>(true);
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState<boolean>(true);
+  const [isNextButtonClicked, setIsNextButtonClicked] = useState<boolean>(false);
+  const [isRegisterButtonDisabled, setIsRegisterButtonDisabled] = useState<boolean>(true);
   const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
   const [user, setUser] = useState<User>({
     name: "",
     surname: "",
     email: "",
-    password: ""
+    password: "",
+    methodologyType: ""
   });
 
   useEffect(() => {
-    setIsButtonDisabled(emailError || passwordError);
+    setIsNextButtonDisabled(emailError || passwordError);
   }, [emailError, passwordError]);
-
-  if (shouldRedirect) {
-    return <Navigate to="/home" replace />;
-  }
 
   const handleChange = async (e: TextBoxChangeEvent) => {
     const name: string = e.target.name as string;
     const value: string = e.target.value as string;
     const trimmedValue: string = value.trim();
-
-    if (trimmedValue === "") {
-      return;
-    }
 
     if (name === "email") {
       if (!validEmail.test(trimmedValue)) {
@@ -68,12 +58,29 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
     });
   }
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    setIsNextButtonClicked(!isNextButtonClicked);
+  }
+
+  const handleMethodologyChange = (value: string) => {
+    setIsRegisterButtonDisabled(false);
+
+    setUser({
+      ...user,
+      methodologyType: value,
+    });
+  };
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
     await axios
       .post(`${registerEndPoint}`, user, { withCredentials: true })
       .then((res: AxiosResponse<User>) => {
+        res.data.methodologyType = getMethodologyString(parseInt(res.data.methodologyType));
+
         setCurrentUser(res.data);
         setShouldRedirect(true);
       })
@@ -82,10 +89,14 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
       });
   }
 
+  if (shouldRedirect) {
+    return <Navigate to="/home" replace />;
+  }
+
   return (
     <>
       <form className='register-form' onSubmit={handleSubmit} method='post'>
-        <div className="content">
+        <div className="content" style={{ display: isNextButtonClicked ? "none" : "flex" }}>
           <TextBox id='name' type='text' name='name' placeholder="Name" onChange={handleChange} required={true} />
           <TextBox id='surname' type='text' name='surname' placeholder="Surname" onChange={handleChange} required={true} />
           <TextBox id='email' type='email' name='email' placeholder="Email" onChange={handleChange} required={true} />
@@ -94,9 +105,17 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
               title='Password needs to be at least 10 characters, have 1 upper/lower case letter, 1 number and 1 special symbol' />
           </Tooltip>
 
-          <Button id='register' themeColor={'info'} disabled={isButtonDisabled}>Register</Button>
+          <Button id='next' themeColor={'info'} disabled={isNextButtonDisabled} onClick={handleClick}>Next</Button>
         </div>
-      </form>
+        <div className="questions" style={{ display: isNextButtonClicked ? "block" : "none" }}>
+          <Questions onMethodologyChange={handleMethodologyChange} />
+
+          <div className="buttonDiv">
+            <Button id='backButton' themeColor={'primary'} onClick={handleClick} >Back</Button>
+            <Button id='registerButton' themeColor={'info'} disabled={isRegisterButtonDisabled} >Register</Button>
+          </div>
+        </div>
+      </form >
     </>
   )
 }
