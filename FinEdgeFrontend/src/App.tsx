@@ -7,13 +7,7 @@ import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
 import Logout from './Pages/Authentication/Logout';
 import Login from './Pages/Authentication/Login';
-
-type User = {
-  name: string;
-  surname: string;
-  email: string;
-  password: string
-}
+import { getMethodologyString, User } from './Helpers/Helpers';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | undefined>();
@@ -22,6 +16,8 @@ function App() {
     axios
       .get(`${getCurrentUserEnddPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<User>) => {
+        res.data.methodologyType = getMethodologyString(parseInt(res.data.methodologyType));
+
         setCurrentUser(res.data);
       })
       .catch((err: AxiosError) => {

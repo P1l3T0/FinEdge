@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
+import { User } from "../Helpers/Helpers";
 
-type User = {
-  name: string;
-  email: string;
-  password: string
-}
+
 
 const Navbar = ({ user }: { user: User }) => {
   return (
@@ -13,7 +10,6 @@ const Navbar = ({ user }: { user: User }) => {
         {user?.name !== undefined ? (
           <>
             <Link to="/home">Home</Link>
-            {/* <Link to="/update">Update</Link> */}
             <Link to="/logout">Log out</Link>
           </>
         ) : (

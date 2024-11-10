@@ -6,18 +6,11 @@ import { Button } from "@progress/kendo-react-buttons";
 import { TextBox, TextBoxChangeEvent, } from "@progress/kendo-react-inputs";
 import { Tooltip } from "@progress/kendo-react-tooltip";
 import "@progress/kendo-theme-default/dist/all.css";
-import Questions from '../Questions';
+import Questions from '../Questions/Questions';
+import { getMethodologyString, User } from '../../Helpers/Helpers';
 
 const validEmail = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
 const validPassword = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,}$');
-
-export type User = {
-  name: string;
-  surname: string;
-  email: string;
-  password: string
-  methodologyType: string;
-}
 
 const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
   const [emailError, setEmailError] = useState<boolean>(true);
@@ -86,6 +79,8 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
     await axios
       .post(`${registerEndPoint}`, user, { withCredentials: true })
       .then((res: AxiosResponse<User>) => {
+        res.data.methodologyType = getMethodologyString(parseInt(res.data.methodologyType));
+
         setCurrentUser(res.data);
         setShouldRedirect(true);
       })

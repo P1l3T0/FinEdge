@@ -4,18 +4,7 @@ import { loginEndPoint } from '../../endpoints';
 import { Navigate } from 'react-router-dom';
 import { TextBox, TextBoxChangeEvent } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
-
-type LoginDto = {
-  email: string;
-  password: string
-}
-
-type User = {
-  name: string;
-  surname: string;
-  email: string;
-  password: string
-}
+import { LoginDto, User } from '../../Helpers/Helpers';
 
 const Login = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
   const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
