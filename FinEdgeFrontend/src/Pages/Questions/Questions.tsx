@@ -40,19 +40,19 @@ const Questions = ({ onMethodologyChange }: { onMethodologyChange: (value: strin
 
   return (
     <>
-      <h3>When you receive your paycheck, what’s the first thing you want to do with it?</h3>
+      <h3>What’s the first thing you want to do with your paycheck?</h3>
       <RadioGroup data={data1} onChange={handleChange} />
 
-      <h3>How much time are you willing to spend managing and adjusting your budget each month?</h3>
+      <h3>How much time will you spend managing your budget monthly?</h3>
       <RadioGroup data={data2} onChange={handleChange} />
 
-      <h3>What best describes your financial priorities?</h3>
+      <h3>What are your top financial priorities?</h3>
       <RadioGroup data={data3} onChange={handleChange} />
 
-      <h3>How would you handle unexpected expenses within the month?</h3>
+      <h3>How would you cover unexpected expenses this month?</h3>
       <RadioGroup data={data4} onChange={handleChange} />
 
-      <h3>What would be the most satisfying financial outcome for you at the end of the month?</h3>
+      <h3>What financial outcome would satisfy you most monthly?</h3>
       <RadioGroup data={data5} onChange={handleChange} />
     </>
   )
