@@ -4,7 +4,7 @@ import { loginEndPoint } from '../../endpoints';
 import { Navigate } from 'react-router-dom';
 import { TextBox, TextBoxChangeEvent } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
-import { LoginDto, User } from '../../Helpers/Helpers';
+import { getMethodologyString, LoginDto, User } from '../../Helpers/Helpers';
 
 const Login = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
   const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
@@ -38,6 +38,8 @@ const Login = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => 
     await axios
       .post(`${loginEndPoint}`, user, { withCredentials: true })
       .then((res: AxiosResponse<User>) => {
+        res.data.methodologyType = getMethodologyString(parseInt(res.data.methodologyType));
+
         setCurrentUser(res.data);
         setShouldRedirect(true);
       }).catch((error: AxiosError) => {

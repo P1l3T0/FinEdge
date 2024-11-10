@@ -3,7 +3,7 @@ import { logoutEndPoint } from "../../endpoints";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@progress/kendo-react-buttons";
-import { User } from "./Register";
+import { User } from "../../Helpers/Helpers";
 
 const Logout = ({ setCurrentUser }: { setCurrentUser: (user: User | undefined) => void }) => {
   const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
