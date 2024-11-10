@@ -1,4 +1,6 @@
-﻿using FinEdgeBackend.DTOs.User;
+﻿using FinEdgeBackend.DTOs;
+using FinEdgeBackend.DTOs.User;
+using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Models;
@@ -18,6 +20,7 @@ namespace FinEdgeBackend.Services.Auth
                 Surname = registerDto.Surname,
                 Email = registerDto.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
+                MethodologyType = (MethodologyType)Enum.Parse(typeof(MethodologyType), registerDto.MethodologyType!),
                 DateCreated = DateTime.Now
             });
         }

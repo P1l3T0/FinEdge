@@ -33,7 +33,7 @@ namespace FinEdgeBackend.Models
         public decimal? TotalBalance { get; set; } = 0;
 
         [Required]
-        public MethodologyType MethodologyType { get; set; } = MethodologyType.FiftyThirtyTwenty;
+        public MethodologyType MethodologyType { get; set; }
 
         public ICollection<Account> Accounts { get; set; } = new List<Account>();
         public ICollection<Category> Categories { get; set; } = new List<Category>();
