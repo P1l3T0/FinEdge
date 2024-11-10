@@ -5,12 +5,10 @@ import { Navigate } from "react-router-dom";
 import { Button } from "@progress/kendo-react-buttons";
 import { TextBox, TextBoxChangeEvent, } from "@progress/kendo-react-inputs";
 import { Tooltip } from "@progress/kendo-react-tooltip";
-import "@progress/kendo-theme-default/dist/all.css";
+import "@progress/kendo-theme-default/dist/default-ocean-blue.css";
 import Questions from '../Questions/Questions';
-import { getMethodologyString, User } from '../../Helpers/Helpers';
-
-const validEmail = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
-const validPassword = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,}$');
+import { emailRegEx, getMethodologyString, passwordRegEx, User } from '../../Helpers/Helpers';
+import MyStepper from '../../Components/Stepper';
 
 const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
   const [emailError, setEmailError] = useState<boolean>(true);
@@ -19,6 +17,7 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
   const [isNextButtonClicked, setIsNextButtonClicked] = useState<boolean>(false);
   const [isRegisterButtonDisabled, setIsRegisterButtonDisabled] = useState<boolean>(true);
   const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
+  const [stepperValue, setStepperValue] = useState<number>(0);
   const [user, setUser] = useState<User>({
     name: "",
     surname: "",
@@ -32,20 +31,18 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
   }, [emailError, passwordError]);
 
   const handleChange = async (e: TextBoxChangeEvent) => {
-    const name: string = e.target.name as string;
-    const value: string = e.target.value as string;
-    const trimmedValue: string = value.trim();
+    const trimmedValue: string = (e.target.value as string).trim();
 
-    if (name === "email") {
-      if (!validEmail.test(trimmedValue)) {
+    if (e.target.name === "email") {
+      if (!emailRegEx.test(trimmedValue)) {
         setEmailError(true);
       } else {
         setEmailError(false);
       }
     }
 
-    if (name === "password") {
-      if (!validPassword.test(trimmedValue)) {
+    if (e.target.name === "password") {
+      if (!passwordRegEx.test(trimmedValue)) {
         setPasswordError(true);
       } else {
         setPasswordError(false);
@@ -54,13 +51,14 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
 
     setUser({
       ...user,
-      [name]: trimmedValue
+      [(e.target.name as string)]: trimmedValue
     });
   }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
+    e.currentTarget.textContent == "Next" ? setStepperValue(1) : setStepperValue(0);
     setIsNextButtonClicked(!isNextButtonClicked);
   }
 
@@ -95,27 +93,31 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
 
   return (
     <>
-      <form className='register-form' onSubmit={handleSubmit} method='post'>
-        <div className="content" style={{ display: isNextButtonClicked ? "none" : "flex" }}>
-          <TextBox id='name' type='text' name='name' placeholder="Name" onChange={handleChange} required={true} />
-          <TextBox id='surname' type='text' name='surname' placeholder="Surname" onChange={handleChange} required={true} />
-          <TextBox id='email' type='email' name='email' placeholder="Email" onChange={handleChange} required={true} />
-          <Tooltip anchorElement="target" >
-            <TextBox id='password' type='password' name='password' placeholder="Password" onChange={handleChange} required={true}
-              title='Password needs to be at least 10 characters, have 1 upper/lower case letter, 1 number and 1 special symbol' />
-          </Tooltip>
+      <MyStepper value={stepperValue} />
 
-          <Button id='next' themeColor={'info'} disabled={isNextButtonDisabled} onClick={handleClick}>Next</Button>
-        </div>
-        <div className="questions" style={{ display: isNextButtonClicked ? "block" : "none" }}>
-          <Questions onMethodologyChange={handleMethodologyChange} />
+      <div className='register-form'>
+        <form onSubmit={handleSubmit} method='post'>
+          <div className="content" style={{ display: isNextButtonClicked ? "none" : "flex" }}>
+            <TextBox id='name' type='text' name='name' placeholder="Name" onChange={handleChange} required={true} />
+            <TextBox id='surname' type='text' name='surname' placeholder="Surname" onChange={handleChange} required={true} />
+            <TextBox id='email' type='email' name='email' placeholder="Email" onChange={handleChange} required={true} />
+            <Tooltip anchorElement="target" >
+              <TextBox id='password' type='password' name='password' placeholder="Password" onChange={handleChange} required={true}
+                title='Password needs to be at least 10 characters, have 1 upper/lower case letter, 1 number and 1 special symbol' />
+            </Tooltip>
 
-          <div className="buttonDiv">
-            <Button id='backButton' themeColor={'primary'} onClick={handleClick} >Back</Button>
-            <Button id='registerButton' themeColor={'info'} disabled={isRegisterButtonDisabled} >Register</Button>
+            <Button id='next' themeColor={'info'} disabled={isNextButtonDisabled} onClick={handleClick}>Next</Button>
           </div>
-        </div>
-      </form >
+          <div className="questions" style={{ display: isNextButtonClicked ? "block" : "none" }}>
+            <Questions onMethodologyChange={handleMethodologyChange} />
+
+            <div className="buttonDiv">
+              <Button id='backButton' themeColor={'error'} onClick={handleClick} >Back</Button>
+              <Button id='registerButton' themeColor={'info'} disabled={isRegisterButtonDisabled} >Register</Button>
+            </div>
+          </div>
+        </form>
+      </div>
     </>
   )
 }
