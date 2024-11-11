@@ -10,12 +10,7 @@ const Navbar = ({ user }: { user: User }) => {
             <Link to="/home">Home</Link>
             <Link to="/logout">Log out</Link>
           </>
-        ) : (
-          <>
-            <Link to="/register">Register</Link>
-            <Link to="/login">Login</Link>
-          </>
-        )}
+        ) : ""}
       </div>
     </>
   )

@@ -8,7 +8,7 @@ import { Tooltip } from "@progress/kendo-react-tooltip";
 import "@progress/kendo-theme-default/dist/default-ocean-blue.css";
 import Questions from '../Questions/Questions';
 import { emailRegEx, getMethodologyString, passwordRegEx, User } from '../../Helpers/Helpers';
-import MyStepper from '../../Components/Stepper';
+import CustomLink from '../../Components/CustomLink';
 
 const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
   const [emailError, setEmailError] = useState<boolean>(true);
@@ -93,8 +93,6 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
 
   return (
     <>
-      <MyStepper value={stepperValue} />
-
       <div className='register-form'>
         <form onSubmit={handleSubmit} method='post'>
           <div className="content" style={{ display: isNextButtonClicked ? "none" : "flex" }}>
@@ -107,9 +105,14 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
             </Tooltip>
 
             <Button id='next' themeColor={'info'} disabled={isNextButtonDisabled} onClick={handleClick}>Next</Button>
+            <div style={{ padding: "1rem 0 0 0", textAlign: "center" }}>
+              <p>Have an account? ‎<CustomLink to='/login'>Log in here</CustomLink></p>
+            </div>
           </div>
           <div className="questions" style={{ display: isNextButtonClicked ? "block" : "none" }}>
-            <Questions onMethodologyChange={handleMethodologyChange} />
+            <div className='questionsForm'>
+              <Questions onMethodologyChange={handleMethodologyChange} />
+            </div>
 
             <div className="buttonDiv">
               <Button id='backButton' themeColor={'error'} onClick={handleClick} >Back</Button>

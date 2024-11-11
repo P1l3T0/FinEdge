@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom';
 import { TextBox, TextBoxChangeEvent } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
 import { getMethodologyString, LoginDto, User } from '../../Helpers/Helpers';
+import CustomLink from '../../Components/CustomLink';
 
 const Login = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
   const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
@@ -55,6 +56,7 @@ const Login = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => 
           <TextBox id='password' type='password' name='password' placeholder="Password" onChange={handleChange} required={true} />
 
           <Button id='login' themeColor={'info'} type='submit'>Login</Button>
+          <p style={{ padding: "1rem 0 0 0" }}>Don't have an account?‎ <CustomLink to='/register'>Register</CustomLink></p>
         </div>
       </form>
     </>
