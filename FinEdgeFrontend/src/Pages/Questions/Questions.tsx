@@ -1,21 +1,21 @@
 import { RadioGroup, RadioGroupChangeEvent } from "@progress/kendo-react-inputs";
 import { data1, data2, data3, data4, data5 } from './QuestionsData';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Questions = ({ onMethodologyChange }: { onMethodologyChange: (value: string) => void }) => {
   const [values, setValues] = useState<string[]>([]);
 
-  const handleChange = (e: RadioGroupChangeEvent) => {
-    setValues([
-      ...values,
-      e.value
-    ])
-
-    if (values.length >= 4) {
+  useEffect(() => {
+    if (values.length === 5) {
       const mostFrequentValue = findMostFrequentString(values);
       onMethodologyChange(mostFrequentValue);
-      setValues([]);
     }
+  }, [values]);
+
+  const handleChange = (index: number, e: RadioGroupChangeEvent) => {
+    const newValues = [...values];
+    newValues[index] = e.value;
+    setValues(newValues);
   }
 
   const findMostFrequentString = (strings: string[]): string => {
@@ -40,20 +40,20 @@ const Questions = ({ onMethodologyChange }: { onMethodologyChange: (value: strin
 
   return (
     <>
-      <h3>What’s the first thing you want to do with your paycheck?</h3>
-      <RadioGroup data={data1} onChange={handleChange} />
+      <h4>What’s the first thing you want to do with your paycheck?</h4>
+      <RadioGroup data={data1} onChange={(e) => handleChange(0, e)} />
 
-      <h3>How much time will you spend managing your budget monthly?</h3>
-      <RadioGroup data={data2} onChange={handleChange} />
+      <h4>How much time will you spend managing your budget monthly?</h4>
+      <RadioGroup data={data2} onChange={(e) => handleChange(1, e)} />
 
-      <h3>What are your top financial priorities?</h3>
-      <RadioGroup data={data3} onChange={handleChange} />
+      <h4>What are your top financial priorities?</h4>
+      <RadioGroup data={data3} onChange={(e) => handleChange(2, e)} />
 
-      <h3>How would you cover unexpected expenses this month?</h3>
-      <RadioGroup data={data4} onChange={handleChange} />
+      <h4>How would you cover unexpected expenses this month?</h4>
+      <RadioGroup data={data4} onChange={(e) => handleChange(3, e)} />
 
-      <h3>What financial outcome would satisfy you most monthly?</h3>
-      <RadioGroup data={data5} onChange={handleChange} />
+      <h4>What financial outcome would satisfy you most monthly?</h4>
+      <RadioGroup data={data5} onChange={(e) => handleChange(4, e)} />
     </>
   )
 }
