@@ -13,25 +13,66 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .register-form,
 .login-form {
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex-direction: column;
-  width: 95vw;
-  height: 95vh;
+  height: 100vh;
 }
 
 .register-form .content span,
 .login-form span {
-  margin: 0.15rem 0;
+  margin: 0.20rem 0;
+}
+
+.content,
+.questions {
+  background-color: #343434;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.313), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 1rem;
+  border-radius: 15px;
+}
+
+.questions h4:not(:first-child) {
+  margin: 1rem 0 0.25rem;
+}
+
+.questions .k-radio-list-item {
+  padding: 0.05rem;
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 0 0;
+}
+
+button.k-button {
+  font-size: 1.25rem;
+  margin: .5rem 0 0 0;
+  font-weight: 800;
+}
+
+.buttonDiv button {
+  margin: 0.25rem;
+  width: 150px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
+}
+
+a {
+  text-decoration: none;
 }
 
 .k-textbox {
@@ -40,4 +81,25 @@
 
 .navbar a {
   margin: .25rem;
+}
+
+@media screen and (width <=500px) {
+  .questions {
+    width: 85vw;
+
+    h4 {
+      font-size: 80%;
+    }
+
+    .k-radio-list-item {
+      label {
+        font-size: .8rem;
+      }
+
+      .k-radio-md {
+        width: .75rem;
+        height: .75rem;
+      }
+    }
+  }
 }
