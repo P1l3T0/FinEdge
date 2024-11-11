@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Register from './Pages/Authentication/Register'
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { getCurrentUserEnddPoint } from './endpoints';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
 import Logout from './Pages/Authentication/Logout';
@@ -30,6 +30,7 @@ function App() {
       <BrowserRouter>
         <Navbar user={currentUser as User} />
         <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/home" element={<Home user={currentUser as User} />} />
           {/* <Route path="/update" element={<Update user={currentUser as User} setCurrentUser={setCurrentUser} />} /> */}
           <Route path="/register" element={<Register setCurrentUser={setCurrentUser} />} />
