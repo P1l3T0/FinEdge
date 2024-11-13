@@ -6,7 +6,7 @@ import { Grid, GridColumn as Column } from '@progress/kendo-react-all';
 
 const GetAccounts = () => {
   const getAccounts = async (): Promise<Account[]> => {
-    return axios
+    return await axios
       .get(`${getAllAccountsEndPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<Account[]>) => res.data)
       .catch((err: AxiosError) => {
@@ -26,14 +26,14 @@ const GetAccounts = () => {
 
   return (
     <>
-      <Grid data={data} style={{ width: "1230px", height: "auto" }}>
-        <Column field="id" title="ID" width="50px" filterable={false} />
-        <Column field="userID" title="UserID" width="100px" filterable={false} />
-        <Column field="name" title="Name" width="250px" filter="text" />
-        <Column field="balance" title="Balance" filter="numeric" width="200px" />
-        <Column field="currency" title="Currency" width="200px" filter="text" />
-        <Column field="accountType" title="Account Type" width="150px" filter="text" />
-        <Column field="dateCreated" title="Date Created" width="250px" filter="date" />
+      <Grid data={data} style={{ width: "820px", height: "auto" }}>
+        <Column field="id" title="ID" width="50px" />
+        <Column field="userID" title="UserID" width="75px" />
+        <Column field="name" title="Name" width="100px" />
+        <Column field="balance" title="Balance" width="100px" />
+        <Column field="currency" title="Currency" width="100px" />
+        <Column field="accountType" title="Account Type" width="125px" />
+        <Column field="dateCreated" title="Date Created" width="250px" />
       </Grid>
     </>
   )
