@@ -1,6 +1,9 @@
-import { User } from "../Helpers/Helpers";
+import { User } from "../Utils/Types";
+import GetAccounts from "./Accounts/GetAccounts";
 
-const Home = ({ user }: { user: User }) => {
+const Home = ({ user }: { user: User, }) => {
+
+
   return (
     <>
       <table>
@@ -19,6 +22,9 @@ const Home = ({ user }: { user: User }) => {
           </tr>
         </tbody>
       </table>
+
+      <h2>Accounts</h2>
+      <GetAccounts />
     </>
   )
 }
