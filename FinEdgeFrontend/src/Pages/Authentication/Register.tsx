@@ -7,18 +7,22 @@ import { TextBox, TextBoxChangeEvent, } from "@progress/kendo-react-inputs";
 import { Tooltip } from "@progress/kendo-react-tooltip";
 import "@progress/kendo-theme-default/dist/default-ocean-blue.css";
 import Questions from '../Questions/Questions';
-import { emailRegEx, getMethodologyString, passwordRegEx, User } from '../../Helpers/Helpers';
+import { RegisterDto } from '../../Utils/Types';
 import CustomLink from '../../Components/CustomLink';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
+const Register = () => {
+  const queryClient = useQueryClient();
+  const emailRegEx = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
+  const passwordRegEx = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,}$');
+
   const [emailError, setEmailError] = useState<boolean>(true);
   const [passwordError, setPasswordError] = useState<boolean>(true);
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState<boolean>(true);
   const [isNextButtonClicked, setIsNextButtonClicked] = useState<boolean>(false);
   const [isRegisterButtonDisabled, setIsRegisterButtonDisabled] = useState<boolean>(true);
   const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
-  const [stepperValue, setStepperValue] = useState<number>(0);
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<RegisterDto>({
     name: "",
     surname: "",
     email: "",
@@ -58,7 +62,6 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    e.currentTarget.textContent == "Next" ? setStepperValue(1) : setStepperValue(0);
     setIsNextButtonClicked(!isNextButtonClicked);
   }
 
@@ -71,20 +74,27 @@ const Register = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) 
     });
   };
 
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-
+  const registerUser = async () => {
     await axios
-      .post(`${registerEndPoint}`, user, { withCredentials: true })
-      .then((res: AxiosResponse<User>) => {
-        res.data.methodologyType = getMethodologyString(parseInt(res.data.methodologyType));
-
-        setCurrentUser(res.data);
-        setShouldRedirect(true);
-      })
+      .post<RegisterDto>(`${registerEndPoint}`, user, { withCredentials: true })
+      .then((res: AxiosResponse<RegisterDto>) => res.data)
       .catch((error: AxiosError) => {
         alert(error.response?.data);
       });
+  }
+
+  const { mutate } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      setShouldRedirect(true);
+    },
+  });
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    mutate();
   }
 
   if (shouldRedirect) {
