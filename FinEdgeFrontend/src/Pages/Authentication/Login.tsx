@@ -4,19 +4,18 @@ import { loginEndPoint } from '../../endpoints';
 import { Navigate } from 'react-router-dom';
 import { TextBox, TextBoxChangeEvent } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
-import { getMethodologyString, LoginDto, User } from '../../Helpers/Helpers';
+import { LoginDto, User } from '../../Utils/Types';
 import CustomLink from '../../Components/CustomLink';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const Login = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
+const Login = () => {
+  const queryClient = useQueryClient();
+
   const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
   const [user, setUser] = useState<LoginDto>({
     email: "",
     password: ""
   });
-
-  if (shouldRedirect) {
-    return <Navigate to="/home" replace />;
-  }
 
   const handleChange = async (e: TextBoxChangeEvent) => {
     const name: string = e.target.name as string;
@@ -31,21 +30,36 @@ const Login = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => 
       ...user,
       [name]: trimmedValue
     });
-  }
+  };
+
+  const loginUser = async () => {
+    await axios
+      .post<User>(`${loginEndPoint}`, user, { withCredentials: true })
+      .then((res: AxiosResponse<User>) => res.data)
+      .catch((error: AxiosError) => {
+        alert(error.response?.data);
+      });;
+  };
+
+  const { mutateAsync } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      setShouldRedirect(true);
+    },
+    onError: (error: AxiosError) => {
+      alert(error.response?.data);
+    }
+  });
 
   const onSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    await axios
-      .post(`${loginEndPoint}`, user, { withCredentials: true })
-      .then((res: AxiosResponse<User>) => {
-        res.data.methodologyType = getMethodologyString(parseInt(res.data.methodologyType));
+    mutateAsync();
+  }
 
-        setCurrentUser(res.data);
-        setShouldRedirect(true);
-      }).catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+  if (shouldRedirect) {
+    return <Navigate to="/home" replace />;
   }
 
   return (
