@@ -82,8 +82,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpDelete]
-        [Route("delete")]
-        public async Task<IActionResult> DeleteAccount([FromQuery] int accountID)
+        [Route("delete/{accountID}")]
+        public async Task<IActionResult> DeleteAccount(int accountID)
         {
             Account account = await _accountService.GetAccountByIdAsync(accountID);
             User currentUser = account.User!;

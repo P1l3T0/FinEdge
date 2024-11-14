@@ -30,6 +30,7 @@ const GetUser = () => {
         Name: {data?.name} <br />
         Surname: {data?.surname} <br />
         Email: {data?.email} <br />
+        Total Balance: {data?.totalBalance} <br />
         Methodology: {getEnumValueFromNumber(parseInt(data?.methodologyType!), MethodologyType)}
       </div>
     </>

@@ -3,6 +3,7 @@ export type User = {
   surname: string;
   email: string;
   methodologyType: string;
+  totalBalance: number;
   accounts: Account[];
 }
 

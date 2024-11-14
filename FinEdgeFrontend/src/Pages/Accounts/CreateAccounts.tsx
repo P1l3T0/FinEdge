@@ -48,6 +48,7 @@ const CreateAccounts = () => {
     mutationFn: createAccount,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 
