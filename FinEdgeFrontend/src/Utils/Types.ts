@@ -2,7 +2,6 @@ export type User = {
   name: string;
   surname: string;
   email: string;
-  password: string;
   methodologyType: string;
   accounts: Account[];
 }
@@ -43,3 +42,8 @@ export enum MethodologyType {
   FiftyThirtyTwenty = 2
 }
 
+export enum AccountType {
+  Regular = 0,
+  Savings = 1,
+  Debt = 2
+}

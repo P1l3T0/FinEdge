@@ -1,5 +1,5 @@
-import { MethodologyType } from "./Types";
+import { AccountType, MethodologyType } from "./Types";
 
-export function getMethodologyString(methodologyType: number): string {
-  return MethodologyType[methodologyType];
+export function getEnumValueFromNumber(numberType: number, enumType: typeof MethodologyType | typeof AccountType): string {
+  return enumType[numberType];
 }
