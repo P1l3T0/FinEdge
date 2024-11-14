@@ -83,7 +83,7 @@ const Register = () => {
       });
   }
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: registerUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
@@ -94,7 +94,7 @@ const Register = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    mutate();
+    mutateAsync();
   }
 
   if (shouldRedirect) {
