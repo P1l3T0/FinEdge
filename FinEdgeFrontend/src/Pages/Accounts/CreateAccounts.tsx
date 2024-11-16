@@ -6,12 +6,11 @@ import { Account, AccountDto } from '../../Utils/Types'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { createAccountEndPoint } from '../../endpoints';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { accountType, currency } from '../../Utils/Functions';
 
 const CreateAccounts = () => {
   const queryClient = useQueryClient();
 
-  const accountType: string[] = ["Regular", "Savings", "Debt"];
-  const currency: string[] = ["BGN", "USD", "EUR"];
   const [account, setAccount] = useState<AccountDto>({
     name: "",
     balance: 0,
@@ -61,11 +60,14 @@ const CreateAccounts = () => {
   return (
     <>
       <div className="account-container" style={{ width: "300px" }}>
-        <TextBox id='name' name='name' type='text' placeholder='Account name' onChange={handleTextBoxChange} />
-        <TextBox id='balance' name='balance' type='number' min={0} placeholder='Account balance' onChange={handleTextBoxChange} />
-        <DropDownList id="account-type" name="accountType" data={accountType} defaultValue="Select account type" onChange={handleDropDownChange} />
-        <DropDownList id="currency" name='currency' data={currency} defaultValue="Select currency" onChange={handleDropDownChange} />
-        <Button id='add-account-button' themeColor='primary' onClick={handlerClick}>Add Account</Button>
+        <form method='post' autoComplete='off'>
+          <TextBox id='name' name='name' type='text' placeholder='Account name' onChange={handleTextBoxChange} />
+          <TextBox id='balance' name='balance' type='number' min={0} placeholder='Account balance' onChange={handleTextBoxChange} />
+          <DropDownList id="account-type" name="accountType" data={accountType} defaultValue="Select account type" onChange={handleDropDownChange} />
+          <DropDownList id="currency" name='currency' data={currency} defaultValue="Select currency" onChange={handleDropDownChange} />
+
+          <Button id='add-account-button' themeColor='primary' onClick={handlerClick}>Add Account</Button>
+        </form>
       </div >
     </>
   )

@@ -2,13 +2,14 @@ import { Button } from '@progress/kendo-react-all';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { deleteAccountEndPoint } from '../../endpoints';
+import { Account } from '../../Utils/Types';
 
-const DeleteButton = ({ accountID }: { accountID: number }) => {
+const DeleteButton = ({ account }: { account: Account }) => {
   const queryClient = useQueryClient();
 
   const deleteAccount = async () => {
     await axios
-      .delete(`${deleteAccountEndPoint}/${accountID}`, { withCredentials: true })
+      .delete(`${deleteAccountEndPoint}/${account.id}`, { withCredentials: true })
       .catch((err: AxiosError) => {
         throw new Error(`No accounts found ${err.message}`);
       });
