@@ -5,6 +5,7 @@ import Home from './Pages/Home';
 import Logout from './Pages/Authentication/Logout';
 import Login from './Pages/Authentication/Login';
 import Accounts from './Pages/Accounts/Accounts';
+import Categories from './Pages/Categories/Categories';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/home" element={<Home />} />
           <Route path="/accounts" element={<Accounts />} />
+          <Route path="/categories" element={<Categories />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
