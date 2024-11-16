@@ -53,15 +53,17 @@ const Login = () => {
 
   return (
     <>
-      <form className='login-form' onSubmit={onSubmit} method='post'>
-        <div className="content">
-          <TextBox id='email' type='email' name='email' placeholder="Email" onChange={handleChange} required={true} />
-          <TextBox id='password' type='password' name='password' placeholder="Password" onChange={handleChange} required={true} />
+      <div className="login-form">
+        <form onSubmit={onSubmit} method='post' autoComplete='off'>
+          <div className="content">
+            <TextBox id='email' type='email' name='email' placeholder="Email" onChange={handleChange} required={true} />
+            <TextBox id='password' type='password' name='password' placeholder="Password" onChange={handleChange} required={true} />
 
-          <Button id='login' themeColor={'info'} type='submit'>Login</Button>
-          <p style={{ padding: "1rem 0 0 0" }}>Don't have an account?‎ <CustomLink to='/register'>Register</CustomLink></p>
-        </div>
-      </form>
+            <Button id='login' themeColor={'info'} type='submit'>Login</Button>
+            <p style={{ padding: "1rem 0 0 0" }}>Don't have an account?‎ <CustomLink to='/register'>Register</CustomLink></p>
+          </div>
+        </form>
+      </div>
     </>
   )
 }

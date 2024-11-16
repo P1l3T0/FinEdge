@@ -1,7 +1,7 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useState, SyntheticEvent, useEffect } from 'react'
 import { registerEndPoint } from '../../endpoints';
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@progress/kendo-react-buttons";
 import { TextBox, TextBoxChangeEvent, } from "@progress/kendo-react-inputs";
 import { Tooltip } from "@progress/kendo-react-tooltip";
@@ -10,8 +10,10 @@ import Questions from '../Questions/Questions';
 import { RegisterDto } from '../../Utils/Types';
 import CustomLink from '../../Components/CustomLink';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { isValidPassword, isValidEmail } from '../../Utils/Functions';
 
 const Register = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const emailRegEx = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
   const passwordRegEx = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,}$');
@@ -21,7 +23,6 @@ const Register = () => {
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState<boolean>(true);
   const [isNextButtonClicked, setIsNextButtonClicked] = useState<boolean>(false);
   const [isRegisterButtonDisabled, setIsRegisterButtonDisabled] = useState<boolean>(true);
-  const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
   const [user, setUser] = useState<RegisterDto>({
     name: "",
     surname: "",
@@ -38,19 +39,9 @@ const Register = () => {
     const trimmedValue: string = (e.target.value as string).trim();
 
     if (e.target.name === "email") {
-      if (!emailRegEx.test(trimmedValue)) {
-        setEmailError(true);
-      } else {
-        setEmailError(false);
-      }
-    }
-
-    if (e.target.name === "password") {
-      if (!passwordRegEx.test(trimmedValue)) {
-        setPasswordError(true);
-      } else {
-        setPasswordError(false);
-      }
+      setEmailError(!isValidEmail(trimmedValue, emailRegEx));
+    } else if (e.target.name === "password") {
+      setPasswordError(!isValidPassword(trimmedValue, passwordRegEx));
     }
 
     setUser({
@@ -77,7 +68,7 @@ const Register = () => {
   const registerUser = async () => {
     await axios
       .post<RegisterDto>(`${registerEndPoint}`, user, { withCredentials: true })
-      .then((res: AxiosResponse<RegisterDto>) => res.data)
+      .then(() => navigate("/home"))
       .catch((error: AxiosError) => {
         alert(error.response?.data);
       });
@@ -87,7 +78,6 @@ const Register = () => {
     mutationFn: registerUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      setShouldRedirect(true);
     },
   });
 
@@ -97,14 +87,10 @@ const Register = () => {
     mutateAsync();
   }
 
-  if (shouldRedirect) {
-    return <Navigate to="/home" replace />;
-  }
-
   return (
     <>
       <div className='register-form'>
-        <form onSubmit={handleSubmit} method='post'>
+        <form onSubmit={handleSubmit} method='post' autoComplete='off'>
           <div className="content" style={{ display: isNextButtonClicked ? "none" : "flex" }}>
             <TextBox id='name' type='text' name='name' placeholder="Name" onChange={handleChange} required={true} />
             <TextBox id='surname' type='text' name='surname' placeholder="Surname" onChange={handleChange} required={true} />
