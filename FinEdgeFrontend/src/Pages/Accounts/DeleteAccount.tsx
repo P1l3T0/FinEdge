@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios';
 import { deleteAccountEndPoint } from '../../endpoints';
 import { Account } from '../../Utils/Types';
 
-const DeleteButton = ({ account }: { account: Account }) => {
+const DeleteAccount = ({ account }: { account: Account }) => {
   const queryClient = useQueryClient();
 
   const deleteAccount = async () => {
@@ -34,4 +34,4 @@ const DeleteButton = ({ account }: { account: Account }) => {
   )
 }
 
-export default DeleteButton;
+export default DeleteAccount;

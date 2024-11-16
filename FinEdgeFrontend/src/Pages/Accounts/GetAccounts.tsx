@@ -4,8 +4,9 @@ import { getAllAccountsEndPoint } from '../../endpoints';
 import { Account, AccountType } from '../../Utils/Types';
 import { Card, CardBody, CardHeader, CardFooter } from '@progress/kendo-react-all';
 import { getEnumValueFromNumber } from '../../Utils/Functions';
-import DeleteButton from './DeleteAccounts';
-import UpdateButton from './UpdateButton';
+import DeleteAccount from './DeleteAccount';
+import UpdateAccount from './UpdateAccount';
+
 
 const GetAccounts = () => {
   const getAccounts = async () => {
@@ -45,8 +46,8 @@ const GetAccounts = () => {
               }
             </CardBody>
             <CardFooter>
-              <UpdateButton account={account} />
-              <DeleteButton account={account} />
+              <UpdateAccount account={account} />
+              <DeleteAccount account={account} />
             </CardFooter>
           </Card>
         ))}

@@ -1,4 +1,4 @@
-import CreateAccounts from "./CreateAccounts";
+import CreateAccounts from "./CreateAccount";
 import GetAccounts from "./GetAccounts";
 
 const Accounts = () => {

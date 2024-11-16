@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { updateAccountEndPoint } from '../../endpoints';
 
-const UpdateButton = ({ account }: { account: Account }) => {
+const UpdateAccount = ({ account }: { account: Account }) => {
   const queryClient = useQueryClient();
 
   const [visible, setVisible] = useState<boolean>(false);
@@ -86,4 +86,4 @@ const UpdateButton = ({ account }: { account: Account }) => {
   )
 }
 
-export default UpdateButton;
+export default UpdateAccount;
