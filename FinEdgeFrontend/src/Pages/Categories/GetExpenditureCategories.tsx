@@ -1,13 +1,13 @@
 import { Card, CardHeader, CardBody, CardFooter } from "@progress/kendo-react-all";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getExpenditureCategoriesEndPoint } from "../../endpoints";
+import { getIncomeCategoriesEndPoint } from "../../endpoints";
 import { CategoryResponse } from "../../Utils/Types";
 
 const GetExpenditureCategories = () => {
   const getCategories = async () => {
     return await axios
-      .get<CategoryResponse>(`${getExpenditureCategoriesEndPoint}`, { withCredentials: true })
+      .get<CategoryResponse>(`${getIncomeCategoriesEndPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<CategoryResponse>) => res.data)
       .catch((err: AxiosError) => {
         throw new Error(`No categories found ${err.message}`);
@@ -15,7 +15,7 @@ const GetExpenditureCategories = () => {
   };
 
   const expenditureCategoriesQuery = useQuery({
-    queryKey: ["category"],
+    queryKey: ["expenditure-category"],
     queryFn: getCategories
   })
 
@@ -26,7 +26,7 @@ const GetExpenditureCategories = () => {
 
   return (
     <>
-      <div className="account-cards">
+      <div className="category-cards">
         {data?.categories.map((category, index) => (
           <Card key={index}>
             <CardHeader>Category name: {category.name}</CardHeader>
