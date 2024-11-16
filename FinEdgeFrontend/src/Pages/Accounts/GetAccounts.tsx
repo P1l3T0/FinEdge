@@ -7,7 +7,6 @@ import { getEnumValueFromNumber } from '../../Utils/Functions';
 import DeleteAccount from './DeleteAccount';
 import UpdateAccount from './UpdateAccount';
 
-
 const GetAccounts = () => {
   const getAccounts = async () => {
     return await axios
@@ -35,15 +34,18 @@ const GetAccounts = () => {
           <Card key={index}>
             <CardHeader>Account name: {account.name}</CardHeader>
             <CardBody>
-              Account Type: {getEnumValueFromNumber(parseInt(account.accountType), AccountType)} <br />
-              Balance: {account.balance} {account.currency} <br />
-              Created at: {
-                new Date(account.dateCreated).toLocaleDateString("en-GB", {
-                  day: "2-digit",
-                  month: "short",
-                  year: "numeric",
-                })
-              }
+              <fieldset>
+                <legend>Details</legend>
+                Account Type: {getEnumValueFromNumber(parseInt(account.accountType), AccountType)} <br />
+                Balance: {account.balance} {account.currency} <br />
+                Created at: {
+                  new Date(account.dateCreated).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })
+                }
+              </fieldset>
             </CardBody>
             <CardFooter>
               <UpdateAccount account={account} />

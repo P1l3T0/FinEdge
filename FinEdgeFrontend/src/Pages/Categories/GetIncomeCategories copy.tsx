@@ -4,6 +4,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { getExpenditureCategoriesEndPoint } from "../../endpoints";
 import { CategoryResponse } from "../../Utils/Types";
 import DeleteCategory from "./DeleteCategory";
+import UpdateCategory from "./UpdateCategory";
 
 const GetIncomeCategories = () => {
   const getCategories = async () => {
@@ -35,19 +36,22 @@ const GetIncomeCategories = () => {
           <Card key={index}>
             <CardHeader>Category name: {category.name}</CardHeader>
             <CardBody>
-              Balance: {category.balance} {category.currency} <br />
-              Budget: {category.budget} {category.currency} <br />
-              Income: {category.isIncome.toString()} <br />
-              Created at: {
-                new Date(category.dateCreated).toLocaleDateString("en-GB", {
-                  day: "2-digit",
-                  month: "short",
-                  year: "numeric",
-                })
-              }
+              <fieldset>
+                <legend> Details</legend>
+                Balance: {category.balance} {category.currency} <br />
+                Budget: {category.budget} {category.currency} <br />
+                Income: {category.isIncome.toString()} <br />
+                Created at: {
+                  new Date(category.dateCreated).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })
+                }
+              </fieldset>
             </CardBody>
             <CardFooter>
-              {/* <UpdateAccount account={account} /> */}
+              <UpdateCategory category={category} />
               <DeleteCategory category={category} />
             </CardFooter>
           </Card>

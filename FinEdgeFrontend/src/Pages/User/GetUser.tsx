@@ -20,7 +20,8 @@ const GetUser = () => {
 
   const accountsQuery = useQuery({
     queryKey: ["user"],
-    queryFn: getUser
+    queryFn: getUser,
+    staleTime: 60 * 60 * 1000
   })
 
   const { data, isLoading, isError, error } = accountsQuery;
