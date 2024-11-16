@@ -7,7 +7,7 @@ import { TextBox, TextBoxChangeEvent, } from "@progress/kendo-react-inputs";
 import { Tooltip } from "@progress/kendo-react-tooltip";
 import "@progress/kendo-theme-default/dist/default-ocean-blue.css";
 import Questions from '../Questions/Questions';
-import { RegisterDto } from '../../Utils/Types';
+import { RegisterDTO } from '../../Utils/Types';
 import CustomLink from '../../Components/CustomLink';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isValidPassword, isValidEmail } from '../../Utils/Functions';
@@ -23,7 +23,7 @@ const Register = () => {
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState<boolean>(true);
   const [isNextButtonClicked, setIsNextButtonClicked] = useState<boolean>(false);
   const [isRegisterButtonDisabled, setIsRegisterButtonDisabled] = useState<boolean>(true);
-  const [user, setUser] = useState<RegisterDto>({
+  const [user, setUser] = useState<RegisterDTO>({
     name: "",
     surname: "",
     email: "",
@@ -67,7 +67,7 @@ const Register = () => {
 
   const registerUser = async () => {
     await axios
-      .post<RegisterDto>(`${registerEndPoint}`, user, { withCredentials: true })
+      .post<RegisterDTO>(`${registerEndPoint}`, user, { withCredentials: true })
       .then(() => navigate("/home"))
       .catch((error: AxiosError) => {
         alert(error.response?.data);

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Account, AccountDto, AccountType } from '../../Utils/Types';
+import { Account, AccountDTO, AccountType } from '../../Utils/Types';
 import { Window } from '@progress/kendo-react-dialogs';
 import { Button, DropDownList, DropDownListChangeEvent, TextBox, TextBoxChangeEvent } from '@progress/kendo-react-all';
 import { accountType, currency, getEnumValueFromNumber } from '../../Utils/Functions';
@@ -11,7 +11,7 @@ const UpdateAccount = ({ account }: { account: Account }) => {
   const queryClient = useQueryClient();
 
   const [visible, setVisible] = useState<boolean>(false);
-  const [updatedAccount, setUpdatedAccount] = useState<AccountDto>({
+  const [updatedAccount, setUpdatedAccount] = useState<AccountDTO>({
     name: account.name,
     balance: account.balance,
     accountType: getEnumValueFromNumber(parseInt(account.accountType), AccountType),
@@ -40,8 +40,8 @@ const UpdateAccount = ({ account }: { account: Account }) => {
 
   const updateAccount = async () => {
     await axios
-      .put<AccountDto>(`${updateAccountEndPoint}/${account.id}`, updatedAccount, { withCredentials: true })
-      .then((res: AxiosResponse<AccountDto>) => res.data)
+      .put<AccountDTO>(`${updateAccountEndPoint}/${account.id}`, updatedAccount, { withCredentials: true })
+      .then((res: AxiosResponse<AccountDTO>) => res.data)
       .catch((error: AxiosError) => {
         alert(error.response?.data);
       });

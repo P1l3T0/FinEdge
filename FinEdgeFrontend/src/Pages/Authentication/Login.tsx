@@ -4,7 +4,7 @@ import { loginEndPoint } from '../../endpoints';
 import { useNavigate } from 'react-router-dom';
 import { TextBox, TextBoxChangeEvent } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
-import { LoginDto, User } from '../../Utils/Types';
+import { LoginDTO, User } from '../../Utils/Types';
 import CustomLink from '../../Components/CustomLink';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [user, setUser] = useState<LoginDto>({
+  const [user, setUser] = useState<LoginDTO>({
     email: "",
     password: ""
   });

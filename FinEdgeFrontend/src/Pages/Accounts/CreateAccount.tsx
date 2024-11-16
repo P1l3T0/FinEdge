@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button } from "@progress/kendo-react-buttons";
 import { TextBox, TextBoxChangeEvent, } from "@progress/kendo-react-inputs";
 import { DropDownList, DropDownListChangeEvent } from '@progress/kendo-react-dropdowns';
-import { Account, AccountDto } from '../../Utils/Types'
+import { Account, AccountDTO } from '../../Utils/Types'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { createAccountEndPoint } from '../../endpoints';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -11,7 +11,7 @@ import { accountType, currency } from '../../Utils/Functions';
 const CreateAccounts = () => {
   const queryClient = useQueryClient();
 
-  const [account, setAccount] = useState<AccountDto>({
+  const [account, setAccount] = useState<AccountDTO>({
     name: "",
     balance: 0,
     accountType: "",

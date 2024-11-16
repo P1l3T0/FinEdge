@@ -1,4 +1,5 @@
 export type User = {
+  id: number;
   name: string;
   surname: string;
   email: string;
@@ -7,7 +8,7 @@ export type User = {
   accounts: Account[];
 }
 
-export type RegisterDto = {
+export type RegisterDTO = {
   name: string;
   surname: string;
   email: string;
@@ -15,12 +16,19 @@ export type RegisterDto = {
   methodologyType: string;
 }
 
-export type LoginDto = {
+export type LoginDTO = {
   email: string;
   password: string
 }
 
-export type AccountDto = {
+export type UpdateDTO = {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+}
+
+export type AccountDTO = {
   name: string;
   balance: number;
   accountType: string;
