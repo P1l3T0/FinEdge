@@ -3,8 +3,6 @@ import GetExpenditureCategories from './GetExpenditureCategories'
 import GetIncomeCategories from './GetIncomeCategories copy'
 
 const Categories = () => {
-
-
   return (
     <>
       <CreateCategory />

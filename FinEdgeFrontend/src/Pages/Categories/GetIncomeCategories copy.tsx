@@ -14,12 +14,12 @@ const GetIncomeCategories = () => {
       });
   };
 
-  const expenditureCategoriesQuery = useQuery({
+  const incomeCategoriesQuery = useQuery({
     queryKey: ["income-category"],
     queryFn: getCategories
   })
 
-  const { data, isLoading, isError, error } = expenditureCategoriesQuery;
+  const { data, isLoading, isError, error } = incomeCategoriesQuery;
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {error.message}</p>;
@@ -27,6 +27,9 @@ const GetIncomeCategories = () => {
   return (
     <>
       <div className="account-cards">
+        Total expenditure categories balance: {data?.totalBalance} <br />
+        Total expenditure categories budget: {data?.totalBudget} <br />
+
         {data?.categories.map((category, index) => (
           <Card key={index}>
             <CardHeader>Category name: {category.name}</CardHeader>

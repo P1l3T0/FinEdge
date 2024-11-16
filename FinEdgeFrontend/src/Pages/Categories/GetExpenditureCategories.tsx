@@ -27,6 +27,9 @@ const GetExpenditureCategories = () => {
   return (
     <>
       <div className="category-cards">
+        Total income categories balance: {data?.totalBalance} <br />
+        Total income categories budget: {data?.totalBudget} <br />
+
         {data?.categories.map((category, index) => (
           <Card key={index}>
             <CardHeader>Category name: {category.name}</CardHeader>
