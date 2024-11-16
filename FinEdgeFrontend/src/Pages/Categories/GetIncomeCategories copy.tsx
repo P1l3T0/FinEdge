@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { getExpenditureCategoriesEndPoint } from "../../endpoints";
 import { CategoryResponse } from "../../Utils/Types";
+import DeleteCategory from "./DeleteCategory";
 
 const GetIncomeCategories = () => {
   const getCategories = async () => {
@@ -46,8 +47,8 @@ const GetIncomeCategories = () => {
               }
             </CardBody>
             <CardFooter>
-              {/* <UpdateAccount account={account} />
-              <DeleteAccount account={account} /> */}
+              {/* <UpdateAccount account={account} /> */}
+              <DeleteCategory category={category} />
             </CardFooter>
           </Card>
         ))}

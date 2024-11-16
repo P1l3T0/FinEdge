@@ -97,8 +97,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpDelete]
-        [Route("delete")]
-        public async Task<IActionResult> DeleteCategory([FromQuery] int categoryID)
+        [Route("delete/{categoryID}")]
+        public async Task<IActionResult> DeleteCategory(int categoryID)
         {
             User currentUser = await _userService.GetCurrentUserAsync();
             Category category = await _categoryService.GetCategoryForCurrentUserByIdAsync(categoryID, currentUser);
