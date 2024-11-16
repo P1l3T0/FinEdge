@@ -66,8 +66,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
-        public async Task<IActionResult> UpdateAccount([FromQuery] int accountID, [FromBody] AccountDTO accountDto)
+        [Route("update/{accountID}")]
+        public async Task<IActionResult> UpdateAccount(int accountID, [FromBody] AccountDTO accountDto)
         {
             if (!_accountService.Validate(accountDto))
             {

@@ -20,6 +20,10 @@ namespace FinEdgeBackend.Services
 
         public async Task UpdateAccountAsync(AccountDTO accountDto, Account account)
         {
+            User currentUser = account.User!;
+
+            currentUser.TotalBalance += accountDto.Balance - account.Balance;
+
             account.Name = accountDto.Name;
             account.Currency = accountDto.Currency;
             account.AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!);
