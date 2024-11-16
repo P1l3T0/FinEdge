@@ -34,7 +34,7 @@ namespace FinEdgeBackend.Controllers
 
             if (!_userService.Validate(updatedDTO.Email, updatedDTO.Password, isCurrentUser: true))
             {
-                return BadRequest("Email already in user or Password is to weak!");
+                return BadRequest("Email already in use or Password is to weak!");
             }
 
             User currentUser = await _userService.GetCurrentUserAsync();

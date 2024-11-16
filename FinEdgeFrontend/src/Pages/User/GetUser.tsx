@@ -49,7 +49,6 @@ const GetUser = () => {
       <h2>Accounts</h2>
       <Grid data={data?.accounts} style={{ width: "820px", height: "auto" }}>
         <Column field="id" title="ID" width="50px" />
-        <Column field="userID" title="UserID" width="75px" />
         <Column field="name" title="Name" width="100px" />
         <Column field="balance" title="Balance" width="100px" />
         <Column field="currency" title="Currency" width="100px" />
