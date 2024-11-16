@@ -18,6 +18,8 @@
   padding: 0;
 }
 
+/*! Register/Login */
+
 .register-form,
 .login-form {
   display: flex;
@@ -81,6 +83,37 @@ a {
 
 .navbar a {
   margin: .25rem;
+}
+
+/*! Accounts */
+
+.account-container form>* {
+  margin: 0.15rem 0;
+}
+
+.account-cards {
+  margin: 1rem 0;
+  display: flex;
+  gap: 1rem;
+
+  .k-card {
+    width: 15rem;
+  }
+
+  .k-card-footer {
+    display: flex;
+    justify-content: center;
+
+    button {
+      margin: 0 .25rem;
+    }
+  }
+}
+
+.k-window {
+  fieldset>*:not(:first-child) {
+    margin: .15rem 0;
+  }
 }
 
 @media screen and (width <=500px) {
