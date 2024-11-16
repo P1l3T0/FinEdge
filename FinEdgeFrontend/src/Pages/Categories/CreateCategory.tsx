@@ -9,7 +9,7 @@ import { currency } from '../../Utils/Functions';
 const CreateCategory = () => {
   const queryClient = useQueryClient();
 
-  const [category, setcategory] = useState<CategoryDTO>({
+  const [category, setCategory] = useState<CategoryDTO>({
     name: "",
     budget: 0,
     currency: "",
@@ -19,21 +19,21 @@ const CreateCategory = () => {
   const handleTextBoxChange = async (e: TextBoxChangeEvent) => {
     const trimmedValue = (e.value as string).trim();
 
-    setcategory({
+    setCategory({
       ...category,
       [e.target.name as string]: trimmedValue
     })
   }
 
   const handleDropDownChange = async (e: DropDownListChangeEvent) => {
-    setcategory({
+    setCategory({
       ...category,
       [e.target.props.name as string]: e.value
     })
   }
 
   const handleCheckBoxChange = async (e: CheckboxChangeEvent) => {
-    setcategory({
+    setCategory({
       ...category,
       [e.target.name as string]: e.value
     })
