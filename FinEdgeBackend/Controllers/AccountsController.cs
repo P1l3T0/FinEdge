@@ -32,7 +32,7 @@ namespace FinEdgeBackend.Controllers
 
             currentUser.TotalBalance += accountDto.Balance;
 
-            await _accountService.CreateAccountAsync(new Account
+            account = await _accountService.CreateAccountAsync(new Account
             {
                 UserID = currentUser.ID,
                 User = currentUser,
@@ -43,7 +43,7 @@ namespace FinEdgeBackend.Controllers
                 AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!),
             });
 
-            return Created();
+            return Ok(account);
         }
 
         [HttpGet]
@@ -66,8 +66,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
-        public async Task<IActionResult> UpdateAccount([FromQuery] int accountID, [FromBody] AccountDTO accountDto)
+        [Route("update/{accountID}")]
+        public async Task<IActionResult> UpdateAccount(int accountID, [FromBody] AccountDTO accountDto)
         {
             if (!_accountService.Validate(accountDto))
             {
@@ -82,8 +82,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpDelete]
-        [Route("delete")]
-        public async Task<IActionResult> DeleteAccount([FromQuery] int accountID)
+        [Route("delete/{accountID}")]
+        public async Task<IActionResult> DeleteAccount(int accountID)
         {
             Account account = await _accountService.GetAccountByIdAsync(accountID);
             User currentUser = account.User!;

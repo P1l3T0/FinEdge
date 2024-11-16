@@ -1,24 +1,12 @@
-import { User } from "../Helpers/Helpers";
+import GetUser from "../User/GetUser";
 
-const Home = ({ user }: { user: User }) => {
+const Home = () => {
+
+
   return (
     <>
-      <table>
-        <tbody>
-          <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Methodology</th>
-          </tr>
-          <tr>
-            <td>{user?.name}</td>
-            <td>{user?.surname}</td>
-            <td>{user?.email}</td>
-            <td>{user?.methodologyType}</td>
-          </tr>
-        </tbody>
-      </table>
+      <h2> User</h2 >
+      <GetUser />
     </>
   )
 }

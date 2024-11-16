@@ -1,64 +1,69 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { SyntheticEvent, useState, } from 'react'
 import { loginEndPoint } from '../../endpoints';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TextBox, TextBoxChangeEvent } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
-import { getMethodologyString, LoginDto, User } from '../../Helpers/Helpers';
+import { LoginDto, User } from '../../Utils/Types';
 import CustomLink from '../../Components/CustomLink';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const Login = ({ setCurrentUser }: { setCurrentUser: (user: User) => void }) => {
-  const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
+const Login = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const [user, setUser] = useState<LoginDto>({
     email: "",
     password: ""
   });
 
-  if (shouldRedirect) {
-    return <Navigate to="/home" replace />;
-  }
-
   const handleChange = async (e: TextBoxChangeEvent) => {
-    const name: string = e.target.name as string;
-    const value: string = e.target.value as string;
-    const trimmedValue: string = value.trim();
-
-    if (trimmedValue === "") {
-      return;
-    }
+    const trimmedValue: string = (e.target.value as string).trim();
 
     setUser({
       ...user,
-      [name]: trimmedValue
+      [(e.target.name as string)]: trimmedValue
     });
-  }
+  };
+
+  const loginUser = async () => {
+    await axios
+      .post<User>(`${loginEndPoint}`, user, { withCredentials: true })
+      .then(() => navigate("/home"))
+      .catch((error: AxiosError) => {
+        alert(error.response?.data);
+      });;
+  };
+
+  const { mutateAsync } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: (error: AxiosError) => {
+      alert(error.response?.data);
+    }
+  });
 
   const onSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    await axios
-      .post(`${loginEndPoint}`, user, { withCredentials: true })
-      .then((res: AxiosResponse<User>) => {
-        res.data.methodologyType = getMethodologyString(parseInt(res.data.methodologyType));
-
-        setCurrentUser(res.data);
-        setShouldRedirect(true);
-      }).catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+    mutateAsync();
   }
 
   return (
     <>
-      <form className='login-form' onSubmit={onSubmit} method='post'>
-        <div className="content">
-          <TextBox id='email' type='email' name='email' placeholder="Email" onChange={handleChange} required={true} />
-          <TextBox id='password' type='password' name='password' placeholder="Password" onChange={handleChange} required={true} />
+      <div className="login-form">
+        <form onSubmit={onSubmit} method='post' autoComplete='off'>
+          <div className="content">
+            <TextBox id='email' type='email' name='email' placeholder="Email" onChange={handleChange} required={true} />
+            <TextBox id='password' type='password' name='password' placeholder="Password" onChange={handleChange} required={true} />
 
-          <Button id='login' themeColor={'info'} type='submit'>Login</Button>
-          <p style={{ padding: "1rem 0 0 0" }}>Don't have an account?‎ <CustomLink to='/register'>Register</CustomLink></p>
-        </div>
-      </form>
+            <Button id='login' themeColor={'info'} type='submit'>Login</Button>
+            <p style={{ padding: "1rem 0 0 0" }}>Don't have an account?‎ <CustomLink to='/register'>Register</CustomLink></p>
+          </div>
+        </form>
+      </div>
     </>
   )
 }

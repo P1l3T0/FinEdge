@@ -1,16 +1,12 @@
 import { Link } from "react-router-dom";
-import { User } from "../Helpers/Helpers";
 
-const Navbar = ({ user }: { user: User }) => {
+const Navbar = () => {
   return (
     <>
       <div className="navbar">
-        {user !== undefined ? (
-          <>
-            <Link to="/home">Home</Link>
-            <Link to="/logout">Log out</Link>
-          </>
-        ) : ""}
+        <Link to="/home">Home</Link>
+        <Link to="/accounts">Accounts</Link>
+        <Link to="/logout">Log out</Link>
       </div>
     </>
   )

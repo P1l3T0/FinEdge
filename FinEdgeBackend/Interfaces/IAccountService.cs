@@ -5,7 +5,7 @@ namespace FinEdgeBackend.Interfaces
 {
     public interface IAccountService
     {
-        Task CreateAccountAsync(Account account);
+        Task<Account> CreateAccountAsync(Account account);
         Task UpdateAccountAsync(AccountDTO accountDto, Account account);
         Task<Account> GetAccountByIdAsync(int accountID);
         Task<Account> GetAccountForCurrentUserByNameAsync(string accountName, User currentUser);

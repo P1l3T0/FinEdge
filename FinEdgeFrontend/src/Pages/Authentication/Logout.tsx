@@ -1,25 +1,15 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import { logoutEndPoint } from "../../endpoints";
-import { Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@progress/kendo-react-buttons";
-import { User } from "../../Helpers/Helpers";
 
-const Logout = ({ setCurrentUser }: { setCurrentUser: (user: User | undefined) => void }) => {
-  const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
-
-  if (shouldRedirect) {
-    return <Navigate to="/login" replace />;
-  }
+const Logout = () => {
+  const navigate = useNavigate();
 
   const onClick = async () => {
     axios
       .post(`${logoutEndPoint}`, {}, { withCredentials: true })
-      .then((res: AxiosResponse) => {
-        alert(res.data.message);
-        setShouldRedirect(true);
-        setCurrentUser(undefined);
-      })
+      .then(() => navigate("/login"))
       .catch((error: AxiosError) => {
         alert(error.response?.data);
       });

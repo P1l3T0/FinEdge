@@ -11,14 +11,19 @@ namespace FinEdgeBackend.Services
     {
         private readonly DataContext _dataContext = dataContext;
 
-        public async Task CreateAccountAsync(Account account)
+        public async Task<Account> CreateAccountAsync(Account account)
         {
             _dataContext.Accounts.Add(account);
             await _dataContext.SaveChangesAsync();
+            return account;
         }
 
         public async Task UpdateAccountAsync(AccountDTO accountDto, Account account)
         {
+            User currentUser = account.User!;
+
+            currentUser.TotalBalance += accountDto.Balance - account.Balance;
+
             account.Name = accountDto.Name;
             account.Currency = accountDto.Currency;
             account.AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!);

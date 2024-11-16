@@ -1,41 +1,23 @@
-import { useEffect, useState } from 'react'
 import Register from './Pages/Authentication/Register'
-import axios, { AxiosResponse, AxiosError } from 'axios';
-import { getCurrentUserEnddPoint } from './endpoints';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
 import Logout from './Pages/Authentication/Logout';
 import Login from './Pages/Authentication/Login';
-import { getMethodologyString, User } from './Helpers/Helpers';
+import Accounts from './Pages/Accounts/Accounts';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<User | undefined>();
-
-  useEffect(() => {
-    axios
-      .get(`${getCurrentUserEnddPoint}`, { withCredentials: true })
-      .then((res: AxiosResponse<User>) => {
-        res.data.methodologyType = getMethodologyString(parseInt(res.data.methodologyType));
-
-        setCurrentUser(res.data);
-      })
-      .catch((err: AxiosError) => {
-        console.log(`No user logged in  ${err.message}`);
-      });
-  }, []);
-
   return (
     <>
       <BrowserRouter>
-        <Navbar user={currentUser as User} />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/home" element={<Home user={currentUser as User} />} />
-          {/* <Route path="/update" element={<Update user={currentUser as User} setCurrentUser={setCurrentUser} />} /> */}
-          <Route path="/register" element={<Register setCurrentUser={setCurrentUser} />} />
-          <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
-          <Route path="/logout" element={<Logout setCurrentUser={setCurrentUser} />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/accounts" element={<Accounts />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </BrowserRouter>
     </>
