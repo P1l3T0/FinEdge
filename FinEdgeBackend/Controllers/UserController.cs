@@ -23,7 +23,7 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
+        [Route("update/{userID}")]
         public async Task<IActionResult> UpddateUser([FromBody] UpdateDTO updatedDTO)
         {
             if (string.IsNullOrEmpty(updatedDTO.Name) || string.IsNullOrEmpty(updatedDTO.Surname) ||

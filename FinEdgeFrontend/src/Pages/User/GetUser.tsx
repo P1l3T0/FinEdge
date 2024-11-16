@@ -5,6 +5,7 @@ import { AccountType, MethodologyType, User } from "../../Utils/Types";
 import { getEnumValueFromNumber } from "../../Utils/Functions";
 import { Grid, GridColumn as Column, GridCellProps } from "@progress/kendo-react-all";
 import DeleteUser from "./DeleteUser";
+import UpdateUser from "./UpdateUser";
 
 const GetUser = () => {
   const getUser = async () => {
@@ -41,6 +42,7 @@ const GetUser = () => {
         Total Balance: {data?.totalBalance} <br />
         Methodology: {getEnumValueFromNumber(parseInt(data?.methodologyType!), MethodologyType)} <br />
 
+        <UpdateUser user={data!} />
         <DeleteUser />
       </div>
 
