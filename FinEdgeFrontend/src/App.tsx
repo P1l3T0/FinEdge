@@ -4,8 +4,7 @@ import Navbar from './Components/Navbar';
 import Home from './Pages/Home';
 import Logout from './Pages/Authentication/Logout';
 import Login from './Pages/Authentication/Login';
-import CreateAccounts from './Pages/Accounts/CreateAccounts';
-import GetAccounts from './Pages/Accounts/GetAccounts';
+import Accounts from './Pages/Accounts/Accounts';
 
 function App() {
   return (
@@ -15,8 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/accounts" element={<CreateAccounts />} />
-          <Route path="/accounts/get" element={<GetAccounts />} />
+          <Route path="/accounts" element={<Accounts />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
