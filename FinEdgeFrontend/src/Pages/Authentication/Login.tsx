@@ -1,7 +1,7 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { SyntheticEvent, useState, } from 'react'
 import { loginEndPoint } from '../../endpoints';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TextBox, TextBoxChangeEvent } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
 import { LoginDto, User } from '../../Utils/Types';
@@ -9,33 +9,27 @@ import CustomLink from '../../Components/CustomLink';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const Login = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [shouldRedirect, setShouldRedirect] = useState<boolean>(false);
   const [user, setUser] = useState<LoginDto>({
     email: "",
     password: ""
   });
 
   const handleChange = async (e: TextBoxChangeEvent) => {
-    const name: string = e.target.name as string;
-    const value: string = e.target.value as string;
-    const trimmedValue: string = value.trim();
-
-    if (trimmedValue === "") {
-      return;
-    }
+    const trimmedValue: string = (e.target.value as string).trim();
 
     setUser({
       ...user,
-      [name]: trimmedValue
+      [(e.target.name as string)]: trimmedValue
     });
   };
 
   const loginUser = async () => {
     await axios
       .post<User>(`${loginEndPoint}`, user, { withCredentials: true })
-      .then((res: AxiosResponse<User>) => res.data)
+      .then(() => navigate("/home"))
       .catch((error: AxiosError) => {
         alert(error.response?.data);
       });;
@@ -45,7 +39,6 @@ const Login = () => {
     mutationFn: loginUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      setShouldRedirect(true);
     },
     onError: (error: AxiosError) => {
       alert(error.response?.data);
@@ -56,10 +49,6 @@ const Login = () => {
     e.preventDefault();
 
     mutateAsync();
-  }
-
-  if (shouldRedirect) {
-    return <Navigate to="/home" replace />;
   }
 
   return (
