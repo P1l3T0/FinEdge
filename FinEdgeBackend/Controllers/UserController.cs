@@ -57,6 +57,9 @@ namespace FinEdgeBackend.Controllers
 
             await _userService.DeleteUserAsync(currentUser);
 
+            DeleteCookie("AccessToken");
+            DeleteCookie("RefreshToken");
+
             return Ok("User deletedd succesfully");
         }
 
@@ -72,6 +75,20 @@ namespace FinEdgeBackend.Controllers
             }
 
             return Ok("Users deletedd succesfully");
+        }
+
+        private IActionResult DeleteCookie(string name)
+        {
+            Response.Cookies.Delete(name, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Domain = "localhost",
+                Path = "/"
+            });
+
+            return NoContent();
         }
     }
 }

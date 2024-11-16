@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getCurrentUserEnddPoint } from "../endpoints";
-import { AccountType, MethodologyType, User } from "../Utils/Types";
-import { getEnumValueFromNumber } from "../Utils/Functions";
+import { getCurrentUserEnddPoint } from "../../endpoints";
+import { AccountType, MethodologyType, User } from "../../Utils/Types";
+import { getEnumValueFromNumber } from "../../Utils/Functions";
 import { Grid, GridColumn as Column, GridCellProps } from "@progress/kendo-react-all";
+import DeleteUser from "./DeleteUser";
 
 const GetUser = () => {
   const getUser = async () => {
@@ -38,7 +39,9 @@ const GetUser = () => {
         Surname: {data?.surname} <br />
         Email: {data?.email} <br />
         Total Balance: {data?.totalBalance} <br />
-        Methodology: {getEnumValueFromNumber(parseInt(data?.methodologyType!), MethodologyType)}
+        Methodology: {getEnumValueFromNumber(parseInt(data?.methodologyType!), MethodologyType)} <br />
+
+        <DeleteUser />
       </div>
 
       <h2>Accounts</h2>

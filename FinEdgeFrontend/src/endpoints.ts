@@ -10,6 +10,7 @@ export const logoutEndPoint = `${authController}/logout`;
 
 export const getCurrentUserEnddPoint = `${userController}/get`;
 export const updateCurrentUserEnddPoint = `${userController}/update`;
+export const deketeCurrentUserEnddPoint = `${userController}/delete`;
 
 export const createAccountEndPoint = `${accountController}/create`;
 export const getAllAccountsEndPoint = `${accountController}/get-all`;

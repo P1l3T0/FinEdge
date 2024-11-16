@@ -1,4 +1,4 @@
-import GetUser from "../User/GetUser";
+import GetUser from "./User/GetUser";
 
 const Home = () => {
 
