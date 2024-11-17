@@ -12,6 +12,8 @@ namespace FinEdgeBackend.Interfaces
         Task<User> GetUserByNameAsync(string name);
         Task<User> GetCurrentUserAsync();
         Task<ICollection<User>> GetAllUsersAsync();
+        ICollection<string> GetAccountNames(ICollection<Account> accounts);
+        ICollection<string> GetCategoryNames(ICollection<Category> categories);
         Task DeleteUserAsync(User currentUser);
         bool Validate(string email, string password, bool isCurrentUser);
         bool ValidateEmail(string email);

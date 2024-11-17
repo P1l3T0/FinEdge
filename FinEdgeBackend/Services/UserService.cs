@@ -84,6 +84,16 @@ namespace FinEdgeBackend.Services
             return users;
         }
 
+        public ICollection<string> GetAccountNames(ICollection<Account> accounts)
+        {
+            return accounts.Select(a => a.Name).ToList()!;
+        }
+
+        public ICollection<string> GetCategoryNames(ICollection<Category> categories)
+        {
+            return categories.Select(a => a.Name).ToList()!;
+        }
+
         public async Task DeleteUserAsync(User currentUser)
         {
             _dataContext.Users.Remove(currentUser);

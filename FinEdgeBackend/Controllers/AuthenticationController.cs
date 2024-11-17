@@ -77,7 +77,7 @@ namespace FinEdgeBackend.Controllers
             {
                 NewAccessToken = newAccessToken,
                 NewRefreshToken = newRefreshToken,
-                ExpiresIn = 300,
+                ExpiresIn = 600,
                 Username = user.Name
             });
         }
@@ -123,7 +123,7 @@ namespace FinEdgeBackend.Controllers
                 Domain = "localhost",
                 Path = "/",
                 Expires = name == "AccessToken"
-                    ? DateTime.Now.AddSeconds(300)
+                    ? DateTime.Now.AddSeconds(600)
                     : DateTime.Now.AddDays(5),
             });
 

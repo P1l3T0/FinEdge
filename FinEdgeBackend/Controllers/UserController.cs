@@ -22,6 +22,24 @@ namespace FinEdgeBackend.Controllers
             return Ok(currentUser);
         }
 
+        [HttpGet]
+        [Route("get/names")]
+        public async Task<IActionResult> GetAccountAndCategoryNamesForUser()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Account> accounts = currentUser.Accounts;
+            ICollection<Category> categories = currentUser.Categories;
+
+            ICollection<string> accountNames = _userService.GetAccountNames(accounts);
+            ICollection<string> categoryNames = _userService.GetCategoryNames(categories);
+
+            return Ok(new
+            {
+                AccountNames = accountNames,
+                CategoryNames = categoryNames
+            });
+        }
+
         [HttpPut]
         [Route("update/{userID}")]
         public async Task<IActionResult> UpddateUser([FromBody] UpdateDTO updatedDTO)
