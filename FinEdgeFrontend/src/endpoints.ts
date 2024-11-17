@@ -8,6 +8,7 @@ const categoryController: string | undefined = `${baseURL}/category`;
 export const registerEndPoint = `${authController}/register`;
 export const loginEndPoint = `${authController}/login`;
 export const logoutEndPoint = `${authController}/logout`;
+export const refreshTokenEndPoint = `${authController}/refresh-token`;
 
 export const getCurrentUserEnddPoint = `${userController}/get`;
 export const updateCurrentUserEnddPoint = `${userController}/update`;

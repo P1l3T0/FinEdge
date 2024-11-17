@@ -1,3 +1,19 @@
+//! Auth
+
+export type Auth = {
+  username: string;
+  accessToken: string;
+}
+
+export type AuthContextType = {
+  auth: Auth;
+  setAuth: React.Dispatch<React.SetStateAction<Auth>>;
+}
+
+export type RefreshToken = {
+  refreshToken: string;
+}
+
 //! User
 
 export type User = {

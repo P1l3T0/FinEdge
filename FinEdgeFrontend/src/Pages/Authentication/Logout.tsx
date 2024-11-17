@@ -7,7 +7,7 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const onClick = async () => {
-    axios
+    await axios
       .post(`${logoutEndPoint}`, {}, { withCredentials: true })
       .then(() => navigate("/login"))
       .catch((error: AxiosError) => {
