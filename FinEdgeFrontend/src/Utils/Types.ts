@@ -92,6 +92,20 @@ export type Category = {
   dateCreated: Date;
 }
 
+//! Transactions
+
+export type Names = {
+  accountNames: string[];
+  categoryNames: string[];
+}
+
+export type TransactionDTO = {
+  name: string;
+  accountName: string;
+  categoryName: string;
+  amount: number;
+}
+
 //! Enums
 
 export enum MethodologyType {

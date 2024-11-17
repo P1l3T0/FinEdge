@@ -3,7 +3,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { getAccountAndCategoryNamesEnddPoint } from "../endpoints";
 import { Names } from "../Utils/Types";
 
-const UseGetNames = () => {
+const useGetNames = () => {
   const getAccountAndCategoryNames = async () => {
     return await axios
       .get<Names>(`${getAccountAndCategoryNamesEnddPoint}`, { withCredentials: true })
@@ -22,7 +22,10 @@ const UseGetNames = () => {
 
   const { data, isLoading, isError, error } = expenditureCategoriesQuery;
 
-  return { data, isLoading, isError, error }
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error: {error?.message}</p>;
+
+  return data;
 }
 
-export default UseGetNames;
+export default useGetNames;
