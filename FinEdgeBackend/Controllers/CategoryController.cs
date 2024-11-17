@@ -80,8 +80,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
-        public async Task<IActionResult> UpdateCategory([FromQuery] int categoryID, [FromBody] CategoryDTO categoryDto)
+        [Route("update/{categoryID}")]
+        public async Task<IActionResult> UpdateCategory(int categoryID, [FromBody] CategoryDTO categoryDto)
         {
             if (!_categoryService.Validate(categoryDto))
             {
