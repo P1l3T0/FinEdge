@@ -32,7 +32,7 @@ namespace FinEdgeBackend.Controllers
 
             currentUser.TotalBalance += accountDto.Balance;
 
-            account = await _accountService.CreateAccountAsync(new Account
+            await _accountService.CreateAccountAsync(new Account
             {
                 UserID = currentUser.ID,
                 User = currentUser,

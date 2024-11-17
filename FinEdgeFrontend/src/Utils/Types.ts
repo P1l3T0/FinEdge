@@ -1,3 +1,21 @@
+//! Auth
+
+export type Auth = {
+  username: string;
+  accessToken: string;
+}
+
+export type AuthContextType = {
+  auth: Auth;
+  setAuth: React.Dispatch<React.SetStateAction<Auth>>;
+}
+
+export type RefreshToken = {
+  refreshToken: string;
+}
+
+//! User
+
 export type User = {
   id: number;
   name: string;
@@ -6,6 +24,7 @@ export type User = {
   methodologyType: string;
   totalBalance: number;
   accounts: Account[];
+  categories: Category[];
 }
 
 export type RegisterDTO = {
@@ -18,7 +37,7 @@ export type RegisterDTO = {
 
 export type LoginDTO = {
   email: string;
-  password: string
+  password: string;
 }
 
 export type UpdateDTO = {
@@ -27,6 +46,8 @@ export type UpdateDTO = {
   email: string;
   password: string;
 }
+
+//! Account
 
 export type AccountDTO = {
   name: string;
@@ -44,6 +65,34 @@ export type Account = {
   currency: string;
   dateCreated: Date;
 }
+
+//! Category
+
+export type CategoryResponse = {
+  categories: Category[];
+  totalBalance: number;
+  totalBudget: number;
+}
+
+export type CategoryDTO = {
+  name: string;
+  currency: string;
+  budget: number;
+  isIncome: boolean;
+}
+
+export type Category = {
+  id: number;
+  userID: number;
+  name: string;
+  currency: string;
+  balance: number;
+  budget: number;
+  isIncome: boolean;
+  dateCreated: Date;
+}
+
+//! Enums
 
 export enum MethodologyType {
   ZeroBasedBudgeting = 0,

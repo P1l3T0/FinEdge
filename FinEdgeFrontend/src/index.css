@@ -87,11 +87,13 @@ a {
 
 /*! Accounts */
 
-.account-container form>* {
+.account-container form>*,
+.category-container form>* {
   margin: 0.15rem 0;
 }
 
-.account-cards {
+.account-cards,
+.category-cards {
   margin: 1rem 0;
   display: flex;
   gap: 1rem;

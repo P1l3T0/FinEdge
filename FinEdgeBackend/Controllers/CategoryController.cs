@@ -80,8 +80,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
-        public async Task<IActionResult> UpdateCategory([FromQuery] int categoryID, [FromBody] CategoryDTO categoryDto)
+        [Route("update/{categoryID}")]
+        public async Task<IActionResult> UpdateCategory(int categoryID, [FromBody] CategoryDTO categoryDto)
         {
             if (!_categoryService.Validate(categoryDto))
             {
@@ -97,8 +97,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpDelete]
-        [Route("delete")]
-        public async Task<IActionResult> DeleteCategory([FromQuery] int categoryID)
+        [Route("delete/{categoryID}")]
+        public async Task<IActionResult> DeleteCategory(int categoryID)
         {
             User currentUser = await _userService.GetCurrentUserAsync();
             Category category = await _categoryService.GetCategoryForCurrentUserByIdAsync(categoryID, currentUser);

@@ -45,8 +45,9 @@ namespace FinEdgeBackend.Controllers
 
         [HttpPost]
         [Route("refresh-token")]
-        public async Task<IActionResult> GenerateNewRefreshToken([FromBody] string refreshToken)
+        public async Task<IActionResult> GenerateNewRefreshToken()
         {
+            string  refreshToken = HttpContext.Request.Cookies["RefreshToken"]!;
             RefreshToken storedToken = await _refreshTokenService.GetRefreshTokenAsync(refreshToken);
 
             if (storedToken is null || storedToken.ExpiryDate < DateTime.Now || storedToken.IsRevoked)
@@ -57,6 +58,7 @@ namespace FinEdgeBackend.Controllers
             storedToken.IsRevoked = true;
 
             string newRefreshToken = _jwtService.GenerateRefreshToken(storedToken.UserID);
+            string newAccessToken = _jwtService.GenerateAcessToken(storedToken.UserID);
 
             RefreshToken newRefreshTokenEntity = await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken
             {
@@ -67,7 +69,17 @@ namespace FinEdgeBackend.Controllers
 
             User? user = await _userService.GetUserByIdAsync(storedToken.UserID);
 
-            return Ok(user);
+            DeleteCookie("RefreshToken");
+            CreateCookie("AccessToken", newAccessToken);
+            CreateCookie("RefreshToken", newRefreshToken);
+
+            return Ok(new
+            {
+                NewAccessToken = newAccessToken,
+                NewRefreshToken = newRefreshToken,
+                ExpiresIn = 300,
+                Username = user.Name
+            });
         }
 
         [HttpPost]
@@ -105,12 +117,14 @@ namespace FinEdgeBackend.Controllers
         {
             Response.Cookies.Append(name, value, new CookieOptions
             {
-                HttpOnly = true,
+                HttpOnly = name == "AccessToken" ? true : false,
                 Secure = true,
                 SameSite = SameSiteMode.None,
                 Domain = "localhost",
                 Path = "/",
-                Expires = DateTime.Now.AddDays(1)
+                Expires = name == "AccessToken"
+                    ? DateTime.Now.AddSeconds(300)
+                    : DateTime.Now.AddDays(5),
             });
 
             return NoContent();

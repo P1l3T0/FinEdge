@@ -65,7 +65,7 @@ const UpdateAccount = ({ account }: { account: Account }) => {
       <Button type="button" fillMode="solid" themeColor={'info'} onClick={toggleDialog}>Update</Button>
 
       {visible && (
-        <Window title={`Update account`} style={{ height: "auto" }} onClose={toggleDialog} initialHeight={350}>
+        <Window title={`Update account`} style={{ height: "auto" }} onClose={toggleDialog}>
           <form className="k-form">
             <fieldset>
               <legend>Account Details</legend>
