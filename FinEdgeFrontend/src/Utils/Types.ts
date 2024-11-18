@@ -25,6 +25,7 @@ export type User = {
   totalBalance: number;
   accounts: Account[];
   categories: Category[];
+  transactions: Transaction[];
 }
 
 export type RegisterDTO = {
@@ -94,6 +95,7 @@ export type Category = {
 
 //! Transactions
 
+
 export type Names = {
   accountNames: string[];
   categoryNames: string[];
@@ -104,6 +106,21 @@ export type TransactionDTO = {
   accountName: string;
   categoryName: string;
   amount: number;
+}
+
+export type Transaction = {
+  id: number;
+  name: string;
+  accountName: string;
+  categoryName: string;
+  amount: number;
+  dateCreated: Date;
+}
+
+export type TransactionResponse = {
+  allTransactions: Transaction[];
+  incomeTransactions: Transaction[];
+  expenditureTransactions: Transaction[];
 }
 
 //! Enums
