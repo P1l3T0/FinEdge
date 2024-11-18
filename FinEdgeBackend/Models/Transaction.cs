@@ -32,7 +32,7 @@ namespace FinEdgeBackend.Models
         public decimal? Amount { get; set; }
 
         [Required]
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime DateCreated { get; set; } = DateTime.Now;
 
         [JsonIgnore]
         public Account? Account { get; set; }

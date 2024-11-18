@@ -47,33 +47,20 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpGet]
-        [Route("get/all")]
+        [Route("get")]
         public async Task<IActionResult> GetAllTransactions()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Transaction> transactions = await _transactionService.GetAllTransactionsAsync(currentUser);
-
-            return Ok(transactions);
-        }
-
-        [HttpGet]
-        [Route("get/expenditure")]
-        public async Task<IActionResult> GetExpenditureTransactions()
-        {
-            User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Transaction> expenditureTransactions = await _transactionService.GetAllExpenditureTransactionsAsync(currentUser);
-
-            return Ok(expenditureTransactions);
-        }
-
-        [HttpGet]
-        [Route("get/income")]
-        public async Task<IActionResult> GetIncomeTransactions()
-        {
-            User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Transaction> incomeTransactions = await _transactionService.GetAllIncomeTransactionsAsync(currentUser);
 
-            return Ok(incomeTransactions);
+            return Ok(new
+            {
+                AllTransactions = transactions,
+                IncomeTransactions = incomeTransactions,
+                ExpenditureTransactions = expenditureTransactions
+            });
         }
 
         [HttpGet]
