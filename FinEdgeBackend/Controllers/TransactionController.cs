@@ -125,8 +125,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpDelete]
-        [Route("delete")]
-        public async Task<IActionResult> DeleteTransaction([FromQuery] int transactionID)
+        [Route("delete/{transactionID}")]
+        public async Task<IActionResult> DeleteTransaction(int transactionID)
         {
             Transaction transaction = await _transactionService.GetTransactionByIdAsync(transactionID);
             Category category = transaction.Category!;

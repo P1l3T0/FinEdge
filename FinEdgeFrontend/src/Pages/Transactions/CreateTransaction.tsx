@@ -50,6 +50,7 @@ const CreateTransaction = () => {
       queryClient.invalidateQueries({ queryKey: ["income-category"] });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
   });
 
