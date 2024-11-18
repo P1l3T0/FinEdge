@@ -34,7 +34,7 @@ const CreateTransaction = () => {
     })
   }
 
-  const createCategory = async () => {
+  const createTransaction = async () => {
     await axios
       .post<TransactionDTO>(`${createTransactionEndPoint}`, transaction, { withCredentials: true })
       .then((res: AxiosResponse<TransactionDTO>) => res.data)
@@ -44,7 +44,7 @@ const CreateTransaction = () => {
   }
 
   const { mutateAsync } = useMutation({
-    mutationFn: createCategory,
+    mutationFn: createTransaction,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["expenditure-category"] });
       queryClient.invalidateQueries({ queryKey: ["income-category"] });
