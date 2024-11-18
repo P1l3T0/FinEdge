@@ -10,8 +10,8 @@ const CategoriesGrid = ({ categories }: { categories: Category[] }) => {
         <GridColumn field="name" title="Name" width="100px" />
         <GridColumn field="balance" title="Balance" width="100px" />
         <GridColumn field="budget" title="Budget" width="100px" />
-        <GridColumn field="isIncome" title="Is Income" width="100px" />
         <GridColumn field="currency" title="Currency" width="100px" />
+        <GridColumn field="isIncome" title="Is Income" width="100px" />
         <GridColumn field="dateCreated" title="Date Created" width="250px" format="{0:dd/mm/yyyy}" />
       </Grid>
     </>

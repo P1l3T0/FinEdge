@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { getTransactionEndPoint } from '../../endpoints';
 import { TransactionResponse } from '../../Utils/Types';
+import TransactionCards from './TransactionCards';
 
 const GetTransactions = () => {
   const getTransactions = async () => {
@@ -25,7 +26,10 @@ const GetTransactions = () => {
 
   return (
     <>
-      lol
+      <div className="transaction-cards">
+        <TransactionCards transactions={data?.incomeTransactions!} />
+        <TransactionCards transactions={data?.expenditureTransactions!} />
+      </div>
     </>
   )
 }
