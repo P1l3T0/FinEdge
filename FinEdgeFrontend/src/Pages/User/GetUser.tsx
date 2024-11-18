@@ -7,6 +7,7 @@ import DeleteUser from "./DeleteUser";
 import UpdateUser from "./UpdateUser";
 import AccountsGrid from "./Details/AccountsGrid";
 import CategoriesGrid from "./Details/CategoriesGrid";
+import TransactionsGrid from "./Details/TransactionsGrid";
 
 const GetUser = () => {
   const getUser = async () => {
@@ -41,11 +42,9 @@ const GetUser = () => {
         <DeleteUser />
       </div>
 
-      <h2>Accounts</h2>
       <AccountsGrid accounts={data?.accounts!} />
-
-      <h2>Categories</h2>
       <CategoriesGrid categories={data?.categories!} />
+      <TransactionsGrid transactions={data?.transactions!} />
     </>
   )
 }
