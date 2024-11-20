@@ -5,7 +5,6 @@ import useGetNames from "../../Hooks/useGetNames";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { createTransactionEndPoint } from "../../endpoints";
-import { Names } from "../../Utils/Types";
 
 const CreateTransaction = () => {
   const queryClient = useQueryClient();
@@ -77,8 +76,8 @@ const CreateTransaction = () => {
         <form method='post' autoComplete='off'>
           <TextBox id='name' name='name' type='text' placeholder='Transaction name' onChange={handleTextBoxChange} />
           <TextBox id='amount' name='amount' type='number' min={0} placeholder='Transaction amount' onChange={handleTextBoxChange} />
-          <DropDownList id="account-name" name='accountName' data={(data as Names).accountNames} defaultValue={data?.accountNames[0]} onChange={handleDropDownChange} />
-          <DropDownList id="category-name" name='categoryName' data={(data as Names).categoryNames} defaultValue={data?.categoryNames[0]} onChange={handleDropDownChange} />
+          <DropDownList id="account-name" name='accountName' data={data?.accountNames} defaultValue={data?.accountNames[0] ?? "Create at least 1 account"} onChange={handleDropDownChange} />
+          <DropDownList id="category-name" name='categoryName' data={data?.categoryNames} defaultValue={data?.categoryNames[0] ?? "Create at least 1 category"} onChange={handleDropDownChange} />
 
           <Button id='add-transaction-button' themeColor='primary' onClick={handlerClick}>Add transaction</Button>
         </form>
