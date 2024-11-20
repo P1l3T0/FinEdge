@@ -44,38 +44,27 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpGet]
-        [Route("get/income")]
-        public async Task<IActionResult> GetIncomeCategories()
+        [Route("get")]
+        public async Task<IActionResult> GetCategories()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Category> incomeCategories = _categoryService.GetIncomeCategories(currentUser.Categories!);
-
-            decimal totalBalance = _categoryService.GetBalanceForIncomeCategories(incomeCategories);
-            decimal totalBudget = _categoryService.GetBudgetForIncomeCategories(incomeCategories);
-
-            return Ok(new
-            {
-                Categories = incomeCategories,
-                TotalBalance = totalBalance,
-                TotalBudget = totalBudget
-            });
-        }
-
-        [HttpGet]
-        [Route("get/expenditure")]
-        public async Task<IActionResult> GetExpenditureCategories()
-        {
-            User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Category> expenditureCategories = _categoryService.GetExpenditureCategories(currentUser.Categories!);
 
-            decimal totalBalance = _categoryService.GetBalanceForExpenditureCategories(expenditureCategories);
-            decimal totalBudget = _categoryService.GetBudgetForExpenditureCategories(expenditureCategories);
+            decimal totalIncomeBalance = _categoryService.GetBalanceForIncomeCategories(incomeCategories);
+            decimal totalIncomeBudget = _categoryService.GetBudgetForIncomeCategories(incomeCategories);
+
+            decimal totalExpenditureBalance = _categoryService.GetBalanceForExpenditureCategories(expenditureCategories);
+            decimal totalExpenditureBudget = _categoryService.GetBudgetForExpenditureCategories(expenditureCategories);
 
             return Ok(new
             {
-                Categories = expenditureCategories,
-                TotalBalance = totalBalance,
-                TotalBudget = totalBudget
+                IncomeCategories = incomeCategories,
+                ExpenditureCategories = expenditureCategories,
+                TotalIncomeBalance = totalIncomeBalance,
+                TotalIncomeBudget = totalIncomeBudget,
+                TotalExpenditureBalance = totalExpenditureBalance,
+                TotalExpenditureBudget = totalExpenditureBudget
             });
         }
 
