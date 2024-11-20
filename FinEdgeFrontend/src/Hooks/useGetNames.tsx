@@ -22,10 +22,7 @@ const useGetNames = () => {
 
   const { data, isLoading, isError, error } = expenditureCategoriesQuery;
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
-
-  return data;
+  return { data, isLoading, isError, error };
 }
 
 export default useGetNames;

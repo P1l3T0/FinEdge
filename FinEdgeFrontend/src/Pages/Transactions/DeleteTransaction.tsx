@@ -8,7 +8,6 @@ const DeleteTransaction = ({ transaction }: { transaction: Transaction }) => {
   const queryClient = useQueryClient();
 
   const deleteTransaction = async () => {
-    debugger;
     await axios
       .delete(`${deleteTransactionEndPoint}/${transaction.id}`, { withCredentials: true })
       .catch((err: AxiosError) => {
