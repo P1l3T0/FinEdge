@@ -9,8 +9,8 @@ const GetCategories = () => {
 
   return (
     <>
-      <CategoryCards categories={data?.incomeCategories!} totalBalance={data?.totalIncomeBalance!} totalBudget={data?.totalIncomeBudget!} />
-      <CategoryCards categories={data?.expenditureCategories!} totalBalance={data?.totalExpenditureBalance!} totalBudget={data?.totalExpenditureBudget!} />
+      <CategoryCards categories={data?.incomeCategories!} totalBalance={data?.totalIncomeBalance!} totalBudget={data?.totalIncomeBudget!} isIncome={true} />
+      <CategoryCards categories={data?.expenditureCategories!} totalBalance={data?.totalExpenditureBalance!} totalBudget={data?.totalExpenditureBudget!} isIncome={false} />
     </>
   )
 }

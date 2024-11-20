@@ -28,8 +28,7 @@ export const deleteAccountEndPoint = `${accountController}/delete`;
 
 //! Categories
 export const createCategoryEndPoint = `${categoryController}/create`;
-export const getIncomeCategoriesEndPoint = `${categoryController}/get/income`;
-export const getExpenditureCategoriesEndPoint = `${categoryController}/get/expenditure`;
+export const getAllCategoriesEndPoint = `${categoryController}/get`;
 export const updateCategoryEndPoint = `${categoryController}/update`;
 export const deleteCategoryEndPoint = `${categoryController}/delete`;
 export const gdeleteAllCategoriesEndPoint = `${categoryController}/delete-all`;

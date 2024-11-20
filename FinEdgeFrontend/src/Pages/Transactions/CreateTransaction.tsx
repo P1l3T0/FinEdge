@@ -53,8 +53,7 @@ const CreateTransaction = () => {
   const { mutateAsync } = useMutation({
     mutationFn: createTransaction,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["expenditure-category"] });
-      queryClient.invalidateQueries({ queryKey: ["income-category"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });

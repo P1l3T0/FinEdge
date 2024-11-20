@@ -70,9 +70,12 @@ export type Account = {
 //! Category
 
 export type CategoryResponse = {
-  categories: Category[];
-  totalBalance: number;
-  totalBudget: number;
+  incomeCategories: Category[];
+  expenditureCategories: Category[];
+  totalIncomeBalance: number;
+  totalIncomeBudget: number;
+  totalExpenditureBalance: number;
+  totalExpenditureBudget: number;
 }
 
 export type CategoryDTO = {
