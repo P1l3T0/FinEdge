@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardBody, CardFooter } from "@progress/kendo-react-all";
 import { Transaction } from "../../Utils/Types";
 import DeleteTransaction from "./DeleteTransaction";
+import UpdateTransaction from "./UpdateTransactions";
 
 const TransactionCards = ({ transactions }: { transactions: Transaction[] }) => {
   return (
@@ -24,7 +25,7 @@ const TransactionCards = ({ transactions }: { transactions: Transaction[] }) => 
             </fieldset>
           </CardBody>
           <CardFooter>
-            {/* {/* <UpdateCategory category={category} /> */}
+            <UpdateTransaction transaction={transaction} />
             <DeleteTransaction transaction={transaction} />
           </CardFooter>
         </Card>

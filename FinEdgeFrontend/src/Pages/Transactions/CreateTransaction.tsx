@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TransactionDTO } from "../../Utils/Types";
 import { TextBox, DropDownList, TextBoxChangeEvent, DropDownListChangeEvent, Button } from "@progress/kendo-react-all";
 import useGetNames from "../../Hooks/useGetNames";
@@ -8,8 +8,8 @@ import { createTransactionEndPoint } from "../../endpoints";
 import { Names } from "../../Utils/Types";
 
 const CreateTransaction = () => {
-  const data = useGetNames();
   const queryClient = useQueryClient();
+  const { data, isLoading, isError, error } = useGetNames();
 
   const [transaction, setTransaction] = useState<TransactionDTO>({
     name: "",
@@ -17,6 +17,14 @@ const CreateTransaction = () => {
     accountName: "",
     categoryName: ""
   });
+
+  useEffect(() => {
+    setTransaction({
+      ...transaction,
+      accountName: data?.accountNames[0]!,
+      categoryName: data?.categoryNames[0]!,
+    })
+  }, [data]);
 
   const handleTextBoxChange = (e: TextBoxChangeEvent) => {
     const trimmedValue = (e.value as string).trim();
@@ -60,14 +68,17 @@ const CreateTransaction = () => {
     mutateAsync();
   }
 
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error: {error?.message}</p>;
+
   return (
     <>
       <div className="transaction-container" style={{ width: "300px" }}>
         <form method='post' autoComplete='off'>
           <TextBox id='name' name='name' type='text' placeholder='Transaction name' onChange={handleTextBoxChange} />
           <TextBox id='amount' name='amount' type='number' min={0} placeholder='Transaction amount' onChange={handleTextBoxChange} />
-          <DropDownList id="account-name" name='accountName' data={(data as Names).accountNames} defaultValue="Select Account" onChange={handleDropDownChange} />
-          <DropDownList id="category-name" name='categoryName' data={(data as Names).categoryNames} defaultValue="Select Category" onChange={handleDropDownChange} />
+          <DropDownList id="account-name" name='accountName' data={(data as Names).accountNames} defaultValue={data?.accountNames[0]} onChange={handleDropDownChange} />
+          <DropDownList id="category-name" name='categoryName' data={(data as Names).categoryNames} defaultValue={data?.categoryNames[0]} onChange={handleDropDownChange} />
 
           <Button id='add-transaction-button' themeColor='primary' onClick={handlerClick}>Add transaction</Button>
         </form>
