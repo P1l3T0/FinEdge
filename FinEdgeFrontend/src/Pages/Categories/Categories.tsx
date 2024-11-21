@@ -1,13 +1,11 @@
 import CreateCategory from './CreateCategory'
-import GetExpenditureCategories from './GetExpenditureCategories'
-import GetIncomeCategories from './GetIncomeCategories copy'
+import GetCategories from './GetCategories'
 
 const Categories = () => {
   return (
     <>
       <CreateCategory />
-      <GetIncomeCategories />
-      <GetExpenditureCategories />
+      <GetCategories />
     </>
   )
 }

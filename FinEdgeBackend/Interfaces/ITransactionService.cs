@@ -12,7 +12,7 @@ namespace FinEdgeBackend.Interfaces
         Task<ICollection<Transaction>> GetAllIncomeTransactionsAsync(User currentUser);
         Task<ICollection<Transaction>> GetAllTransactionsForCategoryAsync(Category category);
         Task<ICollection<Transaction>> GetAllTransactionsForAccountAsync(Account account);
-        Task UpdateTranssactionAsync(TransactionDTO transactioDto, Transaction transaction, Category category, Account account);
+        Task UpdateTranssactionAsync(TransactionDTO transactioDto, Transaction transaction, Category category, Account account, Account originalAccount, User currentUser);
         Task UpdateUserBalanceAsync(bool isNewTransaction, TransactionDTO? transactioDto, Transaction? transaction, User currentUser, Category category, Account account);
         Task DeleteTransactionAsync(Transaction transaction);
         decimal GetDailyBalanceForTransactions(ICollection<Transaction> transactions);

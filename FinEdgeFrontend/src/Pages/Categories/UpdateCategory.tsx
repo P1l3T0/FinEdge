@@ -56,8 +56,7 @@ const UpdateCategory = ({ category }: { category: Category }) => {
   const { mutateAsync } = useMutation({
     mutationFn: updateAccount,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["expenditure-category"], });
-      queryClient.invalidateQueries({ queryKey: ["income-category"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"], });
     },
   });
 

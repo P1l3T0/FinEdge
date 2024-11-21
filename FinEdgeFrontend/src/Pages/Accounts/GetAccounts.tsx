@@ -1,31 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { getAllAccountsEndPoint } from '../../endpoints';
-import { Account, AccountType } from '../../Utils/Types';
+import { AccountType } from '../../Utils/Types';
 import { Card, CardBody, CardHeader, CardFooter } from '@progress/kendo-react-all';
 import { getEnumValueFromNumber } from '../../Utils/Functions';
 import DeleteAccount from './DeleteAccount';
 import UpdateAccount from './UpdateAccount';
+import useGetAccounts from '../../Hooks/useGetAccounts';
 
 const GetAccounts = () => {
-  const getAccounts = async () => {
-    return await axios
-      .get<Account[]>(`${getAllAccountsEndPoint}`, { withCredentials: true })
-      .then((res: AxiosResponse<Account[]>) => res.data)
-      .catch((err: AxiosError) => {
-        throw new Error(`No accounts found ${err.message}`);
-      });
-  };
-
-  const accountsQuery = useQuery({
-    queryKey: ["accounts"],
-    queryFn: getAccounts
-  })
-
-  const { data, isLoading, isError, error } = accountsQuery;
+  const { data, isLoading, isError, error } = useGetAccounts();
 
   if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isError) return <p>Error: {error!.message}</p>;
 
   return (
     <>

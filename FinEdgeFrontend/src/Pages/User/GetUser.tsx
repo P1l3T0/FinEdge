@@ -1,32 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import axios, { AxiosResponse, AxiosError } from "axios";
-import { getCurrentUserEnddPoint } from "../../endpoints";
-import { MethodologyType, User } from "../../Utils/Types";
+import { MethodologyType } from "../../Utils/Types";
 import { getEnumValueFromNumber } from "../../Utils/Functions";
 import DeleteUser from "./DeleteUser";
 import UpdateUser from "./UpdateUser";
 import AccountsGrid from "./Details/AccountsGrid";
 import CategoriesGrid from "./Details/CategoriesGrid";
+import TransactionsGrid from "./Details/TransactionsGrid";
+import useGetUser from "../../Hooks/useGetUser";
 
 const GetUser = () => {
-  const getUser = async () => {
-    return await axios
-      .get<User>(`${getCurrentUserEnddPoint}`, { withCredentials: true })
-      .then((res: AxiosResponse<User>) => res.data)
-      .catch((err: AxiosError) => {
-        throw new Error(`No user logged in ${err.message}`);
-      });
-  };
-
-  const accountsQuery = useQuery({
-    queryKey: ["user"],
-    queryFn: getUser,
-  })
-
-  const { data, isLoading, isError, error } = accountsQuery;
+  const { data, isLoading, isError, error } = useGetUser();
 
   if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isError) return <p>Error: {error?.message}</p>;
 
   return (
     <>
@@ -41,11 +26,9 @@ const GetUser = () => {
         <DeleteUser />
       </div>
 
-      <h2>Accounts</h2>
       <AccountsGrid accounts={data?.accounts!} />
-
-      <h2>Categories</h2>
       <CategoriesGrid categories={data?.categories!} />
+      <TransactionsGrid transactions={data?.transactions!} />
     </>
   )
 }

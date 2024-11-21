@@ -25,6 +25,7 @@ export type User = {
   totalBalance: number;
   accounts: Account[];
   categories: Category[];
+  transactions: Transaction[];
 }
 
 export type RegisterDTO = {
@@ -69,9 +70,12 @@ export type Account = {
 //! Category
 
 export type CategoryResponse = {
-  categories: Category[];
-  totalBalance: number;
-  totalBudget: number;
+  incomeCategories: Category[];
+  expenditureCategories: Category[];
+  totalIncomeBalance: number;
+  totalIncomeBudget: number;
+  totalExpenditureBalance: number;
+  totalExpenditureBudget: number;
 }
 
 export type CategoryDTO = {
@@ -90,6 +94,48 @@ export type Category = {
   budget: number;
   isIncome: boolean;
   dateCreated: Date;
+}
+
+//! Transactions
+
+export type Names = {
+  accountNames: string[];
+  categoryNames: string[];
+}
+
+export type TransactionDTO = {
+  name: string;
+  accountName: string;
+  categoryName: string;
+  amount: number;
+}
+
+export type Transaction = {
+  id: number;
+  name: string;
+  accountName: string;
+  categoryName: string;
+  amount: number;
+  dateCreated: Date;
+}
+
+export type TransactionResponse = {
+  allTransactions: Transaction[];
+  incomeTransactions: Transaction[];
+  expenditureTransactions: Transaction[];
+}
+
+export type Reports = {
+  dailyIncome: number,
+  weeklyIncome: number,
+  weeklyAverage: number,
+  monthlyIncome: number,
+  monthlyAverage: number,
+  dailySpendings: number,
+  weeklySpendings: number,
+  weeklySpendingsAverage: number,
+  monthlySpendings: number,
+  monthlySpendingsAverage: number,
 }
 
 //! Enums

@@ -88,12 +88,14 @@ a {
 /*! Accounts */
 
 .account-container form>*,
-.category-container form>* {
+.category-container form>*,
+.transaction-container form>* {
   margin: 0.15rem 0;
 }
 
 .account-cards,
-.category-cards {
+.category-cards,
+.transaction-cards {
   margin: 1rem 0;
   display: flex;
   gap: 1rem;

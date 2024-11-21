@@ -117,8 +117,8 @@ namespace FinEdgeBackend.Services
         {
             return category.Transactions!
                 .Where(t => t.CategoryID == category.ID
-                    && t.CreatedDate.Month == DateTime.Now.Month
-                    && t.CreatedDate.Year == DateTime.Now.Year
+                    && t.DateCreated.Month == DateTime.Now.Month
+                    && t.DateCreated.Year == DateTime.Now.Year
                     && t.Category!.IsIncome)
                 .Sum(t => t.Amount ?? 0);
         }
@@ -127,8 +127,8 @@ namespace FinEdgeBackend.Services
         {
             return category.Transactions!
                 .Where(t => t.CategoryID == category.ID
-                    && t.CreatedDate.Month == DateTime.Now.Month
-                    && t.CreatedDate.Year == DateTime.Now.Year
+                    && t.DateCreated.Month == DateTime.Now.Month
+                    && t.DateCreated.Year == DateTime.Now.Year
                     && !t.Category!.IsIncome)
                 .Sum(t => t.Amount ?? 0);
         }

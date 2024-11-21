@@ -12,7 +12,7 @@ const CreateCategory = () => {
   const [category, setCategory] = useState<CategoryDTO>({
     name: "",
     budget: 0,
-    currency: "",
+    currency: currency[0],
     isIncome: false
   });
 
@@ -51,8 +51,7 @@ const CreateCategory = () => {
   const { mutateAsync } = useMutation({
     mutationFn: createCategory,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["expenditure-category"] });
-      queryClient.invalidateQueries({ queryKey: ["income-category"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
@@ -69,7 +68,7 @@ const CreateCategory = () => {
         <form method='post' autoComplete='off'>
           <TextBox id='name' name='name' type='text' placeholder='Category name' onChange={handleTextBoxChange} />
           <TextBox id='budget' name='budget' type='number' min={0} placeholder='Category budget' onChange={handleTextBoxChange} />
-          <DropDownList id="currency" name='currency' data={currency} defaultValue="Select currency" onChange={handleDropDownChange} />
+          <DropDownList id="currency" name='currency' data={currency} defaultValue={currency[0]} onChange={handleDropDownChange} />
           <Checkbox id='isIncome' name='isIncome' type='checkbox' label="Is income" onChange={handleCheckBoxChange} />
 
           <Button id='add-category-button' themeColor='primary' onClick={handlerClick}>Add category</Button>

@@ -47,45 +47,38 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpGet]
-        [Route("get/all")]
+        [Route("get")]
         public async Task<IActionResult> GetAllTransactions()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Transaction> transactions = await _transactionService.GetAllTransactionsAsync(currentUser);
-
-            return Ok(transactions);
-        }
-
-        [HttpGet]
-        [Route("get/expenditure")]
-        public async Task<IActionResult> GetExpenditureTransactions()
-        {
-            User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Transaction> expenditureTransactions = await _transactionService.GetAllExpenditureTransactionsAsync(currentUser);
+            ICollection<Transaction> incomeTransactions = await _transactionService.GetAllIncomeTransactionsAsync(currentUser);
 
-            return Ok(expenditureTransactions);
+            return Ok(new
+            {
+                AllTransactions = transactions,
+                IncomeTransactions = incomeTransactions,
+                ExpenditureTransactions = expenditureTransactions
+            });
         }
 
         [HttpGet]
-        [Route("get/income")]
-        public async Task<IActionResult> GetIncomeTransactions()
+        [Route("get/reports")]
+        public async Task<IActionResult> GetReports()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
-            ICollection<Transaction> incomeTransactions = await _transactionService.GetAllIncomeTransactionsAsync(currentUser);
 
-            return Ok(incomeTransactions);
-        }
-
-        [HttpGet]
-        [Route("get/income/amount")]
-        public async Task<IActionResult> GetIncomeBalance()
-        {
-            User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Transaction> incomeTransactions = await _transactionService.GetAllIncomeTransactionsAsync(currentUser);
+            ICollection<Transaction> expenditureTransactions = await _transactionService.GetAllExpenditureTransactionsAsync(currentUser);
 
             decimal dailyIncome = _transactionService.GetDailyBalanceForTransactions(incomeTransactions);
             (decimal weeklyIncome, decimal weeklyAverage) = _transactionService.GetWeeklyBalanceForTransactions(incomeTransactions);
             (decimal monthIncome, decimal monthAverage) = _transactionService.GetMontlyBalanceForTransactions(incomeTransactions);
+
+            decimal dailySpendings = _transactionService.GetDailyBalanceForTransactions(expenditureTransactions);
+            (decimal weeklySpendings, decimal weeklySpendingsAverage) = _transactionService.GetWeeklyBalanceForTransactions(expenditureTransactions);
+            (decimal monthSpendings, decimal monthSpendingsAverage) = _transactionService.GetMontlyBalanceForTransactions(expenditureTransactions);
 
             return Ok(new
             {
@@ -93,34 +86,18 @@ namespace FinEdgeBackend.Controllers
                 WeeklyIncome = weeklyIncome,
                 WeeklyAverage = weeklyAverage,
                 MonthlyIncome = monthIncome,
-                MonthlyAverage = monthAverage
-            });
-        }
-
-        [HttpGet]
-        [Route("get/expenditure/amount")]
-        public async Task<IActionResult> GetExpenditureBalance()
-        {
-            User currentUser = await _userService.GetCurrentUserAsync();
-            ICollection<Transaction> expenditureTransactions = await _transactionService.GetAllExpenditureTransactionsAsync(currentUser);
-
-            decimal dailySpendings = _transactionService.GetDailyBalanceForTransactions(expenditureTransactions);
-            (decimal weeklySpendings, decimal weeklyAverage) = _transactionService.GetWeeklyBalanceForTransactions(expenditureTransactions);
-            (decimal monthSpendings, decimal monthAverage) = _transactionService.GetMontlyBalanceForTransactions(expenditureTransactions);
-
-            return Ok(new
-            {
+                MonthlyAverage = monthAverage,
                 DailySpendings = dailySpendings,
                 WeeklySpendings = weeklySpendings,
-                WeeklyAverage = weeklyAverage,
+                WeeklySpendingsAverage = weeklySpendingsAverage,
                 MonthlySpendings = monthSpendings,
-                MonthlyAverage = monthAverage
+                MonthlySpendingsAverage = monthSpendingsAverage
             });
         }
 
         [HttpPut]
-        [Route("update")]
-        public async Task<IActionResult> UpdateTransaction([FromQuery] int transactionID, [FromBody] TransactionDTO transactionDto)
+        [Route("update/{transactionID}")]
+        public async Task<IActionResult> UpdateTransaction(int transactionID, [FromBody] TransactionDTO transactionDto)
         {
             if (!_transactionService.Validate(transactionDto))
             {
@@ -130,16 +107,17 @@ namespace FinEdgeBackend.Controllers
             User currentUser = await _userService.GetCurrentUserAsync();
             Transaction transaction = await _transactionService.GetTransactionByIdAsync(transactionID);
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
-            Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
+            Account dtoAccount = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
+            Account originalAccount = transaction.Account!;
 
-            await _transactionService.UpdateTranssactionAsync(transactionDto, transaction, category, account);
+            await _transactionService.UpdateTranssactionAsync(transactionDto, transaction, category, dtoAccount, originalAccount, currentUser);
 
             return NoContent();
         }
 
         [HttpDelete]
-        [Route("delete")]
-        public async Task<IActionResult> DeleteTransaction([FromQuery] int transactionID)
+        [Route("delete/{transactionID}")]
+        public async Task<IActionResult> DeleteTransaction(int transactionID)
         {
             Transaction transaction = await _transactionService.GetTransactionByIdAsync(transactionID);
             Category category = transaction.Category!;

@@ -39,7 +39,6 @@ const useRefreshToken = () => {
     }, expiresIn * 1000);
   };
 
-
   return refresh;
 }
 
