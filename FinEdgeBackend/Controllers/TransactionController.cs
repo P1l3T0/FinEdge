@@ -106,8 +106,8 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
-        public async Task<IActionResult> UpdateTransaction([FromQuery] int transactionID, [FromBody] TransactionDTO transactionDto)
+        [Route("update/{transactionID}")]
+        public async Task<IActionResult> UpdateTransaction(int transactionID, [FromBody] TransactionDTO transactionDto)
         {
             if (!_transactionService.Validate(transactionDto))
             {
@@ -117,9 +117,10 @@ namespace FinEdgeBackend.Controllers
             User currentUser = await _userService.GetCurrentUserAsync();
             Transaction transaction = await _transactionService.GetTransactionByIdAsync(transactionID);
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
-            Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
+            Account dtoAccount = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
+            Account originalAccount = transaction.Account!;
 
-            await _transactionService.UpdateTranssactionAsync(transactionDto, transaction, category, account);
+            await _transactionService.UpdateTranssactionAsync(transactionDto, transaction, category, dtoAccount, originalAccount, currentUser);
 
             return NoContent();
         }

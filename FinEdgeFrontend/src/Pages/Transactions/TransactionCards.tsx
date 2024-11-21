@@ -8,7 +8,7 @@ const TransactionCards = ({ transactions }: { transactions: Transaction[] }) => 
     <>
       {transactions?.map((transaction, index) => (
         <Card key={index}>
-          <CardHeader>Category name: {transaction.name}</CardHeader>
+          <CardHeader>Transaction name: {transaction.name}</CardHeader>
           <CardBody>
             <fieldset>
               <legend> Details</legend>
