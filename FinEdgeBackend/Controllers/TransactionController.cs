@@ -64,15 +64,21 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpGet]
-        [Route("get/income/amount")]
-        public async Task<IActionResult> GetIncomeBalance()
+        [Route("get/reports")]
+        public async Task<IActionResult> GetReports()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
+
             ICollection<Transaction> incomeTransactions = await _transactionService.GetAllIncomeTransactionsAsync(currentUser);
+            ICollection<Transaction> expenditureTransactions = await _transactionService.GetAllExpenditureTransactionsAsync(currentUser);
 
             decimal dailyIncome = _transactionService.GetDailyBalanceForTransactions(incomeTransactions);
             (decimal weeklyIncome, decimal weeklyAverage) = _transactionService.GetWeeklyBalanceForTransactions(incomeTransactions);
             (decimal monthIncome, decimal monthAverage) = _transactionService.GetMontlyBalanceForTransactions(incomeTransactions);
+
+            decimal dailySpendings = _transactionService.GetDailyBalanceForTransactions(expenditureTransactions);
+            (decimal weeklySpendings, decimal weeklySpendingsAverage) = _transactionService.GetWeeklyBalanceForTransactions(expenditureTransactions);
+            (decimal monthSpendings, decimal monthSpendingsAverage) = _transactionService.GetMontlyBalanceForTransactions(expenditureTransactions);
 
             return Ok(new
             {
@@ -80,28 +86,12 @@ namespace FinEdgeBackend.Controllers
                 WeeklyIncome = weeklyIncome,
                 WeeklyAverage = weeklyAverage,
                 MonthlyIncome = monthIncome,
-                MonthlyAverage = monthAverage
-            });
-        }
-
-        [HttpGet]
-        [Route("get/expenditure/amount")]
-        public async Task<IActionResult> GetExpenditureBalance()
-        {
-            User currentUser = await _userService.GetCurrentUserAsync();
-            ICollection<Transaction> expenditureTransactions = await _transactionService.GetAllExpenditureTransactionsAsync(currentUser);
-
-            decimal dailySpendings = _transactionService.GetDailyBalanceForTransactions(expenditureTransactions);
-            (decimal weeklySpendings, decimal weeklyAverage) = _transactionService.GetWeeklyBalanceForTransactions(expenditureTransactions);
-            (decimal monthSpendings, decimal monthAverage) = _transactionService.GetMontlyBalanceForTransactions(expenditureTransactions);
-
-            return Ok(new
-            {
+                MonthlyAverage = monthAverage,
                 DailySpendings = dailySpendings,
                 WeeklySpendings = weeklySpendings,
-                WeeklyAverage = weeklyAverage,
+                WeeklySpendingsAverage = weeklySpendingsAverage,
                 MonthlySpendings = monthSpendings,
-                MonthlyAverage = monthAverage
+                MonthlySpendingsAverage = monthSpendingsAverage
             });
         }
 

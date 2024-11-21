@@ -36,5 +36,6 @@ export const gdeleteAllCategoriesEndPoint = `${categoryController}/delete-all`;
 //! Transactions
 export const createTransactionEndPoint = `${transactionController}/create`;
 export const getTransactionEndPoint = `${transactionController}/get`;
+export const getTransactionReportsEndPoint = `${transactionController}/get/reports`;
 export const updateTransactionEndPoint = `${transactionController}/update`;
 export const deleteTransactionEndPoint = `${transactionController}/delete`;

@@ -19,6 +19,7 @@ const DeleteTransaction = ({ transaction }: { transaction: Transaction }) => {
     mutationFn: deleteTransaction,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"], });
+      queryClient.invalidateQueries({ queryKey: ["reports"] });
     },
   });
 

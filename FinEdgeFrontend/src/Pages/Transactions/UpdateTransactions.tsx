@@ -51,6 +51,7 @@ const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
     mutationFn: updateTransaction,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"], });
+      queryClient.invalidateQueries({ queryKey: ["reports"] });
     },
   });
 

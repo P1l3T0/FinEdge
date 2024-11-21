@@ -98,7 +98,6 @@ export type Category = {
 
 //! Transactions
 
-
 export type Names = {
   accountNames: string[];
   categoryNames: string[];
@@ -124,6 +123,19 @@ export type TransactionResponse = {
   allTransactions: Transaction[];
   incomeTransactions: Transaction[];
   expenditureTransactions: Transaction[];
+}
+
+export type Reports = {
+  dailyIncome: number,
+  weeklyIncome: number,
+  weeklyAverage: number,
+  monthlyIncome: number,
+  monthlyAverage: number,
+  dailySpendings: number,
+  weeklySpendings: number,
+  weeklySpendingsAverage: number,
+  monthlySpendings: number,
+  monthlySpendingsAverage: number,
 }
 
 //! Enums
