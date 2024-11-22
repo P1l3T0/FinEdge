@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button } from "@progress/kendo-react-buttons";
 import { TextBox, TextBoxChangeEvent, } from "@progress/kendo-react-inputs";
 import { DropDownList, DropDownListChangeEvent } from '@progress/kendo-react-dropdowns';
-import { Account, AccountDTO } from '../../Utils/Types'
+import { AccountDTO } from '../../Utils/Types'
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { createAccountEndPoint } from '../../endpoints';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -36,8 +36,8 @@ const CreateAccounts = () => {
 
   const createAccount = async () => {
     await axios
-      .post<Account>(`${createAccountEndPoint}`, account, { withCredentials: true })
-      .then((res: AxiosResponse<Account>) => res.data)
+      .post<AccountDTO>(`${createAccountEndPoint}`, account, { withCredentials: true })
+      .then((res: AxiosResponse<AccountDTO>) => res.data)
       .catch((error: AxiosError) => {
         alert(error.response?.data);
       });

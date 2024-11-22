@@ -4,7 +4,7 @@ import { loginEndPoint } from '../../endpoints';
 import { useNavigate } from 'react-router-dom';
 import { TextBox, TextBoxChangeEvent } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
-import { LoginDTO, User } from '../../Utils/Types';
+import { LoginDTO } from '../../Utils/Types';
 import CustomLink from '../../Components/CustomLink';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -28,7 +28,7 @@ const Login = () => {
 
   const loginUser = async () => {
     await axios
-      .post<User>(`${loginEndPoint}`, user, { withCredentials: true })
+      .post<LoginDTO>(`${loginEndPoint}`, user, { withCredentials: true })
       .then(() => navigate("/home"))
       .catch((error: AxiosError) => {
         alert(error.response?.data);
