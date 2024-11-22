@@ -39,6 +39,7 @@ const TransactionsGrid = ({ transactions }: { transactions: Transaction[] }) => 
           <GridColumn field="amount" title="Amount" width="100px" />
           <GridColumn field="accountName" title="Account Name" width="130px" />
           <GridColumn field="categoryName" title="Category Name" width="130px" />
+          <GridColumn field="isRepeating" title="Is Repeating" width="130px" />
           <GridColumn field="dateCreated" title="Date Created" width="250px" cell={dateCell} />
         </Grid>
       </ExcelExport>

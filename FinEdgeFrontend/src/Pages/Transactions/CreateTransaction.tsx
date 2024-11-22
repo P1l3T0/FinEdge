@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { TransactionDTO } from "../../Utils/Types";
-import { TextBox, DropDownList, TextBoxChangeEvent, DropDownListChangeEvent, Button } from "@progress/kendo-react-all";
+import { TextBox, DropDownList, TextBoxChangeEvent, DropDownListChangeEvent, Button, Checkbox, CheckboxChangeEvent } from "@progress/kendo-react-all";
 import useGetNames from "../../Hooks/useGetNames";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
@@ -14,7 +14,8 @@ const CreateTransaction = () => {
     name: "",
     amount: 0,
     accountName: "",
-    categoryName: ""
+    categoryName: "",
+    isRepeating: false
   });
 
   useEffect(() => {
@@ -38,6 +39,13 @@ const CreateTransaction = () => {
     setTransaction({
       ...transaction,
       [e.target.props.name as string]: e.value
+    })
+  }
+
+  const handleCheckBoxChange = async (e: CheckboxChangeEvent) => {
+    setTransaction({
+      ...transaction,
+      [e.target.name as string]: e.value
     })
   }
 
@@ -78,6 +86,7 @@ const CreateTransaction = () => {
           <TextBox id='amount' name='amount' type='number' min={0} placeholder='Transaction amount' onChange={handleTextBoxChange} />
           <DropDownList id="account-name" name='accountName' data={data?.accountNames} defaultValue={data?.accountNames[0] ?? "Create at least 1 account"} onChange={handleDropDownChange} />
           <DropDownList id="category-name" name='categoryName' data={data?.categoryNames} defaultValue={data?.categoryNames[0] ?? "Create at least 1 category"} onChange={handleDropDownChange} />
+          <Checkbox id='isRepeating' name='isRepeating' type='checkbox' label="Is repeating" onChange={handleCheckBoxChange} />
 
           <Button id='add-transaction-button' themeColor='primary' onClick={handlerClick}>Add transaction</Button>
         </form>

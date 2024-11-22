@@ -156,6 +156,7 @@ namespace FinEdgeBackend.Services
             transaction.CategoryID = category.ID;
             transaction.Category = category;
             transaction.CategoryName = category.Name;
+            transaction.IsRepeating = transactionDto.IsRepeating;
 
             _dataContext.Transactions.Update(transaction);
             await _dataContext.SaveChangesAsync();

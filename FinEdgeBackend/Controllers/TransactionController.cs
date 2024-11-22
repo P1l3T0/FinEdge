@@ -41,6 +41,8 @@ namespace FinEdgeBackend.Controllers
                 CategoryID = category.ID,
                 Category = category,
                 CategoryName = category.Name,
+                IsRepeating = transactionDto.IsRepeating,
+                NextRepeatDate = transactionDto.IsRepeating ? DateTime.UtcNow.AddMonths(1) : null
             });
 
             return Created();

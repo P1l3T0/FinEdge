@@ -34,6 +34,11 @@ namespace FinEdgeBackend.Models
         [Required]
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
+        [Required]
+        public bool IsRepeating { get; set; }
+
+        public DateTime? NextRepeatDate { get; set; }
+
         [JsonIgnore]
         public Account? Account { get; set; }
 

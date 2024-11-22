@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Transaction, TransactionDTO } from '../../Utils/Types';
-import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownList, Window } from '@progress/kendo-react-all';
+import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownList, Window, CheckboxChangeEvent, Checkbox } from '@progress/kendo-react-all';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { updateTransactionEndPoint } from '../../endpoints';
@@ -15,7 +15,8 @@ const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
     name: transaction.name,
     amount: transaction.amount,
     accountName: transaction.accountName,
-    categoryName: transaction.categoryName
+    categoryName: transaction.categoryName,
+    isRepeating: transaction.isRepeating
   });
 
   const toggleDialog = () => {
@@ -35,6 +36,13 @@ const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
     setUpdatedTransaction({
       ...updatedTransaction,
       [e.target.props.name as string]: e.value
+    })
+  }
+
+  const handleCheckBoxChange = async (e: CheckboxChangeEvent) => {
+    setUpdatedTransaction({
+      ...updatedTransaction,
+      [e.target.name as string]: e.value
     })
   }
 
@@ -70,6 +78,7 @@ const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
               <legend>Transaction Details</legend>
               <TextBox id='name' name='name' type='text' placeholder='Transaction name' defaultValue={transaction.name} onChange={handleTextBoxChange} />
               <TextBox id='amount' name='amount' type='number' min={0} placeholder='Transaction amount' defaultValue={transaction.amount} onChange={handleTextBoxChange} />
+              <Checkbox id='isRepeating' name='isRepeating' type='checkbox' label="Is repeating" defaultValue={transaction.isRepeating} onChange={handleCheckBoxChange} />
               <DropDownList id="account-name" name='accountName' data={data?.accountNames} defaultValue={transaction.accountName} onChange={handleDropDownChange} />
             </fieldset>
 

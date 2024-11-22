@@ -143,6 +143,7 @@ export type TransactionDTO = {
   accountName: string;
   categoryName: string;
   amount: number;
+  isRepeating: boolean;
 }
 
 export type Transaction = {
@@ -152,6 +153,7 @@ export type Transaction = {
   categoryName: string;
   amount: number;
   dateCreated: Date;
+  isRepeating: boolean;
 }
 
 export type TransactionResponse = {

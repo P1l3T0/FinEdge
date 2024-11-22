@@ -15,6 +15,7 @@ const TransactionCards = ({ transactions }: { transactions: Transaction[] }) => 
               Amount: {transaction.amount} <br />
               Account Name: {transaction.accountName} <br />
               Category Name: {transaction.categoryName} <br />
+              Is repeating: {transaction.isRepeating.toString()} <br />
               Created at: {
                 new Date(transaction.dateCreated).toLocaleDateString("en-GB", {
                   day: "2-digit",
