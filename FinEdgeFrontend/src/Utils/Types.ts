@@ -1,3 +1,25 @@
+//! Common 
+
+export type LabelContentProps = {
+  category: string;
+  dataItem: {
+    name: string;
+    ammount: number;
+    color?: string;
+  };
+  percentage: number;
+  series: {
+    data: any[];
+    visible: boolean;
+    labels: Record<string, unknown>;
+    overlay: Record<string, unknown>;
+    rangeArea: Record<string, unknown>;
+    [key: string]: any;
+  };
+  value: number;
+};
+
+
 //! Auth
 
 export type Auth = {

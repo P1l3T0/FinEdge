@@ -1,8 +1,8 @@
 import { Chart, ChartTitle, ChartLegend, ChartSeries, ChartSeriesItem, ChartSeriesLabels } from "@progress/kendo-react-all";
-import { CategoryInfoDTO } from "../../../Utils/Types";
+import { CategoryInfoDTO, LabelContentProps } from "../../../Utils/Types";
 
 const CategoriesPie = ({ data, title }: { data: CategoryInfoDTO[], title: string }) => {
-  const labelContent = (props) => {
+  const labelContent = (props: LabelContentProps) => {
     const formatedNumber = parseFloat((props.percentage * 100).toPrecision(4))
     return `${props.dataItem.name} : ${formatedNumber} %`;
   };
