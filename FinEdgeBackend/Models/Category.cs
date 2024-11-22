@@ -27,6 +27,9 @@ namespace FinEdgeBackend.Models
         public bool IsIncome { get; set; }
 
         [Required]
+        public string? Color { get; set; }
+
+        [Required]
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
         public ICollection<Subcategory> Subcategories { get; set; } = new List<Subcategory>();

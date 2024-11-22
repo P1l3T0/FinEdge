@@ -6,5 +6,6 @@
         public string? Currency { get; set; }
         public decimal? Budget { get; set; } = 0;
         public bool IsIncome { get; set; }
+        public string? Color { get; set; }
     }
 }

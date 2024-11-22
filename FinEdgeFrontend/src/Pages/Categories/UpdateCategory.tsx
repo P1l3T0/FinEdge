@@ -1,4 +1,4 @@
-import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownList, Window, Checkbox, CheckboxChangeEvent } from '@progress/kendo-react-all';
+import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownList, Window, Checkbox, CheckboxChangeEvent, ColorPickerChangeEvent, ColorPicker, ColorPickerView } from '@progress/kendo-react-all';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useState } from 'react';
@@ -9,12 +9,14 @@ import { Category, CategoryDTO } from '../../Utils/Types';
 const UpdateCategory = ({ category }: { category: Category }) => {
   const queryClient = useQueryClient();
 
+  const [color, setColor] = useState<ColorPickerView>();
   const [visible, setVisible] = useState<boolean>(false);
   const [updateCategory, setUpdateCategory] = useState<CategoryDTO>({
     name: category.name,
     currency: category.currency,
     budget: category.budget,
-    isIncome: category.isIncome
+    isIncome: category.isIncome,
+    color: category.color
   });
 
   const toggleDialog = () => {
@@ -41,6 +43,14 @@ const UpdateCategory = ({ category }: { category: Category }) => {
     setUpdateCategory({
       ...updateCategory,
       [e.target.name as string]: e.value
+    })
+  }
+
+  const handleColorPickerChange = async (e: ColorPickerChangeEvent) => {
+    setColor(e.value as ColorPickerView);
+    setUpdateCategory({
+      ...updateCategory,
+      color: e.value
     })
   }
 
@@ -77,6 +87,7 @@ const UpdateCategory = ({ category }: { category: Category }) => {
               <TextBox id='budget' name='budget' type='number' min={0} placeholder='Category budget' defaultValue={category.budget} onChange={handleTextBoxChange} />
               <DropDownList id="currency" name='currency' data={currency} defaultValue={category.currency} onChange={handleDropDownChange} />
               <Checkbox id='isIncome' name='isIncome' type='checkbox' label="Is income" defaultValue={category.isIncome} onChange={handleCheckBoxChange} />
+              <ColorPicker id='color-picker' view={'combo'} onChange={handleColorPickerChange} value={color} defaultValue={updateCategory.color} />
             </fieldset>
 
             <div className="buttonDiv">

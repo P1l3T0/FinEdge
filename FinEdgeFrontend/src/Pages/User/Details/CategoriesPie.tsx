@@ -14,7 +14,7 @@ const CategoriesPie = ({ data, title }: { data: CategoryInfoDTO[], title: string
           <ChartTitle text={title} />
           <ChartLegend position="bottom" />
           <ChartSeries>
-            <ChartSeriesItem type="donut" data={data} categoryField="name" field="ammount">
+            <ChartSeriesItem type="donut" data={data} categoryField="name" field="ammount" colorField="color">
               <ChartSeriesLabels position="outsideEnd" content={labelContent} />
             </ChartSeriesItem>
           </ChartSeries>
@@ -24,4 +24,4 @@ const CategoriesPie = ({ data, title }: { data: CategoryInfoDTO[], title: string
   )
 }
 
-export default CategoriesPie
+export default CategoriesPie;

@@ -83,6 +83,7 @@ export type CategoryDTO = {
   currency: string;
   budget: number;
   isIncome: boolean;
+  color: string;
 }
 
 export type Category = {
@@ -93,6 +94,7 @@ export type Category = {
   balance: number;
   budget: number;
   isIncome: boolean;
+  color: string;
   dateCreated: Date;
 }
 
@@ -104,6 +106,7 @@ export type CategoryInfo = {
 export type CategoryInfoDTO = {
   name: string;
   ammount: number;
+  color: string;
 }
 
 //! Transactions

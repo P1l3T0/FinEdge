@@ -22,6 +22,7 @@ namespace FinEdgeBackend.Services
             category.Currency = categoryDto.Currency;
             category.Budget = categoryDto.Budget;
             category.IsIncome = categoryDto.IsIncome;
+            category.Color = categoryDto.Color;
 
             _dataContext.Categories.Update(category);
             await _dataContext.SaveChangesAsync();
@@ -67,7 +68,8 @@ namespace FinEdgeBackend.Services
                 .Select(c => new CategoryInfoDTO
                 {
                     Name = c.Name,
-                    Ammount = c.Balance ?? 0
+                    Ammount = c.Balance ?? 0,
+                    Color = c.Color,
                 })
                 .ToList();
         }

@@ -13,8 +13,8 @@ const CategoryCards = ({ categories, totalBalance, totalBudget, isIncome }: { ca
 
         {categories?.map((category, index) => (
           <Card key={index}>
-            <CardHeader>Category name: {category.name}</CardHeader>
-            <CardBody>
+            <CardHeader style={{ backgroundColor: category.color }}>Category name: {category.name}</CardHeader>
+            <CardBody style={{ backgroundColor: category.color }}>
               <fieldset>
                 <legend> Details</legend>
                 Balance: {category.balance} {category.currency} <br />
@@ -29,7 +29,7 @@ const CategoryCards = ({ categories, totalBalance, totalBudget, isIncome }: { ca
                 }
               </fieldset>
             </CardBody>
-            <CardFooter>
+            <CardFooter style={{ backgroundColor: category.color }}>
               <UpdateCategory category={category} />
               <DeleteCategory category={category} />
             </CardFooter>

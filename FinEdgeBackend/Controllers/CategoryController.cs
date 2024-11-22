@@ -37,6 +37,7 @@ namespace FinEdgeBackend.Controllers
                 Currency = categoryDto.Currency,
                 Budget = categoryDto.Budget,
                 IsIncome = categoryDto.IsIncome,
+                Color = categoryDto.Color,
                 DateCreated = DateTime.Now
             });
 

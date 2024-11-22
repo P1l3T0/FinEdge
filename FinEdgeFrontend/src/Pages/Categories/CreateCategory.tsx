@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Category, CategoryDTO } from '../../Utils/Types';
-import { TextBoxChangeEvent, DropDownListChangeEvent, TextBox, DropDownList, Button, Checkbox, CheckboxChangeEvent } from '@progress/kendo-react-all';
+import { CategoryDTO } from '../../Utils/Types';
+import { TextBoxChangeEvent, DropDownListChangeEvent, TextBox, DropDownList, Button, Checkbox, CheckboxChangeEvent, ColorPicker, ColorPickerChangeEvent, ColorPickerView } from '@progress/kendo-react-all';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { createCategoryEndPoint } from '../../endpoints';
@@ -9,11 +9,13 @@ import { currency } from '../../Utils/Functions';
 const CreateCategory = () => {
   const queryClient = useQueryClient();
 
+  const [color, setColor] = useState<ColorPickerView>();
   const [category, setCategory] = useState<CategoryDTO>({
     name: "",
     budget: 0,
     currency: currency[0],
-    isIncome: false
+    isIncome: false,
+    color: "rgba(255, 255, 255, 1)"
   });
 
   const handleTextBoxChange = async (e: TextBoxChangeEvent) => {
@@ -39,10 +41,18 @@ const CreateCategory = () => {
     })
   }
 
+  const handleColorPickerChange = async (e: ColorPickerChangeEvent) => {
+    setColor(e.value as ColorPickerView);
+    setCategory({
+      ...category,
+      color: e.value
+    })
+  }
+
   const createCategory = async () => {
     await axios
-      .post<Category>(`${createCategoryEndPoint}`, category, { withCredentials: true })
-      .then((res: AxiosResponse<Category>) => res.data)
+      .post<CategoryDTO>(`${createCategoryEndPoint}`, category, { withCredentials: true })
+      .then((res: AxiosResponse<CategoryDTO>) => res.data)
       .catch((error: AxiosError) => {
         alert(error.response?.data);
       });
@@ -70,6 +80,7 @@ const CreateCategory = () => {
           <TextBox id='budget' name='budget' type='number' min={0} placeholder='Category budget' onChange={handleTextBoxChange} />
           <DropDownList id="currency" name='currency' data={currency} defaultValue={currency[0]} onChange={handleDropDownChange} />
           <Checkbox id='isIncome' name='isIncome' type='checkbox' label="Is income" onChange={handleCheckBoxChange} />
+          <ColorPicker id='color-picker' view={'combo'} onChange={handleColorPickerChange} value={color} defaultValue={category.color} />
 
           <Button id='add-category-button' themeColor='primary' onClick={handlerClick}>Add category</Button>
         </form>
