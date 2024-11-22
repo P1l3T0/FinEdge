@@ -1,0 +1,8 @@
+﻿namespace FinEdgeBackend.DTOs
+{
+    public class CategoryInfoDTO
+    {
+        public string? Name { get; set; }
+        public decimal Ammount { get; set; }
+    }
+}

@@ -12,6 +12,7 @@ namespace FinEdgeBackend.Interfaces
         Task<ICollection<Category>> GetAllCategoriesForCurrentUserAsync(User user);    
         ICollection<Category> GetExpenditureCategories(ICollection<Category> categories);
         ICollection<Category> GetIncomeCategories(ICollection<Category> categories);
+        ICollection<CategoryInfoDTO> GetCategoryInfo(ICollection<Category> categories);
         Task DeleteCategoryAsync(Category category);
         Task DeleteAllCategoriesAsync(ICollection<Category> categories);
         decimal GetBalanceForExpenditureCategory(Category category);

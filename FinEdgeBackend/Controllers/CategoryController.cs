@@ -68,6 +68,27 @@ namespace FinEdgeBackend.Controllers
             });
         }
 
+        [HttpGet]
+        [Route("get/info")]
+        public async Task<IActionResult> GetInfoForCategories()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Category> incomeCategories = _categoryService.GetIncomeCategories(currentUser.Categories!);
+            ICollection<Category> expenditureCategories = _categoryService.GetExpenditureCategories(currentUser.Categories!);
+
+            ICollection<CategoryInfoDTO> incomeInfo = _categoryService.GetCategoryInfo(incomeCategories);
+            ICollection<CategoryInfoDTO> expenditureInfo = _categoryService.GetCategoryInfo(expenditureCategories);
+
+            decimal totalIncome = incomeInfo.Sum(i => i.Ammount);
+            decimal totalExpense= expenditureInfo.Sum(i => i.Ammount);
+
+            return Ok(new
+            {
+                IncomeInfo = incomeInfo,
+                ExpenditureInfo = expenditureInfo
+            });
+        }
+
         [HttpPut]
         [Route("update/{categoryID}")]
         public async Task<IActionResult> UpdateCategory(int categoryID, [FromBody] CategoryDTO categoryDto)

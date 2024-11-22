@@ -61,6 +61,17 @@ namespace FinEdgeBackend.Services
             return categories.Where(category => category.IsIncome).ToList();
         }
 
+        public ICollection<CategoryInfoDTO> GetCategoryInfo(ICollection<Category> categories)
+        {
+            return categories
+                .Select(c => new CategoryInfoDTO
+                {
+                    Name = c.Name,
+                    Ammount = c.Balance ?? 0
+                })
+                .ToList();
+        }
+
         public async Task DeleteCategoryAsync(Category category)
         {
             _dataContext.Categories.Remove(category);
