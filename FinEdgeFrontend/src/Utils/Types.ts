@@ -96,6 +96,16 @@ export type Category = {
   dateCreated: Date;
 }
 
+export type CategoryInfo = {
+  incomeInfo: CategoryInfoDTO[];
+  expenditureInfo: CategoryInfoDTO[];
+}
+
+export type CategoryInfoDTO = {
+  name: string;
+  ammount: number;
+}
+
 //! Transactions
 
 export type Names = {

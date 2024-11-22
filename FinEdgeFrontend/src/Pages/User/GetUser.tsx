@@ -6,6 +6,7 @@ import AccountsGrid from "./Details/AccountsGrid";
 import CategoriesGrid from "./Details/CategoriesGrid";
 import TransactionsGrid from "./Details/TransactionsGrid";
 import useGetUser from "../../Hooks/useGetUser";
+import CategoriesInfo from "./Details/CategoriesInfo";
 
 const GetUser = () => {
   const { data, isLoading, isError, error } = useGetUser();
@@ -29,6 +30,8 @@ const GetUser = () => {
       <AccountsGrid accounts={data?.accounts!} />
       <CategoriesGrid categories={data?.categories!} />
       <TransactionsGrid transactions={data?.transactions!} />
+
+      <CategoriesInfo />
     </>
   )
 }

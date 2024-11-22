@@ -13,12 +13,12 @@ const usesGetCategories = () => {
       });
   };
 
-  const incomeCategoriesQuery = useQuery({
+  const categoriesQuery = useQuery({
     queryKey: ["categories"],
     queryFn: getCategories
   })
 
-  const { data, isLoading, isError, error } = incomeCategoriesQuery;
+  const { data, isLoading, isError, error } = categoriesQuery;
 
   return { data, isLoading, isError, error }
 }
