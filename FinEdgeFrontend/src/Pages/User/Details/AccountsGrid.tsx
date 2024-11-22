@@ -13,10 +13,22 @@ const AccountsGrid = ({ accounts }: { accounts: Account[] }) => {
     }
   };
 
-  const AccountTypeCell = (props: GridCellProps) => {
+  const accountTypeCell = (props: GridCellProps) => {
     const accountTypeValue: number = props.dataItem[props.field || ''];
     const accountTypeLabel: string = getEnumValueFromNumber(accountTypeValue, AccountType);
+
     return <td>{accountTypeLabel}</td>;
+  };
+
+  const dateCell = (props: GridCellProps) => {
+    const dateValue: Date = new Date(props.dataItem[props.field || '']);
+    const formattedDate: string = dateValue.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
+
+    return <td>{formattedDate}</td>;
   };
 
   return (
@@ -34,8 +46,8 @@ const AccountsGrid = ({ accounts }: { accounts: Account[] }) => {
           <GridColumn field="name" title="Name" width="100px" />
           <GridColumn field="balance" title="Balance" width="100px" />
           <GridColumn field="currency" title="Currency" width="100px" />
-          <GridColumn field="accountType" title="Account Type" width="125px" cell={AccountTypeCell} />
-          <GridColumn field="dateCreated" title="Date Created" width="250px" format="{0:dd/mm/yyyy}" />
+          <GridColumn field="accountType" title="Account Type" width="125px" cell={accountTypeCell} />
+          <GridColumn field="dateCreated" title="Date Created" width="250px" cell={dateCell} />
         </Grid>
       </ExcelExport>
     </>

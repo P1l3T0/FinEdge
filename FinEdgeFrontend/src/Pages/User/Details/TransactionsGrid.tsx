@@ -1,4 +1,4 @@
-import { Button, ExcelExport, Grid, GridColumn, GridToolbar } from "@progress/kendo-react-all";
+import { Button, ExcelExport, Grid, GridCellProps, GridColumn, GridToolbar } from "@progress/kendo-react-all";
 import { Transaction } from "../../../Utils/Types";
 import { useRef } from "react";
 import { CSVLink } from "react-csv";
@@ -10,6 +10,17 @@ const TransactionsGrid = ({ transactions }: { transactions: Transaction[] }) => 
     if (_export.current !== null) {
       _export.current.save();
     }
+  };
+
+  const dateCell = (props: GridCellProps) => {
+    const dateValue: Date = new Date(props.dataItem[props.field || '']);
+    const formattedDate: string = dateValue.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
+
+    return <td>{formattedDate}</td>;
   };
 
   return (
@@ -28,7 +39,7 @@ const TransactionsGrid = ({ transactions }: { transactions: Transaction[] }) => 
           <GridColumn field="amount" title="Amount" width="100px" />
           <GridColumn field="accountName" title="Account Name" width="130px" />
           <GridColumn field="categoryName" title="Category Name" width="130px" />
-          <GridColumn field="dateCreated" title="Date Created" width="250px" format="{0:dd/mm/yyyy}" />
+          <GridColumn field="dateCreated" title="Date Created" width="250px" cell={dateCell} />
         </Grid>
       </ExcelExport>
     </>
