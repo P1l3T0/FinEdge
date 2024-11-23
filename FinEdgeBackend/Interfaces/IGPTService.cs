@@ -4,6 +4,6 @@ namespace FinEdgeBackend.Interfaces
 {
     public interface IGPTService
     {
-        public Task<FinancialRecommendation> Ask(string prompt, User currentUser);
+        public Task Ask(string prompt, User currentUser);
     }
 }

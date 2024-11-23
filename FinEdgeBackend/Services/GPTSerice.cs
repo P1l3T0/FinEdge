@@ -11,7 +11,7 @@ namespace FinEdgeBackend.Services
         private readonly IConfiguration _configuration = configuration;
         private readonly DataContext _dataContext = dataContext;
 
-        public async Task<FinancialRecommendation> Ask(string prompt, User currentUser)
+        public async Task Ask(string prompt, User currentUser)
         {
             string apiKey = _configuration.GetSection("Appsettings:OpenAIAPIKEY").Value!;
             string model = _configuration.GetSection("Appsettings:Model").Value!;
@@ -20,17 +20,14 @@ namespace FinEdgeBackend.Services
             ClientResult<ChatCompletion> completion = await chatClient.CompleteChatAsync(prompt);
             string response = completion.Value.Content[0].Text.Trim();
 
-            FinancialRecommendation financialRecommendation = new FinancialRecommendation
+            _dataContext.FinancialRecommendations.Add(new FinancialRecommendation
             {
                 Recommendation = response, 
                 UserID = currentUser.ID,
                 User = currentUser
-            };
+            });
 
-            _dataContext.FinancialRecommendations.Add(financialRecommendation);
             await _dataContext.SaveChangesAsync();
-
-            return financialRecommendation;
         }
     }
 }

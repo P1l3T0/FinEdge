@@ -1,29 +1,55 @@
 ﻿using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FinancialRecommendationController(IGPTService gPTService, IUserService userService) : Controller
+    public class FinancialRecommendationController(IGPTService gPTService, IUserService userService, ITransactionService transactionService) : Controller
     {
         private readonly IGPTService _gPTService = gPTService;
         private readonly IUserService _userSerice = userService;
+        private readonly ITransactionService _transactionService = transactionService;
 
         [HttpGet]
         [Route("get")]
         public async Task<IActionResult> GetFinancialRecommendation()
+        [HttpPost]
+        [Route("post")]
+        public async Task<IActionResult> CreateFinancialRecommendation([FromBody] DateRequest dateRequest)
         {
+            if (!DateTime.TryParse(dateRequest.DateString, out DateTime parsedDate))
+        {
+                return BadRequest("Invalid date. Please use a valid date.");
+            }
+
             User currentUser = await _userSerice.GetCurrentUserAsync();
+            ICollection<Transaction> transactions = _transactionService.GetTransactionsFromSpecifiedDate(currentUser.Transactions, parsedDate);
 
-            string propt = @$"I am a user who wants to keep track of all of my finances, so I have created the following accounts {currentUser.Accounts}, categories: {currentUser.Categories} and transactions: {currentUser.Transactions}.
-                    I want to get information based on how much money I have spent in the last week and if a transaction appears unusually higher price and makes a category go beyond its declared budget, I want some recommendations what to do next time
-                    so I don't spend that much money";
+            string accountsJson = JsonSerializer.Serialize(currentUser.Accounts, new JsonSerializerOptions { WriteIndented = true });
+            string categoriesJson = JsonSerializer.Serialize(currentUser.Categories, new JsonSerializerOptions { WriteIndented = true });
+            string transactionsJson = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
 
-            FinancialRecommendation financialRecommendation = await _gPTService.Ask(propt, currentUser);
+            string prompt = @$"
+                I am a user managing my personal finances and tracking all my spending habits. Here's an overview of my financial data:
+                Accounts: {accountsJson}, Categories: {categoriesJson}, Transactions: {transactionsJson}. All the transactions are from {parsedDate} until today.
 
-            return Ok(financialRecommendation);
+                The main issues that concern me as a user are: 
+                - I want to know if my spendings and allocation of finances align with my chosen financial methodology: {currentUser.MethodologyType}. If my spending habbits do not align with the category, please provide suggestions on how to fix them.
+                - Identify any unusually high spending in the past week or month and suggest ways to avoid it.
+                - Highlight categories where spending is close to or has exceeded the budget (if it is an income category, that is good).
+                - Flag recurring transactions or subscriptions that might not be necessary.
+                - Recommend ways to manage cash flow better and align expenses with income.
+                - Suggest practical tips to save money or optimize spending in overspent categories.
+                - If there are opportunities to grow savings or invest, provide recommendations.
+
+                Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. A simple, clear explanation is enough.";
+
+            await _gPTService.Ask(prompt, currentUser);
+
+            return Created();
         }
     }
 }
