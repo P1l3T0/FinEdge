@@ -7,21 +7,29 @@ namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FinancialRecommendationController(IGPTService gPTService, IUserService userService, ITransactionService transactionService) : Controller
+    public class FinancialRecommendationController(IGPTService gPTService, IUserService userService, ITransactionService transactionService, IFinancialRecommendationService financialRecommendationService) : Controller
     {
         private readonly IGPTService _gPTService = gPTService;
         private readonly IUserService _userSerice = userService;
         private readonly ITransactionService _transactionService = transactionService;
+        private readonly IFinancialRecommendationService _financialRecommendationService = financialRecommendationService;
 
         [HttpGet]
         [Route("get")]
-        public async Task<IActionResult> GetFinancialRecommendation()
+        public async Task<IActionResult> GetFinancialRecommendations()
+        {
+            User currentUser = await _userSerice.GetCurrentUserAsync();
+            ICollection<FinancialRecommendation> financialRecommendations = currentUser.FinancialRecommendations;
+
+            return Ok(financialRecommendations);
+        }
+
         [HttpPost]
         [Route("post")]
         public async Task<IActionResult> CreateFinancialRecommendation([FromBody] DateRequest dateRequest)
         {
             if (!DateTime.TryParse(dateRequest.DateString, out DateTime parsedDate))
-        {
+            {
                 return BadRequest("Invalid date. Please use a valid date.");
             }
 
@@ -47,9 +55,23 @@ namespace FinEdgeBackend.Controllers
 
                 Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. A simple, clear explanation is enough.";
 
-            await _gPTService.Ask(prompt, currentUser);
+            FinancialRecommendation financialRecommendation =  await _gPTService.Ask(prompt, currentUser);
+
+            await _financialRecommendationService.CreateRecommendationAsync(financialRecommendation);
 
             return Created();
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteFinancialRecommendations()
+        {
+            User currentUser = await _userSerice.GetCurrentUserAsync();
+            ICollection<FinancialRecommendation> financialRecommendations = currentUser.FinancialRecommendations;
+
+            await _financialRecommendationService.DeleteRecommendationsAsync(financialRecommendations);
+
+            return Ok();
         }
     }
 }
