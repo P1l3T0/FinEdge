@@ -29,8 +29,8 @@ const CategoriesGrid = ({ categories }: { categories: Category[] }) => {
       <ExcelExport fileName="Categories" data={categories} ref={_export}>
         <Grid data={categories} style={{ width: "750px", height: "auto" }}>
           <GridToolbar>
-            <Button themeColor={'primary'} type="button" onClick={hanleExcelExport}>Export to Excel</Button>
-            <Button themeColor={'primary'} type="button">
+            <Button themeColor={'primary'} type="button" onClick={hanleExcelExport} disabled={categories.length === 0}>Export to Excel</Button>
+            <Button themeColor={'primary'} type="button" disabled={categories.length === 0}>
               <CSVLink filename="Categories" data={categories}>Export to CSV</CSVLink>
             </Button>
           </GridToolbar>
