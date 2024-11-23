@@ -1,3 +1,5 @@
+using DotNetEnv;
+using DotNetEnv.Configuration;
 using FinEdgeBackend.Data;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Interfaces.Auth;
@@ -11,6 +13,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables()
+    .AddDotNetEnv(".env", LoadOptions.TraversePath())
+    .Build();
 
 builder.Services.AddCors();
 builder.Services.AddControllers();
@@ -81,6 +90,7 @@ builder.Services!.AddScoped<ISubcategoryService, SubcategoryService>();
 builder.Services!.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ISnapshotService, SnapshotService>();
 builder.Services!.AddScoped<IRefreshTokenService, RefreshTokenService>();
+builder.Services!.AddScoped<IGPTService, GPTService>();
 
 var app = builder.Build();
 

@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+		<PackageReference Include="DotNetEnv" Version="3.1.1" />
 		<PackageReference Include="Hangfire" Version="1.8.15" />
 		<PackageReference Include="Hangfire.AspNetCore" Version="1.8.15" />
 		<PackageReference Include="JWT" Version="10.1.1" />
@@ -23,12 +24,13 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="OpenAI" Version="2.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.9.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Migrations\" />
+	    <Folder Include="Migrations\" />
 	</ItemGroup>
 
 </Project>
