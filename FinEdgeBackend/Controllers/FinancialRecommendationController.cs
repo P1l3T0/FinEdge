@@ -1,4 +1,5 @@
-﻿using FinEdgeBackend.Interfaces;
+﻿using FinEdgeBackend.DTOs;
+using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -55,9 +56,14 @@ namespace FinEdgeBackend.Controllers
 
                 Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. A simple, clear explanation is enough.";
 
-            FinancialRecommendation financialRecommendation =  await _gPTService.Ask(prompt, currentUser);
+            GPTResponseDTO response =  await _gPTService.Ask(prompt, currentUser);
 
-            await _financialRecommendationService.CreateRecommendationAsync(financialRecommendation);
+            await _financialRecommendationService.CreateRecommendationAsync(new FinancialRecommendation
+            {
+                Recommendation = response.Response,
+                UserID = currentUser.ID,
+                User = currentUser
+            }); 
 
             return Created();
         }

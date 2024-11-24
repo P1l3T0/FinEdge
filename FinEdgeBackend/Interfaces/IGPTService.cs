@@ -1,9 +1,10 @@
-﻿using FinEdgeBackend.Models;
+﻿using FinEdgeBackend.DTOs;
+using FinEdgeBackend.Models;
 
 namespace FinEdgeBackend.Interfaces
 {
     public interface IGPTService
     {
-        public Task<FinancialRecommendation> Ask(string prompt, User currentUser);
+        public Task<GPTResponseDTO> Ask(string prompt, User currentUser);
     }
 }
