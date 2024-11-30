@@ -3,7 +3,6 @@ using FinEdgeBackend.DTOs;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Eventing.Reader;
 
 namespace FinEdgeBackend.Services
 {
@@ -53,6 +52,11 @@ namespace FinEdgeBackend.Services
         public async Task<ICollection<Transaction>> GetAllTransactionsForCategoryAsync(Category category)
         {
             return await _dataContext.Transactions.Where(t => t.Category!.Equals(category)).ToListAsync();
+        }
+
+        public ICollection<Transaction> GetTransactionsFromSpecifiedDate(ICollection<Transaction> transactions, DateTime date)
+        {
+            return transactions.Where(t => t.DateCreated >= date).ToList();
         }
 
         public async Task UpdateTranssactionAsync(TransactionDTO transactionDto, Transaction transaction, Category category, Account newAccount, Account originalAccount, User currentUser)

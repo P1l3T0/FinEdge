@@ -443,4 +443,7 @@ FodyWeavers.xsd
 # Ignore migrations
 Migrations/
 
+# Ignore Environment files
+.env
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode

@@ -1,3 +1,17 @@
+//! Enums
+
+export enum MethodologyType {
+  ZeroBasedBudgeting = 0,
+  PayYourselfFirst = 1,
+  FiftyThirtyTwenty = 2
+}
+
+export enum AccountType {
+  Regular = 0,
+  Savings = 1,
+  Debt = 2
+}
+
 //! Common 
 
 export type LabelContentProps = {
@@ -18,7 +32,6 @@ export type LabelContentProps = {
   };
   value: number;
 };
-
 
 //! Auth
 
@@ -45,6 +58,7 @@ export type User = {
   email: string;
   methodologyType: string;
   totalBalance: number;
+  dateCreated: string;
   accounts: Account[];
   categories: Category[];
   transactions: Transaction[];
@@ -173,18 +187,4 @@ export type Reports = {
   weeklySpendingsAverage: number,
   monthlySpendings: number,
   monthlySpendingsAverage: number,
-}
-
-//! Enums
-
-export enum MethodologyType {
-  ZeroBasedBudgeting = 0,
-  PayYourselfFirst = 1,
-  FiftyThirtyTwenty = 2
-}
-
-export enum AccountType {
-  Regular = 0,
-  Savings = 1,
-  Debt = 2
 }

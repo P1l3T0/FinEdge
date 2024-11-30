@@ -29,8 +29,8 @@ const TransactionsGrid = ({ transactions }: { transactions: Transaction[] }) => 
       <ExcelExport fileName="Transactions" data={transactions} ref={_export}>
         <Grid data={transactions} style={{ width: "750px", height: "auto" }}>
           <GridToolbar>
-            <Button themeColor={'primary'} type="button" onClick={hanleExcelExport}>Export to Excel</Button>
-            <Button themeColor={'primary'} type="button">
+            <Button themeColor={'primary'} type="button" onClick={hanleExcelExport} disabled={transactions.length === 0}>Export to Excel</Button>
+            <Button themeColor={'primary'} type="button" disabled={transactions.length === 0}>
               <CSVLink filename="Transactions" data={transactions}>Export to CSV</CSVLink>
             </Button>
           </GridToolbar>

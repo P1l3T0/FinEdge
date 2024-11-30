@@ -4,13 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace FinEdgeBackend.Models
 {
-    public class CategorySnapshot
+    public class CategorySnapshot : BaseModel
     {
-        public int ID { get; set; }
-
-        [Required]
-        public int CategoryID { get; set; }
-
         [Required]
         public string? MonthName { get; set; }
 
@@ -23,7 +18,7 @@ namespace FinEdgeBackend.Models
         public decimal TotalExpenses { get; set; } = 0;
 
         [Required]
-        public DateTime DateCreated { get; set; }
+        public int CategoryID { get; set; }
 
         [JsonIgnore]
         public Category? Category { get; set; }

@@ -4,13 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace FinEdgeBackend.Models
 {
-    public class Category
+    public class Category : BaseModel
     {
-        public int ID { get; set; }
-
-        [Required]
-        public int UserID { get; set; }
-
         [Required] 
         public string? Name { get; set; } 
 
@@ -28,15 +23,10 @@ namespace FinEdgeBackend.Models
 
         [Required]
         public string? Color { get; set; }
-
-        [Required]
-        public DateTime DateCreated { get; set; } = DateTime.Now;
-
         public ICollection<Subcategory> Subcategories { get; set; } = new List<Subcategory>();
 
         [Required]
-        [JsonIgnore]
-        public int TransactionID { get; set; }
+        public int UserID { get; set; }
 
         [JsonIgnore]
         public User? User { get; set; }

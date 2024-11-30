@@ -5,13 +5,8 @@ using System.Text.Json.Serialization;
 
 namespace FinEdgeBackend.Models
 {
-    public class Account
+    public class Account : BaseModel
     {
-        public int ID { get; set; }
-
-        [Required]
-        public int UserID { get; set; }
-
         [Required]
         public string? Name { get; set; }
 
@@ -22,10 +17,10 @@ namespace FinEdgeBackend.Models
         public decimal? Balance { get; set; } = 0;
 
         [Required]
-        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public AccountType AccountType { get; set; }
 
         [Required]
-        public AccountType AccountType { get; set; }
+        public int UserID { get; set; }
 
         [JsonIgnore]
         public User? User { get; set; }

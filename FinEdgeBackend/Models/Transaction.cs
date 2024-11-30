@@ -4,26 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace FinEdgeBackend.Models
 {
-    public class Transaction
+    public class Transaction : BaseModel
     {
-        [Key]
-        public int ID { get; set; }
-
-        [Required]
-        public int UserID { get; set; }
-
-        [Required]
-        public int AccountID { get; set; }
-
-        [Required]
-        public string? AccountName { get; set; }
-
-        [Required]
-        public int CategoryID { get; set; }
-
-        [Required]
-        public string? CategoryName { get; set; }
-
         [Required]
         public string? Name { get; set; } 
 
@@ -32,18 +14,30 @@ namespace FinEdgeBackend.Models
         public decimal? Amount { get; set; }
 
         [Required]
-        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public string? AccountName { get; set; }
+
+        [Required]
+        public string? CategoryName { get; set; }
 
         [Required]
         public bool IsRepeating { get; set; }
 
         public DateTime? NextRepeatDate { get; set; }
 
+        [Required]
+        public int AccountID { get; set; }
+
         [JsonIgnore]
         public Account? Account { get; set; }
 
+        [Required]
+        public int CategoryID { get; set; }
+
         [JsonIgnore]
         public Category? Category { get; set; }
+
+        [Required]
+        public int UserID { get; set; }
 
         [JsonIgnore]
         public User? User { get; set; }

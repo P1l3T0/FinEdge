@@ -22,7 +22,11 @@ const GetUser = () => {
         Email: {data?.email} <br />
         Total Balance: {data?.totalBalance} <br />
         Methodology: {getEnumValueFromNumber(parseInt(data?.methodologyType!), MethodologyType)} <br />
-
+        Date created: {new Date(data?.dateCreated!).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })} <br />
         <UpdateUser user={data!} />
         <DeleteUser />
       </div>
