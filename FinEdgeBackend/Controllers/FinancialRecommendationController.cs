@@ -55,7 +55,8 @@ namespace FinEdgeBackend.Controllers
                 - Suggest practical tips to save money or optimize spending in overspent categories.
                 - If there are opportunities to grow savings or invest, provide recommendations.
 
-                Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. A simple, clear explanation is enough.".Trim();
+                Also I want your response to always start with something like 'Recommendations based on data from {parsedDate.ToShortDateString()} to today (or similar sentences). The responsse should include how much money has been spent overall, on what categories 
+                and suggestions based on the above list. Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. A simple, clear explanation is enough.".Trim();
 
             GPTResponseDTO gPTResponse =  await _gPTService.Ask(prompt, currentUser);
 

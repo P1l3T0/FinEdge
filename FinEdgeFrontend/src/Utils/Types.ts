@@ -191,7 +191,7 @@ export type Reports = {
 
 //! Financial Recommendations
 
-export type financialRecommendation = {
+export type FinancialRecommendation = {
   id: number;
   userID: number;
   recommendation: string;
