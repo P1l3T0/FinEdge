@@ -17,6 +17,7 @@ namespace FinEdgeBackend.Controllers
 
         [HttpGet]
         [Route("get")]
+        [ProducesResponseType(200, Type = typeof(ICollection<FinancialRecommendation>))]
         public async Task<IActionResult> GetFinancialRecommendations()
         {
             User currentUser = await _userSerice.GetCurrentUserAsync();
@@ -26,7 +27,7 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpPost]
-        [Route("post")]
+        [Route("create")]
         public async Task<IActionResult> CreateFinancialRecommendation([FromBody] DateRequest dateRequest)
         {
             if (!DateTime.TryParse(dateRequest.DateString, out DateTime parsedDate))
@@ -54,13 +55,13 @@ namespace FinEdgeBackend.Controllers
                 - Suggest practical tips to save money or optimize spending in overspent categories.
                 - If there are opportunities to grow savings or invest, provide recommendations.
 
-                Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. A simple, clear explanation is enough.";
+                Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. A simple, clear explanation is enough.".Trim();
 
-            GPTResponseDTO response =  await _gPTService.Ask(prompt, currentUser);
+            GPTResponseDTO gPTResponse =  await _gPTService.Ask(prompt, currentUser);
 
             await _financialRecommendationService.CreateRecommendationAsync(new FinancialRecommendation
             {
-                Recommendation = response.Response,
+                Recommendation = gPTResponse.Response,
                 UserID = currentUser.ID,
                 User = currentUser
             }); 
@@ -77,7 +78,7 @@ namespace FinEdgeBackend.Controllers
 
             await _financialRecommendationService.DeleteRecommendationsAsync(financialRecommendations);
 
-            return Ok();
+            return NoContent();
         }
     }
 }
