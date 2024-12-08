@@ -188,3 +188,16 @@ export type Reports = {
   monthlySpendings: number,
   monthlySpendingsAverage: number,
 }
+
+//! Financial Recommendations
+
+export type FinancialRecommendation = {
+  id: number;
+  userID: number;
+  recommendation: string;
+  dateCreated: Date;
+}
+
+export type DateRequest = {
+  dateString: string;
+}

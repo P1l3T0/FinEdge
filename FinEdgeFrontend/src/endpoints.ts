@@ -6,6 +6,7 @@ const userController: string | undefined = `${baseURL}/user`;
 const accountController: string | undefined = `${baseURL}/accounts`;
 const categoryController: string | undefined = `${baseURL}/category`;
 const transactionController: string | undefined = `${baseURL}/transaction`;
+const financialRecommendationsController: string | undefined = `${baseURL}/financialRecommendation`;
 
 //! Authentication
 export const registerEndPoint = `${authController}/register`;
@@ -40,3 +41,8 @@ export const getTransactionEndPoint = `${transactionController}/get`;
 export const getTransactionReportsEndPoint = `${transactionController}/get/reports`;
 export const updateTransactionEndPoint = `${transactionController}/update`;
 export const deleteTransactionEndPoint = `${transactionController}/delete`;
+
+//! Financial Recommendations
+export const createFinancialRecommendationEndPoint = `${financialRecommendationsController}/create`;
+export const getFinancialRecommendationEndPoint = `${financialRecommendationsController}/get`;
+export const deleteFinancialRecommendationEndPoint = `${financialRecommendationsController}/delete`;
