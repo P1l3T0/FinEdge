@@ -41,7 +41,7 @@ const CreateFinancialRecommendations = () => {
 
   return (
     <>
-      <DatePicker width={200} onChange={handleDateChange} /> <br />
+      <DatePicker width={200} max={new Date()} onChange={handleDateChange} /> <br />
       <Button themeColor={"primary"} onClick={handleButtonClick}>Create recommendations</Button>
     </>
   )
