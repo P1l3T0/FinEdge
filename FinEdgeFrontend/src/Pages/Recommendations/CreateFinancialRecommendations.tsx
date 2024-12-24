@@ -1,28 +1,30 @@
-import { Button } from '@progress/kendo-react-all';
 import { DatePicker, DatePickerChangeEvent } from '@progress/kendo-react-dateinputs';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
-import { DateRequest } from '../../Utils/Types';
+import { PromptRequestData } from '../../Utils/Types';
 import { createFinancialRecommendationEndPoint } from '../../endpoints';
+import AIPromptComponent from './AIPrompt/AIPromptComponent';
 
 const CreateFinancialRecommendations = () => {
   const queryClient = useQueryClient();
-  const [fromDate, setFromDate] = useState<DateRequest>({
+  const [promptRequestData, setPromptRequestData] = useState<PromptRequestData>({
+    prompt: "",
     dateString: `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`
   });
 
   const handleDateChange = (e: DatePickerChangeEvent) => {
     const dateString: string = `${e.value!.getDate()}-${e.value!.getMonth() + 1}-${e.value!.getFullYear()}`;
 
-    setFromDate({
+    setPromptRequestData({
+      ...promptRequestData,
       dateString: dateString
     });
   }
 
   const createRecommendations = async () => {
     await axios
-      .post(createFinancialRecommendationEndPoint, fromDate, { withCredentials: true })
+      .post(createFinancialRecommendationEndPoint, promptRequestData, { withCredentials: true })
       .catch((error: AxiosError) => {
         alert(error.response?.data);
       });
@@ -35,14 +37,19 @@ const CreateFinancialRecommendations = () => {
     },
   });
 
-  const handleButtonClick = () => {
-    mutateAsync();
+  const handleGenerateButtonClick = async (prompt: string) => {
+    setPromptRequestData({
+      ...promptRequestData,
+      prompt: prompt
+    });
+
+    await mutateAsync();
   }
 
   return (
     <>
       <DatePicker width={200} max={new Date()} onChange={handleDateChange} /> <br />
-      <Button themeColor={"primary"} onClick={handleButtonClick}>Create recommendations</Button>
+      <AIPromptComponent handleGenerateButtonClick={handleGenerateButtonClick} />
     </>
   )
 }

@@ -6,21 +6,21 @@ import { getFinancialRecommendationEndPoint } from "../endpoints";
 const useGetFinancialRecommendations = () => {
   const getFinancialRecommendations = async () => {
     return await axios
-      .get<FinancialRecommendation[]>(`${getFinancialRecommendationEndPoint}`, { withCredentials: true })
-      .then((res: AxiosResponse<FinancialRecommendation[]>) => res.data)
+      .get<FinancialRecommendation>(`${getFinancialRecommendationEndPoint}`, { withCredentials: true })
+      .then((res: AxiosResponse<FinancialRecommendation>) => res.data)
       .catch((err: AxiosError) => {
         throw new Error(`No recommendations found ${err.message}`);
       });
   };
 
-  const accountsQuery = useQuery({
+  const financialRecommendationsQuery = useQuery({
     queryKey: ["recommendations"],
-    queryFn: getFinancialRecommendations
-  })
+    queryFn: getFinancialRecommendations,
+  });
 
-  const { data, isLoading, isError, error } = accountsQuery;
+  const { data, isLoading, isError, error } = financialRecommendationsQuery;
 
-  return { data, isLoading, isError, error }
-}
+  return { data, isLoading, isError, error };
+};
 
 export default useGetFinancialRecommendations;
