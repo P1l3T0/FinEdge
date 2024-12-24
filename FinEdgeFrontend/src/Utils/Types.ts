@@ -189,15 +189,21 @@ export type Reports = {
   monthlySpendingsAverage: number,
 }
 
-//! Financial Recommendations
+//! AIPrompt 
 
-export type FinancialRecommendation = {
+type PromptOutput = {
   id: number;
+  title: string;
+  responseContent: string;
   userID: number;
-  recommendation: string;
   dateCreated: Date;
 }
 
-export type DateRequest = {
+//! Financial Recommendations
+
+export type FinancialRecommendation = PromptOutput;
+
+export type PromptRequestData = {
+  prompt: string;
   dateString: string;
 }
