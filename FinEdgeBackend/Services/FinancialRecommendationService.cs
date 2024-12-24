@@ -8,6 +8,11 @@ namespace FinEdgeBackend.Services
     {
         private readonly DataContext _dataContext = dataContext;
 
+        public FinancialRecommendation GetLatestFinancialRecommendation(ICollection<FinancialRecommendation> financialRecommendations)
+        {
+            return financialRecommendations.OrderByDescending(fr => fr.DateCreated).FirstOrDefault()!;
+        }
+
         public async Task CreateRecommendationAsync(FinancialRecommendation financialRecommendation)
         {
             _dataContext.FinancialRecommendations.Add(financialRecommendation);

@@ -1,6 +1,7 @@
 ﻿using FinEdgeBackend.DTOs;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
+using FinEdgeBackend.Models.PromptData;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -17,20 +18,20 @@ namespace FinEdgeBackend.Controllers
 
         [HttpGet]
         [Route("get")]
-        [ProducesResponseType(200, Type = typeof(ICollection<FinancialRecommendation>))]
+        [ProducesResponseType(200, Type = typeof(FinancialRecommendation))]
         public async Task<IActionResult> GetFinancialRecommendations()
         {
             User currentUser = await _userSerice.GetCurrentUserAsync();
-            ICollection<FinancialRecommendation> financialRecommendations = currentUser.FinancialRecommendations;
+            FinancialRecommendation latestRecommendation = _financialRecommendationService.GetLatestFinancialRecommendation(currentUser.FinancialRecommendations);
 
-            return Ok(financialRecommendations);
+            return Ok(latestRecommendation);
         }
 
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> CreateFinancialRecommendation([FromBody] DateRequest dateRequest)
+        public async Task<IActionResult> CreateFinancialRecommendation([FromBody] PromptRequest promptRequestData)
         {
-            if (!DateTime.TryParse(dateRequest.DateString, out DateTime parsedDate))
+            if (!DateTime.TryParse(promptRequestData.DateString, out DateTime parsedDate))
             {
                 return BadRequest("Invalid date. Please use a valid date.");
             }
@@ -38,34 +39,29 @@ namespace FinEdgeBackend.Controllers
             User currentUser = await _userSerice.GetCurrentUserAsync();
             ICollection<Transaction> transactions = _transactionService.GetTransactionsFromSpecifiedDate(currentUser.Transactions, parsedDate);
 
-            string accountsJson = JsonSerializer.Serialize(currentUser.Accounts, new JsonSerializerOptions { WriteIndented = true });
-            string categoriesJson = JsonSerializer.Serialize(currentUser.Categories, new JsonSerializerOptions { WriteIndented = true });
-            string transactionsJson = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
+            JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
 
-            string prompt = @$"
-                I am a user managing my personal finances and tracking all my spending habits. Here's an overview of my financial data:
-                Accounts: {accountsJson}, Categories: {categoriesJson}, Transactions: {transactionsJson}. All the transactions are from {parsedDate} until today.
+            string accountsJson = JsonSerializer.Serialize(currentUser.Accounts, options);
+            string categoriesJson = JsonSerializer.Serialize(currentUser.Categories, options);
+            string transactionsJson = JsonSerializer.Serialize(transactions, options);
 
-                The main issues that concern me as a user are: 
-                - I want to know if my spendings and allocation of finances align with my chosen financial methodology: {currentUser.MethodologyType}. If my spending habbits do not align with the category, please provide suggestions on how to fix them.
-                - Identify any unusually high spending in the past week or month and suggest ways to avoid it.
-                - Highlight categories where spending is close to or has exceeded the budget (if it is an income category, that is good).
-                - Flag recurring transactions or subscriptions that might not be necessary.
-                - Recommend ways to manage cash flow better and align expenses with income.
-                - Suggest practical tips to save money or optimize spending in overspent categories.
-                - If there are opportunities to grow savings or invest, provide recommendations.
+            string allData = string.Join(",", accountsJson, categoriesJson, transactionsJson);
 
-                Also I want your response to always start with something like 'Recommendations based on data from {parsedDate.ToShortDateString()} to today (or similar sentences). The responsse should include how much money has been spent overall, on what categories 
-                and suggestions based on the above list. Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. A simple, clear explanation is enough.".Trim();
+            string textTweaks = @$"I want your response to always start with something like 'Recommendations based on data from {parsedDate.ToShortDateString()} to today (or similar sentences). 
+                Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. 
+                A simple, clear explanation is enough.";
 
-            GPTResponseDTO gPTResponse =  await _gPTService.Ask(prompt, currentUser);
+            string prompt = string.Join(" ", promptRequestData.Prompt!, allData, textTweaks).Trim();
+
+            GPTResponseDTO gPTResponse = await _gPTService.Ask(prompt, currentUser);
 
             await _financialRecommendationService.CreateRecommendationAsync(new FinancialRecommendation
             {
-                Recommendation = gPTResponse.Response,
+                Title = promptRequestData.Prompt,
+                ResponseContent = gPTResponse.Response,
                 UserID = currentUser.ID,
                 User = currentUser
-            }); 
+            });
 
             return Created();
         }
@@ -75,9 +71,8 @@ namespace FinEdgeBackend.Controllers
         public async Task<IActionResult> DeleteFinancialRecommendations()
         {
             User currentUser = await _userSerice.GetCurrentUserAsync();
-            ICollection<FinancialRecommendation> financialRecommendations = currentUser.FinancialRecommendations;
 
-            await _financialRecommendationService.DeleteRecommendationsAsync(financialRecommendations);
+            await _financialRecommendationService.DeleteRecommendationsAsync(currentUser.FinancialRecommendations);
 
             return NoContent();
         }
