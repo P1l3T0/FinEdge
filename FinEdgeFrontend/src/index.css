@@ -57,7 +57,7 @@
   margin: 1rem 0 0 0;
 }
 
-button.k-button {
+button.k-button:not(.k-button-flat):not(.k-rounded-full) {
   font-size: 1.25rem;
   margin: .5rem 0 0 0;
   font-weight: 800;
@@ -117,6 +117,13 @@ a {
 .k-window {
   fieldset>*:not(:first-child) {
     margin: .15rem 0;
+  }
+}
+
+.k-input {
+  textarea {
+    resize: vertical;
+    height: 5rem;
   }
 }
 
