@@ -33,5 +33,6 @@ namespace FinEdgeBackend.Models
         public ICollection<Category> Categories { get; set; } = new List<Category>();
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
         public ICollection<FinancialRecommendation> FinancialRecommendations { get; set; } = new List<FinancialRecommendation>();
+        public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     }
 }

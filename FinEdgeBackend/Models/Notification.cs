@@ -1,0 +1,24 @@
+﻿using FinEdgeBackend.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace FinEdgeBackend.Models
+{
+    public class Notification : BaseModel
+    {
+        [Required]
+        public int UserID { get; set; }
+
+        [Required]
+        public string? Message { get; set; } = string.Empty;
+
+        [Required]
+        public bool IsRead { get; set; } = false;
+
+        [Required]
+        public NotificationType NotificationType { get; set; }
+
+        [JsonIgnore]
+        public User? User { get; set; }
+    }
+}

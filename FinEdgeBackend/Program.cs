@@ -93,6 +93,7 @@ builder.Services!.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services!.AddScoped<IGPTService, GPTService>();
 builder.Services!.AddScoped<IFinancialRecommendationService, FinancialRecommendationService>();
 builder.Services!.AddScoped<IPromptSuggestionsService, PromptSuggestionsService>();
+builder.Services!.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 
