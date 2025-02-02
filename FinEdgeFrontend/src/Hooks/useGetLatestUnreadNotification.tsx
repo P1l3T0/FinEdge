@@ -3,7 +3,8 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useEffect } from "react";
 import { AppNotification } from "../Utils/Types";
-import { getNotificationHubEndPoint, getLatestUnreadNotificationEndPoint } from "../endpoints"; // ✅ Make sure this exists
+import { getNotificationHubEndPoint, getLatestUnreadNotificationEndPoint } from "../endpoints"; 
+import useGetUser from "./useGetUser";
 
 const getLatestUnreadNotification = async (): Promise<AppNotification | null> => {
   return await axios
@@ -16,12 +17,15 @@ const getLatestUnreadNotification = async (): Promise<AppNotification | null> =>
 };
 
 const useGetLatestNotification = () => {
+  const { data: user } = useGetUser();
+
   const queryClient = useQueryClient();
 
   const latestNotificationQuery = useQuery({
     queryKey: ["latestNotification"],
     queryFn: getLatestUnreadNotification,
     refetchInterval: 10000, 
+    enabled: !!user,
   });
 
   const { data, isLoading, isError, error } = latestNotificationQuery;

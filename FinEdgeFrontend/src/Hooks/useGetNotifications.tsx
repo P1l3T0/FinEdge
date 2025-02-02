@@ -4,9 +4,10 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 import { getNotificationHubEndPoint, getNotificationsEndPoint } from "../endpoints";
 import { useEffect } from "react";
 import { AppNotification } from "../Utils/Types";
+import useGetUser from "./useGetUser";
 
 const getNotifications = async () => {
-  return await axios
+return await axios
     .get<AppNotification[]>(`${getNotificationsEndPoint}`, { withCredentials: true })
     .then((res: AxiosResponse<AppNotification[]>) => res.data)
     .catch((err: AxiosError) => {
@@ -15,11 +16,14 @@ const getNotifications = async () => {
 };
 
 const useGetNotifications = () => {
+  const { data: user } = useGetUser();
+  
   const queryClient = useQueryClient();
 
   const notificationsQuery = useQuery({
     queryKey: ["notifications"],
     queryFn: getNotifications,
+    enabled: !!user,
   });
 
   const { data, isLoading, isError, error } = notificationsQuery;

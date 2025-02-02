@@ -16,6 +16,7 @@ const useGetUser = () => {
   const accountsQuery = useQuery({
     queryKey: ["user"],
     queryFn: getUser,
+    enabled: !!document.cookie.includes("RefreshToken"),
   })
 
   const { data, isLoading, isError, error } = accountsQuery;
