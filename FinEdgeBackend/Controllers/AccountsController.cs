@@ -8,31 +8,51 @@ namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AccountsController(IUserService userService, IAccountService accountService) : Controller
+    public class AccountsController(IUserService userService, IAccountService accountService, INotificationService notificationService) : Controller
     {
         private readonly IUserService _userService = userService;
         private readonly IAccountService _accountService = accountService;
+        private readonly INotificationService _notificationService = notificationService;
 
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> CreateAccount([FromBody] AccountDTO accountDto)
         {
+            User currentUser = await _userService.GetCurrentUserAsync();
+
             if (!_accountService.Validate(accountDto))
             {
-                return BadRequest("Error with the account fields");
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = "Please fill in the account fields!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    User = currentUser,
+                    UserID = currentUser.ID
+                });
+
+                return BadRequest();
             }
 
-            User currentUser = await _userService.GetCurrentUserAsync();
             Account account = await _accountService.GetAccountForCurrentUserByNameAsync(accountDto.Name!, currentUser);
 
             if (account is not null)
             {
-                return BadRequest($"Account '{account.Name}' already exist!");
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = $"Account '{account.Name}' already exist!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    User = currentUser,
+                    UserID = currentUser.ID
+                });
+
+                return BadRequest();
             }
 
             currentUser.TotalBalance += accountDto.Balance;
 
-            await _accountService.CreateAccountAsync(new Account
+            await _accountService.CreateAccountAsync(new Account()
             {
                 UserID = currentUser.ID,
                 User = currentUser,
@@ -41,6 +61,15 @@ namespace FinEdgeBackend.Controllers
                 Currency = accountDto.Currency,
                 DateCreated = DateTime.Now,
                 AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!),
+            });
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = $"Successfully created Account {accountDto!.Name}!",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                User = currentUser,
+                UserID = currentUser.ID
             });
 
             return Ok(account);
@@ -69,14 +98,34 @@ namespace FinEdgeBackend.Controllers
         [Route("update/{accountID}")]
         public async Task<IActionResult> UpdateAccount(int accountID, [FromBody] AccountDTO accountDto)
         {
+            User currentUser = await _userService.GetCurrentUserAsync();
+
             if (!_accountService.Validate(accountDto))
             {
-                return BadRequest("Error with the account fields");
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = "Please fill in the account fields!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    User = currentUser,
+                    UserID = currentUser.ID
+                });
+
+                return BadRequest();
             }
 
             Account account = await _accountService.GetAccountByIdAsync(accountID);
 
             await _accountService.UpdateAccountAsync(accountDto, account);
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = $"Account {account.Name} updated successfully!",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                User = currentUser,
+                UserID = currentUser.ID
+            });
 
             return NoContent();
         }
@@ -89,6 +138,15 @@ namespace FinEdgeBackend.Controllers
             User currentUser = account.User!;
 
             currentUser.TotalBalance -= account.Balance;
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = $"Account {account.Name} deleted successfully!",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                User = currentUser,
+                UserID = currentUser.ID
+            });
 
             await _accountService.DeleteAccountAsync(account);
 

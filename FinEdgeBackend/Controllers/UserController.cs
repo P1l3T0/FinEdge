@@ -1,18 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FinEdgeBackend.Models;
 using FinEdgeBackend.DTOs.User;
-using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Interfaces;
+using FinEdgeBackend.Enums;
 
 namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController(IUserService userService, IJwtService jwtService, IRefreshTokenService refreshTokenService) : Controller
+    public class UserController(IUserService userService, INotificationService notificationService) : Controller
     {
         private readonly IUserService _userService = userService;
-        private readonly IJwtService _jwtService = jwtService;
-        private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
+        private readonly INotificationService _notificationService = notificationService;
 
         [HttpGet]
         [Route("get")]
@@ -44,20 +43,50 @@ namespace FinEdgeBackend.Controllers
         [Route("update/{userID}")]
         public async Task<IActionResult> UpddateUser([FromBody] UpdateDTO updatedDTO)
         {
+            User currentUser = await _userService.GetCurrentUserAsync();
+
             if (string.IsNullOrEmpty(updatedDTO.Name) || string.IsNullOrEmpty(updatedDTO.Surname) ||
                 string.IsNullOrEmpty(updatedDTO.Email) || string.IsNullOrEmpty(updatedDTO.Password))
             {
-                return BadRequest("One or more of the fields are empty!");
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = "One or more of the fields are empty!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    User = currentUser,
+                    UserID = currentUser.ID,
+                    DateCreated = DateTime.Now,
+                });
+
+                return BadRequest();
             }
 
             if (!_userService.Validate(updatedDTO.Email, updatedDTO.Password, isCurrentUser: true))
             {
-                return BadRequest("Email already in use or Password is to weak!");
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = "Email already in use or Password is to weak!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    User = currentUser,
+                    UserID = currentUser.ID,
+                    DateCreated = DateTime.Now,
+                });
+
+                return BadRequest();
             }
 
-            User currentUser = await _userService.GetCurrentUserAsync();
-
             await _userService.UpdateCurrentUserAsync(updatedDTO, currentUser);
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = "User updated successfully!",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                User = currentUser,
+                UserID = currentUser.ID,
+                DateCreated = DateTime.Now,
+            });
 
             return Ok(currentUser);
         }
@@ -70,6 +99,14 @@ namespace FinEdgeBackend.Controllers
 
             if (currentUser is null)
             {
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = "User does not exist!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    DateCreated = DateTime.Now,
+                });
+
                 return BadRequest("User does not exist!");
             }
 
@@ -78,7 +115,7 @@ namespace FinEdgeBackend.Controllers
             DeleteCookie("AccessToken");
             DeleteCookie("RefreshToken");
 
-            return Ok("User deletedd succesfully");
+            return NoContent();
         }
 
         [HttpDelete]

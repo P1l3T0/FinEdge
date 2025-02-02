@@ -30,9 +30,7 @@ const Login = () => {
     await axios
       .post<LoginDTO>(`${loginEndPoint}`, user, { withCredentials: true })
       .then(() => navigate("/home"))
-      .catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });;
+      .catch((error: AxiosError) => {});
   };
 
   const { mutateAsync } = useMutation({

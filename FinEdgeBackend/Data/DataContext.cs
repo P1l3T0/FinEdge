@@ -13,6 +13,7 @@ namespace FinEdgeBackend.Data
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<CategorySnapshot> CategorySnapshots { get; set; }
         public DbSet<FinancialRecommendation> FinancialRecommendations { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,9 +57,9 @@ namespace FinEdgeBackend.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<CategorySnapshot>()
-                .HasOne(cs => cs.Category)           
-                .WithMany(c => c.CategorySnapshots)  
-                .HasForeignKey(cs => cs.CategoryID)  
+                .HasOne(cs => cs.Category)
+                .WithMany(c => c.CategorySnapshots)
+                .HasForeignKey(cs => cs.CategoryID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<FinancialRecommendation>()
@@ -66,9 +67,16 @@ namespace FinEdgeBackend.Data
                 .WithMany(u => u.FinancialRecommendations)
                 .HasForeignKey(r => r.UserID);
 
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.User)
+                .WithMany(u => u.Notifications)
+                .HasForeignKey(n => n.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<RefreshToken>().HasOne(rt => rt.User);
             modelBuilder.Entity<User>().Property(u => u.MethodologyType).HasConversion<string>();
             modelBuilder.Entity<Account>().Property(a => a.AccountType).HasConversion<string>();
+            modelBuilder.Entity<Notification>().Property(n => n.NotificationType).HasConversion<string>();
 
             base.OnModelCreating(modelBuilder);
         }

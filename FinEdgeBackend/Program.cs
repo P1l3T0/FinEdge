@@ -5,6 +5,7 @@ using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Services;
 using FinEdgeBackend.Services.Auth;
+using FinEdgeBackend.Services.Notifications;
 using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -23,6 +24,7 @@ builder.Configuration
 
 builder.Services.AddCors();
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -65,7 +67,6 @@ builder.Services.AddHangfire(config => config
 
 builder.Services.AddAuthorization();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -93,6 +94,7 @@ builder.Services!.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services!.AddScoped<IGPTService, GPTService>();
 builder.Services!.AddScoped<IFinancialRecommendationService, FinancialRecommendationService>();
 builder.Services!.AddScoped<IPromptSuggestionsService, PromptSuggestionsService>();
+builder.Services!.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 
@@ -102,14 +104,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowSpecificOrigin");
-
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseRouting();
 
+app.UseCors("AllowSpecificOrigin");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<NotificationHub>("/notificationHub"); // Register SignalR hub
+});
 
 app.Run();

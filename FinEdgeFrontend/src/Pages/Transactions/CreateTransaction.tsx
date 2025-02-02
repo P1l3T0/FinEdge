@@ -53,9 +53,7 @@ const CreateTransaction = () => {
     await axios
       .post<TransactionDTO>(`${createTransactionEndPoint}`, transaction, { withCredentials: true })
       .then((res: AxiosResponse<TransactionDTO>) => res.data)
-      .catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+      .catch((error: AxiosError) => {});
   }
 
   const { mutateAsync } = useMutation({

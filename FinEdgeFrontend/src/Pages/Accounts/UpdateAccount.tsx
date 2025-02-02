@@ -42,9 +42,7 @@ const UpdateAccount = ({ account }: { account: Account }) => {
     await axios
       .put<AccountDTO>(`${updateAccountEndPoint}/${account.id}`, updatedAccount, { withCredentials: true })
       .then((res: AxiosResponse<AccountDTO>) => res.data)
-      .catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+      .catch((error: AxiosError) => {});
   }
 
   const { mutateAsync } = useMutation({
@@ -56,7 +54,6 @@ const UpdateAccount = ({ account }: { account: Account }) => {
   });
 
   const handleUpdate = async () => {
-
     await mutateAsync();
   }
 
