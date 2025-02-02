@@ -38,9 +38,7 @@ const CreateAccounts = () => {
     await axios
       .post<AccountDTO>(`${createAccountEndPoint}`, account, { withCredentials: true })
       .then((res: AxiosResponse<AccountDTO>) => res.data)
-      .catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+      .catch((error: AxiosError) => {});
   }
 
   const { mutateAsync } = useMutation({
