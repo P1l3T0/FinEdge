@@ -3,17 +3,19 @@ using FinEdgeBackend.Models;
 using FinEdgeBackend.DTOs.User;
 using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Interfaces;
+using FinEdgeBackend.Enums;
 
 namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthenticationController(IUserService userService, IJwtService jwtService, IRefreshTokenService refreshTokenService, IAuthService authService) : Controller
+    public class AuthenticationController(IUserService userService, IJwtService jwtService, IRefreshTokenService refreshTokenService, IAuthService authService, INotificationService notificationService) : Controller
     {
         private readonly IUserService _userService = userService;
         private readonly IJwtService _jwtService = jwtService;
         private readonly IAuthService _authService = authService;
         private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
+        private readonly INotificationService _notificationService = notificationService;
 
         [HttpPost]
         [Route("register")]
@@ -21,10 +23,28 @@ namespace FinEdgeBackend.Controllers
         {
             if (!_userService.Validate(registerDto.Email!, registerDto.Password!, isCurrentUser: false))
             {
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = "Invalid Email or Password!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    DateCreated = DateTime.Now,
+                });
+
                 return BadRequest("Invalid Email or Password!");
             }
 
             User? user = await _authService.RegisterAsync(registerDto);
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = $"User {user.Name} {user.Surname} registered succesfuly!",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                User = user,
+                UserID = user.ID,
+                DateCreated = DateTime.Now,
+            });
 
             return await GenerateAuthResponse(user);
         }
@@ -37,8 +57,24 @@ namespace FinEdgeBackend.Controllers
 
             if (user is null)
             {
-                return Unauthorized("Invalid login credentials or token issue.");
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = "Invalid login credentials or token issue!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    DateCreated = DateTime.Now,
+                });
+
+                return BadRequest();
             }
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = "Logged in succesfuly!",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                DateCreated = DateTime.Now,
+            });
 
             return await GenerateAuthResponse(user);
         }
@@ -52,6 +88,14 @@ namespace FinEdgeBackend.Controllers
 
             if (storedToken is null || storedToken.ExpiryDate < DateTime.Now || storedToken.IsRevoked)
             {
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = "Invalid or expired refresh token!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    DateCreated = DateTime.Now,
+                });
+
                 return Unauthorized("Invalid or expired refresh token.");
             }
 
@@ -60,7 +104,7 @@ namespace FinEdgeBackend.Controllers
             string newRefreshToken = _jwtService.GenerateRefreshToken(storedToken.UserID);
             string newAccessToken = _jwtService.GenerateAcessToken(storedToken.UserID);
 
-            RefreshToken newRefreshTokenEntity = await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken
+            RefreshToken newRefreshTokenEntity = await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken()
             {
                 Token = newRefreshToken,
                 ExpiryDate = DateTime.Now.AddDays(7),
@@ -84,10 +128,18 @@ namespace FinEdgeBackend.Controllers
 
         [HttpPost]
         [Route("logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
             DeleteCookie("AccessToken");
             DeleteCookie("RefreshToken");
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = "Logged out succesfully!",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                DateCreated = DateTime.Now,
+            });
 
             return Ok(new
             {
@@ -100,7 +152,7 @@ namespace FinEdgeBackend.Controllers
             string accessToken = _jwtService.GenerateAcessToken(user.ID);
             string refreshToken = _jwtService.GenerateRefreshToken(user.ID);
 
-            await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken
+            await _refreshTokenService.AddRefreshTokenAsync(new RefreshToken()
             {
                 Token = refreshToken,
                 ExpiryDate = DateTime.Now.AddDays(1),
@@ -115,7 +167,7 @@ namespace FinEdgeBackend.Controllers
 
         private IActionResult CreateCookie(string name, string value)
         {
-            Response.Cookies.Append(name, value, new CookieOptions
+            Response.Cookies.Append(name, value, new CookieOptions()
             {
                 HttpOnly = name == "AccessToken" ? true : false,
                 Secure = true,
@@ -132,7 +184,7 @@ namespace FinEdgeBackend.Controllers
 
         private IActionResult DeleteCookie(string name)
         {
-            Response.Cookies.Delete(name, new CookieOptions
+            Response.Cookies.Delete(name, new CookieOptions()
             {
                 HttpOnly = true,
                 Secure = true,
