@@ -31,7 +31,6 @@ const UpdateUser = ({ user }: { user: User }) => {
 
   const updateUser = async () => {
     if (updatedUser.password === "") {
-      alert("Update your password!");
       return;
     }
 
@@ -41,9 +40,7 @@ const UpdateUser = ({ user }: { user: User }) => {
         ...updatedUser,
         password: ""
       }))
-      .catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+      .catch((error: AxiosError) => {});
   }
 
   const { mutateAsync } = useMutation({
