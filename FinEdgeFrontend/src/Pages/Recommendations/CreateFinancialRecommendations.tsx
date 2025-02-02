@@ -25,9 +25,7 @@ const CreateFinancialRecommendations = () => {
   const createRecommendations = async () => {
     await axios
       .post(createFinancialRecommendationEndPoint, promptRequestData, { withCredentials: true })
-      .catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+      .catch((error: AxiosError) => {});
   }
 
   const { mutateAsync } = useMutation({
