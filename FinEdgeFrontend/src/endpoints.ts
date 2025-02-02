@@ -55,4 +55,6 @@ export const getPromptSuggestionsEndPoint = `${promptSuggestionController}/get`;
 // Notifications
 export const getNotificationsEndPoint = `${notificationController}/get-all`;
 export const getLatestUnreadNotificationEndPoint = `${notificationController}/get-latest-unread`;
+export const markNotificationAsReadAsync = `${notificationController}/mark-as-read`;
+export const markAllNotificationsAsReadAsync = `${notificationController}/mark-all-as-read`;
 export const getNotificationHubEndPoint = `${baseURL}/notificationHub`;
