@@ -57,14 +57,6 @@ namespace FinEdgeBackend.Controllers
 
             if (user is null)
             {
-                await _notificationService.CreateNotificationAsync(new Notification()
-                {
-                    Message = "Invalid login credentials or token issue!",
-                    NotificationType = NotificationType.Error,
-                    IsRead = false,
-                    DateCreated = DateTime.Now,
-                });
-
                 return BadRequest();
             }
 
@@ -88,14 +80,6 @@ namespace FinEdgeBackend.Controllers
 
             if (storedToken is null || storedToken.ExpiryDate < DateTime.Now || storedToken.IsRevoked)
             {
-                await _notificationService.CreateNotificationAsync(new Notification()
-                {
-                    Message = "Invalid or expired refresh token!",
-                    NotificationType = NotificationType.Error,
-                    IsRead = false,
-                    DateCreated = DateTime.Now,
-                });
-
                 return Unauthorized("Invalid or expired refresh token.");
             }
 

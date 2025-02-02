@@ -110,16 +110,6 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest("User does not exist!");
             }
 
-            await _notificationService.CreateNotificationAsync(new Notification()
-            {
-                Message = $"User {currentUser.Name} {currentUser.Surname} deleted succesfully!",
-                NotificationType = NotificationType.Success,
-                IsRead = false,
-                User = currentUser,
-                UserID = currentUser.ID,
-                DateCreated = DateTime.Now,
-            });
-
             await _userService.DeleteUserAsync(currentUser);
 
             DeleteCookie("AccessToken");
