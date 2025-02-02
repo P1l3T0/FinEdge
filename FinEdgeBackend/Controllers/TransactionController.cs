@@ -1,4 +1,5 @@
 ﻿using FinEdgeBackend.DTOs;
+using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,23 +8,35 @@ namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TransactionController(ITransactionService transactionService ,ICategoryService categoryService, IAccountService accountService, IUserService userService) : Controller
+    public class TransactionController(ITransactionService transactionService ,ICategoryService categoryService, IAccountService accountService, IUserService userService, INotificationService notificationService) : Controller
     {
         private readonly ITransactionService _transactionService = transactionService;
         private readonly ICategoryService _categoryService = categoryService;
         private readonly IAccountService _accountService = accountService;
         private readonly IUserService _userService = userService;
+        private readonly INotificationService _notificationService = notificationService;
 
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> CreateTransaction([FromBody] TransactionDTO transactionDto)
         {
+            User currentUser = await _userService.GetCurrentUserAsync();
+
             if (!_transactionService.Validate(transactionDto))
             {
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = $"Could not create Transaction {transactionDto.Name}",
+                    NotificationType = NotificationType.Warning,
+                    IsRead = false,
+                    User = currentUser,
+                    UserID = currentUser.ID,
+                    DateCreated = DateTime.Now,
+                });
+
                 return BadRequest("Error with the transactionDto fields");
             }
 
-            User currentUser = await _userService.GetCurrentUserAsync();
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
             Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
 
@@ -43,6 +56,16 @@ namespace FinEdgeBackend.Controllers
                 CategoryName = category.Name,
                 IsRepeating = transactionDto.IsRepeating,
                 NextRepeatDate = transactionDto.IsRepeating ? DateTime.UtcNow.AddMonths(1) : null
+            });
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = $"Transaction {transactionDto.Name} created successffuly",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                User = currentUser,
+                UserID = currentUser.ID,
+                DateCreated = DateTime.Now,
             });
 
             return Created();

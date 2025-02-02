@@ -1,18 +1,22 @@
 ﻿using FinEdgeBackend.Data;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinEdgeBackend.Services
+namespace FinEdgeBackend.Services.Notifications
 {
-    public class NotificationService(DataContext dataContext) : INotificationService
+    public class NotificationService(DataContext dataContext, IHubContext<NotificationHub> hubContext) : INotificationService
     {
         private readonly DataContext _dataContext = dataContext;
+        private readonly IHubContext<NotificationHub> _hubContext = hubContext;
 
         public async Task CreateNotificationAsync(Notification notification)
         {
             _dataContext.Notifications.Add(notification);
             await _dataContext.SaveChangesAsync();
+
+            await _hubContext.Clients.All.SendAsync("ReceiveNotification", notification);
         }
 
         public async Task MarkNotificationAsReadAsync(Notification notification)
@@ -28,12 +32,15 @@ namespace FinEdgeBackend.Services
             return await _dataContext.Notifications.Where(n => n.ID == notificationID).FirstAsync();
         }
 
-        public async Task<ICollection<Notification>> GetAllNotificationsForCurrentUserAsync(User currentUser)
+        public async Task<Notification> GetLatestUnreadNotification(User currentUser)
         {
-            return await _dataContext.Notifications.Where(n => n.User!.Equals(currentUser)).ToListAsync();
+            return await _dataContext.Notifications
+                .Where(n => n.User.Equals(currentUser) && n.IsRead == false)
+                .OrderByDescending(n => n.DateCreated)
+                .FirstOrDefaultAsync()!;
         }
 
-        public async Task<ICollection<Notification>> GetAllUnreadNotificationsForCurrentUserAsync(User currentUser)
+        public async Task<ICollection<Notification>> GetAllNotificationsForCurrentUserAsync(User currentUser)
         {
             return await _dataContext.Notifications.Where(n => n.User!.Equals(currentUser) && n.IsRead == false).ToListAsync();
         }

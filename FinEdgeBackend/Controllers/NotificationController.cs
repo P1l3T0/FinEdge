@@ -32,6 +32,17 @@ namespace FinEdgeBackend.Controllers
             return Ok(notification);
         }
 
+        [HttpGet]
+        [Route("get-latest-unread")]
+        [ProducesResponseType(200, Type = typeof(Notification))]
+        public async Task<IActionResult> GetLatestUnreadNotification()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            Notification notification = await _notificationService.GetLatestUnreadNotification(currentUser);
+
+            return Ok(notification);
+        }
+
         [HttpPut]
         [Route("update")]
         public async Task<IActionResult> MarkNotificationAsRead(int notificationID)
