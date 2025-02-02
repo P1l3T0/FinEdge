@@ -56,7 +56,7 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpPut]
-        [Route("update")]
+        [Route("mark-as-read/{notificationID}")]
         public async Task<IActionResult> MarkNotificationAsRead(int notificationID)
         {
             Notification notification = await _notificationService.GetNotificationByIdAsync(notificationID);
@@ -65,7 +65,7 @@ namespace FinEdgeBackend.Controllers
             return NoContent();
         }
 
-        [HttpPut("put/mark-as-read")]
+        [HttpPut("mark-all-as-read")]
         public async Task<IActionResult> MarkAllNotificationsAsRead()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
