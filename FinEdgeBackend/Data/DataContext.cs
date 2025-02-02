@@ -70,7 +70,8 @@ namespace FinEdgeBackend.Data
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
-                .HasForeignKey(n => n.UserID);
+                .HasForeignKey(n => n.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<RefreshToken>().HasOne(rt => rt.User);
             modelBuilder.Entity<User>().Property(u => u.MethodologyType).HasConversion<string>();
