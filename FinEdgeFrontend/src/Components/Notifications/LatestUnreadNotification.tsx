@@ -3,8 +3,13 @@ import useGetLatestNotification from "../../Hooks/useGetLatestUnreadNotification
 import { getEnumValueFromNumber } from "../../Utils/Functions";
 import { AppNotification, NotificationType } from "../../Utils/Types";
 import { useEffect, useState } from "react";
+import axios, { AxiosError } from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { markNotificationAsReadAsync } from "../../endpoints";
 
 const LatestUnreadNotification = () => {
+  const queryClient = useQueryClient();
+
   const { data, isLoading, isError, error } = useGetLatestNotification();
   const [notification, setNotification] = useState<AppNotification | null>(null);
 
@@ -14,6 +19,24 @@ const LatestUnreadNotification = () => {
     }
   }, [data]);
 
+  const updateNotification = async () => {
+    await axios
+      .put(`${markNotificationAsReadAsync}/${notification?.id}`, { withCredentials: true })
+      .then(() => setNotification(null))
+      .catch((error: AxiosError) => {});
+  }
+
+  const { mutateAsync } = useMutation({
+    mutationFn: updateNotification,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
+    },
+  });
+
+  const handleClose = async () => {
+    await mutateAsync();
+  }
+  
   if (isLoading) return null;
   if (isError) return <p>Error: {error!.message}</p>;
 
@@ -21,7 +44,6 @@ const LatestUnreadNotification = () => {
     <>
       <NotificationGroup
         style={{
-          position: "fixed",
           top: "10px",
           right: "10px",
           zIndex: 1000,
@@ -34,7 +56,7 @@ const LatestUnreadNotification = () => {
                 icon: true,
               }}
               closable={true}
-              onClose={() => setNotification(null)}>
+              onClose={handleClose}>
               <span>{notification.message}</span>
             </KendoNotification>
           </Fade>
