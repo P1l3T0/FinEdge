@@ -58,9 +58,7 @@ const UpdateCategory = ({ category }: { category: Category }) => {
     await axios
       .put<CategoryDTO>(`${updateCategoryEndPoint}/${category.id}`, updateCategory, { withCredentials: true })
       .then((res: AxiosResponse<CategoryDTO>) => res.data)
-      .catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+      .catch((error: AxiosError) => {});
   }
 
   const { mutateAsync } = useMutation({

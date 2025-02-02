@@ -53,9 +53,7 @@ const CreateCategory = () => {
     await axios
       .post<CategoryDTO>(`${createCategoryEndPoint}`, category, { withCredentials: true })
       .then((res: AxiosResponse<CategoryDTO>) => res.data)
-      .catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+      .catch((error: AxiosError) => {});
   }
 
   const { mutateAsync } = useMutation({
