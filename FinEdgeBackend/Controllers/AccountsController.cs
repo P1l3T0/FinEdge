@@ -28,7 +28,7 @@ namespace FinEdgeBackend.Controllers
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
-                    UserID = currentUser.ID,
+                    UserID = currentUser.ID
                 });
 
                 return BadRequest();
@@ -44,7 +44,7 @@ namespace FinEdgeBackend.Controllers
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
-                    UserID = currentUser.ID,
+                    UserID = currentUser.ID
                 });
 
                 return BadRequest();
@@ -69,7 +69,7 @@ namespace FinEdgeBackend.Controllers
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
-                UserID = currentUser.ID,
+                UserID = currentUser.ID
             });
 
             return Ok(account);
@@ -108,7 +108,7 @@ namespace FinEdgeBackend.Controllers
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
-                    UserID = currentUser.ID,
+                    UserID = currentUser.ID
                 });
 
                 return BadRequest();
@@ -124,7 +124,7 @@ namespace FinEdgeBackend.Controllers
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
-                UserID = currentUser.ID,
+                UserID = currentUser.ID
             });
 
             return NoContent();
@@ -145,7 +145,7 @@ namespace FinEdgeBackend.Controllers
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
-                UserID = currentUser.ID,
+                UserID = currentUser.ID
             });
 
             await _accountService.DeleteAccountAsync(account);

@@ -27,8 +27,7 @@ namespace FinEdgeBackend.Controllers
                 {
                     Message = "Invalid Email or Password!",
                     NotificationType = NotificationType.Error,
-                    IsRead = false,
-                    DateCreated = DateTime.Now,
+                    IsRead = false
                 });
 
                 return BadRequest("Invalid Email or Password!");
@@ -42,8 +41,7 @@ namespace FinEdgeBackend.Controllers
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = user,
-                UserID = user.ID,
-                DateCreated = DateTime.Now,
+                UserID = user.ID
             });
 
             return await GenerateAuthResponse(user);
@@ -64,8 +62,7 @@ namespace FinEdgeBackend.Controllers
             {
                 Message = "Logged in succesfuly!",
                 NotificationType = NotificationType.Success,
-                IsRead = false,
-                DateCreated = DateTime.Now,
+                IsRead = false
             });
 
             return await GenerateAuthResponse(user);
@@ -121,8 +118,7 @@ namespace FinEdgeBackend.Controllers
             {
                 Message = "Logged out succesfully!",
                 NotificationType = NotificationType.Success,
-                IsRead = false,
-                DateCreated = DateTime.Now,
+                IsRead = false
             });
 
             return Ok(new
