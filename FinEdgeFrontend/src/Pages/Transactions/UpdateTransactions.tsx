@@ -50,9 +50,7 @@ const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
     await axios
       .put<TransactionDTO>(`${updateTransactionEndPoint}/${transaction.id}`, updatedTransaction, { withCredentials: true })
       .then((res: AxiosResponse<TransactionDTO>) => res.data)
-      .catch((error: AxiosError) => {
-        alert(error.response?.data);
-      });
+      .catch((error: AxiosError) => {});
   }
 
   const { mutateAsync } = useMutation({

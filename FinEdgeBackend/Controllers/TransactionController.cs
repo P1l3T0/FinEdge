@@ -26,15 +26,14 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = $"Could not create Transaction {transactionDto.Name}",
-                    NotificationType = NotificationType.Warning,
+                    Message = "Please fill in the Transaction fields!",
+                    NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
-                    UserID = currentUser.ID,
-                    DateCreated = DateTime.Now,
+                    UserID = currentUser.ID
                 });
 
-                return BadRequest("Error with the transactionDto fields");
+                return BadRequest();
             }
 
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
@@ -42,7 +41,7 @@ namespace FinEdgeBackend.Controllers
 
             await _transactionService.UpdateUserBalanceAsync(true, transactionDto, null, currentUser, category, account);
 
-            await _transactionService.CreateTransactionAsync(new Transaction
+            await _transactionService.CreateTransactionAsync(new Transaction()
             {
                 Name = transactionDto.Name,
                 Amount = transactionDto.Amount,
@@ -64,8 +63,7 @@ namespace FinEdgeBackend.Controllers
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
-                UserID = currentUser.ID,
-                DateCreated = DateTime.Now,
+                UserID = currentUser.ID
             });
 
             return Created();
@@ -124,18 +122,37 @@ namespace FinEdgeBackend.Controllers
         [Route("update/{transactionID}")]
         public async Task<IActionResult> UpdateTransaction(int transactionID, [FromBody] TransactionDTO transactionDto)
         {
+            User currentUser = await _userService.GetCurrentUserAsync();
+
             if (!_transactionService.Validate(transactionDto))
             {
-                return BadRequest("Error with the transactionDto fields");
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Message = "Please fill in the Transaction fields!",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    User = currentUser,
+                    UserID = currentUser.ID
+                });
+
+                return BadRequest();
             }
 
-            User currentUser = await _userService.GetCurrentUserAsync();
             Transaction transaction = await _transactionService.GetTransactionByIdAsync(transactionID);
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
             Account dtoAccount = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
             Account originalAccount = transaction.Account!;
 
             await _transactionService.UpdateTranssactionAsync(transactionDto, transaction, category, dtoAccount, originalAccount, currentUser);
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = $"Transaction {transactionDto.Name} updated successfully",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                User = currentUser,
+                UserID = currentUser.ID
+            });
 
             return NoContent();
         }
@@ -152,6 +169,15 @@ namespace FinEdgeBackend.Controllers
             await _transactionService.UpdateUserBalanceAsync(false, null, transaction, currentUser, category, account);
 
             await _transactionService.DeleteTransactionAsync(transaction);
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Message = $"Transaction {transaction.Name} deleted successfully",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                User = currentUser,
+                UserID = currentUser.ID
+            });
 
             return NoContent();
         }
