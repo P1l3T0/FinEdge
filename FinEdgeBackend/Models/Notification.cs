@@ -6,8 +6,7 @@ namespace FinEdgeBackend.Models
 {
     public class Notification : BaseModel
     {
-        [Required]
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
 
         [Required]
         public string? Message { get; set; } = string.Empty;

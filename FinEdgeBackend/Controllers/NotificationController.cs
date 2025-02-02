@@ -17,6 +17,12 @@ namespace FinEdgeBackend.Controllers
         public async Task<IActionResult> GetAllNotifications()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
+
+            if (currentUser is null)
+            {
+                return BadRequest("No user logged in");
+            }
+
             ICollection<Notification> notifications = await _notificationService.GetAllNotificationsForCurrentUserAsync(currentUser);
 
             return Ok(notifications);
@@ -38,6 +44,12 @@ namespace FinEdgeBackend.Controllers
         public async Task<IActionResult> GetLatestUnreadNotification()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
+
+            if (currentUser is null)
+            {
+                return BadRequest("No user logged in");
+            }
+
             Notification notification = await _notificationService.GetLatestUnreadNotification(currentUser);
 
             return Ok(notification);

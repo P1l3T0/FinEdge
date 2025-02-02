@@ -35,7 +35,7 @@ namespace FinEdgeBackend.Services.Notifications
         public async Task<Notification> GetLatestUnreadNotification(User currentUser)
         {
             return await _dataContext.Notifications
-                .Where(n => n.User.Equals(currentUser) && n.IsRead == false)
+                .Where(n => n.IsRead == false)
                 .OrderByDescending(n => n.DateCreated)
                 .FirstOrDefaultAsync()!;
         }
