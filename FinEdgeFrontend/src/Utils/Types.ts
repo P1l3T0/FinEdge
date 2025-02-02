@@ -12,6 +12,14 @@ export enum AccountType {
   Debt = 2
 }
 
+export enum NotificationType {
+  None = 0,
+  Success = 1,
+  Error = 2,
+  Warning = 3,
+  Info = 4
+}
+
 //! Common 
 
 export type LabelContentProps = {
@@ -62,6 +70,7 @@ export type User = {
   accounts: Account[];
   categories: Category[];
   transactions: Transaction[];
+  notifications: Notification[];
 }
 
 export type RegisterDTO = {
@@ -206,4 +215,15 @@ export type FinancialRecommendation = PromptOutput;
 export type PromptRequestData = {
   prompt: string;
   dateString: string;
+}
+
+// Notifications
+
+export type AppNotification = {
+  id: number;
+  userID: number;
+  message: string;
+  ssRead: boolean;
+  notificationType: string;
+  dateCreated: Date;
 }

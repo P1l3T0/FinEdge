@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import NotificationsBase from "./Notifications/NotificationsBas";
 
 const Navbar = () => {
   return (
@@ -10,6 +11,7 @@ const Navbar = () => {
         <Link to="/transactions">Transactions</Link>
         <Link to="/recommendations">Recommendations</Link>
         <Link to="/logout">Log out</Link>
+        <NotificationsBase />
       </div>
     </>
   )

@@ -8,6 +8,7 @@ const categoryController: string | undefined = `${baseURL}/category`;
 const transactionController: string | undefined = `${baseURL}/transaction`;
 const financialRecommendationsController: string | undefined = `${baseURL}/financialRecommendation`;
 const promptSuggestionController: string | undefined = `${baseURL}/promptSuggestions`;
+const notificationController: string | undefined = `${baseURL}/notification`;
 
 //! Authentication
 export const registerEndPoint = `${authController}/register`;
@@ -50,3 +51,8 @@ export const deleteFinancialRecommendationEndPoint = `${financialRecommendations
 
 //! Prompt Suggestions
 export const getPromptSuggestionsEndPoint = `${promptSuggestionController}/get`;
+
+// Notifications
+export const getNotificationsEndPoint = `${notificationController}/get-all`;
+export const getLatestUnreadNotificationEndPoint = `${notificationController}/get-latest-unread`;
+export const getNotificationHubEndPoint = `${baseURL}/notificationHub`;
