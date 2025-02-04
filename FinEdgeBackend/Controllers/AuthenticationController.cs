@@ -58,13 +58,6 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest();
             }
 
-            await _notificationService.CreateNotificationAsync(new Notification()
-            {
-                Message = "Logged in succesfuly!",
-                NotificationType = NotificationType.Success,
-                IsRead = false
-            });
-
             return await GenerateAuthResponse(user);
         }
 
@@ -113,13 +106,6 @@ namespace FinEdgeBackend.Controllers
         {
             DeleteCookie("AccessToken");
             DeleteCookie("RefreshToken");
-
-            await _notificationService.CreateNotificationAsync(new Notification()
-            {
-                Message = "Logged out succesfully!",
-                NotificationType = NotificationType.Success,
-                IsRead = false
-            });
 
             return Ok(new
             {
