@@ -4,28 +4,24 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useEffect } from "react";
 import { AppNotification } from "../Utils/Types";
 import { getNotificationHubEndPoint, getLatestUnreadNotificationEndPoint } from "../endpoints"; 
-import useGetUser from "./useGetUser";
 
 const getLatestUnreadNotification = async (): Promise<AppNotification | null> => {
   return await axios
     .get<AppNotification>(`${getLatestUnreadNotificationEndPoint}`, { withCredentials: true })
     .then((res: AxiosResponse<AppNotification>) => res.data)
     .catch((err: AxiosError) => {
-      console.error(`Failed to fetch latest notification: ${err.message}`);
       return null;
     });
 };
 
 const useGetLatestNotification = () => {
-  const { data: user } = useGetUser();
-
   const queryClient = useQueryClient();
 
   const latestNotificationQuery = useQuery({
     queryKey: ["latestNotification"],
     queryFn: getLatestUnreadNotification,
     refetchInterval: 10000, 
-    enabled: !!user,
+    enabled: document.cookie.includes("RefreshToken"),
   });
 
   const { data, isLoading, isError, error } = latestNotificationQuery;

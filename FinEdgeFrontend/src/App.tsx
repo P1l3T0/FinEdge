@@ -9,12 +9,15 @@ import Categories from './Pages/Categories/Categories';
 import PersistLogin from './Pages/Authentication/axios/Components/PersistLogin';
 import Transactions from './Pages/Transactions/Transactions';
 import FinancialRecommendations from './Pages/Recommendations/FinancialRecommendations';
+import useGetUser from './Hooks/useGetUser';
 
 function App() {
+  const { data } = useGetUser();
+
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
+      <BrowserRouter >
+        {data! && <Navbar />}
         <Routes>
           <Route element={<PersistLogin />}>
             <Route path="/" element={<Navigate to="/login" replace />} />

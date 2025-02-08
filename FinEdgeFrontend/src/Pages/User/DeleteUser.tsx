@@ -1,8 +1,8 @@
 import { Button } from '@progress/kendo-react-all';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { deketeCurrentUserEnddPoint } from '../../endpoints';
-import { useNavigate } from 'react-router-dom';
+import { deketeCurrentUserEnddPoint, logoutEndPoint } from "../../endpoints";
+import { useNavigate } from "react-router-dom";
 
 const DeleteUser = () => {
   const navigate = useNavigate();
@@ -11,30 +11,49 @@ const DeleteUser = () => {
   const deleteUser = async () => {
     await axios
       .delete(`${deketeCurrentUserEnddPoint}`, { withCredentials: true })
-      .then(() => navigate("/login"))
-      .catch((err: AxiosError) => {
-        throw new Error(`No user found ${err.message}`);
-      });
-  }
+      .catch((err: AxiosError) => {});
+  };
 
-  const { mutateAsync } = useMutation({
+  const logOutUser = async () => {
+    await axios
+      .post(`${logoutEndPoint}`, {}, { withCredentials: true })
+      .then(() => navigate("/login"))
+      .catch((err: AxiosError) => {});
+  };
+
+  const deleteCurrentUser = useMutation({
     mutationFn: deleteUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
-      queryClient.invalidateQueries({ queryKey: ["user"] });
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },
   });
 
+  const logOut = useMutation({
+    mutationFn: logOutUser,
+    onSuccess: () => {
+      queryClient.setQueryData(["user"], null);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+  });
+
   const handleDelete = async () => {
-    mutateAsync();
-  }
+    logOut.mutateAsync();
+    deleteCurrentUser.mutateAsync();
+  };
 
   return (
     <>
-      <Button type="button" fillMode="solid" themeColor={'error'} onClick={handleDelete}>Delete</Button>
+      <Button
+        type="button"
+        fillMode="solid"
+        themeColor={"error"}
+        onClick={handleDelete}
+      >
+        Delete
+      </Button>
     </>
-  )
-}
+  );
+};
 
 export default DeleteUser;
