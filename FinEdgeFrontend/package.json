@@ -18,13 +18,16 @@
     "@progress/kendo-react-tooltip": "^8.5.0",
     "@progress/kendo-svg-icons": "^3.1.0",
     "@progress/kendo-theme-default": "^9.1.0",
+    "@tailwindcss/vite": "^4.0.3",
     "@tanstack/react-query": "^5.59.20",
     "@tanstack/react-query-devtools": "^5.59.20",
     "axios": "^1.7.7",
+    "js-cookie": "^3.0.5",
     "react": "^18.3.1",
     "react-csv": "^2.2.2",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.27.0"
+    "react-router-dom": "^6.27.0",
+    "tailwindcss": "^4.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
