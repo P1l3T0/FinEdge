@@ -47,7 +47,7 @@ namespace FinEdgeBackend.Controllers
 
             if (currentUser is null)
             {
-                return BadRequest("No user logged in");
+                return NoContent();
             }
 
             Notification notification = await _notificationService.GetLatestUnreadNotification(currentUser);
