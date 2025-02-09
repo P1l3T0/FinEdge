@@ -27,20 +27,20 @@ const TransactionsGrid = ({ transactions }: { transactions: Transaction[] }) => 
     <>
       <h2>Transactions</h2>
       <ExcelExport fileName="Transactions" data={transactions} ref={_export}>
-        <Grid data={transactions} style={{ width: "750px", height: "auto" }}>
+        <Grid data={transactions} scrollable="none">
           <GridToolbar>
             <Button themeColor={'primary'} type="button" onClick={hanleExcelExport} disabled={transactions.length === 0}>Export to Excel</Button>
             <Button themeColor={'primary'} type="button" disabled={transactions.length === 0}>
               <CSVLink filename="Transactions" data={transactions}>Export to CSV</CSVLink>
             </Button>
           </GridToolbar>
-          <GridColumn field="id" title="ID" width="50px" />
-          <GridColumn field="name" title="Name" width="100px" />
-          <GridColumn field="amount" title="Amount" width="100px" />
-          <GridColumn field="accountName" title="Account Name" width="130px" />
-          <GridColumn field="categoryName" title="Category Name" width="130px" />
-          <GridColumn field="isRepeating" title="Is Repeating" width="130px" />
-          <GridColumn field="dateCreated" title="Date Created" width="250px" cell={dateCell} />
+          <GridColumn field="id" title="ID" />
+          <GridColumn field="name" title="Name" />
+          <GridColumn field="amount" title="Amount" />
+          <GridColumn field="accountName" title="Account Name" />
+          <GridColumn field="categoryName" title="Category Name"/>
+          <GridColumn field="isRepeating" title="Is Repeating"  />
+          <GridColumn field="dateCreated" title="Date Created" cell={dateCell} />
         </Grid>
       </ExcelExport>
     </>
