@@ -1,10 +1,9 @@
-import axios, { AxiosError } from "axios";
-import { logoutEndPoint } from "../../endpoints";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@progress/kendo-react-buttons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import { logoutEndPoint } from "../endpoints";
 
-const Logout = () => {
+const useLogout = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -12,10 +11,12 @@ const Logout = () => {
     await axios
       .post(`${logoutEndPoint}`, {}, { withCredentials: true })
       .then(() => navigate("/login"))
-      .catch((error: AxiosError) => {});
+      .catch((error: AxiosError) => {
+        throw error;
+      });
   };
 
-  const { mutateAsync } = useMutation({
+  return useMutation({
     mutationFn: logOutUser,
     onSuccess: () => {
       queryClient.setQueryData(["user"], null);
@@ -25,18 +26,6 @@ const Logout = () => {
       alert(error.response?.data);
     },
   });
-
-  const handleClick = async () => {
-    mutateAsync();
-  };
-
-  return (
-    <>
-      <Button id="logout" onClick={handleClick}>
-        Log out
-      </Button>
-    </>
-  );
 };
 
-export default Logout;
+export default useLogout;
