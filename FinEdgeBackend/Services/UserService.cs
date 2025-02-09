@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.DTOs.User;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace FinEdgeBackend.Services
 {
@@ -27,7 +28,11 @@ namespace FinEdgeBackend.Services
             currentUser.Name = updatedDTO.Name;
             currentUser.Surname = updatedDTO.Surname;
             currentUser.Email = updatedDTO.Email;
-            currentUser.Password = BCrypt.Net.BCrypt.HashPassword(updatedDTO.Password);
+
+            if (!string.IsNullOrEmpty(updatedDTO.Password))
+            {
+                currentUser.Password = BCrypt.Net.BCrypt.HashPassword(updatedDTO.Password);
+            }
 
             _dataContext.Users.Update(currentUser);
             await _dataContext.SaveChangesAsync();
@@ -132,6 +137,11 @@ namespace FinEdgeBackend.Services
 
         public bool ValidatePassword(string password)
         {
+            if (string.IsNullOrEmpty(password))
+            {
+                return true;
+            }
+
             string regExPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$";
             Regex regex = new Regex(regExPattern);
 

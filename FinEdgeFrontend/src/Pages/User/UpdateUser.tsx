@@ -30,10 +30,6 @@ const UpdateUser = ({ user }: { user: User }) => {
   }
 
   const updateUser = async () => {
-    if (updatedUser.password === "") {
-      return;
-    }
-
     await axios
       .put<UpdateDTO>(`${updateCurrentUserEnddPoint}/${user.id}`, updatedUser, { withCredentials: true })
       .then(() => setUpdatedUser({
@@ -57,28 +53,54 @@ const UpdateUser = ({ user }: { user: User }) => {
 
   return (
     <>
-      <Button type="button" fillMode="solid" themeColor={'info'} onClick={toggleDialog}>Update</Button>
+      <Button type="button" fillMode="solid" themeColor={"primary"} onClick={toggleDialog} > 
+        Update
+      </Button>
 
       {visible && (
-        <Window title={`Update account`} style={{ height: "auto" }} onClose={toggleDialog} initialHeight={350}>
-          <form className="k-form">
-            <fieldset>
-              <legend>Account Details</legend>
-              <TextBox id='name' type='text' name='name' placeholder="Name" defaultValue={user.name} onChange={handleTextBoxChange} />
-              <TextBox id='surname' type='text' name='surname' placeholder="Surname" defaultValue={user.surname} onChange={handleTextBoxChange} />
-              <TextBox id='email' type='email' name='email' placeholder="Email" defaultValue={user.email} onChange={handleTextBoxChange} />
-              <TextBox id='password' type='password' name='password' placeholder="Password" defaultValue="" onChange={handleTextBoxChange} />
-            </fieldset>
+        <Window title="Update Profile" onClose={toggleDialog} initialHeight={400}> 
+          <form className="space-y-3">
+            <div className="space-y-2">
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Name</label>
+                <TextBox id="name" type="text" name="name" defaultValue={user.name} onChange={handleTextBoxChange} className="w-full" />
+              </div>
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">
+                  Surname
+                </label>
+                <TextBox id="surname" type="text" name="surname" defaultValue={user.surname} onChange={handleTextBoxChange} className="w-full" />
+              </div>
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">
+                  Email
+                </label>
+                <TextBox id="email" type="email" name="email" defaultValue={user.email} onChange={handleTextBoxChange} className="w-full" />
+              </div>
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">
+                  New Password
+                </label>
+                <TextBox id="password" type="password" name="password" defaultValue="" onChange={handleTextBoxChange} className="w-full" />
+                <p className="text-xs text-gray-500 mt-1">
+                  Leave blank to keep current password
+                </p>
+              </div>
+            </div>
 
-            <div className="buttonDiv">
-              <Button type="button" onClick={handleUpdate} themeColor={'primary'}>Submit</Button>
-              <Button type="button" onClick={toggleDialog} themeColor={'error'}>Cancel</Button>
+            <div className="flex justify-end gap-2 pt-5 border-t border-gray-200">
+              <Button type="button" themeColor="primary" onClick={handleUpdate}>
+                Save
+              </Button>
+              <Button type="button" themeColor="error" onClick={toggleDialog}>
+                Cancel
+              </Button>
             </div>
           </form>
         </Window>
       )}
     </>
-  )
+  );
 }
 
 export default UpdateUser;
