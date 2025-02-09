@@ -23,7 +23,6 @@ const useRefreshToken = () => {
     }));
 
     setRefreshToken(newRefreshToken);
-
     setTokenRefreshTimer(expiresIn - 10);
 
     return newAccessToken;

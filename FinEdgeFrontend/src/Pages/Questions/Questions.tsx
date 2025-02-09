@@ -16,12 +16,12 @@ const Questions = ({ onMethodologyChange }: { onMethodologyChange: (value: strin
     const newValues = [...values];
     newValues[index] = e.value;
     setValues(newValues);
-  }
+  };
 
   const findMostFrequentString = (strings: string[]): string => {
     const frequencyMap: { [key: string]: number } = {};
 
-    strings.forEach(string => {
+    strings.forEach((string) => {
       frequencyMap[string] = (frequencyMap[string] || 0) + 1;
     });
 
@@ -36,26 +36,32 @@ const Questions = ({ onMethodologyChange }: { onMethodologyChange: (value: strin
     }
 
     return mostFrequentString;
-  }
+  };
 
   return (
     <>
-      <h4>What’s the first thing you want to do with your paycheck?</h4>
-      <RadioGroup data={data1} onChange={(e) => handleChange(0, e)} />
-
-      <h4>How much time will you spend managing your budget monthly?</h4>
-      <RadioGroup data={data2} onChange={(e) => handleChange(1, e)} />
-
-      <h4>What are your top financial priorities?</h4>
-      <RadioGroup data={data3} onChange={(e) => handleChange(2, e)} />
-
-      <h4>How would you cover unexpected expenses this month?</h4>
-      <RadioGroup data={data4} onChange={(e) => handleChange(3, e)} />
-
-      <h4>What financial outcome would satisfy you most monthly?</h4>
-      <RadioGroup data={data5} onChange={(e) => handleChange(4, e)} />
+      <div className="pb-3">
+        <h4>What’s the first thing you want to do with your paycheck?</h4>
+        <RadioGroup data={data1} onChange={(e) => handleChange(0, e)} />
+      </div>
+      <div className="pb-3">
+        <h4>How much time will you spend managing your budget monthly?</h4>
+        <RadioGroup data={data2} onChange={(e) => handleChange(1, e)} />
+      </div>
+      <div className="pb-3">
+        <h4>How much time will you spend managing your budget monthly?</h4>
+        <RadioGroup data={data3} onChange={(e) => handleChange(2, e)} />
+      </div>
+      <div className="pb-3">
+        <h4>How much time will you spend managing your budget monthly?</h4>
+        <RadioGroup data={data4} onChange={(e) => handleChange(3, e)} />
+      </div>
+      <div>
+        <h4>How much time will you spend managing your budget monthly?</h4>
+        <RadioGroup data={data5} onChange={(e) => handleChange(4, e)} />
+      </div>
     </>
-  )
+  );
 }
 
 export default Questions;
