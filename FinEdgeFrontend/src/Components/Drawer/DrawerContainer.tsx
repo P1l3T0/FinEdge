@@ -43,20 +43,36 @@ const DrawerContainer = ({ children }: DrawerContainerProps) => {
 
   return (
     <div>
-      <div className="p-0.5">
-        <Button svgIcon={menuIcon} fillMode="flat" onClick={handleClick} />
+      <div className="flex items-center h-13 border-b border-gray-200 bg-white px-2">
+        <div className="p-2 -ml-2">
+          <Button svgIcon={menuIcon} fillMode="flat" onClick={handleClick} />
+        </div>
+        <div className="flex-1 flex justify-center items-center pt-1">
+          <svg viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg" className="max-h-20" >
+            <path d="M 80 150 L 140 90 L 200 150" fill="none" stroke="#2563eb" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
+            <text x="230" y="150" fontFamily="Arial" fontWeight="900" fontSize="120" >
+              <tspan fill="#1e3a8a">Fin</tspan>
+              <tspan fill="#2563eb" dx="10">Edge</tspan>
+            </text>
+            <text x="500" y="220" fontFamily="Arial" fontSize="36" fill="#64748b" letterSpacing="4" fontWeight="500" textAnchor="middle" >
+              FINANCIAL INTELLIGENCE
+            </text>
+          </svg>
+        </div>
+        <div className="w-12 mr-2"></div>
       </div>
       <Drawer
         mini={true}
         expanded={expanded}
-        position={"start"}
-        mode={"push"}
+        position="start"
+        mode="push"
         width={200}
         items={items.map((item, index) => ({
           ...item,
           selected: index === selected,
         }))}
-        onSelect={onSelect}>
+        onSelect={onSelect}
+      >
         <DrawerContent>{children}</DrawerContent>
       </Drawer>
     </div>
