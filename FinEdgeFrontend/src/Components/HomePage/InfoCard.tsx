@@ -10,7 +10,7 @@ const InfoCard: React.FC<InfoCardProps> = ({title, children, className = "" }) =
   <div className={`bg-white rounded-lg shadow ${className}`}>
     <Card className="border-none shadow-none">
       <CardHeader className="border-b border-gray-200">
-        <CardTitle className="text-lg font-semibold text-gray-900 p-4">
+        <CardTitle className="text-lg font-semibold text-gray-900">
           {title}
         </CardTitle>
       </CardHeader>
