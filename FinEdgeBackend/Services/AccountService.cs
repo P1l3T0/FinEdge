@@ -65,6 +65,7 @@ namespace FinEdgeBackend.Services
                 {
                     Type = group.Key.ToString(),
                     Count = group.Count(),
+                    Titles = group.Select(a => a.Name).ToList()!,
                     Balance = group.Sum(a => a.Balance ?? 0),
                     Currency = group.First().Currency ?? "BGN"
                 })
