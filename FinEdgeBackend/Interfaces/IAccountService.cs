@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.Accounts;
 using FinEdgeBackend.Models;
 
 namespace FinEdgeBackend.Interfaces
@@ -10,6 +10,7 @@ namespace FinEdgeBackend.Interfaces
         Task<Account> GetAccountByIdAsync(int accountID);
         Task<Account> GetAccountForCurrentUserByNameAsync(string accountName, User currentUser);
         Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser);
+        Task<IEnumerable<AccountSummaryDTO>> GetAccountSummariesAsync(User currentUser);
         Task DeleteAccountAsync(Account account);
         bool Validate(AccountDTO accountDto);
     }

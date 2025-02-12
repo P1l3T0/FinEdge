@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.Accounts;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
@@ -92,6 +92,16 @@ namespace FinEdgeBackend.Controllers
             ICollection<Account> accounts = currentUser.Accounts!;
 
             return Ok(accounts);
+        }
+
+        [HttpGet]
+        [Route("get-summaries")]
+        public async Task<IActionResult> GetAccountSummaries()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            IEnumerable<AccountSummaryDTO> summaries = await _accountService.GetAccountSummariesAsync(currentUser);
+
+            return Ok(summaries);
         }
 
         [HttpPut]

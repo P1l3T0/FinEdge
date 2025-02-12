@@ -1,5 +1,5 @@
 ﻿using FinEdgeBackend.Data;
-using FinEdgeBackend.DTOs;
+using FinEdgeBackend.DTOs.Accounts;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
@@ -54,6 +54,21 @@ namespace FinEdgeBackend.Services
         {
             ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.User!.Equals(currentUser)).ToListAsync();
             return accounts;
+        }
+
+        public async Task<IEnumerable<AccountSummaryDTO>> GetAccountSummariesAsync(User currentUser)
+        {
+            return await _dataContext.Accounts
+                .Where(a => a.UserID == currentUser.ID)
+                .GroupBy(a => a.AccountType)
+                .Select(group => new AccountSummaryDTO
+                {
+                    Type = group.Key.ToString(),
+                    Count = group.Count(),
+                    Balance = group.Sum(a => a.Balance ?? 0),
+                    Currency = group.First().Currency ?? "BGN"
+                })
+                .ToListAsync();
         }
 
         public async Task DeleteAccountAsync(Account account)
