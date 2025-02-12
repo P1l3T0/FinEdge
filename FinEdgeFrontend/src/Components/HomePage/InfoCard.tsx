@@ -6,7 +6,7 @@ type InfoCardProps = {
   className?: string;
 }
 
-const InfoCard: React.FC<InfoCardProps> = ({title, children, className = "" }) => (
+const InfoCard = ({title, children, className}: InfoCardProps) => (
   <div className={`bg-white rounded-lg shadow ${className}`}>
     <Card className="border-none shadow-none">
       <CardHeader className="border-b border-gray-200">

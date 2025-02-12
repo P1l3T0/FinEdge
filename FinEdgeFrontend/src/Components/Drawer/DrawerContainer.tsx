@@ -15,7 +15,7 @@ const DrawerContainer = ({ children }: DrawerContainerProps) => {
   const navigate = useNavigate();
   const { mutateAsync: logOut } = useLogout();
 
-  const [expanded, setExpanded] = useState<boolean>(true);
+  const [expanded, setExpanded] = useState<boolean>(false);
   const [selected, setSelected] = useState(0);
 
   const items = [

@@ -3,10 +3,10 @@ import StatCard from "../Components/HomePage/StatCard";
 import UserProfile from "../Components/HomePage/UserProfile";
 import useGetReports from "../Hooks/useGetReports";
 import useGetUser from "../Hooks/useGetUser";
-import AccountsGrid from "./User/Details/AccountsGrid";
-import CategoriesGrid from "./User/Details/CategoriesGrid";
-import CategoriesInfo from "./User/Details/CategoriesInfo";
-import TransactionsGrid from "./User/Details/TransactionsGrid";
+import AccountsGrid from "../Data/User/Details/AccountsGrid";
+import CategoriesGrid from "../Data/User/Details/CategoriesGrid";
+import CategoriesInfo from "../Data/User/Details/CategoriesInfo";
+import TransactionsGrid from "../Data/User/Details/TransactionsGrid";
 
 const Home = () => {
   const { data: userData, isLoading: userLoading, isError: userError, error: userErrorData } = useGetUser();
@@ -22,20 +22,9 @@ const Home = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard title="Total Balance" value={userData?.totalBalance} />
-          <StatCard
-            title="Monthly Income"
-            value={reportsData?.monthlyIncome}
-            subtitle={`Avg: $${reportsData?.monthlyAverage}`}
-            valueColor="text-green-600"
-          />
-          <StatCard
-            title="Monthly Expenses"
-            value={reportsData?.monthlySpendings}
-            subtitle={`Avg: $${reportsData?.monthlySpendingsAverage}`}
-            valueColor="text-red-600"
-          />
-          <StatCard
-            title="Weekly Overview"
+          <StatCard title="Monthly Income" value={reportsData?.monthlyIncome} subtitle={`Avg: $${reportsData?.monthlyAverage}`} valueColor="text-green-600" />
+          <StatCard title="Monthly Expenses" value={reportsData?.monthlySpendings} subtitle={`Avg: $${reportsData?.monthlySpendingsAverage}`} valueColor="text-red-600" />
+          <StatCard title="Weekly Overview" 
             value={
               <>
                 <p className="text-lg font-bold text-green-600">
@@ -52,13 +41,13 @@ const Home = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <InfoCard title="Information" className="lg:col-span-2">
             <div className="space-y-6">
-              <div className="p-3">
+              <div>
                 <AccountsGrid accounts={userData?.accounts!} />
               </div>
-              <div className="p-3">
+              <div>
                 <CategoriesGrid categories={userData?.categories!} />
               </div>
-              <div className="p-3">
+              <div>
                 <TransactionsGrid transactions={userData?.transactions!} />
               </div>
             </div>

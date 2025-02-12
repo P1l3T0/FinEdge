@@ -1,10 +1,10 @@
-import DeleteUser from "../../Pages/User/DeleteUser";
-import UpdateUser from "../../Pages/User/UpdateUser";
+import DeleteUser from "../../Data/User/DeleteUser";
+import UpdateUser from "../../Data/User/UpdateUser";
 import { getEnumValueFromNumber } from "../../Utils/Functions";
 import { MethodologyType, User } from "../../Utils/Types";
 import DashboardCard from "./DashboardCard";
 
-const UserProfile: React.FC<{ user: User }> = ({ user }) => (
+const UserProfile = ({ user }: {user: User}) => (
   <DashboardCard>
     <div className="flex justify-between items-start">
       <div className="space-y-2">

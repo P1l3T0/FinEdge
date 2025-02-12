@@ -7,7 +7,7 @@ type StatCardProps = {
   valueColor?: string;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ title, value, subtitle, valueColor = "text-gray-900" }) => (
+const StatCard = ({ title, value, subtitle, valueColor }: StatCardProps) => (
   <DashboardCard>
     <div className="space-y-2">
       <p className="text-sm text-gray-500">{title}</p>
