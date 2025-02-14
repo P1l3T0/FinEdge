@@ -19,6 +19,8 @@ const DeleteAccount = ({ account }: { account: Account }) => {
     mutationFn: deleteAccount,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      queryClient.invalidateQueries({ queryKey: ["accountChartData"] });
+      queryClient.invalidateQueries({ queryKey: ["accountStats"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });

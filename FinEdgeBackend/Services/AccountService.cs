@@ -58,8 +58,9 @@ namespace FinEdgeBackend.Services
 
         public async Task<ICollection<AccountChartDTO>> GetAccountChartDataAsync(User currentUser)
         {
-            return await _dataContext.Accounts
-                .Where(a => a.UserID == currentUser.ID)
+            ICollection<Account> accounts = currentUser.Accounts;
+
+            return accounts
                 .GroupBy(a => a.AccountType)
                 .Select(group => new AccountChartDTO
                 {
@@ -67,7 +68,7 @@ namespace FinEdgeBackend.Services
                     Value = group.Sum(a => a.Balance ?? 0),
                     Color = GetAccountTypeColor(group.Key)
                 })
-                .ToListAsync();
+                .ToList();
         }
 
         private static string GetAccountTypeColor(AccountType type) => type switch
