@@ -26,6 +26,8 @@ export const deketeCurrentUserEnddPoint = `${userController}/delete`;
 export const createAccountEndPoint = `${accountController}/create`;
 export const getAllAccountsEndPoint = `${accountController}/get-all`;
 export const getAccountEndPoint = `${accountController}/get`;
+export const getAccountChartDataEndPoint = `${accountController}/get-chart-data`;
+export const getAccountStatisticsEndPoint = `${accountController}/get-statistics`;
 export const updateAccountEndPoint = `${accountController}/update`;
 export const deleteAccountEndPoint = `${accountController}/delete`;
 

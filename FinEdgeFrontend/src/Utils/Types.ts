@@ -9,7 +9,8 @@ export enum MethodologyType {
 export enum AccountType {
   Regular = 0,
   Savings = 1,
-  Debt = 2
+  Debt = 2,
+  Retirement = 3
 }
 
 export enum NotificationType {
@@ -111,6 +112,43 @@ export type Account = {
   currency: string;
   dateCreated: Date;
 }
+
+export type AccountSummary = {
+  type: string;
+  count: number;
+  titles: string[];
+  balance: number;
+  currency: string;
+};
+
+export type AccountChartData = {
+  category: string;
+  value: number;
+  color: string;
+};
+
+export type AccountTypeStats = {
+  type: string;
+  totalBalance: number;
+  averageBalance: number;
+  accountCount: number;
+};
+
+export type HighestBalanceAccount = {
+  name: string;
+  type: string;
+  balance: number;
+  currency: string;
+};
+
+export type AccountStats = {
+  totalBalance: number;
+  totalAccounts: number;
+  averageBalance: number;
+  primaryCurrency: string;
+  accountTypeStats: AccountTypeStats[];
+  highestBalanceAccount: HighestBalanceAccount;
+};
 
 //! Category
 
