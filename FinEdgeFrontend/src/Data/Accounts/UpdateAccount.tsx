@@ -64,19 +64,37 @@ const UpdateAccount = ({ account }: { account: Account }) => {
       <Button type="button" fillMode="solid" themeColor={'info'} onClick={toggleDialog}>Update</Button>
 
       {visible && (
-        <Window title={`Update account`} style={{ height: "auto" }} onClose={toggleDialog}>
-          <form className="k-form">
-            <fieldset>
-              <legend>Account Details</legend>
-              <TextBox id='name' name='name' type='text' defaultValue={account.name} onChange={handleTextBoxChange} />
-              <TextBox id='balance' name='balance' type='number' min={0} defaultValue={account.balance.toString()} onChange={handleTextBoxChange} />
-              <DropDownList id="account-type" name="accountType" data={accountType} defaultValue={getEnumValueFromNumber(parseInt(account.accountType), AccountType)} onChange={handleDropDownChange} />
-              <DropDownList id="currency" name='currency' data={currency} defaultValue={account.currency} onChange={handleDropDownChange} />
-            </fieldset>
+        <Window title="Update Account" onClose={toggleDialog} initialHeight={380}>
+          <form className="space-y-3">
+            <div className="space-y-2">
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Account Name</label>
+                <TextBox id="name" name="name" type="text" defaultValue={account.name} onChange={handleTextBoxChange} className="w-full" />
+              </div>
 
-            <div className="buttonDiv">
-              <Button type="button" onClick={handleUpdate} themeColor={'primary'}>Submit</Button>
-              <Button type="button" onClick={toggleDialog} themeColor={'error'}>Cancel</Button>
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Balance</label>
+                <TextBox id="balance" name="balance" type="number" min={0} defaultValue={account.balance.toString()} onChange={handleTextBoxChange} className="w-full" />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Account Type</label>
+                <DropDownList id="account-type" name="accountType" data={accountType} defaultValue={getEnumValueFromNumber(parseInt(account.accountType), AccountType)} onChange={handleDropDownChange} className="w-full" />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Currency</label>
+                <DropDownList id="currency" name="currency" data={currency} defaultValue={account.currency} onChange={handleDropDownChange} className="w-full" />
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-5 border-t border-gray-200">
+              <Button type="button" themeColor="primary" onClick={handleUpdate} >
+                Save
+              </Button>
+              <Button type="button" themeColor="error" onClick={toggleDialog} >
+                Cancel
+              </Button>
             </div>
           </form>
         </Window>

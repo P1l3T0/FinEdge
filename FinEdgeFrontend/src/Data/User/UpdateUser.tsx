@@ -58,7 +58,7 @@ const UpdateUser = ({ user }: { user: User }) => {
       </Button>
 
       {visible && (
-        <Window title="Update Profile" onClose={toggleDialog} initialHeight={400}> 
+        <Window title="Update Profile" onClose={toggleDialog} initialHeight={380}> 
           <form className="space-y-3">
             <div className="space-y-2">
               <div>
@@ -82,9 +82,6 @@ const UpdateUser = ({ user }: { user: User }) => {
                   New Password
                 </label>
                 <TextBox id="password" type="password" name="password" defaultValue="" onChange={handleTextBoxChange} className="w-full" />
-                <p className="text-xs text-gray-500 mt-1">
-                  Leave blank to keep current password
-                </p>
               </div>
             </div>
 
