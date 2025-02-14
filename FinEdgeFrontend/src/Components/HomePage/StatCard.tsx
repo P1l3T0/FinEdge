@@ -8,7 +8,7 @@ type StatCardProps = {
 }
 
 const StatCard = ({ title, value, subtitle, valueColor }: StatCardProps) => (
-  <DashboardCard>
+  <DashboardCard className="hover:shadow-lg transition-shadow">
     <div className="space-y-2">
       <p className="text-sm text-gray-500">{title}</p>
       <span className={`text-2xl font-bold ${valueColor}`}>
