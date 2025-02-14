@@ -56,20 +56,63 @@ namespace FinEdgeBackend.Services
             return accounts;
         }
 
-        public async Task<IEnumerable<AccountSummaryDTO>> GetAccountSummariesAsync(User currentUser)
+        public async Task<ICollection<AccountChartDTO>> GetAccountChartDataAsync(User currentUser)
         {
             return await _dataContext.Accounts
                 .Where(a => a.UserID == currentUser.ID)
                 .GroupBy(a => a.AccountType)
-                .Select(group => new AccountSummaryDTO
+                .Select(group => new AccountChartDTO
                 {
-                    Type = group.Key.ToString(),
-                    Count = group.Count(),
-                    Titles = group.Select(a => a.Name).ToList()!,
-                    Balance = group.Sum(a => a.Balance ?? 0),
-                    Currency = group.First().Currency ?? "BGN"
+                    Category = group.Key.ToString(),
+                    Value = group.Sum(a => a.Balance ?? 0),
+                    Color = GetAccountTypeColor(group.Key)
                 })
                 .ToListAsync();
+        }
+
+        private static string GetAccountTypeColor(AccountType type) => type switch
+        {
+            AccountType.Regular => "#3b82f6",
+            AccountType.Savings => "#10b981",
+            AccountType.Debt => "#6366f1",
+            AccountType.Retirement => "#85db14",
+            _ => "#64748b"
+        };
+
+        public async Task<AccountStatsDTO> GetAccountStatisticsAsync(User currentUser)
+        {
+            ICollection<Account> accounts = currentUser.Accounts;
+            Account? highestBalanceAccount = accounts.OrderByDescending(a => a.Balance).FirstOrDefault();
+
+            ICollection<AccountTypeStatsDTO> accountTypeStats = accounts
+                .GroupBy(a => a.AccountType)
+                .Select(group => new AccountTypeStatsDTO
+                {
+                    Type = group.Key.ToString(),
+                    TotalBalance = group.Sum(a => a.Balance ?? 0),
+                    AverageBalance = group.Average(a => a.Balance ?? 0),
+                    AccountCount = group.Count()
+                })
+                .ToList();
+
+            return new AccountStatsDTO
+            {
+                TotalBalance = accounts.Sum(a => a.Balance ?? 0),
+                TotalAccounts = accounts.Count,
+                AverageBalance = accounts.Any() ? accounts.Average(a => a.Balance ?? 0) : 0,
+                PrimaryCurrency = accounts.GroupBy(a => a.Currency)
+                    .OrderByDescending(g => g.Count())
+                    .Select(g => g.Key)
+                    .FirstOrDefault() ?? "BGN",
+                AccountTypeStats = accountTypeStats,
+                HighestBalanceAccount = highestBalanceAccount != null ? new AccountHighestBalanceDTO
+                {
+                    Name = highestBalanceAccount.Name!,
+                    Type = highestBalanceAccount.AccountType.ToString(),
+                    Balance = highestBalanceAccount.Balance ?? 0,
+                    Currency = highestBalanceAccount.Currency!
+                } : null!
+            };
         }
 
         public async Task DeleteAccountAsync(Account account)

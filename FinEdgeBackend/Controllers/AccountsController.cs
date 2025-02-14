@@ -95,13 +95,23 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpGet]
-        [Route("get-summaries")]
-        public async Task<IActionResult> GetAccountSummaries()
+        [Route("get-chart-data")]
+        public async Task<IActionResult> GetAccountChartData()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
-            IEnumerable<AccountSummaryDTO> summaries = await _accountService.GetAccountSummariesAsync(currentUser);
+            ICollection<AccountChartDTO> chartData = await _accountService.GetAccountChartDataAsync(currentUser);
 
-            return Ok(summaries);
+            return Ok(chartData);
+        }
+
+        [HttpGet]
+        [Route("get-statistics")]
+        public async Task<IActionResult> GetAccountStatistics()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            AccountStatsDTO statistics = await _accountService.GetAccountStatisticsAsync(currentUser);
+
+            return Ok(statistics);
         }
 
         [HttpPut]

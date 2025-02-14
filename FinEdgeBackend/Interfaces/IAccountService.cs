@@ -10,7 +10,8 @@ namespace FinEdgeBackend.Interfaces
         Task<Account> GetAccountByIdAsync(int accountID);
         Task<Account> GetAccountForCurrentUserByNameAsync(string accountName, User currentUser);
         Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser);
-        Task<IEnumerable<AccountSummaryDTO>> GetAccountSummariesAsync(User currentUser);
+        Task<ICollection<AccountChartDTO>> GetAccountChartDataAsync(User currentUser);
+        Task<AccountStatsDTO> GetAccountStatisticsAsync(User currentUser);
         Task DeleteAccountAsync(Account account);
         bool Validate(AccountDTO accountDto);
     }
