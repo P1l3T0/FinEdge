@@ -75,27 +75,38 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpGet]
-        [Route("get")]
-        public async Task<IActionResult> GetCategories()
+        [Route("get-income")]
+        public async Task<IActionResult> GetIncomeCategories()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Category> incomeCategories = _categoryService.GetIncomeCategories(currentUser.Categories!);
-            ICollection<Category> expenditureCategories = _categoryService.GetExpenditureCategories(currentUser.Categories!);
 
             decimal totalIncomeBalance = _categoryService.GetBalanceForIncomeCategories(incomeCategories);
             decimal totalIncomeBudget = _categoryService.GetBudgetForIncomeCategories(incomeCategories);
+
+            return Ok(new
+            {
+                Categories = incomeCategories,
+                Balance = totalIncomeBalance,
+                Budget = totalIncomeBudget
+            });
+        }
+
+        [HttpGet]
+        [Route("get-expenditure")]
+        public async Task<IActionResult> GetExpenditureCategories()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Category> expenditureCategories = _categoryService.GetExpenditureCategories(currentUser.Categories!);
 
             decimal totalExpenditureBalance = _categoryService.GetBalanceForExpenditureCategories(expenditureCategories);
             decimal totalExpenditureBudget = _categoryService.GetBudgetForExpenditureCategories(expenditureCategories);
 
             return Ok(new
             {
-                IncomeCategories = incomeCategories,
-                ExpenditureCategories = expenditureCategories,
-                TotalIncomeBalance = totalIncomeBalance,
-                TotalIncomeBudget = totalIncomeBudget,
-                TotalExpenditureBalance = totalExpenditureBalance,
-                TotalExpenditureBudget = totalExpenditureBudget
+                Categories = expenditureCategories,
+                Balance = totalExpenditureBalance,
+                Budget = totalExpenditureBudget
             });
         }
 
