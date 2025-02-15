@@ -153,12 +153,9 @@ export type AccountStats = {
 //! Category
 
 export type CategoryResponse = {
-  incomeCategories: Category[];
-  expenditureCategories: Category[];
-  totalIncomeBalance: number;
-  totalIncomeBudget: number;
-  totalExpenditureBalance: number;
-  totalExpenditureBudget: number;
+  categories: Category[];
+  balance: number;
+  budget: number;
 }
 
 export type CategoryDTO = {

@@ -18,7 +18,8 @@ const DeleteCategory = ({ category }: { category: Category }) => {
   const { mutateAsync } = useMutation({
     mutationFn: deleteCategory,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"], });
+      queryClient.invalidateQueries({ queryKey: ["income-categories"], });
+      queryClient.invalidateQueries({ queryKey: ["expenditure-categories"] });
     },
   });
 
