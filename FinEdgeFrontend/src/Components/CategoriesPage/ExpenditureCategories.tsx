@@ -1,10 +1,9 @@
 import { Card, CardBody, CardFooter, CardHeader } from "@progress/kendo-react-layout";
 import usesGetExpenditureCategories from "../../Hooks/useGetExpenditureCategories";
-import DeleteCategory from "../../Data/Categories/DeleteCategory";
-import UpdateCategory from "../../Data/Categories/UpdateCategory";
 import CategoriesDataCard from "./CategoriesDataCard";
 import CategoryCardBody from "./Cards/CategoryCardBody";
 import CategoryCardHeader from "./Cards/CategoryCardHeader";
+import CategoryCardFooter from "./Cards/CategoryCardFooter";
 
 const ExpenditureCategories = () => {
   const { data, isLoading, isError, error } = usesGetExpenditureCategories();
@@ -19,18 +18,15 @@ const ExpenditureCategories = () => {
         <div className="flex-grow">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.categories.map((category, index) => (
-              <Card key={index} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl duration-300 ease-in-out">
-                <CardHeader className="border-b border-gray-200 p-4" style={{ backgroundColor: `${category.color}15` }}>
+              <Card key={index} className="shadow-md hover:shadow-xl duration-300 ease-in-out">
+                <CardHeader style={{ backgroundColor: `${category.color}15` }}>
                   <CategoryCardHeader category={category} />
                 </CardHeader>
-                <CardBody className="p-4">
+                <CardBody>
                   <CategoryCardBody category={category} />
                 </CardBody>
-                <CardFooter className="border-t border-gray-200 p-4">
-                  <div className="flex justify-end gap-2">
-                    <UpdateCategory category={category} />
-                    <DeleteCategory category={category} />
-                  </div>
+                <CardFooter>
+                  <CategoryCardFooter category={category} />
                 </CardFooter>
               </Card>
             ))}
