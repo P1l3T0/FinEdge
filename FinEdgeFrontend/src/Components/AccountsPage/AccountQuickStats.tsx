@@ -12,7 +12,7 @@ const QuickStats = () => {
 
   return (
     <>
-      <Card className="custom-scrollbar" style={{ height: "485px", overflowY: "scroll" }}>
+      <Card className="custom-scrollbar" style={{ height: "500px", overflowY: "scroll" }}>
         <CardHeader>
           <h3 className="text-lg font-semibold text-gray-900">Quick Statistics</h3>
         </CardHeader>

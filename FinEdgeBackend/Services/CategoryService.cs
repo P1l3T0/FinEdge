@@ -90,8 +90,8 @@ namespace FinEdgeBackend.Services
         {
             decimal balance = categories.Sum(c => c.Balance ?? 0);
             decimal budget = categories.Sum(c => c.Budget ?? 0);
-            decimal avarageBalance = categories.Average(c => c.Balance ?? 0);
-            decimal avarageBudget = categories.Average(c => c.Budget ?? 0);
+            decimal avarageBalance = categories.Average(c => c.Balance) ?? 0;
+            decimal avarageBudget = categories.Average(c => c.Budget) ?? 0;
 
             return (balance, budget, avarageBalance, avarageBudget);
         }
