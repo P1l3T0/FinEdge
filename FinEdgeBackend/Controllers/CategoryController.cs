@@ -81,14 +81,15 @@ namespace FinEdgeBackend.Controllers
             User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Category> incomeCategories = _categoryService.GetIncomeCategories(currentUser.Categories!);
 
-            decimal totalIncomeBalance = _categoryService.GetBalanceForIncomeCategories(incomeCategories);
-            decimal totalIncomeBudget = _categoryService.GetBudgetForIncomeCategories(incomeCategories);
+            (decimal balance, decimal budget, decimal averageBalance, decimal averageBudget) = _categoryService.GetDataForCategories(incomeCategories);
 
             return Ok(new
             {
                 Categories = incomeCategories,
-                Balance = totalIncomeBalance,
-                Budget = totalIncomeBudget
+                Balance = balance,
+                Budget = budget,
+                AverageBalance = averageBalance,
+                AverageBudget = averageBudget
             });
         }
 
@@ -99,14 +100,15 @@ namespace FinEdgeBackend.Controllers
             User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Category> expenditureCategories = _categoryService.GetExpenditureCategories(currentUser.Categories!);
 
-            decimal totalExpenditureBalance = _categoryService.GetBalanceForExpenditureCategories(expenditureCategories);
-            decimal totalExpenditureBudget = _categoryService.GetBudgetForExpenditureCategories(expenditureCategories);
+            (decimal balance, decimal budget, decimal averageBalance, decimal averageBudget) = _categoryService.GetDataForCategories(expenditureCategories);
 
             return Ok(new
             {
                 Categories = expenditureCategories,
-                Balance = totalExpenditureBalance,
-                Budget = totalExpenditureBudget
+                Balance = balance,
+                Budget = budget,
+                AverageBalance = averageBalance,
+                AverageBudget = averageBudget
             });
         }
 
