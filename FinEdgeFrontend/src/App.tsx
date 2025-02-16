@@ -4,12 +4,12 @@ import DrawerContainer from "./Components/Drawer/DrawerContainer";
 import Register from "./Pages/Authentication/Register";
 import Login from "./Pages/Authentication/Login";
 import PersistLogin from "./Pages/Authentication/axios/Components/PersistLogin";
-import Categories from "./Pages/Categories/Categories";
 import Transactions from "./Pages/Transactions/Transactions";
 import FinancialRecommendations from "./Pages/Recommendations/FinancialRecommendations";
 import NotificationsBase from "./Components/Notifications/NotificationsBas";
 import Home from "./Pages/Home";
 import Accounts from "./Pages/Accounts";
+import Categories from "./Pages/Category";
 
 function App() {
   const { data } = useGetUser();
