@@ -193,6 +193,24 @@ export type CategoryInfoDTO = {
   color: string;
 }
 
+// Category Sankey Chart
+
+export type SankeyChartNode = {
+  id: string;
+  label: string;
+}
+
+export type SankeyChartLink = {
+  sourceId: string;
+  targetId: string;
+  value: number;
+}
+
+export type SankeyChartDTO = {
+  nodes: SankeyChartNode[];
+  links: SankeyChartLink[];
+}
+
 //! Transactions
 
 export type Names = {

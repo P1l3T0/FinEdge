@@ -1,4 +1,4 @@
-import useGetCategoryInfo from "../../../Hooks/useGetCategoryInfo";
+import useGetCategoryInfo from "../../../Hooks/Categories/useGetCategoryInfo";
 import CategoriesPie from "./CategoriesPie";
 
 const CategoriesInfo = () => {

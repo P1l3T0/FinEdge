@@ -1,5 +1,5 @@
 import { Card, CardBody, CardFooter, CardHeader } from "@progress/kendo-react-layout";
-import usesGetIncomeCategories from "../../Hooks/useGetIncomeCategories";
+import usesGetIncomeCategories from "../../Hooks/Categories/useGetIncomeCategories";
 import CategoriesDataCard from "./CategoriesDataCard";
 import CategoryCardBody from "./Cards/CategoryCardBody";
 import CategoryCardHeader from "./Cards/CategoryCardHeader";
