@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.Categories;
 using FinEdgeBackend.Models;
 
 namespace FinEdgeBackend.Interfaces
@@ -13,6 +13,7 @@ namespace FinEdgeBackend.Interfaces
         ICollection<Category> GetExpenditureCategories(ICollection<Category> categories);
         ICollection<Category> GetIncomeCategories(ICollection<Category> categories);
         ICollection<CategoryInfoDTO> GetCategoryInfo(ICollection<Category> categories);
+        CategorySankeyChartDTO GetSankeyChartDataAsync(ICollection<Category> categories);
         Task DeleteCategoryAsync(Category category);
         Task DeleteAllCategoriesAsync(ICollection<Category> categories);
         (decimal balance, decimal budget, decimal averageBalance, decimal averageBudget) GetDataForCategories(ICollection<Category> categories);

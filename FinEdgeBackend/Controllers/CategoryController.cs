@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.Categories;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
@@ -131,6 +131,16 @@ namespace FinEdgeBackend.Controllers
                 IncomeInfo = incomeInfo,
                 ExpenditureInfo = expenditureInfo
             });
+        }
+
+        [HttpGet]
+        [Route("get/sankey-data")]
+        public async Task<IActionResult> GetSankeyData()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            CategorySankeyChartDTO sankeyData = _categoryService.GetSankeyChartDataAsync(currentUser.Categories);
+
+            return Ok(sankeyData);
         }
 
         [HttpPut]
