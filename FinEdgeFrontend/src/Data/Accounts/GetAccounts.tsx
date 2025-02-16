@@ -1,9 +1,8 @@
-import { AccountType } from "../../Utils/Types";
-import { Card, CardBody, CardHeader, CardFooter, } from "@progress/kendo-react-all";
-import { getEnumValueFromNumber } from "../../Utils/Functions";
-import DeleteAccount from "./DeleteAccount";
-import UpdateAccount from "./UpdateAccount";
+import { Card, CardBody, CardHeader, CardFooter } from "@progress/kendo-react-all";
 import useGetAccounts from "../../Hooks/Accounts/useGetAccounts";
+import AccountCardHeader from "../../Components/AccountsPage/Cards/AccountCardHeader";
+import AccountCardBody from "../../Components/AccountsPage/Cards/AccountCardBody";
+import AccountCardFooter from "../../Components/AccountsPage/Cards/AccountCardFooter";
 
 const GetAccounts = () => {
   const { data, isLoading, isError, error } = useGetAccounts();
@@ -14,49 +13,15 @@ const GetAccounts = () => {
   return (
     <>
       {data?.map((account, index) => (
-        <Card key={index} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl duration-300 ease-in-out">
-          <CardHeader className="border-b border-gray-200 p-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {account.name}
-                </h3>
-                <span className="text-sm text-gray-500">
-                  {getEnumValueFromNumber(parseInt(account.accountType), AccountType)}
-                </span>
-              </div>
-              <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center">
-                <span className="text-blue-600 font-semibold">
-                  {account.name.charAt(0).toUpperCase()}
-                </span>
-              </div>
-            </div>
+        <Card key={index} className="shadow-md hover:shadow-xl duration-300 ease-in-out">
+          <CardHeader>
+            <AccountCardHeader account={account} />
           </CardHeader>
-          <CardBody className="p-4">
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Balance</span>
-                <span className="text-xl font-bold">
-                  {account.balance} {account.currency}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Created</span>
-                <span className="text-sm text-gray-500">
-                  {new Date(account.dateCreated).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </span>
-              </div>
-            </div>
+          <CardBody>
+            <AccountCardBody account={account} />
           </CardBody>
-          <CardFooter className="border-t border-gray-200 p-4">
-            <div className="flex justify-end gap-2">
-              <UpdateAccount account={account} />
-              <DeleteAccount account={account} />
-            </div>
+          <CardFooter>
+            <AccountCardFooter account={account} />
           </CardFooter>
         </Card>
       ))}
