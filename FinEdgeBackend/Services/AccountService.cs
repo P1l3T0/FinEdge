@@ -1,4 +1,5 @@
 ﻿using FinEdgeBackend.Data;
+using FinEdgeBackend.DTOs;
 using FinEdgeBackend.DTOs.Accounts;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
@@ -27,6 +28,7 @@ namespace FinEdgeBackend.Services
             account.Currency = accountDto.Currency;
             account.AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!);
             account.Balance = accountDto.Balance;
+            account.Color = accountDto.Color;
 
             _dataContext.Accounts.Update(account);
             await _dataContext.SaveChangesAsync();

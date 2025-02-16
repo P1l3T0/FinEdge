@@ -6,5 +6,6 @@
         public string? Currency { get; set; }
         public string? AccountType { get; set; }
         public decimal? Balance { get; set; }
+        public string? Color { get; set; }
     }
 }

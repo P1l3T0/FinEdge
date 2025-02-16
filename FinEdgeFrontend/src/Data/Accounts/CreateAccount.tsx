@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@progress/kendo-react-buttons";
-import { TextBox, TextBoxChangeEvent } from "@progress/kendo-react-inputs";
+import { ColorPicker, ColorPickerChangeEvent, ColorPickerView, TextBox, TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 import { DropDownList, DropDownListChangeEvent, } from "@progress/kendo-react-dropdowns";
 import { AccountDTO } from "../../Utils/Types";
 import axios, { AxiosError, AxiosResponse } from "axios";
@@ -12,9 +12,11 @@ import { Card, CardHeader, CardBody } from "@progress/kendo-react-all";
 const CreateAccounts = () => {
   const queryClient = useQueryClient();
 
+  const [color, setColor] = useState<ColorPickerView>();
   const [account, setAccount] = useState<AccountDTO>({
     name: "",
     balance: 0,
+    color: "rgba(255, 255, 255, 1)",
     accountType: accountType[0],
     currency: currency[0],
   });
@@ -35,7 +37,16 @@ const CreateAccounts = () => {
     });
   };
 
+  const handleColorPickerChange = async (e: ColorPickerChangeEvent) => {
+    setColor(e.value as ColorPickerView);
+    setAccount({
+      ...account,
+      color: e.value
+    })
+  }
+
   const createAccount = async () => {
+    debugger
     await axios
       .post<AccountDTO>(`${createAccountEndPoint}`, account, {
         withCredentials: true,
@@ -84,6 +95,10 @@ const CreateAccounts = () => {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Currency</label>
                 <DropDownList id="currency" name="currency" data={currency} defaultValue={currency[0]} onChange={handleDropDownChange} className="w-full" size="large" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Account Color</label>
+                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={account.color} className="w-full" />
               </div>
               <div className="pt-4">
                 <Button id="add-account-button" themeColor="primary" onClick={handlerClick} className="w-full" size="large">Add Account</Button>

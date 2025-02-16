@@ -23,6 +23,8 @@ namespace FinEdgeBackend.Models
 
         [Required]
         public string? Color { get; set; }
+
+        [Required]
         public ICollection<Subcategory> Subcategories { get; set; } = new List<Subcategory>();
 
         [Required]

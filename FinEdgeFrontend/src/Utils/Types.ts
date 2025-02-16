@@ -101,6 +101,7 @@ export type AccountDTO = {
   balance: number;
   accountType: string;
   currency: string;
+  color: string;
 }
 
 export type Account = {
@@ -110,6 +111,7 @@ export type Account = {
   balance: number;
   accountType: string;
   currency: string;
+  color: string;
   dateCreated: Date;
 }
 

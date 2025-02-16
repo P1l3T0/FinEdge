@@ -59,6 +59,7 @@ namespace FinEdgeBackend.Controllers
                 Name = accountDto.Name,
                 Balance = accountDto.Balance,
                 Currency = accountDto.Currency,
+                Color = accountDto.Color,
                 DateCreated = DateTime.Now,
                 AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!),
             });
