@@ -9,7 +9,7 @@ import FinancialRecommendations from "./Pages/Recommendations/FinancialRecommend
 import NotificationsBase from "./Components/Notifications/NotificationsBas";
 import Home from "./Pages/Home";
 import Accounts from "./Pages/Accounts";
-import Categories from "./Pages/Category";
+import Categories from "./Pages/Categories";
 
 function App() {
   const { data } = useGetUser();
