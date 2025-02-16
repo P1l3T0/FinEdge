@@ -17,7 +17,7 @@ const IncomeCategories = () => {
       <h2 className="text-md font-semibold text-gray-600 mb-4 mt-4">Income Categories</h2>
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="flex-grow">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.categories.map((category, index) => (
               <Card key={index} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl duration-300 ease-in-out">
                 <CardHeader className="border-b border-gray-200 p-4" style={{ backgroundColor: `${category.color}15` }}>
