@@ -1,5 +1,5 @@
-import InfoCard from "../Components/HomePage/InfoCard";
-import StatCard from "../Components/HomePage/StatCard";
+import InfoCard from "../Components/HomePage/Cards/InfoCard";
+import StatCard from "../Components/HomePage/Cards/StatCard";
 import UserProfile from "../Components/HomePage/UserProfile";
 import useGetReports from "../Hooks/useGetReports";
 import useGetUser from "../Hooks/useGetUser";

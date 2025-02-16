@@ -2,7 +2,7 @@ import DeleteUser from "../../Data/User/DeleteUser";
 import UpdateUser from "../../Data/User/UpdateUser";
 import { getEnumValueFromNumber } from "../../Utils/Functions";
 import { MethodologyType, User } from "../../Utils/Types";
-import DashboardCard from "./DashboardCard";
+import DashboardCard from "./Cards/DashboardCard";
 
 const UserProfile = ({ user }: {user: User}) => (
   <DashboardCard className="hover:shadow-lg transition-shadow">
