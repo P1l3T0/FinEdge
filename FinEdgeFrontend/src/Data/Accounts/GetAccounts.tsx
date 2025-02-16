@@ -14,7 +14,7 @@ const GetAccounts = () => {
   return (
     <>
       {data?.map((account, index) => (
-        <Card key={index} className="bg-white hover:shadow-lg transition-shadow">
+        <Card key={index} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl duration-300 ease-in-out">
           <CardHeader className="border-b border-gray-200 p-4">
             <div className="flex justify-between items-center">
               <div>

@@ -64,7 +64,8 @@ const UpdateCategory = ({ category }: { category: Category }) => {
   const { mutateAsync } = useMutation({
     mutationFn: updateAccount,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"], });
+      queryClient.invalidateQueries({ queryKey: ["income-categories"], });
+      queryClient.invalidateQueries({ queryKey: ["expenditure-categories"] });
     },
   });
 
@@ -74,29 +75,60 @@ const UpdateCategory = ({ category }: { category: Category }) => {
 
   return (
     <>
-      <Button type="button" fillMode="solid" themeColor={'info'} onClick={toggleDialog}>Update</Button>
+      <Button
+        type="button"
+        fillMode="solid"
+        themeColor={"info"}
+        onClick={toggleDialog}
+      >
+        Update
+      </Button>
 
       {visible && (
-        <Window title={`Update Category`} style={{ height: "auto" }} onClose={toggleDialog}>
-          <form className="k-form">
-            <fieldset>
-              <legend>Category Details</legend>
-              <TextBox id='name' name='name' type='text' placeholder='Category name' defaultValue={category.name} onChange={handleTextBoxChange} />
-              <TextBox id='budget' name='budget' type='number' min={0} placeholder='Category budget' defaultValue={category.budget} onChange={handleTextBoxChange} />
-              <DropDownList id="currency" name='currency' data={currency} defaultValue={category.currency} onChange={handleDropDownChange} />
-              <Checkbox id='isIncome' name='isIncome' type='checkbox' label="Is income" defaultValue={category.isIncome} onChange={handleCheckBoxChange} />
-              <ColorPicker id='color-picker' view={'combo'} onChange={handleColorPickerChange} value={color} defaultValue={updateCategory.color} />
-            </fieldset>
+        <Window title="Update Category" onClose={toggleDialog} initialHeight={415}>
+          <form className="space-y-3">
+            <div className="space-y-2">
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Category Name</label>
+                <TextBox id="name" name="name" type="text" defaultValue={category.name} onChange={handleTextBoxChange} className="w-full" />
+              </div>
 
-            <div className="buttonDiv">
-              <Button type="button" onClick={handleUpdate} themeColor={'primary'}>Submit</Button>
-              <Button type="button" onClick={toggleDialog} themeColor={'error'}>Cancel</Button>
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Budget</label>
+                <TextBox id="budget" name="budget" type="number" min={0} defaultValue={category.budget} onChange={handleTextBoxChange} className="w-full" />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Currency</label>
+                <DropDownList id="currency" name="currency" data={currency} defaultValue={category.currency} onChange={handleDropDownChange} className="w-full" />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Category Color</label>
+                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={updateCategory.color} className="w-full" />
+              </div>
+
+              <div className="pt-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="isIncome" name="isIncome" type="checkbox" defaultValue={category.isIncome} onChange={handleCheckBoxChange} />
+                  <label htmlFor="isIncome" className="text-sm text-gray-600">Is Income Category</label>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-5 border-t border-gray-200">
+              <Button type="button" themeColor="primary" onClick={handleUpdate}>
+                Save
+              </Button>
+              <Button type="button" themeColor="error" onClick={toggleDialog}>
+                Cancel
+              </Button>
             </div>
           </form>
         </Window>
       )}
     </>
-  )
+  );
 }
 
 export default UpdateCategory;
