@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { getCategoryInfoEndPoint } from '../endpoints';
-import { CategoryInfo } from '../Utils/Types';
+import { getCategoryInfoEndPoint } from '../../endpoints';
+import { CategoryInfo } from '../../Utils/Types';
 
 const useGetCategoryInfo = () => {
   const getCategoryInfo = async () => {
