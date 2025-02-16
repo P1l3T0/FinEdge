@@ -156,6 +156,8 @@ export type CategoryResponse = {
   categories: Category[];
   balance: number;
   budget: number;
+  averageBalance: number;
+  averageBudget: number;
 }
 
 export type CategoryDTO = {
