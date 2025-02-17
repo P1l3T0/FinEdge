@@ -49,7 +49,6 @@ const UpdateAccount = ({ account }: { account: Account }) => {
   }
 
   const updateAccount = async () => {
-    debugger
     await axios
       .put<AccountDTO>(`${updateAccountEndPoint}/${account.id}`, updatedAccount, { withCredentials: true })
       .then((res: AxiosResponse<AccountDTO>) => res.data)

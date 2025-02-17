@@ -46,7 +46,6 @@ const CreateAccounts = () => {
   }
 
   const createAccount = async () => {
-    debugger
     await axios
       .post<AccountDTO>(`${createAccountEndPoint}`, account, {
         withCredentials: true,
