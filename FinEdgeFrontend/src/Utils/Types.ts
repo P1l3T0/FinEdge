@@ -71,7 +71,7 @@ export type User = {
   accounts: Account[];
   categories: Category[];
   transactions: Transaction[];
-  notifications: Notification[];
+  notifications: AppNotification[];
 }
 
 export type RegisterDTO = {
@@ -279,8 +279,9 @@ export type PromptRequestData = {
 export type AppNotification = {
   id: number;
   userID: number;
-  message: string;
-  ssRead: boolean;
   notificationType: string;
-  dateCreated: Date;
+  title: string;
+  description: string;
+  isRead: boolean;
+  dateCreated: string;
 }

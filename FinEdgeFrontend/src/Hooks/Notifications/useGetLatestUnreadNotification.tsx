@@ -2,8 +2,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useEffect } from "react";
-import { AppNotification } from "../Utils/Types";
-import { getNotificationHubEndPoint, getLatestUnreadNotificationEndPoint } from "../endpoints"; 
+import { AppNotification } from "../../Utils/Types";
+import { getNotificationHubEndPoint, getLatestUnreadNotificationEndPoint } from "../../endpoints"; 
 
 const getLatestUnreadNotification = async (): Promise<AppNotification | null> => {
   return await axios
