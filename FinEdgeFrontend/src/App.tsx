@@ -10,6 +10,7 @@ import NotificationsBase from "./Components/Notifications/NotificationsBase";
 import Home from "./Pages/Home";
 import Accounts from "./Pages/Accounts";
 import Categories from "./Pages/Categories";
+import Notifications from "./Pages/Notifications";
 
 function App() {
   const { data } = useGetUser();
@@ -24,6 +25,7 @@ function App() {
               <Route element={<PersistLogin />}>
                 <Route path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/notifications" element={<Notifications />} />
                 <Route path="/accounts" element={<Accounts />} />
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/transactions" element={<Transactions />} />
