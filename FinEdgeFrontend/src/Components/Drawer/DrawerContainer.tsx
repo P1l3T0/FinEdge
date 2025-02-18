@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Drawer, DrawerContent, DrawerSelectEvent } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
 import { userIcon, logoutIcon, menuIcon, bellIcon, sparklesIcon, trackChangesEnableIcon, categorizeIcon } from "@progress/kendo-svg-icons";
-import useGetNotifications from "../../Hooks/useGetNotifications";
 import useLogout from "../../Hooks/useLogOut";
+import useGetNotifications from "../../Hooks/Notifications/useGetNotifications";
 
 type DrawerContainerProps = {
   children: ReactNode;
@@ -61,18 +61,11 @@ const DrawerContainer = ({ children }: DrawerContainerProps) => {
         </div>
         <div className="w-12 mr-2"></div>
       </div>
-      <Drawer
-        mini={true}
-        expanded={expanded}
-        position="start"
-        mode="push"
-        width={200}
+      <Drawer mini={true} expanded={expanded} position="start" mode="push" width={200} onSelect={onSelect}
         items={items.map((item, index) => ({
           ...item,
           selected: index === selected,
-        }))}
-        onSelect={onSelect}
-      >
+        }))}>
         <DrawerContent>{children}</DrawerContent>
       </Drawer>
     </div>
