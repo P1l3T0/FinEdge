@@ -42,7 +42,7 @@ namespace FinEdgeBackend.Services.Notifications
 
         public async Task<ICollection<Notification>> GetAllNotificationsForCurrentUserAsync(User currentUser)
         {
-            return await _dataContext.Notifications.Where(n => n.User!.Equals(currentUser)).ToListAsync();
+            return await _dataContext.Notifications.Where(n => n.User!.Equals(currentUser)).OrderByDescending(n => n.DateCreated).ToListAsync();
         }
 
         public async Task DeleteNotificationAsync(Notification notification)
