@@ -26,7 +26,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Please fill in the Transaction fields!",
+                    Title = "Please fill in the Transaction fields!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -59,7 +59,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Transaction {transactionDto.Name} created successffuly",
+                Title = $"Transaction {transactionDto.Name} created successffuly",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -128,7 +128,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Please fill in the Transaction fields!",
+                    Title = "Please fill in the Transaction fields!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -147,7 +147,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Transaction {transactionDto.Name} updated successfully",
+                Title = $"Transaction {transactionDto.Name} updated successfully",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -172,7 +172,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Transaction {transaction.Name} deleted successfully",
+                Title = $"Transaction {transaction.Name} deleted successfully",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,

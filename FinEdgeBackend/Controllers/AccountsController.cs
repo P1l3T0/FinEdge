@@ -24,7 +24,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Please fill in the account fields!",
+                    Title = "Please fill in the account fields!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -40,7 +40,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = $"Account '{account.Name}' already exist!",
+                    Title = $"Account '{account.Name}' already exist!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -66,7 +66,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Successfully created Account {accountDto!.Name}!",
+                Title = $"Successfully created Account {accountDto!.Name}!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -125,7 +125,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Please fill in the account fields!",
+                    Title = "Please fill in the account fields!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -141,7 +141,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Account {account.Name} updated successfully!",
+                Title = $"Account {account.Name} updated successfully!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -162,7 +162,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Account {account.Name} deleted successfully!",
+                Title = $"Account {account.Name} deleted successfully!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,

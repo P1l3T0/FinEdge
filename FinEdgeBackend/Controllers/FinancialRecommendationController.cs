@@ -40,7 +40,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Invalid date. Please use a valid date!",
+                    Title = "Invalid date. Please use a valid date!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -78,7 +78,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = "Recommendation created successfully!",
+                Title = "Recommendation created successfully!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,

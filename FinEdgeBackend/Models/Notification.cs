@@ -9,7 +9,10 @@ namespace FinEdgeBackend.Models
         public int? UserID { get; set; }
 
         [Required]
-        public string? Message { get; set; } = string.Empty;
+        public string? Title { get; set; } = string.Empty;
+
+        [Required]
+        public string? Description { get; set; } = string.Empty;
 
         [Required]
         public bool IsRead { get; set; } = false;

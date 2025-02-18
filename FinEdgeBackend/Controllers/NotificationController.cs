@@ -1,6 +1,7 @@
 ﻿using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace FinEdgeBackend.Controllers
 {
@@ -65,7 +66,8 @@ namespace FinEdgeBackend.Controllers
             return NoContent();
         }
 
-        [HttpPut("mark-all-as-read")]
+        [HttpPost]
+        [Route("mark-all-as-read")]
         public async Task<IActionResult> MarkAllNotificationsAsRead()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
@@ -79,13 +81,26 @@ namespace FinEdgeBackend.Controllers
             return NoContent();
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete]
+        [Route("delete/{notificationID}")]
+        public async Task<IActionResult> DeleteNotification(int notificationID)
+        {
+            Notification notification = await _notificationService.GetNotificationByIdAsync(notificationID);
+            await _notificationService.DeleteNotificationAsync(notification);
+
+            return NoContent();
+        }
+
+        [HttpDelete("delete-all")]
         public async Task<IActionResult> DeleteNotifications()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Notification> notifications = await _notificationService.GetAllNotificationsForCurrentUserAsync(currentUser);
 
-            await _notificationService.DeleteAllNotificationAsync(notifications);
+            foreach (Notification notification in notifications)
+            {
+                await _notificationService.DeleteNotificationAsync(notification);
+            }
 
             return NoContent();
         }
