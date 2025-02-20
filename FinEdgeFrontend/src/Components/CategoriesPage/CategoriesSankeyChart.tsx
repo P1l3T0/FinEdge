@@ -19,7 +19,9 @@ const CategoriesSankeyChart = () => {
           <h2 className="text-lg font-semibold text-gray-900">Budget Flow Visualization</h2>
         </CardHeader>
         <CardBody>
-          <Sankey data={data!} links={links} style={{ width: "100%", height: "100%" }} />
+          {data?.links.length! > 0 && data?.nodes.length! > 0 
+            ? <Sankey data={data!} links={links} style={{ width: "100%", height: "100%" }} />
+            : ""}
         </CardBody>
       </Card>
     </>

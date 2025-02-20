@@ -75,12 +75,7 @@ const UpdateCategory = ({ category }: { category: Category }) => {
 
   return (
     <>
-      <Button
-        type="button"
-        fillMode="solid"
-        themeColor={"info"}
-        onClick={toggleDialog}
-      >
+      <Button type="button" fillMode="solid" themeColor={"info"} onClick={toggleDialog}>
         Update
       </Button>
 

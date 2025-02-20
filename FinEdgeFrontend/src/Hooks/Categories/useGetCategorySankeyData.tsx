@@ -5,7 +5,6 @@ import { SankeyData } from "@progress/kendo-react-all";
 
 const useGetSankeyChartData = () => {
   const getSankeyChartData = async () => {
-
     return await axios
       .get<SankeyData>(`${getCategorySankeyChartDataEndPoint}`, { withCredentials: true, })
       .then((res: AxiosResponse<SankeyData>) => res.data)

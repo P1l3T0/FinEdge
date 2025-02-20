@@ -20,7 +20,7 @@ const useGetLatestNotification = () => {
   const latestNotificationQuery = useQuery({
     queryKey: ["latestNotification"],
     queryFn: getLatestUnreadNotification,
-    refetchInterval: 10000, 
+    refetchInterval: 60000, 
     enabled: document.cookie.includes("RefreshToken"),
   });
 
