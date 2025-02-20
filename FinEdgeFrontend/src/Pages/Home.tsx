@@ -1,12 +1,12 @@
 import InfoCard from "../Components/HomePage/Cards/InfoCard";
 import StatCard from "../Components/HomePage/Cards/StatCard";
-import UserProfile from "../Components/HomePage/UserProfile";
+import UserProfile from "../Components/HomePage/Cards/UserProfile";
 import useGetReports from "../Hooks/useGetReports";
 import useGetUser from "../Hooks/useGetUser";
-import AccountsGrid from "../Data/User/Details/AccountsGrid";
-import CategoriesGrid from "../Data/User/Details/CategoriesGrid";
-import CategoriesInfo from "../Data/User/Details/CategoriesInfo";
-import TransactionsGrid from "../Data/User/Details/TransactionsGrid";
+import AccountsGrid from "../Components/HomePage/Grids/AccountsGrid";
+import CategoriesGrid from "../Components/HomePage/Grids/CategoriesGrid";
+import CategoriesInfo from "../Components/HomePage/Grids/CategoriesInfo";
+import TransactionsGrid from "../Components/HomePage/Grids/TransactionsGrid";
 
 const Home = () => {
   const { data: userData, isLoading: userLoading, isError: userError, error: userErrorData } = useGetUser();

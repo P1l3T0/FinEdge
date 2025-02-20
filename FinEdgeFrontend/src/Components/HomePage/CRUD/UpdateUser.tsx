@@ -2,8 +2,8 @@ import { TextBoxChangeEvent, Button, TextBox, Window } from "@progress/kendo-rea
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
-import { updateCurrentUserEnddPoint } from "../../endpoints";
-import { UpdateDTO, User } from "../../Utils/Types";
+import { updateCurrentUserEnddPoint } from "../../../endpoints";
+import { UpdateDTO, User } from "../../../Utils/Types";
 
 const UpdateUser = ({ user }: { user: User }) => {
   const queryClient = useQueryClient();

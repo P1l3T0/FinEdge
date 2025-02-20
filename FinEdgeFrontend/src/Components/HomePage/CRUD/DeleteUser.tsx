@@ -1,7 +1,7 @@
 import { Button } from '@progress/kendo-react-all';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { deketeCurrentUserEnddPoint, logoutEndPoint } from "../../endpoints";
+import { deketeCurrentUserEnddPoint, logoutEndPoint } from "../../../endpoints";
 import { useNavigate } from "react-router-dom";
 
 const DeleteUser = () => {
