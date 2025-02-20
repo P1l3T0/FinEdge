@@ -1,8 +1,8 @@
 import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 import { Sankey, SankeyLinkDefaults } from "@progress/kendo-react-charts";
-import useGetSankeyChartData from "../../Hooks/Categories/useGetCategorySankeyData";
+import useGetSankeyChartData from "../../../Hooks/Categories/useGetCategorySankeyData";
 
-const CategoriesSankeyChart = () => {
+const TransactionSankeyChart = () => {
   const { data, isLoading, isError, error } = useGetSankeyChartData();
 
   if (isLoading) return <div>Loading...</div>;
@@ -28,4 +28,4 @@ const CategoriesSankeyChart = () => {
   );
 };
 
-export default CategoriesSankeyChart;
+export default TransactionSankeyChart;

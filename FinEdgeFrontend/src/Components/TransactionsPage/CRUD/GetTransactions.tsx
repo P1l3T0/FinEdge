@@ -1,5 +1,5 @@
-import TransactionCards from './TransactionCards';
-import useGetTransactions from '../../Hooks/useGetTransactions';
+import useGetTransactions from '../../../Hooks/useGetTransactions';
+import TransactionCards from '../Cards/TransactionCards';
 
 const GetTransactions = () => {
   const { data, isLoading, isError, error } = useGetTransactions();

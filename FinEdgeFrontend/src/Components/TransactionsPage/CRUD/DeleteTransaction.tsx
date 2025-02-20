@@ -1,8 +1,8 @@
 import { Button } from '@progress/kendo-react-all';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { deleteTransactionEndPoint } from '../../endpoints';
-import { Transaction } from '../../Utils/Types';
+import { deleteTransactionEndPoint } from '../../../endpoints';
+import { Transaction } from '../../../Utils/Types';
 
 const DeleteTransaction = ({ transaction }: { transaction: Transaction }) => {
   const queryClient = useQueryClient();
@@ -20,6 +20,7 @@ const DeleteTransaction = ({ transaction }: { transaction: Transaction }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"], });
       queryClient.invalidateQueries({ queryKey: ["reports"] });
+      queryClient.invalidateQueries({ queryKey: ["sankey-chart"] });
     },
   });
 

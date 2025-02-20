@@ -1,21 +1,10 @@
 import { useEffect, useState } from "react";
-import { TransactionDTO } from "../../Utils/Types";
-import {
-  TextBox,
-  DropDownList,
-  TextBoxChangeEvent,
-  DropDownListChangeEvent,
-  Button,
-  Checkbox,
-  CheckboxChangeEvent,
-  Card,
-  CardBody,
-  CardHeader,
-} from "@progress/kendo-react-all";
-import useGetNames from "../../Hooks/useGetNames";
+import { TextBox, DropDownList, TextBoxChangeEvent, DropDownListChangeEvent, Button, Checkbox, CheckboxChangeEvent, Card, CardBody, CardHeader } from "@progress/kendo-react-all";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { createTransactionEndPoint } from "../../endpoints";
+import { createTransactionEndPoint } from "../../../endpoints";
+import useGetNames from "../../../Hooks/useGetNames";
+import { TransactionDTO } from "../../../Utils/Types";
 
 const CreateTransaction = () => {
   const queryClient = useQueryClient();
@@ -104,25 +93,28 @@ const CreateTransaction = () => {
                 <label className="text-sm font-medium text-gray-700">Transaction Name</label>
                 <TextBox id="name" name="name" type="text" placeholder="Enter transaction name" onChange={handleTextBoxChange} size="large" />
               </div>
+
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Amount</label>
                 <TextBox id="amount" name="amount" type="number" min={0} placeholder="Enter transaction amount" onChange={handleTextBoxChange} size="large" />
               </div>
+
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Account</label> 
                 <DropDownList id="account-name" name="accountName" data={data?.accountNames} defaultValue={data?.accountNames[0] ?? "Create at least 1 account"} onChange={handleDropDownChange} size="large" />
               </div>
+
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Category</label>
-                <DropDownList id="category-name" name="categoryName" data={data?.categoryNames} defaultValue={data?.categoryNames[0] ?? "Create at least 1 category"} onChange={handleDropDownChange}
-                  size="large"
-                />
+                <DropDownList id="category-name" name="categoryName" data={data?.categoryNames} defaultValue={data?.categoryNames[0] ?? "Create at least 1 category"} onChange={handleDropDownChange} size="large" />
               </div>
+
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <Checkbox id="isRepeating" name="isRepeating" type="checkbox" label="Is repeating Transaction" onChange={handleCheckBoxChange} />
                 </div>
               </div>
+
               <div className="pt-4">
                 <Button id="add-transaction-button" themeColor="primary" onClick={handlerClick} className="w-full" size="large">
                   Add Transaction

@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Transaction, TransactionDTO } from '../../Utils/Types';
 import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownList, Window, CheckboxChangeEvent, Checkbox } from '@progress/kendo-react-all';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { updateTransactionEndPoint } from '../../endpoints';
-import useGetNames from '../../Hooks/useGetNames';
+import { updateTransactionEndPoint } from '../../../endpoints';
+import useGetNames from '../../../Hooks/useGetNames';
+import { Transaction, TransactionDTO } from '../../../Utils/Types';
 
 const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
   const { data } = useGetNames();
@@ -58,6 +58,7 @@ const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"], });
       queryClient.invalidateQueries({ queryKey: ["reports"] });
+      queryClient.invalidateQueries({ queryKey: ["sankey-chart"] });
     },
   });
 
@@ -67,28 +68,50 @@ const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
 
   return (
     <>
-      <Button type="button" fillMode="solid" themeColor={'info'} onClick={toggleDialog}>Update</Button>
+      <Button type="button" fillMode="solid" themeColor={"info"} onClick={toggleDialog}>
+        Update
+      </Button>
 
       {visible && (
-        <Window title={`Update Transaction`} style={{ height: "auto" }} onClose={toggleDialog}>
-          <form className="k-form">
-            <fieldset>
-              <legend>Transaction Details</legend>
-              <TextBox id='name' name='name' type='text' placeholder='Transaction name' defaultValue={transaction.name} onChange={handleTextBoxChange} />
-              <TextBox id='amount' name='amount' type='number' min={0} placeholder='Transaction amount' defaultValue={transaction.amount} onChange={handleTextBoxChange} />
-              <Checkbox id='isRepeating' name='isRepeating' type='checkbox' label="Is repeating" defaultValue={transaction.isRepeating} onChange={handleCheckBoxChange} />
-              <DropDownList id="account-name" name='accountName' data={data?.accountNames} defaultValue={transaction.accountName} onChange={handleDropDownChange} />
-            </fieldset>
+        <Window title="Update Transaction" onClose={toggleDialog} initialHeight={355}>
+          <form className="space-y-3">
+            <div className="space-y-2">
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Transaction Name</label>
+                <TextBox id="name" name="name" type="text" placeholder="Transaction name" defaultValue={transaction.name} onChange={handleTextBoxChange} />
+              </div>
 
-            <div className="buttonDiv">
-              <Button type="button" onClick={handleUpdate} themeColor={'primary'}>Submit</Button>
-              <Button type="button" onClick={toggleDialog} themeColor={'error'}>Cancel</Button>
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Amount</label>
+                <TextBox id="amount" name="amount" type="number" min={0} placeholder="Transaction amount" defaultValue={transaction.amount} onChange={handleTextBoxChange} />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Account</label>
+                <DropDownList id="account-name" name="accountName" data={data?.accountNames} defaultValue={transaction.accountName} onChange={handleDropDownChange} />
+              </div>
+
+              <div className="pt-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="isRepeating" name="isRepeating" type="checkbox" defaultValue={transaction.isRepeating} onChange={handleCheckBoxChange} />
+                  <label htmlFor="isRepeating" className="text-sm text-gray-600">Is Repeating Transaction</label>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-5 border-t border-gray-200">
+              <Button type="button" themeColor="primary" onClick={handleUpdate}>
+                Save
+              </Button>
+              <Button type="button" themeColor="error" onClick={toggleDialog}>
+                Cancel
+              </Button>
             </div>
           </form>
         </Window>
       )}
     </>
-  )
+  );
 }
 
 export default UpdateTransaction;

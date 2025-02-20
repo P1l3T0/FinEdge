@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardBody, CardFooter } from "@progress/kendo-react-all";
-import { Transaction } from "../../Utils/Types";
-import DeleteTransaction from "./DeleteTransaction";
-import UpdateTransaction from "./UpdateTransactions";
+import DeleteTransaction from "../CRUD/DeleteTransaction";
+import UpdateTransaction from "../CRUD/UpdateTransactions";
+import { Transaction } from "../../../Utils/Types";
 
 const TransactionCards = ({ transactions }: { transactions: Transaction[] }) => {
   return (
