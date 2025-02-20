@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Button } from "@progress/kendo-react-buttons";
 import { ColorPicker, ColorPickerChangeEvent, ColorPickerView, TextBox, TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 import { DropDownList, DropDownListChangeEvent, } from "@progress/kendo-react-dropdowns";
-import { AccountDTO } from "../../Utils/Types";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { createAccountEndPoint } from "../../endpoints";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { accountType, currency } from "../../Utils/Functions";
 import { Card, CardHeader, CardBody } from "@progress/kendo-react-all";
+import { createAccountEndPoint } from "../../../endpoints";
+import { accountType, currency } from "../../../Utils/Functions";
+import { AccountDTO } from "../../../Utils/Types";
 
 const CreateAccounts = () => {
   const queryClient = useQueryClient();
@@ -81,23 +81,23 @@ const CreateAccounts = () => {
             <form method="post" autoComplete="off" className="space-y-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Account Name</label>
-                <TextBox id="name" name="name" type="text" placeholder="Enter account name" onChange={handleTextBoxChange} className="w-full" size="large" />
+                <TextBox id="name" name="name" type="text" placeholder="Enter account name" onChange={handleTextBoxChange} size="large" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Balance</label>
-                <TextBox id="balance" name="balance" type="number" min={0} placeholder="Enter initial balance" onChange={handleTextBoxChange} className="w-full" size="large" />
+                <TextBox id="balance" name="balance" type="number" min={0} placeholder="Enter initial balance" onChange={handleTextBoxChange} size="large" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Account Type</label>
-                <DropDownList id="account-type" name="accountType" data={accountType} defaultValue={accountType[0]} onChange={handleDropDownChange} className="w-full" size="large" />
+                <DropDownList id="account-type" name="accountType" data={accountType} defaultValue={accountType[0]} onChange={handleDropDownChange} size="large" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Currency</label>
-                <DropDownList id="currency" name="currency" data={currency} defaultValue={currency[0]} onChange={handleDropDownChange} className="w-full" size="large" />
+                <DropDownList id="currency" name="currency" data={currency} defaultValue={currency[0]} onChange={handleDropDownChange} size="large" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Account Color</label>
-                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={account.color} className="w-full" />
+                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={account.color} />
               </div>
               <div className="pt-4">
                 <Button id="add-account-button" themeColor="primary" onClick={handlerClick} className="w-full" size="large">Add Account</Button>

@@ -1,8 +1,8 @@
 import { Card, CardBody, CardHeader } from "@progress/kendo-react-all";
-import useGetAccountStats from "../../Hooks/Accounts/useGetAccountStats";
-import AccountQuickStatsHighestBalanceCard from "./Cards/AccountQuickStatsCardHighestBalance";
-import AccountQuickStatsOverallCard from "./Cards/AccountQuickStatsCardOverall";
-import AccountQuickStatsdAccountTypesCard from "./Cards/AccountQuickStatsCardAccountTypes";
+import useGetAccountStats from "../../../Hooks/Accounts/useGetAccountStats";
+import AccountQuickStatsdAccountTypesCard from "../Cards/AccountQuickStatsCardAccountTypes";
+import AccountQuickStatsHighestBalanceCard from "../Cards/AccountQuickStatsCardHighestBalance";
+import AccountQuickStatsOverallCard from "../Cards/AccountQuickStatsCardOverall";
 
 const QuickStats = () => {
   const { data, isLoading, isError, error } = useGetAccountStats();

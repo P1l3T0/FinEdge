@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Account, AccountDTO, AccountType } from '../../Utils/Types';
 import { Window } from '@progress/kendo-react-dialogs';
 import { Button, ColorPicker, ColorPickerChangeEvent, ColorPickerView, DropDownList, DropDownListChangeEvent, TextBox, TextBoxChangeEvent } from '@progress/kendo-react-all';
-import { accountType, currency, getEnumValueFromNumber } from '../../Utils/Functions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { updateAccountEndPoint } from '../../endpoints';
+import { updateAccountEndPoint } from '../../../endpoints';
+import { getEnumValueFromNumber, accountType, currency } from '../../../Utils/Functions';
+import { Account, AccountDTO, AccountType } from '../../../Utils/Types';
 
 const UpdateAccount = ({ account }: { account: Account }) => {
   const queryClient = useQueryClient();
@@ -79,28 +79,28 @@ const UpdateAccount = ({ account }: { account: Account }) => {
             <div className="space-y-2">
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Account Name</label>
-                <TextBox id="name" name="name" type="text" defaultValue={account.name} onChange={handleTextBoxChange} className="w-full" />
+                <TextBox id="name" name="name" type="text" defaultValue={account.name} onChange={handleTextBoxChange} />
               </div>
 
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Balance</label>
-                <TextBox id="balance" name="balance" type="number" min={0} defaultValue={account.balance.toString()} onChange={handleTextBoxChange} className="w-full" />
+                <TextBox id="balance" name="balance" type="number" min={0} defaultValue={account.balance.toString()} onChange={handleTextBoxChange} />
               </div>
 
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Account Type</label>
-                <DropDownList id="account-type" name="accountType" data={accountType} defaultValue={getEnumValueFromNumber(parseInt(account.accountType), AccountType)} onChange={handleDropDownChange} className="w-full" />
+                <DropDownList id="account-type" name="accountType" data={accountType} defaultValue={getEnumValueFromNumber(parseInt(account.accountType), AccountType)} onChange={handleDropDownChange} />
               </div>
 
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Currency</label>
-                <DropDownList id="currency" name="currency" data={currency} defaultValue={account.currency} onChange={handleDropDownChange} className="w-full" />
+                <DropDownList id="currency" name="currency" data={currency} defaultValue={account.currency} onChange={handleDropDownChange} />
               </div>
             </div>
 
             <div>
               <label className="text-sm text-gray-600 mb-1 block">Account Color</label>
-              <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={updatedAccount.color} className="w-full" />
+              <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={updatedAccount.color} />
             </div>
 
             <div className="flex justify-end gap-2 pt-5 border-t border-gray-200">

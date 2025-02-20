@@ -1,6 +1,6 @@
 import { Account } from "../../../Utils/Types";
-import DeleteAccount from "../../../Data/Accounts/DeleteAccount";
-import UpdateAccount from "../../../Data/Accounts/UpdateAccount";
+import DeleteAccount from "../CRUD/DeleteAccount";
+import UpdateAccount from "../CRUD/UpdateAccount";
 
 const AccountCardFooter = ({ account }: { account: Account }) => {
   return (

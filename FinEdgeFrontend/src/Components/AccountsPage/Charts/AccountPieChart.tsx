@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardBody, Chart, ChartTitle, ChartLegend, ChartSeries, ChartSeriesItem, ChartSeriesLabels } from "@progress/kendo-react-all";
-import useGetAccountChartData from "../../Hooks/Accounts/useGetAccountChartData";
+import useGetAccountChartData from "../../../Hooks/Accounts/useGetAccountChartData";
 
 const AccountPieChart = () => {
   const { data, isLoading, isError, error } = useGetAccountChartData();

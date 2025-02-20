@@ -1,8 +1,8 @@
 import { Card, CardBody, CardHeader, CardFooter } from "@progress/kendo-react-all";
-import useGetAccounts from "../../Hooks/Accounts/useGetAccounts";
-import AccountCardHeader from "../../Components/AccountsPage/Cards/AccountCardHeader";
-import AccountCardBody from "../../Components/AccountsPage/Cards/AccountCardBody";
-import AccountCardFooter from "../../Components/AccountsPage/Cards/AccountCardFooter";
+import useGetAccounts from "../../../Hooks/Accounts/useGetAccounts";
+import AccountCardBody from "../Cards/AccountCardBody";
+import AccountCardFooter from "../Cards/AccountCardFooter";
+import AccountCardHeader from "../Cards/AccountCardHeader";
 
 const GetAccounts = () => {
   const { data, isLoading, isError, error } = useGetAccounts();

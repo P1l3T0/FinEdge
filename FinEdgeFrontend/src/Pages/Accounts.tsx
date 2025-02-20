@@ -1,7 +1,7 @@
-import AccountPieChart from "../Components/AccountsPage/AccountPieChart";
-import QuickStats from "../Components/AccountsPage/AccountQuickStats";
-import CreateAccounts from "../Data/Accounts/CreateAccount";
-import GetAccounts from "../Data/Accounts/GetAccounts";
+import AccountPieChart from "../Components/AccountsPage/Charts/AccountPieChart";
+import QuickStats from "../Components/AccountsPage/Charts/AccountQuickStats";
+import CreateAccounts from "../Components/AccountsPage/CRUD/CreateAccount";
+import GetAccounts from "../Components/AccountsPage/CRUD/GetAccounts";
 
 const Accounts = () => {
   return (
