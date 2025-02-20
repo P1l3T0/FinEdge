@@ -1,4 +1,4 @@
-import { CategoryResponse } from "../../Utils/Types";
+import { CategoryResponse } from "../../../Utils/Types";
 import CategoryData from "./CategoryData";
 
 const CategoriesDataCard = ({data}: {data: CategoryResponse}) => {

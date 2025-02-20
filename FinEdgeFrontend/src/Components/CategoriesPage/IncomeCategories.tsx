@@ -1,9 +1,9 @@
 import { Card, CardBody, CardFooter, CardHeader } from "@progress/kendo-react-layout";
 import usesGetIncomeCategories from "../../Hooks/Categories/useGetIncomeCategories";
-import CategoriesDataCard from "./CategoriesDataCard";
 import CategoryCardBody from "./Cards/CategoryCardBody";
 import CategoryCardHeader from "./Cards/CategoryCardHeader";
 import CategoryCardFooter from "./Cards/CategoryCardFooter";
+import CategoriesDataCard from "./Cards/CategoriesDataCard";
 
 const IncomeCategories = () => {
   const { data, isLoading, isError, error } = usesGetIncomeCategories();

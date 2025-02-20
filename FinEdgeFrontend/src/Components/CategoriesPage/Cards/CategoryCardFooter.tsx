@@ -1,6 +1,6 @@
 import { Category } from "../../../Utils/Types";
-import DeleteCategory from "../../../Data/Categories/DeleteCategory";
-import UpdateCategory from "../../../Data/Categories/UpdateCategory";
+import DeleteCategory from "../CRUD/DeleteCategory";
+import UpdateCategory from "../CRUD/UpdateCategory";
 
 const CategoryCardFooter = ({ category }: {category: Category}) => {
   return (

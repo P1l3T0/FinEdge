@@ -1,7 +1,6 @@
-import CategoriesSankeyChart from "../Components/CategoriesPage/CategoriesSankeyChart";
 import ExpenditureCategories from "../Components/CategoriesPage/ExpenditureCategories";
 import IncomeCategories from "../Components/CategoriesPage/IncomeCategories";
-import CreateCategory from "../Data/Categories/CreateCategory";
+import CreateCategory from "../Components/CategoriesPage/CRUD/CreateCategory";
 
 const Categories = () => {
   return (
@@ -13,7 +12,6 @@ const Categories = () => {
               <CreateCategory />
             </div>
             <div className="lg:col-span-3">
-              <CategoriesSankeyChart />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow">

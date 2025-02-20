@@ -4,7 +4,6 @@ import DrawerContainer from "./Components/Drawer/DrawerContainer";
 import Register from "./Pages/Authentication/Register";
 import Login from "./Pages/Authentication/Login";
 import PersistLogin from "./Pages/Authentication/axios/Components/PersistLogin";
-// import Transactions from "./Data/Transactions/Transactions";
 import FinancialRecommendations from "./Pages/Recommendations/FinancialRecommendations";
 import NotificationsBase from "./Components/Notifications/NotificationsBase";
 import Home from "./Pages/Home";

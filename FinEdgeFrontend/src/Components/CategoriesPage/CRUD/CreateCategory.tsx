@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { CategoryDTO } from '../../Utils/Types';
+import { CategoryDTO } from '../../../Utils/Types';
 import { TextBoxChangeEvent, DropDownListChangeEvent, TextBox, DropDownList, Button, Checkbox, CheckboxChangeEvent, ColorPicker, ColorPickerChangeEvent, ColorPickerView, Card, CardBody, CardHeader } from '@progress/kendo-react-all';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { createCategoryEndPoint } from '../../endpoints';
-import { currency } from '../../Utils/Functions';
+import { createCategoryEndPoint } from '../../../endpoints';
+import { currency } from '../../../Utils/Functions';
 
 const CreateCategory = () => {
   const queryClient = useQueryClient();
@@ -84,28 +84,28 @@ const CreateCategory = () => {
                 <label className="text-sm font-medium text-gray-700">
                   Category Name
                 </label>
-                <TextBox id="name" name="name" type="text" placeholder="Enter category name" onChange={handleTextBoxChange} className="w-full" size="large" />
+                <TextBox id="name" name="name" type="text" placeholder="Enter category name" onChange={handleTextBoxChange} size="large" />
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">
                   Budget
                 </label>
-                <TextBox id="budget" name="budget" type="number" min={0} placeholder="Enter category budget" onChange={handleTextBoxChange} className="w-full" size="large" />
+                <TextBox id="budget" name="budget" type="number" min={0} placeholder="Enter category budget" onChange={handleTextBoxChange} size="large" />
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">
                   Currency
                 </label>
-                <DropDownList id="currency" name="currency" data={currency} defaultValue={currency[0]} onChange={handleDropDownChange} className="w-full" size="large" />
+                <DropDownList id="currency" name="currency" data={currency} defaultValue={currency[0]} onChange={handleDropDownChange} size="large" />
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">
                   Category Color
                 </label>
-                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={category.color} className="w-full" />
+                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={category.color} />
               </div>
 
               <div className="space-y-2">

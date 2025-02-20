@@ -2,9 +2,9 @@ import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownL
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useState } from 'react';
-import { updateCategoryEndPoint } from '../../endpoints';
-import { currency } from '../../Utils/Functions';
-import { Category, CategoryDTO } from '../../Utils/Types';
+import { updateCategoryEndPoint } from '../../../endpoints';
+import { currency } from '../../../Utils/Functions';
+import { Category, CategoryDTO } from '../../../Utils/Types';
 
 const UpdateCategory = ({ category }: { category: Category }) => {
   const queryClient = useQueryClient();
@@ -85,22 +85,22 @@ const UpdateCategory = ({ category }: { category: Category }) => {
             <div className="space-y-2">
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Category Name</label>
-                <TextBox id="name" name="name" type="text" defaultValue={category.name} onChange={handleTextBoxChange} className="w-full" />
+                <TextBox id="name" name="name" type="text" defaultValue={category.name} onChange={handleTextBoxChange} />
               </div>
 
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Budget</label>
-                <TextBox id="budget" name="budget" type="number" min={0} defaultValue={category.budget} onChange={handleTextBoxChange} className="w-full" />
+                <TextBox id="budget" name="budget" type="number" min={0} defaultValue={category.budget} onChange={handleTextBoxChange} />
               </div>
 
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Currency</label>
-                <DropDownList id="currency" name="currency" data={currency} defaultValue={category.currency} onChange={handleDropDownChange} className="w-full" />
+                <DropDownList id="currency" name="currency" data={currency} defaultValue={category.currency} onChange={handleDropDownChange} />
               </div>
 
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Category Color</label>
-                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={updateCategory.color} className="w-full" />
+                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={updateCategory.color} />
               </div>
 
               <div className="pt-2">
