@@ -9,11 +9,9 @@ const AccountPieChart = () => {
 
   return (
     <>
-      <Card className="bg-white">
+      <Card className="bg-white" style={{ height: "31.25rem" }}>
         <CardHeader className="border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">
-            Account Distribution
-          </h3>
+          <h3 className="text-lg font-semibold text-gray-900">Account Distribution</h3>
         </CardHeader>
         <CardBody>
           <Chart>

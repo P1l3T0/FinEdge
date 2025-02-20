@@ -8,10 +8,16 @@ const Accounts = () => {
     <>
       <div className="p-6 bg-gray-50">
         <div className="space-y-6">
-          <div className="gap-4 grid lg:grid-cols-3 md:grid-cols-1">
-            <CreateAccounts />
-            <AccountPieChart />
-            <QuickStats />
+          <div className="gap-4 grid lg:grid-cols-4 md:grid-cols-1">
+            <div className="lg:col-span-1" >
+              <CreateAccounts />
+            </div>
+            <div className="lg:col-span-2">
+              <AccountPieChart />
+            </div>
+            <div className="lg:col-span-1">
+              <QuickStats />
+            </div>
           </div>
           <div className="bg-white rounded-lg shadow">
             <div className="p-4">
