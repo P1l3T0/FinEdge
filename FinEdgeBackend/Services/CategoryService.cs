@@ -74,63 +74,6 @@ namespace FinEdgeBackend.Services
                 .ToList();
         }
 
-        public CategorySankeyChartDTO GetSankeyChartDataAsync(ICollection<Category> categories)
-        {
-            ICollection<Category> incomeCategories = GetIncomeCategories(categories);
-            ICollection<Category> expenditureCategories = GetExpenditureCategories(categories);
-
-            decimal totalIncome = incomeCategories.Sum(c => c.Balance ?? 0);
-            decimal totalExpenditure = expenditureCategories.Sum(c => c.Balance ?? 0);
-
-            CategorySankeyChartDTO sankeyChartDto = new CategorySankeyChartDTO
-            {
-                Nodes = new List<SankeyChartNodeDTO>
-                {
-                    new SankeyChartNodeDTO
-                    {
-                        Id = "income",
-                        Label = new SankeyChartLabelDTO
-                        {
-                            Text = $"Income ({totalIncome:C})"
-                        }
-                    },
-                    new SankeyChartNodeDTO
-                    {
-                        Id = "expenditure",
-                        Label = new SankeyChartLabelDTO
-                        {
-                            Text = $"Expenditure ({totalExpenditure:C})"
-                        }
-                    }
-                },
-                Links = new List<SankeyChartLinkDTO>()
-            };
-
-            foreach (Category category in categories)
-            {
-                sankeyChartDto.Nodes.Add(new SankeyChartNodeDTO
-                {
-                    Id = category.Name!.ToLower().Replace(" ", "_"),
-                    Label = new SankeyChartLabelDTO
-                    {
-                        Text = $"{category.Name} ({category.Balance:C})"
-                    }
-                });
-            }
-
-            foreach (Category category in categories)
-            {
-                sankeyChartDto.Links.Add(new SankeyChartLinkDTO
-                {
-                    SourceId = category.IsIncome ? "income" : "expenditure",
-                    TargetId = category.Name!.ToLower().Replace(" ", "_"),
-                    Value = category.Balance ?? 0
-                });
-            }
-
-            return sankeyChartDto;
-        }
-
         public async Task DeleteCategoryAsync(Category category)
         {
             _dataContext.Categories.Remove(category);

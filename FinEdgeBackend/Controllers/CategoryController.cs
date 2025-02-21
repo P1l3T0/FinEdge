@@ -133,16 +133,6 @@ namespace FinEdgeBackend.Controllers
             });
         }
 
-        [HttpGet]
-        [Route("get/sankey-data")]
-        public async Task<IActionResult> GetSankeyData()
-        {
-            User currentUser = await _userService.GetCurrentUserAsync();
-            CategorySankeyChartDTO sankeyData = _categoryService.GetSankeyChartDataAsync(currentUser.Categories);
-
-            return Ok(sankeyData);
-        }
-
         [HttpPut]
         [Route("update/{categoryID}")]
         public async Task<IActionResult> UpdateCategory(int categoryID, [FromBody] CategoryDTO categoryDto)

@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.Transactions;
 using FinEdgeBackend.Models;
 
 namespace FinEdgeBackend.Interfaces
@@ -13,6 +13,7 @@ namespace FinEdgeBackend.Interfaces
         Task<ICollection<Transaction>> GetAllTransactionsForCategoryAsync(Category category);
         Task<ICollection<Transaction>> GetAllTransactionsForAccountAsync(Account account);
         ICollection<Transaction> GetTransactionsFromSpecifiedDate(ICollection<Transaction> transactions, DateTime date);
+        TransactionSankeyChartDTO GetSankeyChartDataAsync(ICollection<Category> categories);
         Task UpdateTranssactionAsync(TransactionDTO transactioDto, Transaction transaction, Category category, Account account, Account originalAccount, User currentUser);
         Task UpdateUserBalanceAsync(bool isNewTransaction, TransactionDTO? transactioDto, Transaction? transaction, User currentUser, Category category, Account account);
         Task DeleteTransactionAsync(Transaction transaction);

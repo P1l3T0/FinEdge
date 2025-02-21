@@ -1,6 +1,6 @@
-﻿namespace FinEdgeBackend.DTOs.Categories
+﻿namespace FinEdgeBackend.DTOs.Transactions
 {
-    public class CategorySankeyChartDTO
+    public class TransactionSankeyChartDTO
     {
         public ICollection<SankeyChartNodeDTO> Nodes { get; set; } = new List<SankeyChartNodeDTO>();
         public ICollection<SankeyChartLinkDTO> Links { get; set; } = new List<SankeyChartLinkDTO>();

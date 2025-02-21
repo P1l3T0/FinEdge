@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.Transactions;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
@@ -116,6 +116,16 @@ namespace FinEdgeBackend.Controllers
                 MonthlySpendings = monthSpendings,
                 MonthlySpendingsAverage = monthSpendingsAverage
             });
+        }
+
+        [HttpGet]
+        [Route("get/sankey-data")]
+        public async Task<IActionResult> GetSankeyData()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            TransactionSankeyChartDTO sankeyData = _transactionService.GetSankeyChartDataAsync(currentUser.Categories);
+
+            return Ok(sankeyData);
         }
 
         [HttpPut]
