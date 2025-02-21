@@ -1,5 +1,5 @@
-import ExpenditureCategories from "../Components/CategoriesPage/ExpenditureCategories";
-import IncomeCategories from "../Components/CategoriesPage/IncomeCategories";
+import ExpenditureCategories from "../Components/CategoriesPage/CRUD/ExpenditureCategories";
+import IncomeCategories from "../Components/CategoriesPage/CRUD/IncomeCategories";
 import CreateCategory from "../Components/CategoriesPage/CRUD/CreateCategory";
 
 const Categories = () => {
