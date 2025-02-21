@@ -3,7 +3,7 @@ import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownL
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { updateTransactionEndPoint } from '../../../endpoints';
-import useGetNames from '../../../Hooks/useGetNames';
+import useGetNames from '../../../Hooks/Accounts/useGetNames';
 import { Transaction, TransactionDTO } from '../../../Utils/Types';
 
 const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {

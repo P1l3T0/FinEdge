@@ -36,7 +36,6 @@ export const createCategoryEndPoint = `${categoryController}/create`;
 export const getIncomeCategoriesEndPoint = `${categoryController}/get-income`;
 export const getExpenditureCategoriesEndPoint = `${categoryController}/get-expenditure`;
 export const getCategoryInfoEndPoint = `${categoryController}/get/info`;
-export const getCategorySankeyChartDataEndPoint = `${categoryController}/get/sankey-data`;
 export const updateCategoryEndPoint = `${categoryController}/update`;
 export const deleteCategoryEndPoint = `${categoryController}/delete`;
 export const gdeleteAllCategoriesEndPoint = `${categoryController}/delete-all`;
@@ -45,6 +44,7 @@ export const gdeleteAllCategoriesEndPoint = `${categoryController}/delete-all`;
 export const createTransactionEndPoint = `${transactionController}/create`;
 export const getTransactionEndPoint = `${transactionController}/get`;
 export const getTransactionReportsEndPoint = `${transactionController}/get/reports`;
+export const getTransactionSankeyChartDataEndPoint = `${transactionController}/get/sankey-data`;
 export const updateTransactionEndPoint = `${transactionController}/update`;
 export const deleteTransactionEndPoint = `${transactionController}/delete`;
 

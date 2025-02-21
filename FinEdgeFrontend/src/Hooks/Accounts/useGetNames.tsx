@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getAccountAndCategoryNamesEnddPoint } from "../endpoints";
-import { Names } from "../Utils/Types";
+import { getAccountAndCategoryNamesEnddPoint } from "../../endpoints";
+import { Names } from "../../Utils/Types";
 
 const useGetNames = () => {
   const getAccountAndCategoryNames = async () => {

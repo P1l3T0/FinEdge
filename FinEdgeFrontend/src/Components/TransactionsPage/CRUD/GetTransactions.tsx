@@ -1,4 +1,4 @@
-import useGetTransactions from '../../../Hooks/useGetTransactions';
+import useGetTransactions from '../../../Hooks/Transactions/useGetTransactions';
 import TransactionCards from '../Cards/TransactionCards';
 
 const GetTransactions = () => {

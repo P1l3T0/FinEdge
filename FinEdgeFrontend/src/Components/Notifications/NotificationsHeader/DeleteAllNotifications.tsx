@@ -6,7 +6,6 @@ const DeleteAllNotifications = () => {
   const queryClient = useQueryClient();
 
   const deleteAllNotifications = async () => {
-    debugger
     await axios
       .delete(deleteAllNotificationsEndPoint, { withCredentials: true })
       .catch((err: AxiosError) => {

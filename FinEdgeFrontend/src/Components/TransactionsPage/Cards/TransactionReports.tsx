@@ -1,4 +1,4 @@
-import useGetReports from "../../../Hooks/useGetReports";
+import useGetReports from "../../../Hooks/Transactions/useGetReports";
 
 const TransactionReports = () => {
   const { data, isLoading, isError, error } = useGetReports();
