@@ -107,9 +107,9 @@ namespace FinEdgeBackend.Controllers
             {
                 DailyIncome = dailyIncome,
                 WeeklyIncome = weeklyIncome,
-                WeeklyAverage = weeklyAverage,
+                WeeklyIncomeAverage = weeklyAverage,
                 MonthlyIncome = monthIncome,
-                MonthlyAverage = monthAverage,
+                MonthlyIncomeAverage = monthAverage,
                 DailySpendings = dailySpendings,
                 WeeklySpendings = weeklySpendings,
                 WeeklySpendingsAverage = weeklySpendingsAverage,

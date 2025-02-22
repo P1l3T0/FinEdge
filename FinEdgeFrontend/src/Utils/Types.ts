@@ -245,9 +245,9 @@ export type TransactionResponse = {
 export type Reports = {
   dailyIncome: number,
   weeklyIncome: number,
-  weeklyAverage: number,
+  weeklyIncomeAverage: number,
   monthlyIncome: number,
-  monthlyAverage: number,
+  monthlyIncomeAverage: number,
   dailySpendings: number,
   weeklySpendings: number,
   weeklySpendingsAverage: number,
