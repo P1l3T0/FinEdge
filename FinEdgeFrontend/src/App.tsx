@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import useGetUser from "./Hooks/useGetUser";
 import DrawerContainer from "./Components/Drawer/DrawerContainer";
-import Register from "./Pages/Authentication/Register";
-import Login from "./Pages/Authentication/Login";
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
 import PersistLogin from "./Pages/Authentication/axios/Components/PersistLogin";
 import FinancialRecommendations from "./Pages/Recommendations/FinancialRecommendations";
 import NotificationsBase from "./Components/Notifications/NotificationsBase";

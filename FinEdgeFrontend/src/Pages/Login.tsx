@@ -3,16 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@progress/kendo-react-buttons";
-import {
-  TextBox,
-  TextBoxChangeEvent,
-  InputSuffix,
-} from "@progress/kendo-react-inputs";
+import { TextBox, TextBoxChangeEvent, InputSuffix } from "@progress/kendo-react-inputs";
 import { SvgIcon } from "@progress/kendo-react-common";
 import { envelopeIcon, passwordIcon } from "@progress/kendo-svg-icons";
-import { loginEndPoint } from "../../endpoints";
-import { LoginDTO } from "../../Utils/Types";
-import CustomLink from "../../Components/CustomLink";
+import { loginEndPoint } from "../endpoints";
+import { LoginDTO } from "../Utils/Types";
+import CustomLink from "../Components/CustomLink";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -67,13 +63,7 @@ const Login = () => {
             <div className="space-y-6">
               <div className="space-y-6">
                 <div className="mb-2">
-                  <TextBox
-                    id="email"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleChange}
-                    required={true}
+                  <TextBox id="email" type="email" name="email" placeholder="Email" onChange={handleChange} required={true}
                     prefix={() => (
                       <InputSuffix>
                         <SvgIcon icon={envelopeIcon} />
@@ -83,13 +73,7 @@ const Login = () => {
                 </div>
 
                 <div className="mb-2">
-                  <TextBox
-                    id="password"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                    required={true}
+                  <TextBox id="password" type="password" name="password" placeholder="Password" onChange={handleChange} required={true}
                     prefix={() => (
                       <InputSuffix>
                         <SvgIcon icon={passwordIcon} />
@@ -100,24 +84,13 @@ const Login = () => {
               </div>
 
               <div className="text-center">
-                <Button
-                  id="login"
-                  themeColor={"primary"}
-                  type="submit"
-                  size={"large"}
-                  className="w-64 font-bold"
-                >
-                  Login
-                </Button>
+                <Button id="login" themeColor={"primary"} type="submit" size={"large"} className="w-64 font-bold" >Login</Button>
               </div>
 
               <div className="mt-6 text-center text-sm text-gray-600">
                 <p>
                   Don't have an account?{" "}
-                  <CustomLink
-                    to="/register"
-                    className="text-blue-600 hover:text-blue-700 font-medium"
-                  >
+                  <CustomLink to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
                     Register
                   </CustomLink>
                 </p>
