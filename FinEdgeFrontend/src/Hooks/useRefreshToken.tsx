@@ -1,8 +1,8 @@
-import axios from "../Pages/Authentication/axios/axios";
-import useAuth from "./useAuth"
+import axios from "../Components/Axios/axios";
 import { refreshTokenEndPoint } from "../endpoints";
 import { RefreshToken } from "../Utils/Types";
 import { useRef, useState } from "react";
+import useAuth from "./useAuth";
 
 const useRefreshToken = () => {
   const { setAuth } = useAuth();

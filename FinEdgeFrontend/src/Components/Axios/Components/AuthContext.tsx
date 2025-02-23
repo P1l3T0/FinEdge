@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState } from "react"
-import { Auth, AuthContextType } from "../../../../Utils/Types";
+import { Auth, AuthContextType } from "../../../Utils/Types";
 
 type AuthProviderProps = {
   children: ReactNode;

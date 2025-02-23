@@ -3,7 +3,6 @@ import useGetUser from "./Hooks/useGetUser";
 import DrawerContainer from "./Components/Drawer/DrawerContainer";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
-import PersistLogin from "./Pages/Authentication/axios/Components/PersistLogin";
 import FinancialRecommendations from "./Pages/Recommendations/FinancialRecommendations";
 import NotificationsBase from "./Components/Notifications/NotificationsBase";
 import Home from "./Pages/Home";
@@ -11,6 +10,7 @@ import Accounts from "./Pages/Accounts";
 import Categories from "./Pages/Categories";
 import Notifications from "./Pages/Notifications";
 import Transactions from "./Pages/Transactions";
+import PersistLogin from "./Components/Axios/Components/PersistLogin";
 
 function App() {
   const { data } = useGetUser();
