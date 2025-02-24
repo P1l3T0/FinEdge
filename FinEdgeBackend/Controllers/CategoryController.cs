@@ -133,6 +133,16 @@ namespace FinEdgeBackend.Controllers
             });
         }
 
+        [HttpGet]
+        [Route("get/chart-data")]
+        public async Task<IActionResult> GetCategoryChartData()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<CategoryChartDataDTO >categoryChartData = _categoryService.GetCategoryChartData(currentUser.Categories);
+
+            return Ok(categoryChartData);
+        }
+
         [HttpPut]
         [Route("update/{categoryID}")]
         public async Task<IActionResult> UpdateCategory(int categoryID, [FromBody] CategoryDTO categoryDto)

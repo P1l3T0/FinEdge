@@ -64,14 +64,25 @@ namespace FinEdgeBackend.Services
 
         public ICollection<CategoryInfoDTO> GetCategoryInfo(ICollection<Category> categories)
         {
-            return categories
-                .Select(c => new CategoryInfoDTO
-                {
-                    Name = c.Name,
-                    Ammount = c.Balance ?? 0,
-                    Color = c.Color,
-                })
-                .ToList();
+            return categories.Select(c => new CategoryInfoDTO
+            {
+                Name = c.Name,
+                Ammount = c.Balance ?? 0,
+                Color = c.Color,
+            }).ToList();
+        }
+
+        public ICollection<CategoryChartDataDTO> GetCategoryChartData(ICollection<Category> categories)
+        {
+            return categories.Select(c => new CategoryChartDataDTO()
+            {
+                Name = c.Name!,
+                Balance = c.Balance ?? 0,
+                Budget = c.Budget ?? 0,
+                IsIncome = c.IsIncome,
+                Color = c.Color!,
+                Currency = c.Currency!
+            }).ToList();
         }
 
         public async Task DeleteCategoryAsync(Category category)
