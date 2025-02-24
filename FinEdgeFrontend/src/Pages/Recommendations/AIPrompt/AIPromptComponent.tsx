@@ -1,7 +1,7 @@
 import { AIPrompt, AIPromptView, AIPromptOutputView, promptViewDefaults, outputViewDefaults, AIPromptOutputInterface } from '@progress/kendo-react-conversational-ui';
 import { useState } from 'react'
-import useGetPromptSuggestions from '../../../Hooks/useGetPromptSuggestions';
-import useGetFinancialRecommendations from '../../../Hooks/useGetFinancialRecommendations';
+import useGetPromptSuggestions from '../../../Hooks/FinancialRecommendations/useGetPromptSuggestions';
+import useGetFinancialRecommendations from '../../../Hooks/FinancialRecommendations/useGetFinancialRecommendations';
 
 const AIPromptComponent = ({ handleGenerateButtonClick }: { handleGenerateButtonClick: (prompt: string) => void }) => {
   const promptSuggestions = useGetPromptSuggestions();
@@ -39,7 +39,7 @@ const AIPromptComponent = ({ handleGenerateButtonClick }: { handleGenerateButton
   return (
     <>
       <AIPrompt
-        style={{ width: '500px', height: 'auto' }}
+        style={{ width: '500px', height: 'auto', boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.1)' }}
         activeView={activeView}
         onActiveViewChange={handleActiveViewChange}
         onPromptRequest={handlePromptRequest}>

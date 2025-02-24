@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { FinancialRecommendation } from "../Utils/Types";
-import { getFinancialRecommendationEndPoint } from "../endpoints";
+import { getFinancialRecommendationEndPoint } from "../../endpoints";
+import { FinancialRecommendation } from "../../Utils/Types";
 
 const useGetFinancialRecommendations = () => {
   const getFinancialRecommendations = async () => {
