@@ -3,7 +3,7 @@ import UpdateUser from "../CRUD/UpdateUser";
 import { getEnumValueFromNumber } from "../../../Utils/Functions";
 import { MethodologyType } from "../../../Utils/Types";
 import DashboardCard from "./DashboardCard";
-import useGetUser from "../../../Hooks/useGetUser";
+import useGetUser from "../../../Hooks/Auth/useGetUser";
 
 const UserProfile = () => {
   const { data, isLoading, isError, error } = useGetUser();

@@ -1,5 +1,5 @@
 import useGetReports from '../../../Hooks/Transactions/useGetReports';
-import useGetUser from '../../../Hooks/useGetUser';
+import useGetUser from '../../../Hooks/Auth/useGetUser';
 import StatCard from './StatCard'
 
 const StatisticCards = () => {

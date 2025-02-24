@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Drawer, DrawerContent, DrawerSelectEvent } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
 import { userIcon, logoutIcon, menuIcon, bellIcon, sparklesIcon, trackChangesEnableIcon, categorizeIcon } from "@progress/kendo-svg-icons";
-import useLogout from "../../Hooks/useLogOut";
+import useLogout from "../../Hooks/Auth/useLogOut";
 import useGetNotifications from "../../Hooks/Notifications/useGetNotifications";
 
 type DrawerContainerProps = {

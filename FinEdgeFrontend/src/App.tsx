@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import useGetUser from "./Hooks/useGetUser";
+import useGetUser from "./Hooks/Auth/useGetUser";
 import DrawerContainer from "./Components/Drawer/DrawerContainer";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";

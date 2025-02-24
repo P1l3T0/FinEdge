@@ -1,6 +1,6 @@
-import axios from "../Components/Axios/axios";
-import { refreshTokenEndPoint } from "../endpoints";
-import { RefreshToken } from "../Utils/Types";
+import axios from "../../Components/Axios/axios";
+import { refreshTokenEndPoint } from "../../endpoints";
+import { RefreshToken } from "../../Utils/Types";
 import { useRef, useState } from "react";
 import useAuth from "./useAuth";
 

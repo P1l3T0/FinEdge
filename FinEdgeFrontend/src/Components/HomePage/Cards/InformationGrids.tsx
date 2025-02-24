@@ -1,4 +1,4 @@
-import useGetUser from "../../../Hooks/useGetUser";
+import useGetUser from "../../../Hooks/Auth/useGetUser";
 import AccountsGrid from "../Grids/AccountsGrid";
 import CategoriesGrid from "../Grids/CategoriesGrid";
 import TransactionsGrid from "../Grids/TransactionsGrid";
