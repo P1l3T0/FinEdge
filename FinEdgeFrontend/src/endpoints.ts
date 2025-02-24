@@ -36,6 +36,7 @@ export const createCategoryEndPoint = `${categoryController}/create`;
 export const getIncomeCategoriesEndPoint = `${categoryController}/get-income`;
 export const getExpenditureCategoriesEndPoint = `${categoryController}/get-expenditure`;
 export const getCategoryInfoEndPoint = `${categoryController}/get/info`;
+export const getCategoryChartDataEndPoint = `${categoryController}/get/chart-data`;
 export const updateCategoryEndPoint = `${categoryController}/update`;
 export const deleteCategoryEndPoint = `${categoryController}/delete`;
 export const gdeleteAllCategoriesEndPoint = `${categoryController}/delete-all`;

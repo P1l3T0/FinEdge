@@ -193,6 +193,15 @@ export type CategoryInfoDTO = {
   color: string;
 }
 
+export type CategoryChartData = {
+  name: string;
+  balance: number;
+  budget: number;
+  isIncome: boolean;
+  color: string;
+  currency: string;
+};
+
 // Category Sankey Chart
 
 export type SankeyChartNode = {
