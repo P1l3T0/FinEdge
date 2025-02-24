@@ -62,6 +62,7 @@ const CreateCategory = () => {
       queryClient.invalidateQueries({ queryKey: ["income-categories"] });
       queryClient.invalidateQueries({ queryKey: ["expenditure-categories"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["category-chart-data"] });
     },
   });
 

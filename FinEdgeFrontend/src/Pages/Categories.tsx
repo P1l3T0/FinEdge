@@ -1,6 +1,8 @@
 import ExpenditureCategories from "../Components/CategoriesPage/CRUD/ExpenditureCategories";
 import IncomeCategories from "../Components/CategoriesPage/CRUD/IncomeCategories";
 import CreateCategory from "../Components/CategoriesPage/CRUD/CreateCategory";
+import CategoryBarChart from "../Components/CategoriesPage/Charts/CategoryBarChart";
+import CategoryColumnChart from "../Components/CategoriesPage/Charts/CategoryColumnChart";
 
 const Categories = () => {
   return (
@@ -12,7 +14,11 @@ const Categories = () => {
               <CreateCategory />
             </div>
             <div className="lg:col-span-3">
+              <CategoryColumnChart />
             </div>
+          </div>
+          <div className="w-full">
+            <CategoryBarChart />
           </div>
           <div className="bg-white rounded-lg shadow">
             <div className="p-4">
