@@ -4,6 +4,7 @@
     {
         Regular,
         Savings, 
-        Debt
+        Debt,
+        Retirement
     }
 }

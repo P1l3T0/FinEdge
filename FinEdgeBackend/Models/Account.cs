@@ -17,6 +17,9 @@ namespace FinEdgeBackend.Models
         public decimal? Balance { get; set; } = 0;
 
         [Required]
+        public string? Color { get; set; }
+
+        [Required]
         public AccountType AccountType { get; set; }
 
         [Required]

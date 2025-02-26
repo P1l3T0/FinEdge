@@ -26,13 +26,17 @@ export const deketeCurrentUserEnddPoint = `${userController}/delete`;
 export const createAccountEndPoint = `${accountController}/create`;
 export const getAllAccountsEndPoint = `${accountController}/get-all`;
 export const getAccountEndPoint = `${accountController}/get`;
+export const getAccountChartDataEndPoint = `${accountController}/get-chart-data`;
+export const getAccountStatisticsEndPoint = `${accountController}/get-statistics`;
 export const updateAccountEndPoint = `${accountController}/update`;
 export const deleteAccountEndPoint = `${accountController}/delete`;
 
 //! Categories
 export const createCategoryEndPoint = `${categoryController}/create`;
-export const getAllCategoriesEndPoint = `${categoryController}/get`;
+export const getIncomeCategoriesEndPoint = `${categoryController}/get-income`;
+export const getExpenditureCategoriesEndPoint = `${categoryController}/get-expenditure`;
 export const getCategoryInfoEndPoint = `${categoryController}/get/info`;
+export const getCategoryChartDataEndPoint = `${categoryController}/get/chart-data`;
 export const updateCategoryEndPoint = `${categoryController}/update`;
 export const deleteCategoryEndPoint = `${categoryController}/delete`;
 export const gdeleteAllCategoriesEndPoint = `${categoryController}/delete-all`;
@@ -41,6 +45,7 @@ export const gdeleteAllCategoriesEndPoint = `${categoryController}/delete-all`;
 export const createTransactionEndPoint = `${transactionController}/create`;
 export const getTransactionEndPoint = `${transactionController}/get`;
 export const getTransactionReportsEndPoint = `${transactionController}/get/reports`;
+export const getTransactionSankeyChartDataEndPoint = `${transactionController}/get/sankey-data`;
 export const updateTransactionEndPoint = `${transactionController}/update`;
 export const deleteTransactionEndPoint = `${transactionController}/delete`;
 
@@ -55,6 +60,8 @@ export const getPromptSuggestionsEndPoint = `${promptSuggestionController}/get`;
 // Notifications
 export const getNotificationsEndPoint = `${notificationController}/get-all`;
 export const getLatestUnreadNotificationEndPoint = `${notificationController}/get-latest-unread`;
-export const markNotificationAsReadAsync = `${notificationController}/mark-as-read`;
-export const markAllNotificationsAsReadAsync = `${notificationController}/mark-all-as-read`;
+export const markNotificationAsReadEndPoint = `${notificationController}/mark-as-read`;
+export const markAllNotificationsAsReadEndPoint = `${notificationController}/mark-all-as-read`;
+export const deleteNotificationEndPoint = `${notificationController}/delete`;
+export const deleteAllNotificationsEndPoint = `${notificationController}/delete-all`;
 export const getNotificationHubEndPoint = `${baseURL}/notificationHub`;

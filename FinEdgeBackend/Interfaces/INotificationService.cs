@@ -9,6 +9,6 @@ namespace FinEdgeBackend.Interfaces
         Task<Notification> GetNotificationByIdAsync(int notificationID);
         Task<Notification> GetLatestUnreadNotification(User currentUser);
         Task<ICollection<Notification>> GetAllNotificationsForCurrentUserAsync(User currentUser);
-        Task DeleteAllNotificationAsync(ICollection<Notification> notifications);
+        Task DeleteNotificationAsync(Notification notification);
     }
 }

@@ -1,151 +1,28 @@
 @import "tailwindcss";
+@tailwind utilities;
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
 }
 
-* {
-  margin: 0;
-  padding: 0;
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-/*! Register/Login */
-
-.register-form,
-.login-form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 100vh;
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
 }
 
-.register-form .content span,
-.login-form span {
-  margin: 0.20rem 0;
+::-webkit-scrollbar-thumb {
+  background: #bcd2ee;
+  border-radius: 10px;
 }
 
-.content,
-.questions {
-  background-color: #343434;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.313), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding: 1rem;
-  border-radius: 15px;
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
-.questions h4:not(:first-child) {
-  margin: 1rem 0 0.25rem;
-}
-
-.questions .k-radio-list-item {
-  padding: 0.05rem;
-}
-
-.buttonDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0 0 0;
-}
-
-button.k-button:not(.k-button-flat):not(.k-rounded-full) {
-  font-size: 1.25rem;
-  margin: .5rem 0 0 0;
-  font-weight: 800;
-}
-
-.buttonDiv button {
-  margin: 0.25rem;
-  width: 150px;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-}
-
-a {
-  text-decoration: none;
-}
-
-.k-textbox {
-  width: 200px;
-}
-
-.navbar a {
-  margin: .25rem;
-}
-
-/*! Accounts */
-
-.account-container form>*,
-.category-container form>*,
-.transaction-container form>* {
-  margin: 0.15rem 0;
-}
-
-.account-cards,
-.category-cards,
-.transaction-cards {
-  margin: 1rem 0;
-  display: flex;
-  gap: 1rem;
-
-  .k-card {
-    width: 15rem;
-  }
-
-  .k-card-footer {
-    display: flex;
-    justify-content: center;
-
-    button {
-      margin: 0 .25rem;
-    }
-  }
-}
-
-.k-window {
-  fieldset>*:not(:first-child) {
-    margin: .15rem 0;
-  }
-}
-
-.k-input {
-  textarea {
-    resize: vertical;
-    height: 5rem;
-  }
-}
-
-@media screen and (width <=500px) {
-  .questions {
-    width: 85vw;
-
-    h4 {
-      font-size: 80%;
-    }
-
-    .k-radio-list-item {
-      label {
-        font-size: .8rem;
-      }
-
-      .k-radio-md {
-        width: .75rem;
-        height: .75rem;
-      }
-    }
-  }
+html body .k-bottom-nav-item {
+  min-width: 0;
 }

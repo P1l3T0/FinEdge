@@ -41,16 +41,15 @@ namespace FinEdgeBackend.Controllers
 
         [HttpPut]
         [Route("update/{userID}")]
-        public async Task<IActionResult> UpddateUser([FromBody] UpdateDTO updatedDTO)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateDTO updatedDTO)
         {
             User currentUser = await _userService.GetCurrentUserAsync();
 
-            if (string.IsNullOrEmpty(updatedDTO.Name) || string.IsNullOrEmpty(updatedDTO.Surname) ||
-                string.IsNullOrEmpty(updatedDTO.Email) || string.IsNullOrEmpty(updatedDTO.Password))
+            if (string.IsNullOrEmpty(updatedDTO.Name) || string.IsNullOrEmpty(updatedDTO.Surname) || string.IsNullOrEmpty(updatedDTO.Email))
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "One or more of the fields are empty!",
+                    Title = "One or more required fields are empty!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -61,11 +60,11 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest();
             }
 
-            if (!_userService.Validate(updatedDTO.Email, updatedDTO.Password, isCurrentUser: true))
+            if (!_userService.Validate(updatedDTO.Email, string.IsNullOrEmpty(updatedDTO.Password) ? null : updatedDTO.Password, isCurrentUser: true))
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Email already in use or Password is to weak!",
+                    Title = "Email already in use or Password is too weak!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -80,7 +79,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = "User updated successfully!",
+                Title = "User updated successfully!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -101,7 +100,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "User does not exist!",
+                    Title = "User does not exist!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     DateCreated = DateTime.Now,

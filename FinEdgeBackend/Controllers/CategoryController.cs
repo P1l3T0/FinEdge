@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.Categories;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
@@ -24,7 +24,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Category must have a name and be a positive number!",
+                    Title = "Category must have a name and be a positive number!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -40,7 +40,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = $"Category '{category.Name}' already exist!",
+                    Title = $"Category '{category.Name}' already exist!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -64,7 +64,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Category '{categoryDto.Name}' created successfully!",
+                Title = $"Category '{categoryDto.Name}' created successfully!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -75,27 +75,40 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpGet]
-        [Route("get")]
-        public async Task<IActionResult> GetCategories()
+        [Route("get-income")]
+        public async Task<IActionResult> GetIncomeCategories()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
             ICollection<Category> incomeCategories = _categoryService.GetIncomeCategories(currentUser.Categories!);
-            ICollection<Category> expenditureCategories = _categoryService.GetExpenditureCategories(currentUser.Categories!);
 
-            decimal totalIncomeBalance = _categoryService.GetBalanceForIncomeCategories(incomeCategories);
-            decimal totalIncomeBudget = _categoryService.GetBudgetForIncomeCategories(incomeCategories);
-
-            decimal totalExpenditureBalance = _categoryService.GetBalanceForExpenditureCategories(expenditureCategories);
-            decimal totalExpenditureBudget = _categoryService.GetBudgetForExpenditureCategories(expenditureCategories);
+            (decimal balance, decimal budget, decimal averageBalance, decimal averageBudget) = _categoryService.GetDataForCategories(incomeCategories);
 
             return Ok(new
             {
-                IncomeCategories = incomeCategories,
-                ExpenditureCategories = expenditureCategories,
-                TotalIncomeBalance = totalIncomeBalance,
-                TotalIncomeBudget = totalIncomeBudget,
-                TotalExpenditureBalance = totalExpenditureBalance,
-                TotalExpenditureBudget = totalExpenditureBudget
+                Categories = incomeCategories,
+                Balance = balance,
+                Budget = budget,
+                AverageBalance = averageBalance,
+                AverageBudget = averageBudget
+            });
+        }
+
+        [HttpGet]
+        [Route("get-expenditure")]
+        public async Task<IActionResult> GetExpenditureCategories()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<Category> expenditureCategories = _categoryService.GetExpenditureCategories(currentUser.Categories!);
+
+            (decimal balance, decimal budget, decimal averageBalance, decimal averageBudget) = _categoryService.GetDataForCategories(expenditureCategories);
+
+            return Ok(new
+            {
+                Categories = expenditureCategories,
+                Balance = balance,
+                Budget = budget,
+                AverageBalance = averageBalance,
+                AverageBudget = averageBudget
             });
         }
 
@@ -120,6 +133,16 @@ namespace FinEdgeBackend.Controllers
             });
         }
 
+        [HttpGet]
+        [Route("get/chart-data")]
+        public async Task<IActionResult> GetCategoryChartData()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<CategoryChartDataDTO >categoryChartData = _categoryService.GetCategoryChartData(currentUser.Categories);
+
+            return Ok(categoryChartData);
+        }
+
         [HttpPut]
         [Route("update/{categoryID}")]
         public async Task<IActionResult> UpdateCategory(int categoryID, [FromBody] CategoryDTO categoryDto)
@@ -130,7 +153,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Please fill in the category fields!",
+                    Title = "Please fill in the category fields!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -146,7 +169,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Category {category.Name} updated successfully!",
+                Title = $"Category {category.Name} updated successfully!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -165,7 +188,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Category {category.Name} deleted successfully!",
+                Title = $"Category {category.Name} deleted successfully!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,

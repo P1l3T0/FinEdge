@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.Transactions;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
@@ -26,7 +26,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Please fill in the Transaction fields!",
+                    Title = "Please fill in the Transaction fields!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -59,7 +59,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Transaction {transactionDto.Name} created successffuly",
+                Title = $"Transaction {transactionDto.Name} created successffuly",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -107,15 +107,25 @@ namespace FinEdgeBackend.Controllers
             {
                 DailyIncome = dailyIncome,
                 WeeklyIncome = weeklyIncome,
-                WeeklyAverage = weeklyAverage,
+                WeeklyIncomeAverage = weeklyAverage,
                 MonthlyIncome = monthIncome,
-                MonthlyAverage = monthAverage,
+                MonthlyIncomeAverage = monthAverage,
                 DailySpendings = dailySpendings,
                 WeeklySpendings = weeklySpendings,
                 WeeklySpendingsAverage = weeklySpendingsAverage,
                 MonthlySpendings = monthSpendings,
                 MonthlySpendingsAverage = monthSpendingsAverage
             });
+        }
+
+        [HttpGet]
+        [Route("get/sankey-data")]
+        public async Task<IActionResult> GetSankeyData()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            TransactionSankeyChartDTO sankeyData = _transactionService.GetSankeyChartDataAsync(currentUser.Categories);
+
+            return Ok(sankeyData);
         }
 
         [HttpPut]
@@ -128,7 +138,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Please fill in the Transaction fields!",
+                    Title = "Please fill in the Transaction fields!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -147,7 +157,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Transaction {transactionDto.Name} updated successfully",
+                Title = $"Transaction {transactionDto.Name} updated successfully",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -172,7 +182,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Transaction {transaction.Name} deleted successfully",
+                Title = $"Transaction {transaction.Name} deleted successfully",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,

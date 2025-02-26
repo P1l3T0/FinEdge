@@ -1,5 +1,5 @@
 ﻿using FinEdgeBackend.Data;
-using FinEdgeBackend.DTOs;
+using FinEdgeBackend.DTOs.Categories;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
 using Microsoft.EntityFrameworkCore;
@@ -64,14 +64,25 @@ namespace FinEdgeBackend.Services
 
         public ICollection<CategoryInfoDTO> GetCategoryInfo(ICollection<Category> categories)
         {
-            return categories
-                .Select(c => new CategoryInfoDTO
-                {
-                    Name = c.Name,
-                    Ammount = c.Balance ?? 0,
-                    Color = c.Color,
-                })
-                .ToList();
+            return categories.Select(c => new CategoryInfoDTO
+            {
+                Name = c.Name,
+                Ammount = c.Balance ?? 0,
+                Color = c.Color,
+            }).ToList();
+        }
+
+        public ICollection<CategoryChartDataDTO> GetCategoryChartData(ICollection<Category> categories)
+        {
+            return categories.Select(c => new CategoryChartDataDTO()
+            {
+                Name = c.Name!,
+                Balance = c.Balance ?? 0,
+                Budget = c.Budget ?? 0,
+                IsIncome = c.IsIncome,
+                Color = c.Color!,
+                Currency = c.Currency!
+            }).ToList();
         }
 
         public async Task DeleteCategoryAsync(Category category)
@@ -86,44 +97,14 @@ namespace FinEdgeBackend.Services
             await _dataContext.SaveChangesAsync();
         }
 
-        public decimal GetBalanceForExpenditureCategory(Category category)
+        public (decimal balance, decimal budget, decimal averageBalance, decimal averageBudget) GetDataForCategories(ICollection<Category> categories)
         {
-            return !category.IsIncome ? (decimal)category.Balance! : 0;
-        }
+            decimal balance = categories.Sum(c => c.Balance ?? 0);
+            decimal budget = categories.Sum(c => c.Budget ?? 0);
+            decimal avarageBalance = categories.Average(c => c.Balance) ?? 0;
+            decimal avarageBudget = categories.Average(c => c.Budget) ?? 0;
 
-        public decimal GetBalanceForIncomeCategory(Category category)
-        {
-            return category.IsIncome ? (decimal)category.Balance! : 0;
-        }
-
-        public decimal GetBudgetForExpenditureCategory(Category category)
-        {
-            return !category.IsIncome ? (decimal)category.Budget! : 0;
-        }
-
-        public decimal GetBudgetForIncomeCategory(Category category)
-        {
-            return category.IsIncome ? (decimal)category.Budget! : 0;
-        }
-
-        public decimal GetBalanceForExpenditureCategories(ICollection<Category> categories)
-        {
-            return categories.Sum(category => category.Balance ?? 0);
-        }
-
-        public decimal GetBalanceForIncomeCategories(ICollection<Category> categories)
-        {
-            return categories.Sum(category => category.Balance ?? 0);
-        }
-
-        public decimal GetBudgetForExpenditureCategories(ICollection<Category> categories)
-        {
-            return categories.Sum(category => category.Budget ?? 0);
-        }
-
-        public decimal GetBudgetForIncomeCategories(ICollection<Category> categories)
-        {
-            return categories.Sum(category => category.Budget ?? 0);
+            return (balance, budget, avarageBalance, avarageBudget);
         }
 
         public decimal GetMonthlyBalanceForIncomeCategories(Category category)

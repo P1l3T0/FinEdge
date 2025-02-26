@@ -25,7 +25,7 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Invalid Email or Password!",
+                    Title = "Invalid Email or Password!",
                     NotificationType = NotificationType.Error,
                     IsRead = false
                 });
@@ -37,7 +37,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"User {user.Name} {user.Surname} registered succesfuly!",
+                Title = $"User {user.Name} {user.Surname} registered succesfuly!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = user,

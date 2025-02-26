@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
+﻿using FinEdgeBackend.DTOs.Accounts;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
@@ -24,7 +24,8 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Please fill in the account fields!",
+                    Title = "Please fill in the Account fields!",
+                    Description = "The Account needs to have a Name and positive Balance!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -40,7 +41,8 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = $"Account '{account.Name}' already exist!",
+                    Title = $"Account '{account.Name}' already exist!",
+                    Description = "New Accounts cannot have the same name as already existing ones!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -59,13 +61,15 @@ namespace FinEdgeBackend.Controllers
                 Name = accountDto.Name,
                 Balance = accountDto.Balance,
                 Currency = accountDto.Currency,
+                Color = accountDto.Color,
                 DateCreated = DateTime.Now,
                 AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!),
             });
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Successfully created Account {accountDto!.Name}!",
+                Title = $"Successfully created Account '{accountDto!.Name}'!",
+                Description = $"Your account '{accountDto!.Name}' has been successfully created and is now ready to use.",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -94,6 +98,26 @@ namespace FinEdgeBackend.Controllers
             return Ok(accounts);
         }
 
+        [HttpGet]
+        [Route("get-chart-data")]
+        public async Task<IActionResult> GetAccountChartData()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            ICollection<AccountChartDTO> chartData = await _accountService.GetAccountChartDataAsync(currentUser);
+
+            return Ok(chartData);
+        }
+
+        [HttpGet]
+        [Route("get-statistics")]
+        public async Task<IActionResult> GetAccountStatistics()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+            AccountStatsDTO statistics = await _accountService.GetAccountStatisticsAsync(currentUser);
+
+            return Ok(statistics);
+        }
+
         [HttpPut]
         [Route("update/{accountID}")]
         public async Task<IActionResult> UpdateAccount(int accountID, [FromBody] AccountDTO accountDto)
@@ -104,7 +128,8 @@ namespace FinEdgeBackend.Controllers
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
-                    Message = "Please fill in the account fields!",
+                    Title = "Please fill in the Account fields!",
+                    Description = "The Account needs to have a Name and positive Balance!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -120,8 +145,9 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Account {account.Name} updated successfully!",
-                NotificationType = NotificationType.Success,
+                Title = $"Account {account.Name} updated successfully!",
+                Description = $"All changes to account '{account.Name}' have been saved successfully.",
+                NotificationType = NotificationType.Info,
                 IsRead = false,
                 User = currentUser,
                 UserID = currentUser.ID
@@ -141,7 +167,8 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Message = $"Account {account.Name} deleted successfully!",
+                Title = $"Account {account.Name} deleted successfully!",
+                Description = $"Account '{account.Name}' has been permanently removed from the system.",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,

@@ -9,7 +9,8 @@ export enum MethodologyType {
 export enum AccountType {
   Regular = 0,
   Savings = 1,
-  Debt = 2
+  Debt = 2,
+  Retirement = 3
 }
 
 export enum NotificationType {
@@ -70,7 +71,7 @@ export type User = {
   accounts: Account[];
   categories: Category[];
   transactions: Transaction[];
-  notifications: Notification[];
+  notifications: AppNotification[];
 }
 
 export type RegisterDTO = {
@@ -100,6 +101,7 @@ export type AccountDTO = {
   balance: number;
   accountType: string;
   currency: string;
+  color: string;
 }
 
 export type Account = {
@@ -109,18 +111,55 @@ export type Account = {
   balance: number;
   accountType: string;
   currency: string;
+  color: string;
   dateCreated: Date;
 }
+
+export type AccountSummary = {
+  type: string;
+  count: number;
+  titles: string[];
+  balance: number;
+  currency: string;
+};
+
+export type AccountChartData = {
+  category: string;
+  value: number;
+  color: string;
+};
+
+export type AccountTypeStats = {
+  type: string;
+  totalBalance: number;
+  averageBalance: number;
+  accountCount: number;
+};
+
+export type HighestBalanceAccount = {
+  name: string;
+  type: string;
+  balance: number;
+  currency: string;
+};
+
+export type AccountStats = {
+  totalBalance: number;
+  totalAccounts: number;
+  averageBalance: number;
+  primaryCurrency: string;
+  accountTypeStats: AccountTypeStats[];
+  highestBalanceAccount: HighestBalanceAccount;
+};
 
 //! Category
 
 export type CategoryResponse = {
-  incomeCategories: Category[];
-  expenditureCategories: Category[];
-  totalIncomeBalance: number;
-  totalIncomeBudget: number;
-  totalExpenditureBalance: number;
-  totalExpenditureBudget: number;
+  categories: Category[];
+  balance: number;
+  budget: number;
+  averageBalance: number;
+  averageBudget: number;
 }
 
 export type CategoryDTO = {
@@ -152,6 +191,33 @@ export type CategoryInfoDTO = {
   name: string;
   ammount: number;
   color: string;
+}
+
+export type CategoryChartData = {
+  name: string;
+  balance: number;
+  budget: number;
+  isIncome: boolean;
+  color: string;
+  currency: string;
+};
+
+// Category Sankey Chart
+
+export type SankeyChartNode = {
+  id: string;
+  label: string;
+}
+
+export type SankeyChartLink = {
+  sourceId: string;
+  targetId: string;
+  value: number;
+}
+
+export type SankeyChartDTO = {
+  nodes: SankeyChartNode[];
+  links: SankeyChartLink[];
 }
 
 //! Transactions
@@ -188,9 +254,9 @@ export type TransactionResponse = {
 export type Reports = {
   dailyIncome: number,
   weeklyIncome: number,
-  weeklyAverage: number,
+  weeklyIncomeAverage: number,
   monthlyIncome: number,
-  monthlyAverage: number,
+  monthlyIncomeAverage: number,
   dailySpendings: number,
   weeklySpendings: number,
   weeklySpendingsAverage: number,
@@ -222,8 +288,9 @@ export type PromptRequestData = {
 export type AppNotification = {
   id: number;
   userID: number;
-  message: string;
-  ssRead: boolean;
   notificationType: string;
-  dateCreated: Date;
+  title: string;
+  description: string;
+  isRead: boolean;
+  dateCreated: string;
 }
