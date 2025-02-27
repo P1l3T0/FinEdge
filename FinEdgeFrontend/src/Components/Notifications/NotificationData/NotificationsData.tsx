@@ -37,12 +37,12 @@ const NotificationsData = () => {
             <div key={index} className={`flex items-center justify-between p-4 border rounded-lg ${getNotificationColor(parseInt(notification.notificationType))} ${!notification.isRead ? "shadow-sm" : "opacity-70"}`}>
               <div className="flex-grow pr-4">
                 <div className="flex items-center mb-2">
-                  <h3 className={`font-semibold ${!notification.isRead ? "text-gray-900" : "text-gray-600"}`}>{notification.title}</h3>
+                  <h3 className={`font-semibold text-sm sm:text-lg ${!notification.isRead ? "text-gray-900" : "text-gray-600"}`}>{notification.title}</h3>
                   {!notification.isRead && (
                     <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">New</span>
                   )}
                 </div>
-                <p className={`text-sm ${!notification.isRead ? "text-gray-700" : "text-gray-500"}`}>{notification.description}</p>
+                <p className={`text-sm sm:text-xs ${!notification.isRead ? "text-gray-700" : "text-gray-500"}`}>{notification.description}</p>
                 <span className="text-xs text-gray-500 mt-1">
                   {new Date(notification.dateCreated).toLocaleDateString("en-GB", {
                     day: "numeric",
