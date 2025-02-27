@@ -26,6 +26,7 @@
     "lucide-react": "^0.475.0",
     "react": "^18.3.1",
     "react-csv": "^2.2.2",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
     "tailwindcss": "^4.0.3"

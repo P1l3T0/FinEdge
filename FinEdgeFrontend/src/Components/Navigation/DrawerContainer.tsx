@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Drawer, DrawerContent, DrawerSelectEvent } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
-import { userIcon, logoutIcon, menuIcon, bellIcon, sparklesIcon, trackChangesEnableIcon, categorizeIcon } from "@progress/kendo-svg-icons";
+import { userIcon, logoutIcon, menuIcon, infoCircleIcon, infoSolidIcon, sparklesIcon, trackChangesEnableIcon, dollarIcon, categorizeIcon } from "@progress/kendo-svg-icons";
 import useLogout from "../../Hooks/Auth/useLogOut";
 import useGetNotifications from "../../Hooks/Notifications/useGetNotifications";
 
@@ -20,8 +20,8 @@ const DrawerContainer = ({ children }: DrawerContainerProps) => {
 
   const items = [
     { text: "Profile", svgIcon: userIcon, route: "/home" },
-    { text: `Notifications (${data?.length || "0"})`, svgIcon: bellIcon, route: "/notifications" },
-    { text: "Accounts", svgIcon: userIcon, route: "/accounts" },
+    { text: `Notifications (${data?.length || "0"})`, svgIcon: data?.length! > 0 ? infoSolidIcon : infoCircleIcon, route: "/notifications" },
+    { text: "Accounts", svgIcon: dollarIcon, route: "/accounts" },
     { text: "Categories", svgIcon: categorizeIcon, route: "/categories" },
     { text: "Transactions", svgIcon: trackChangesEnableIcon, route: "/transactions" },
     { text: "Recommendations", svgIcon: sparklesIcon, route: "/recommendations" },

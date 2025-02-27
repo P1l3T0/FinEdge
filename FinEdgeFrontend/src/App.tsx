@@ -1,6 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserView, MobileView } from "react-device-detect";
 import useGetUser from "./Hooks/Auth/useGetUser";
-import DrawerContainer from "./Components/Drawer/DrawerContainer";
+import DrawerContainer from "./Components/Navigation/DrawerContainer";
+import BottomNavigationContainer from "./Components/Navigation/BottomNavigationContainer";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import FinancialRecommendations from "./Pages/Recommendations/FinancialRecommendations";
@@ -19,23 +21,44 @@ function App() {
     <>
       {data ? (
         <BrowserRouter>
-          <DrawerContainer>
-            <NotificationsBase />
-            <Routes>
-              <Route element={<PersistLogin />}>
-                <Route path="/" element={<Login />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/notifications" element={<Notifications />} />
-                <Route path="/accounts" element={<Accounts />} />
-                <Route path="/categories" element={<Categories />} />
-                <Route path="/transactions" element={<Transactions />} />
-                <Route path="/recommendations" element={<FinancialRecommendations />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/logout" element={<Login />} />
-              </Route>
-            </Routes>
-          </DrawerContainer>
+          <BrowserView>
+            <DrawerContainer>
+              <NotificationsBase />
+              <Routes>
+                <Route element={<PersistLogin />}>
+                  <Route path="/" element={<Login />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/notifications" element={<Notifications />} />
+                  <Route path="/accounts" element={<Accounts />} />
+                  <Route path="/categories" element={<Categories />} />
+                  <Route path="/transactions" element={<Transactions />} />
+                  <Route path="/recommendations" element={<FinancialRecommendations />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/logout" element={<Login />} />
+                </Route>
+              </Routes>
+            </DrawerContainer>
+          </BrowserView>
+          <MobileView>
+            <BottomNavigationContainer>
+              <NotificationsBase />
+              <Routes>
+                <Route element={<PersistLogin />}>
+                  <Route path="/" element={<Login />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/notifications" element={<Notifications />} />
+                  <Route path="/accounts" element={<Accounts />} />
+                  <Route path="/categories" element={<Categories />} />
+                  <Route path="/transactions" element={<Transactions />} />
+                  <Route path="/recommendations" element={<FinancialRecommendations />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/logout" element={<Login />} />
+                </Route>
+              </Routes>
+            </BottomNavigationContainer>
+          </MobileView>
         </BrowserRouter>
       ) : (
         <BrowserRouter>

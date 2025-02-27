@@ -22,3 +22,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+html body .k-bottom-nav-item {
+  min-width: 0;
+}
