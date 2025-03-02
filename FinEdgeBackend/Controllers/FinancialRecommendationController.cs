@@ -19,17 +19,6 @@ namespace FinEdgeBackend.Controllers
         private readonly IFinancialRecommendationService _financialRecommendationService = financialRecommendationService;
         private readonly INotificationService _notificationService = notificationService;
 
-        [HttpGet]
-        [Route("get")]
-        [ProducesResponseType(200, Type = typeof(FinancialRecommendation))]
-        public async Task<IActionResult> GetFinancialRecommendations()
-        {
-            User currentUser = await _userSerice.GetCurrentUserAsync();
-            FinancialRecommendation latestRecommendation = _financialRecommendationService.GetLatestFinancialRecommendation(currentUser.FinancialRecommendations);
-
-            return Ok(latestRecommendation);
-        }
-
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> CreateFinancialRecommendation([FromBody] PromptRequest promptRequestData)
@@ -61,8 +50,7 @@ namespace FinEdgeBackend.Controllers
             string allData = string.Join(",", accountsJson, categoriesJson, transactionsJson);
 
             string textTweaks = @$"I want your response to always start with something like 'Recommendations based on data from {parsedDate.ToShortDateString()} to today (or similar sentences). 
-                Please respond in small plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters. 
-                A simple, clear explanation is enough.";
+                Please respond in short plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters.";
 
             string prompt = string.Join(" ", promptRequestData.Prompt!, allData, textTweaks).Trim();
 
@@ -85,7 +73,9 @@ namespace FinEdgeBackend.Controllers
                 UserID = currentUser.ID
             });
 
-            return Created();
+            FinancialRecommendation latestRecommendation = _financialRecommendationService.GetLatestFinancialRecommendation(currentUser.FinancialRecommendations);
+
+            return Ok(latestRecommendation);
         }
 
         [HttpDelete]

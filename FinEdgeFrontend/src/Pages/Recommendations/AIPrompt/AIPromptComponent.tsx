@@ -1,11 +1,10 @@
 import { AIPrompt, AIPromptView, AIPromptOutputView, promptViewDefaults, outputViewDefaults, AIPromptOutputInterface } from '@progress/kendo-react-conversational-ui';
 import { useState } from 'react'
 import useGetPromptSuggestions from '../../../Hooks/FinancialRecommendations/useGetPromptSuggestions';
-import useGetFinancialRecommendations from '../../../Hooks/FinancialRecommendations/useGetFinancialRecommendations';
+import { FinancialRecommendation } from '../../../Utils/Types';
 
-const AIPromptComponent = ({ handleGenerateButtonClick }: { handleGenerateButtonClick: (prompt: string) => void }) => {
-  const promptSuggestions = useGetPromptSuggestions();
-  const financialRecommendations = useGetFinancialRecommendations();
+const AIPromptComponent = ({ generateFinancialRecommendation }: { generateFinancialRecommendation: (prompt: string) => Promise<FinancialRecommendation> }) => {
+  const { data, isLoading, isError, error } = useGetPromptSuggestions();
 
   const [activeView, setActiveView] = useState<string>(promptViewDefaults.name);
   const [outputs, setOutputs] = useState<AIPromptOutputInterface[]>([]);
@@ -19,22 +18,24 @@ const AIPromptComponent = ({ handleGenerateButtonClick }: { handleGenerateButton
       return;
     }
 
-    handleGenerateButtonClick(prompt);
+    const recommendation = generateFinancialRecommendation(prompt);
 
-    setOutputs([{
-      id: outputs?.length + 1,
-      title: prompt,
-      responseContent: financialRecommendations.data?.responseContent!,
-      prompt
-    },
-    ...outputs,
-    ]);
+    recommendation.then((data) => {
+      setOutputs([{
+          id: data.id,
+          title: prompt,
+          responseContent: data?.responseContent!,
+          prompt,
+        },
+        ...outputs,
+      ]);
 
-    setActiveView(outputViewDefaults.name);
+      setActiveView(outputViewDefaults.name);
+    });
   }
 
-  if (promptSuggestions.isLoading || financialRecommendations?.isLoading) return <p>Loading...</p>;
-  if (promptSuggestions.isError || financialRecommendations?.isError) return <p>Error: {promptSuggestions.error!.message || financialRecommendations?.error!.message}</p>;
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error: {error!.message}</p>;
 
   return (
     <>
@@ -43,7 +44,7 @@ const AIPromptComponent = ({ handleGenerateButtonClick }: { handleGenerateButton
         activeView={activeView}
         onActiveViewChange={handleActiveViewChange}
         onPromptRequest={handlePromptRequest}>
-        <AIPromptView promptSuggestions={promptSuggestions.data} />
+        <AIPromptView promptSuggestions={data} />
         <AIPromptOutputView outputs={outputs} showOutputRating={true} />
       </AIPrompt>
     </>
