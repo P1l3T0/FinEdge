@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { FinancialRecommendation, PromptRequestData } from '../../Utils/Types';
 import { createFinancialRecommendationEndPoint } from '../../endpoints';
-import AIPromptComponent from './AIPrompt/AIPromptComponent';
+import AIPromptComponent from './AIPromptComponent';
 
 const CreateFinancialRecommendations = () => {
   const queryClient = useQueryClient();

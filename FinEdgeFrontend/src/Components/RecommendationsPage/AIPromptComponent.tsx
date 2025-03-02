@@ -1,7 +1,7 @@
 import { AIPrompt, AIPromptView, AIPromptOutputView, promptViewDefaults, outputViewDefaults, AIPromptOutputInterface } from '@progress/kendo-react-conversational-ui';
 import { useState } from 'react'
-import useGetPromptSuggestions from '../../../Hooks/FinancialRecommendations/useGetPromptSuggestions';
-import { FinancialRecommendation } from '../../../Utils/Types';
+import useGetPromptSuggestions from '../../Hooks/FinancialRecommendations/useGetPromptSuggestions';
+import { FinancialRecommendation } from '../../Utils/Types';
 
 const AIPromptComponent = ({ generateFinancialRecommendation }: { generateFinancialRecommendation: (prompt: string) => Promise<FinancialRecommendation> }) => {
   const { data, isLoading, isError, error } = useGetPromptSuggestions();
