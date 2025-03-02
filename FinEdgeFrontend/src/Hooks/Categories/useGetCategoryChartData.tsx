@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getCategoryChartDataEndPoint } from "../../endpoints";
+import { getCategoryChartDataEndPoint } from "../../Utils/endpoints";
 import { CategoryChartData } from "../../Utils/Types";
 
 const useGetCategoryChartData = () => {

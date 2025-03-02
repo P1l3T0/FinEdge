@@ -3,7 +3,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useEffect } from "react";
 import { AppNotification } from "../../Utils/Types";
-import { getNotificationHubEndPoint, getLatestUnreadNotificationEndPoint } from "../../endpoints"; 
+import { getNotificationHubEndPoint, getLatestUnreadNotificationEndPoint } from "../../Utils/endpoints"; 
 
 const getLatestUnreadNotification = async (): Promise<AppNotification | null> => {
   return await axios

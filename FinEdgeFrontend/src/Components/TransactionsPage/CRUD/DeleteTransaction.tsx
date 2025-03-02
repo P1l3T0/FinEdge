@@ -1,7 +1,7 @@
 import { Button } from '@progress/kendo-react-all';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { deleteTransactionEndPoint } from '../../../endpoints';
+import { deleteTransactionEndPoint } from '../../../Utils/endpoints';
 import { Transaction } from '../../../Utils/Types';
 
 const DeleteTransaction = ({ transaction }: { transaction: Transaction }) => {

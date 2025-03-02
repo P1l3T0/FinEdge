@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { FinancialRecommendation, PromptRequestData } from '../../Utils/Types';
-import { createFinancialRecommendationEndPoint } from '../../endpoints';
+import { createFinancialRecommendationEndPoint } from '../../Utils/endpoints';
 import AIPromptComponent from './AIPromptComponent';
 
 const CreateFinancialRecommendations = () => {

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getAllAccountsEndPoint } from "../../endpoints";
+import { getAllAccountsEndPoint } from "../../Utils/endpoints";
 import { Account } from "../../Utils/Types";
 
 const useGetAccounts = () => {

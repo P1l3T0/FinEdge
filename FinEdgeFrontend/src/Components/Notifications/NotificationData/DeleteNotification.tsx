@@ -2,7 +2,7 @@ import { Trash } from "lucide-react";
 import { AppNotification } from "../../../Utils/Types";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { deleteNotificationEndPoint } from "../../../endpoints";
+import { deleteNotificationEndPoint } from "../../../Utils/endpoints";
 
 const DeleteNotification = ({ notification }: { notification: AppNotification }) => {
   const queryClient = useQueryClient();

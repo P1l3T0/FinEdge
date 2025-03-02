@@ -6,7 +6,7 @@ import { Button, TextBox, TextBoxChangeEvent, InputSuffix, Tooltip } from "@prog
 import { SvgIcon } from "@progress/kendo-react-common";
 import "@progress/kendo-theme-default/dist/default-ocean-blue.css";
 import { envelopeIcon, userIcon, passwordIcon } from "@progress/kendo-svg-icons";
-import { registerEndPoint } from "../endpoints";
+import { registerEndPoint } from "../Utils/endpoints";
 import { RegisterDTO } from "../Utils/Types";
 import { isValidPassword, isValidEmail } from "../Utils/Functions";
 import Questions from "../Components/HomePage/Questions";

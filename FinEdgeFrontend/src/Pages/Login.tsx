@@ -6,7 +6,7 @@ import { Button } from "@progress/kendo-react-buttons";
 import { TextBox, TextBoxChangeEvent, InputSuffix } from "@progress/kendo-react-inputs";
 import { SvgIcon } from "@progress/kendo-react-common";
 import { envelopeIcon, passwordIcon } from "@progress/kendo-svg-icons";
-import { loginEndPoint } from "../endpoints";
+import { loginEndPoint } from "../Utils/endpoints";
 import { LoginDTO } from "../Utils/Types";
 import CustomLink from "../Components/CustomLink";
 

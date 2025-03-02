@@ -3,7 +3,7 @@ import { Window } from '@progress/kendo-react-dialogs';
 import { Button, ColorPicker, ColorPickerChangeEvent, ColorPickerView, DropDownList, DropDownListChangeEvent, TextBox, TextBoxChangeEvent } from '@progress/kendo-react-all';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { updateAccountEndPoint } from '../../../endpoints';
+import { updateAccountEndPoint } from '../../../Utils/endpoints';
 import { getEnumValueFromNumber, accountType, currency } from '../../../Utils/Functions';
 import { Account, AccountDTO, AccountType } from '../../../Utils/Types';
 

@@ -1,7 +1,7 @@
 // hooks/useGetAccountChartData.ts
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getAccountChartDataEndPoint } from "../../endpoints";
+import { getAccountChartDataEndPoint } from "../../Utils/endpoints";
 import { AccountChartData } from "../../Utils/Types";
 
 const useGetAccountChartData = () => {

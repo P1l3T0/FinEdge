@@ -3,7 +3,7 @@ import { CategoryDTO } from '../../../Utils/Types';
 import { TextBoxChangeEvent, DropDownListChangeEvent, TextBox, DropDownList, Button, Checkbox, CheckboxChangeEvent, ColorPicker, ColorPickerChangeEvent, ColorPickerView, Card, CardBody, CardHeader } from '@progress/kendo-react-all';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { createCategoryEndPoint } from '../../../endpoints';
+import { createCategoryEndPoint } from '../../../Utils/endpoints';
 import { currency } from '../../../Utils/Functions';
 
 const CreateCategory = () => {
