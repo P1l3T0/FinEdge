@@ -1,5 +1,5 @@
 import { useState, SyntheticEvent, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, TextBox, TextBoxChangeEvent, InputSuffix, Tooltip } from "@progress/kendo-react-all";
@@ -10,7 +10,6 @@ import { registerEndPoint } from "../Utils/endpoints";
 import { RegisterDTO } from "../Utils/Types";
 import { isValidPassword, isValidEmail } from "../Utils/Functions";
 import Questions from "../Components/HomePage/Questions";
-import CustomLink from "../Components/CustomLink";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -149,9 +148,9 @@ const Register = () => {
 
               <div className="mt-6 text-center text-sm text-gray-600">
                 <p>Have an account?{" "}
-                  <CustomLink to="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+                  <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">
                     Log in
-                  </CustomLink>
+                  </Link>
                 </p>
               </div>
             </div>
