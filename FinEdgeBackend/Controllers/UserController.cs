@@ -50,6 +50,7 @@ namespace FinEdgeBackend.Controllers
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
                     Title = "One or more required fields are empty!",
+                    Description = "Please fill out the required fields",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -65,6 +66,7 @@ namespace FinEdgeBackend.Controllers
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
                     Title = "Email already in use or Password is too weak!",
+                    Description = "Please use a different Email or stronger Password",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -80,6 +82,7 @@ namespace FinEdgeBackend.Controllers
             await _notificationService.CreateNotificationAsync(new Notification()
             {
                 Title = "User updated successfully!",
+                Description = $"All changes to user '{updatedDTO.Name} {updatedDTO.Surname}' have been saved successfully.",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -101,6 +104,7 @@ namespace FinEdgeBackend.Controllers
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
                     Title = "User does not exist!",
+                    Description = "Invalid User data",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     DateCreated = DateTime.Now,

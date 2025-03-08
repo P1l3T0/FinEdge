@@ -129,7 +129,7 @@ namespace FinEdgeBackend.Controllers
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
                     Title = "Please fill in the Account fields!",
-                    Description = "The Account needs to have a Name and positive Balance!",
+                    Description = $"The Account {accountDto.Name} needs to have a Name and positive Balance!",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,

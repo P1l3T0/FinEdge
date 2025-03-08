@@ -1,4 +1,5 @@
-﻿using FinEdgeBackend.DTOs.Transactions;
+﻿using FinEdgeBackend.DTOs.Categories;
+using FinEdgeBackend.DTOs.Transactions;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
@@ -27,12 +28,12 @@ namespace FinEdgeBackend.Controllers
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
                     Title = "Please fill in the Transaction fields!",
+                    Description = $"The Transaction with name '{transactionDto.Name}' must have valid properties",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
                     UserID = currentUser.ID
                 });
-
                 return BadRequest();
             }
 
@@ -60,6 +61,7 @@ namespace FinEdgeBackend.Controllers
             await _notificationService.CreateNotificationAsync(new Notification()
             {
                 Title = $"Transaction {transactionDto.Name} created successffuly",
+                Description = $"Your transaction '{transactionDto.Name}' has been successfully created!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -139,6 +141,7 @@ namespace FinEdgeBackend.Controllers
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
                     Title = "Please fill in the Transaction fields!",
+                    Description = $"The Transaction '{transactionDto.Name}' must have valid properties",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -158,6 +161,7 @@ namespace FinEdgeBackend.Controllers
             await _notificationService.CreateNotificationAsync(new Notification()
             {
                 Title = $"Transaction {transactionDto.Name} updated successfully",
+                Description = $"All changes to transaction '{transaction.Name}' have been saved successfully.",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -183,6 +187,7 @@ namespace FinEdgeBackend.Controllers
             await _notificationService.CreateNotificationAsync(new Notification()
             {
                 Title = $"Transaction {transaction.Name} deleted successfully",
+                Description = $"Transaction '{transaction.Name}' has been permanently removed from the system.",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
