@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.DTOs.User;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
+using FinEdgeBackend.Enums;
 
 namespace FinEdgeBackend.Services
 {
@@ -28,6 +28,7 @@ namespace FinEdgeBackend.Services
             currentUser.Name = updatedDTO.Name;
             currentUser.Surname = updatedDTO.Surname;
             currentUser.Email = updatedDTO.Email;
+            currentUser.MethodologyType = (MethodologyType)Enum.Parse(typeof(MethodologyType), updatedDTO.MethodologyType!);
 
             if (!string.IsNullOrEmpty(updatedDTO.Password))
             {

@@ -90,6 +90,7 @@ export type LoginDTO = {
 export type UpdateDTO = {
   name: string;
   surname: string;
+  methodologyType: string;
   email: string;
   password: string;
 }
