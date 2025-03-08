@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getExpenditureCategoriesEndPoint } from "../../endpoints";
+import { getExpenditureCategoriesEndPoint } from "../../Utils/endpoints";
 import { CategoryResponse } from "../../Utils/Types";
 
 const usesGetExpenditureCategories = () => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { TextBox, DropDownList, TextBoxChangeEvent, DropDownListChangeEvent, Button, Checkbox, CheckboxChangeEvent, Card, CardBody, CardHeader } from "@progress/kendo-react-all";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { createTransactionEndPoint } from "../../../endpoints";
+import { createTransactionEndPoint } from "../../../Utils/endpoints";
 import useGetNames from "../../../Hooks/Accounts/useGetNames";
 import { TransactionDTO } from "../../../Utils/Types";
 

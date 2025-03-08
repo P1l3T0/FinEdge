@@ -1,14 +1,13 @@
 import { SyntheticEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@progress/kendo-react-buttons";
 import { TextBox, TextBoxChangeEvent, InputSuffix } from "@progress/kendo-react-inputs";
 import { SvgIcon } from "@progress/kendo-react-common";
 import { envelopeIcon, passwordIcon } from "@progress/kendo-svg-icons";
-import { loginEndPoint } from "../endpoints";
+import { loginEndPoint } from "../Utils/endpoints";
 import { LoginDTO } from "../Utils/Types";
-import CustomLink from "../Components/CustomLink";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -90,9 +89,9 @@ const Login = () => {
               <div className="mt-6 text-center text-sm text-gray-600">
                 <p>
                   Don't have an account?{" "}
-                  <CustomLink to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
+                  <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
                     Register
-                  </CustomLink>
+                  </Link>
                 </p>
               </div>
             </div>

@@ -2,9 +2,9 @@ import { DatePicker, DatePickerChangeEvent } from '@progress/kendo-react-dateinp
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
-import { PromptRequestData } from '../../Utils/Types';
-import { createFinancialRecommendationEndPoint } from '../../endpoints';
-import AIPromptComponent from './AIPrompt/AIPromptComponent';
+import { FinancialRecommendation, PromptRequestData } from '../../Utils/Types';
+import { createFinancialRecommendationEndPoint } from '../../Utils/endpoints';
+import AIPromptComponent from './AIPromptComponent';
 
 const CreateFinancialRecommendations = () => {
   const queryClient = useQueryClient();
@@ -23,9 +23,11 @@ const CreateFinancialRecommendations = () => {
   }
 
   const createRecommendations = async () => {
-    await axios
+    const response = await axios
       .post(createFinancialRecommendationEndPoint, promptRequestData, { withCredentials: true })
       .catch((error: AxiosError) => {});
+
+      return response?.data as FinancialRecommendation;
   }
 
   const { mutateAsync } = useMutation({
@@ -35,19 +37,24 @@ const CreateFinancialRecommendations = () => {
     },
   });
 
-  const handleGenerateButtonClick = async (prompt: string) => {
+  const generateFinancialRecommendation = async (prompt: string): Promise<FinancialRecommendation> => {
     setPromptRequestData({
       ...promptRequestData,
-      prompt: prompt
+      prompt: prompt,
     });
 
-    await mutateAsync();
+    const newRecommendation = await mutateAsync();
+    return newRecommendation;
   }
 
   return (
     <>
-      <DatePicker width={200} max={new Date()} onChange={handleDateChange} /> <br />
-      <AIPromptComponent handleGenerateButtonClick={handleGenerateButtonClick} />
+      <div className="mb-3">
+        <DatePicker width={200} max={new Date()} onChange={handleDateChange} className='m-6' />
+      </div>
+      <div>
+        <AIPromptComponent generateFinancialRecommendation={generateFinancialRecommendation} />
+      </div>
     </>
   )
 }

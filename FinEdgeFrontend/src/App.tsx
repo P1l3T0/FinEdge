@@ -5,7 +5,7 @@ import DrawerContainer from "./Components/Navigation/DrawerContainer";
 import BottomNavigationContainer from "./Components/Navigation/BottomNavigationContainer";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
-import FinancialRecommendations from "./Pages/Recommendations/FinancialRecommendations";
+import FinancialRecommendations from "./Pages/FinancialRecommendations";
 import NotificationsBase from "./Components/Notifications/NotificationsBase";
 import Home from "./Pages/Home";
 import Accounts from "./Pages/Accounts";

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getAccountStatisticsEndPoint } from "../../endpoints";
+import { getAccountStatisticsEndPoint } from "../../Utils/endpoints";
 import { AccountStats } from "../../Utils/Types";
 
 const useGetAccountStats = () => {

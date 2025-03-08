@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { markAllNotificationsAsReadEndPoint } from '../../../endpoints';
+import { markAllNotificationsAsReadEndPoint } from '../../../Utils/endpoints';
 
 const MarkAllNotificationsAsRead = () => {
   const queryClient = useQueryClient();

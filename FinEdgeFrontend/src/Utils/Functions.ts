@@ -2,6 +2,7 @@ import { AccountType, MethodologyType, NotificationType } from "./Types";
 
 export const accountType: string[] = ["Regular", "Savings", "Debt", "Retirement"];
 export const currency: string[] = ["BGN", "USD", "EUR"];
+export const methodologyTypes: string[] = ["ZeroBasedBudgeting", "PayYourselfFirst", "FiftyThirtyTwenty"];
 
 export function getEnumValueFromNumber(numberType: number, enumType: typeof MethodologyType | typeof AccountType | typeof NotificationType): string {
   return enumType[numberType];

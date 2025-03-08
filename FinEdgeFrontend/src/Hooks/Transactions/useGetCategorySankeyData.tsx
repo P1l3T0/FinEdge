@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getTransactionSankeyChartDataEndPoint } from "../../endpoints";
+import { getTransactionSankeyChartDataEndPoint } from "../../Utils/endpoints";
 import { SankeyData } from "@progress/kendo-react-all";
 
 const useGetTransactionSankeyChartData = () => {

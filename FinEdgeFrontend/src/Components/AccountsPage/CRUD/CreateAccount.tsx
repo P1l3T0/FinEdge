@@ -5,7 +5,7 @@ import { DropDownList, DropDownListChangeEvent, } from "@progress/kendo-react-dr
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardHeader, CardBody } from "@progress/kendo-react-all";
-import { createAccountEndPoint } from "../../../endpoints";
+import { createAccountEndPoint } from "../../../Utils/endpoints";
 import { accountType, currency } from "../../../Utils/Functions";
 import { AccountDTO } from "../../../Utils/Types";
 

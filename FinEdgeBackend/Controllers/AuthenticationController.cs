@@ -23,13 +23,6 @@ namespace FinEdgeBackend.Controllers
         {
             if (!_userService.Validate(registerDto.Email!, registerDto.Password!, isCurrentUser: false))
             {
-                await _notificationService.CreateNotificationAsync(new Notification()
-                {
-                    Title = "Invalid Email or Password!",
-                    NotificationType = NotificationType.Error,
-                    IsRead = false
-                });
-
                 return BadRequest("Invalid Email or Password!");
             }
 
@@ -37,7 +30,8 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Title = $"User {user.Name} {user.Surname} registered succesfuly!",
+                Title = $"User registered succesfuly!",
+                Description = $"{user.Name} {user.Surname} has regustered intto the system",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = user,

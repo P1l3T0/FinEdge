@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
-import { logoutEndPoint } from "../../endpoints";
+import { logoutEndPoint } from "../../Utils/endpoints";
 
 const useLogout = () => {
   const navigate = useNavigate();

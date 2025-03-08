@@ -51,7 +51,6 @@ export const deleteTransactionEndPoint = `${transactionController}/delete`;
 
 //! Financial Recommendations
 export const createFinancialRecommendationEndPoint = `${financialRecommendationsController}/create`;
-export const getFinancialRecommendationEndPoint = `${financialRecommendationsController}/get`;
 export const deleteFinancialRecommendationEndPoint = `${financialRecommendationsController}/delete`;
 
 //! Prompt Suggestions

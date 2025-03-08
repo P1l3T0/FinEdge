@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import { AppNotification } from "../../../Utils/Types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { markNotificationAsReadEndPoint } from "../../../endpoints";
+import { markNotificationAsReadEndPoint } from "../../../Utils/endpoints";
 
 const MarkNotificationAsRead = ({ notification }: { notification: AppNotification }) => {
   const queryClient = useQueryClient();

@@ -2,7 +2,7 @@ import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownL
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useState } from 'react';
-import { updateCategoryEndPoint } from '../../../endpoints';
+import { updateCategoryEndPoint } from '../../../Utils/endpoints';
 import { currency } from '../../../Utils/Functions';
 import { Category, CategoryDTO } from '../../../Utils/Types';
 

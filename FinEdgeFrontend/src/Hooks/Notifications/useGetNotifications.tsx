@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useEffect } from "react";
-import { getNotificationsEndPoint, getNotificationHubEndPoint } from "../../endpoints";
+import { getNotificationsEndPoint, getNotificationHubEndPoint } from "../../Utils/endpoints";
 import { AppNotification } from "../../Utils/Types";
 
 const getNotifications = async () => {

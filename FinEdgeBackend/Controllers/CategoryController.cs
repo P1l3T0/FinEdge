@@ -25,6 +25,7 @@ namespace FinEdgeBackend.Controllers
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
                     Title = "Category must have a name and be a positive number!",
+                    Description = $"The Category with name {categoryDto.Name} and budget {categoryDto.Budget} {categoryDto.Currency} must have valid properties",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -41,6 +42,7 @@ namespace FinEdgeBackend.Controllers
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
                     Title = $"Category '{category.Name}' already exist!",
+                    Description = "There is already a Category that hhas this name",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -65,6 +67,7 @@ namespace FinEdgeBackend.Controllers
             await _notificationService.CreateNotificationAsync(new Notification()
             {
                 Title = $"Category '{categoryDto.Name}' created successfully!",
+                Description = $"Your category '{categoryDto.Name}' has been successfully created and is now ready to use",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -154,6 +157,7 @@ namespace FinEdgeBackend.Controllers
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
                     Title = "Please fill in the category fields!",
+                    Description = $"The Category '{categoryDto.Name}' must have valid properties",
                     NotificationType = NotificationType.Error,
                     IsRead = false,
                     User = currentUser,
@@ -169,7 +173,8 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Title = $"Category {category.Name} updated successfully!",
+                Title = $"Category '{category.Name}' updated successfully!",
+                Description = $"All changes to category '{category.Name}' have been saved successfully.",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -188,7 +193,8 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Title = $"Category {category.Name} deleted successfully!",
+                Title = $"Category '{category.Name}' deleted successfully!",
+                Description = $"Category '{category.Name}' has been permanently removed from the system.",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
                 User = currentUser,
@@ -207,6 +213,16 @@ namespace FinEdgeBackend.Controllers
             User currentUser = await _userService.GetCurrentUserAsync();
 
             await _categoryService.DeleteAllCategoriesAsync(currentUser.Categories!);
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Title = "All Categories deleted successfully!",
+                Description = "All Categories have been permanently removed from the system.",
+                NotificationType = NotificationType.Success,
+                IsRead = false,
+                User = currentUser,
+                UserID = currentUser.ID
+            });
 
             return NoContent();
         }

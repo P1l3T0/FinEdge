@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getPromptSuggestionsEndPoint } from "../../endpoints";
+import { getPromptSuggestionsEndPoint } from "../../Utils/endpoints";
 
 const useGetPromptSuggestions = () => {
   const getPromptSuggestions = async () => {

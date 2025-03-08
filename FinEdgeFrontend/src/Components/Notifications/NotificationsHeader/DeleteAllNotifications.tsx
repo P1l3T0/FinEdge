@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { deleteAllNotificationsEndPoint } from "../../../endpoints";
+import { deleteAllNotificationsEndPoint } from "../../../Utils/endpoints";
 
 const DeleteAllNotifications = () => {
   const queryClient = useQueryClient();

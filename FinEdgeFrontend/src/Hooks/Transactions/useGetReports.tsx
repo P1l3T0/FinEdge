@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { getTransactionReportsEndPoint } from "../../endpoints";
+import { getTransactionReportsEndPoint } from "../../Utils/endpoints";
 import { Reports } from "../../Utils/Types";
 
 const useGetReports = () => {
