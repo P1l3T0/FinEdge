@@ -49,8 +49,12 @@ const CreateFinancialRecommendations = () => {
 
   return (
     <>
-      <DatePicker width={200} max={new Date()} onChange={handleDateChange} /> <br />
-      <AIPromptComponent generateFinancialRecommendation={generateFinancialRecommendation} />
+      <div className="mb-3">
+        <DatePicker width={200} max={new Date()} onChange={handleDateChange} className='m-6' />
+      </div>
+      <div>
+        <AIPromptComponent generateFinancialRecommendation={generateFinancialRecommendation} />
+      </div>
     </>
   )
 }

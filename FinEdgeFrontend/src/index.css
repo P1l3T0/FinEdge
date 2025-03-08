@@ -26,3 +26,7 @@
 html body .k-bottom-nav-item {
   min-width: 0;
 }
+
+textarea.k-resize {
+  resize: vertical;
+}

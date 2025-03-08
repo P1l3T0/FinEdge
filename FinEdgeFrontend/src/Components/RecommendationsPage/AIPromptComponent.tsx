@@ -31,6 +31,8 @@ const AIPromptComponent = ({ generateFinancialRecommendation }: { generateFinanc
       ]);
 
       setActiveView(outputViewDefaults.name);
+    }).catch((error) => {
+      console.log(error);
     });
   }
 
@@ -39,16 +41,12 @@ const AIPromptComponent = ({ generateFinancialRecommendation }: { generateFinanc
 
   return (
     <>
-      <AIPrompt
-        style={{ width: '500px', height: 'auto', boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.1)' }}
-        activeView={activeView}
-        onActiveViewChange={handleActiveViewChange}
-        onPromptRequest={handlePromptRequest}>
+      <AIPrompt className="px-5 w-70 sm:w-90 md:w-139 shadow-sm" activeView={activeView} onActiveViewChange={handleActiveViewChange} onPromptRequest={handlePromptRequest}>
         <AIPromptView promptSuggestions={data} />
         <AIPromptOutputView outputs={outputs} showOutputRating={true} />
       </AIPrompt>
     </>
-  )
+  );
 }
 
 export default AIPromptComponent;
