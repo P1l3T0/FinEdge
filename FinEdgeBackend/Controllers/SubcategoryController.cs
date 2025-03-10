@@ -25,7 +25,7 @@ namespace FinEdgeBackend.Controllers
             User currentUser = await _userService.GetCurrentUserAsync();
             Category category = await _categoryService.GetCategoryForCurrentUserByIdAsync(categoryID, currentUser);
 
-            await _subcategoryService.CreateSubcategoryAsync(new Subcategory
+            await _subcategoryService.CreateSubcategoryAsync(new Subcategory()
             {
                 Name = subcategoryDto.Name,
                 CategoryID = categoryID,
