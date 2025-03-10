@@ -14,8 +14,8 @@ namespace FinEdgeBackend.Controllers
         [ProducesResponseType(200, Type = typeof(ICollection<string>))]
         public IActionResult GetPromptSuggestions()
         {
-            ICollection<string> strings = _promptSuggestionsService.GetPromptSuggestions();
-            return Ok(strings);
+            ICollection<string> suggestions = _promptSuggestionsService.GetPromptSuggestions();
+            return Ok(suggestions);
         }
     }
 }
