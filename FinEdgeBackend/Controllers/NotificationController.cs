@@ -1,7 +1,6 @@
 ﻿using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace FinEdgeBackend.Controllers
 {
