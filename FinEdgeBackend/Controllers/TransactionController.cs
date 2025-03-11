@@ -1,5 +1,4 @@
-﻿using FinEdgeBackend.DTOs.Categories;
-using FinEdgeBackend.DTOs.Transactions;
+﻿using FinEdgeBackend.DTOs.Transactions;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
