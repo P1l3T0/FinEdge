@@ -27,7 +27,6 @@ namespace FinEdgeTests.Controller
         public async Task AccountsController_CreateAccount_InvalidData_ReturnsBadRequest()
         {
             AccountDTO accountDto = new AccountDTO { Name = "", Balance = -1 };
-
             User user = new User { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
