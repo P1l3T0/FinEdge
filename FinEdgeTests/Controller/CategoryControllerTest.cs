@@ -1,5 +1,4 @@
-﻿
-using FakeItEasy;
+﻿using FakeItEasy;
 using FinEdgeBackend.Controllers;
 using FinEdgeBackend.DTOs.Categories;
 using FinEdgeBackend.Interfaces;
@@ -27,8 +26,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_CreateCategory_InvalidData_ReturnsBadRequest()
         {
-            CategoryDTO categoryDto = new CategoryDTO { Name = "", Budget = -1 };
-            User user = new User { ID = 1, Name = "Test User" };
+            CategoryDTO categoryDto = new CategoryDTO() { Name = "", Budget = -1 };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _categoryService.Validate(categoryDto)).Returns(false);
@@ -42,8 +41,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_CreateCategory_ExistingCategory_ReturnsBadRequest()
         {
-            User user = new User { ID = 1, Name = "Test User", TotalBalance = 0 };
-            CategoryDTO categoryDto = new CategoryDTO { Name = "Test Account", Budget = 100, Currency = "USD", Color = "Blue" };
+            User user = new User() { ID = 1, Name = "Test User", TotalBalance = 0 };
+            CategoryDTO categoryDto = new CategoryDTO() { Name = "Test Account", Budget = 100, Currency = "USD", Color = "Blue" };
             Category category = new Category();
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
@@ -59,8 +58,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_CreateCategory_ValidData_ReturnsCreated()
         {
-            CategoryDTO categoryDto = new CategoryDTO { Name = "Test Category", Budget = 100, Currency = "USD", IsIncome = true, Color = "Blue" };
-            User user = new User { ID = 1, Name = "Test User" };
+            CategoryDTO categoryDto = new CategoryDTO() { Name = "Test Category", Budget = 100, Currency = "USD", IsIncome = true, Color = "Blue" };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _categoryService.Validate(categoryDto)).Returns(true);
@@ -77,11 +76,11 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_GetIncomeCategories_ReturnsOk()
         {
-            User user = new User { ID = 1, Name = "Test User" };
+            User user = new User() { ID = 1, Name = "Test User" };
             List<Category> incomeCategories = new List<Category>
             {
-                new Category { ID = 1, Name = "Income1" },
-                new Category { ID = 2, Name = "Income2" }
+                new Category() { ID = 1, Name = "Income1" },
+                new Category() { ID = 2, Name = "Income2" }
             };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
@@ -96,11 +95,11 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_GetExpenditureCategories_ReturnsOk()
         {
-            User user = new User { ID = 1, Name = "Test User" };
+            User user = new User() { ID = 1, Name = "Test User" };
             List<Category> expenditureCategories = new List<Category>
             {
-                new Category { ID = 1, Name = "Expenditure1" },
-                new Category { ID = 2, Name = "Expenditure2" }
+                new Category() { ID = 1, Name = "Expenditure1" },
+                new Category() { ID = 2, Name = "Expenditure2" }
             };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
@@ -115,29 +114,30 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_GetInfoForCategories_ReturnsOk()
         {
-            User user = new User { ID = 1, Name = "Test User" };
-            List<Category> incomeCategories = new List<Category>
+            User user = new User() { ID = 1, Name = "Test User" };
+
+            List<Category> incomeCategories = new List<Category>()
             {
-                new Category { ID = 1, Name = "Income1" },
-                new Category { ID = 2, Name = "Income2" }
+                new Category() { ID = 1, Name = "Income1" },
+                new Category() { ID = 2, Name = "Income2" }
             };
 
-            List<Category> expenditureCategories = new List<Category>
+            List<Category> expenditureCategories = new List<Category>()
             {
-                new Category { ID = 1, Name = "Expenditure1" },
-                new Category { ID = 2, Name = "Expenditure2" }
+                new Category() { ID = 1, Name = "Expenditure1" },
+                new Category() { ID = 2, Name = "Expenditure2" }
             };
 
-            List<CategoryInfoDTO> incomeInfo = new List<CategoryInfoDTO>
+            List<CategoryInfoDTO> incomeInfo = new List<CategoryInfoDTO>()
             {
-                new CategoryInfoDTO { Name = "Income1", Ammount = 100 },
-                new CategoryInfoDTO { Name = "Income2", Ammount = 200 }
+                new CategoryInfoDTO() { Name = "Income1", Ammount = 100 },
+                new CategoryInfoDTO() { Name = "Income2", Ammount = 200 }
             };
 
             List<CategoryInfoDTO> expenditureInfo = new List<CategoryInfoDTO>
             {
-                new CategoryInfoDTO { Name = "Expenditure1", Ammount = 100 },
-                new CategoryInfoDTO { Name = "Expenditure2", Ammount = 200 }
+                new CategoryInfoDTO() { Name = "Expenditure1", Ammount = 100 },
+                new CategoryInfoDTO() { Name = "Expenditure2", Ammount = 200 }
             };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
@@ -154,11 +154,12 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_GetCategoryChartData_ReturnsOk()
         {
-            User user = new User { ID = 1, Name = "Test User" };
-            List<CategoryChartDataDTO> chartData = new List<CategoryChartDataDTO>
+            User user = new User() { ID = 1, Name = "Test User" };
+
+            List<CategoryChartDataDTO> chartData = new List<CategoryChartDataDTO>()
             {
-                new CategoryChartDataDTO { Name = "Category1", Balance = 100 },
-                new CategoryChartDataDTO { Name = "Category2", Balance = 200 }
+                new CategoryChartDataDTO() { Name = "Category1", Balance = 100 },
+                new CategoryChartDataDTO() { Name = "Category2", Balance = 200 }
             };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
@@ -175,8 +176,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_UpdateCategory_InvalidData_ReturnsBadRequest()
         {
-            CategoryDTO categoryDto = new CategoryDTO { Name = "", Budget = -1 };
-            User user = new User { ID = 1, Name = "Test User" };
+            CategoryDTO categoryDto = new CategoryDTO() { Name = "", Budget = -1 };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _categoryService.Validate(categoryDto)).Returns(false);
@@ -190,9 +191,9 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_UpdateCategory_ValidData_ReturnsNoContent()
         {
-            CategoryDTO categoryDto = new CategoryDTO { Name = "Updated Category", Budget = 200, Currency = "USD", IsIncome = true, Color = "Red" };
-            Category category = new Category { ID = 1, Name = "Test Category" };
-            User user = new User { ID = 1, Name = "Test User" };
+            CategoryDTO categoryDto = new CategoryDTO() { Name = "Updated Category", Budget = 200, Currency = "USD", IsIncome = true, Color = "Red" };
+            Category category = new Category() { ID = 1, Name = "Test Category" };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _categoryService.Validate(categoryDto)).Returns(true);
@@ -209,8 +210,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_DeleteCategory_ReturnsNoContent()
         {
-            Category category = new Category { ID = 1, Name = "Test Category" };
-            User user = new User { ID = 1, Name = "Test User" };
+            Category category = new Category() { ID = 1, Name = "Test Category" };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _categoryService.GetCategoryForCurrentUserByIdAsync(1, user)).Returns(Task.FromResult(category));
@@ -226,7 +227,7 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_DeleteAllCategories_ReturnsNoContent()
         {
-            User user = new User { ID = 1, Name = "Test User", Categories = new List<Category> { new Category { Name = "Category1" }, new Category { Name = "Category2" } } };
+            User user = new User() { ID = 1, Name = "Test User", Categories = new List<Category> { new Category { Name = "Category1" }, new Category { Name = "Category2" } } };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _categoryService.DeleteAllCategoriesAsync(user.Categories)).Returns(Task.CompletedTask);

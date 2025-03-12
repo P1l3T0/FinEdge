@@ -25,7 +25,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task UserController_GetCurrentUser_ReturnsOk()
         {
-            User user = new User { ID = 1, Name = "Test User" };
+            User user = new User() { ID = 1, Name = "Test User" };
+
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
 
             IActionResult result = await _controller.GetCurrentUser();
@@ -39,16 +40,10 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task UserController_GetAccountAndCategoryNamesForUser_ReturnsOk()
         {
-            User user = new User
-            {
-                ID = 1,
-                Name = "Test User",
-                Accounts = new List<Account> { new Account { Name = "Account1" } },
-                Categories = new List<Category> { new Category { Name = "Category1" } }
-            };
+            User user = new User() { ID = 1, Name = "Test User", Accounts = new List<Account> { new Account { Name = "Account1" } }, Categories = new List<Category> { new Category { Name = "Category1" } } };
 
-            List<string> accountNames = new List<string> { "Account1" };
-            List<string> categoryNames = new List<string> { "Category1" };
+            List<string> accountNames = new List<string>() { "Account1" };
+            List<string> categoryNames = new List<string>() { "Category1" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _userService.GetAccountNames(user.Accounts)).Returns(accountNames);
@@ -62,8 +57,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task UserController_UpdateUser_InvalidData_ReturnsBadRequest()
         {
-            UpdateDTO updateDTO = new UpdateDTO { Name = "", Surname = "", Email = "" };
-            User user = new User { ID = 1, Name = "Test User" };
+            UpdateDTO updateDTO = new UpdateDTO() { Name = "", Surname = "", Email = "" };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
 
@@ -76,8 +71,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task UserController_UpdateUser_ValidData_ReturnsOk()
         {
-            UpdateDTO updateDTO = new UpdateDTO { Name = "Updated", Surname = "User", Email = "updated@example.com" };
-            User user = new User { ID = 1, Name = "Test User" };
+            UpdateDTO updateDTO = new UpdateDTO() { Name = "Updated", Surname = "User", Email = "updated@example.com" };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _userService.Validate(updateDTO.Email, A<string>.Ignored, true)).Returns(true);
@@ -110,7 +105,7 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task UserController_DeleteUser_ReturnsNoContent()
         {
-            User user = new User { ID = 1, Name = "Test User" };
+            User user = new User() { ID = 1, Name = "Test User" };
             HttpContext httpContext = A.Fake<HttpContext>();
             HttpResponse response = A.Fake<HttpResponse>();
             IResponseCookies cookies = A.Fake<IResponseCookies>();
@@ -118,7 +113,7 @@ namespace FinEdgeTests.Controller
             A.CallTo(() => httpContext.Response).Returns(response);
             A.CallTo(() => response.Cookies).Returns(cookies);
 
-            _controller.ControllerContext = new ControllerContext
+            _controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = httpContext
             };
@@ -136,7 +131,7 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task UserController_DeleteAllUsers_ReturnsOk()
         {
-            List<User> users = new List<User>
+            List<User> users = new List<User>()
             {
                 new User { ID = 1, Name = "User1" },
                 new User { ID = 2, Name = "User2" }

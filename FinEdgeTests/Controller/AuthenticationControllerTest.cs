@@ -108,7 +108,7 @@ namespace FinEdgeTests.Controller
             A.CallTo(() => httpContext.Response).Returns(response);
             A.CallTo(() => response.Cookies).Returns(cookies);
 
-            _controller.ControllerContext = new ControllerContext
+            _controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = httpContext
             };
@@ -186,7 +186,7 @@ namespace FinEdgeTests.Controller
             A.CallTo(() => httpContext.Response).Returns(response);
             A.CallTo(() => response.Cookies).Returns(cookies);
 
-            _controller.ControllerContext = new ControllerContext
+            _controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = httpContext
             };
@@ -225,7 +225,7 @@ namespace FinEdgeTests.Controller
             A.CallTo(() => request.Cookies).Returns(cookies);
             A.CallTo(() => httpContext.Request).Returns(request);
 
-            _controller.ControllerContext = new ControllerContext
+            _controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = httpContext
             };
@@ -283,7 +283,7 @@ namespace FinEdgeTests.Controller
             A.CallTo(() => httpContext.Response).Returns(response);
             A.CallTo(() => response.Cookies).Returns(responseCookies);
 
-            _controller.ControllerContext = new ControllerContext
+            _controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = httpContext
             };
@@ -315,7 +315,7 @@ namespace FinEdgeTests.Controller
             A.CallTo(() => httpContext.Response).Returns(response);
             A.CallTo(() => response.Cookies).Returns(cookies);
 
-            _controller.ControllerContext = new ControllerContext
+            _controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = httpContext
             };

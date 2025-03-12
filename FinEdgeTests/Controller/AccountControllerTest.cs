@@ -26,8 +26,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_CreateAccount_InvalidData_ReturnsBadRequest()
         {
-            AccountDTO accountDto = new AccountDTO { Name = "", Balance = -1 };
-            User user = new User { ID = 1, Name = "Test User" };
+            AccountDTO accountDto = new AccountDTO() { Name = "", Balance = -1 };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _accountService.Validate(accountDto)).Returns(false);
@@ -41,8 +41,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_CreateAccount_ExistingAccount_ReturnsBadRequest()
         {
-            AccountDTO accountDto = new AccountDTO { Name = "Test Account", Balance = 100, Currency = "USD", Color = "Blue", AccountType = "Savings" };
-            User user = new User { ID = 1, Name = "Test User", TotalBalance = 0 };
+            AccountDTO accountDto = new AccountDTO() { Name = "Test Account", Balance = 100, Currency = "USD", Color = "Blue", AccountType = "Savings" };
+            User user = new User() { ID = 1, Name = "Test User", TotalBalance = 0 };
             Account account = new Account();
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
@@ -59,8 +59,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_CreateAccount_ValidData_ReturnsOk()
         {
-            AccountDTO accountDto = new AccountDTO { Name = "Test Account", Balance = 100, Currency = "USD", Color = "Blue", AccountType = "Savings" };
-            User user = new User { ID = 1, Name = "Test User", TotalBalance = 0 };
+            AccountDTO accountDto = new AccountDTO() { Name = "Test Account", Balance = 100, Currency = "USD", Color = "Blue", AccountType = "Savings" };
+            User user = new User() { ID = 1, Name = "Test User", TotalBalance = 0 };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _accountService.Validate(accountDto)).Returns(true);
@@ -77,7 +77,7 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_GetAccount_ReturnsOk()
         {
-            Account account = new Account { ID = 1, Name = "Test Account" };
+            Account account = new Account() { ID = 1, Name = "Test Account" };
 
             A.CallTo(() => _accountService.GetAccountByIdAsync(1)).Returns(Task.FromResult(account));
 
@@ -92,12 +92,7 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_GetAccounts_ReturnsOk()
         {
-            User user = new User
-            {
-                ID = 1,
-                Name = "Test User",
-                Accounts = new List<Account> { new Account { Name = "Account1" }, new Account { Name = "Account2" } }
-            };
+            User user = new User() { ID = 1, Name = "Test User", Accounts = new List<Account> { new Account { Name = "Account1" }, new Account { Name = "Account2" } } };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
 
@@ -112,8 +107,9 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_GetAccountChartData_ReturnsOk()
         {
-            User user = new User { ID = 1, Name = "Test User" };
-            List<AccountChartDTO> chartData = new List<AccountChartDTO>
+            User user = new User() { ID = 1, Name = "Test User" };
+
+            List<AccountChartDTO> chartData = new List<AccountChartDTO>()
             {
                 new AccountChartDTO { Category = "Category1", Value = 100, Color = "red" },
                 new AccountChartDTO { Category = "Category2", Value = 200, Color = "green" }
@@ -133,8 +129,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_GetAccountStatistics_ReturnsOk()
         {
-            User user = new User { ID = 1, Name = "Test User" };
-            AccountStatsDTO statistics = new AccountStatsDTO { TotalBalance = 300, AverageBalance = 150 };
+            User user = new User() { ID = 1, Name = "Test User" };
+            AccountStatsDTO statistics = new AccountStatsDTO() { TotalBalance = 300, AverageBalance = 150 };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _accountService.GetAccountStatisticsAsync(user)).Returns(Task.FromResult(statistics));
@@ -150,8 +146,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_UpdateAccount_InvalidData_ReturnsBadRequest()
         {
-            AccountDTO accountDto = new AccountDTO { Name = "", Balance = -1 };
-            User user = new User { ID = 1, Name = "Test User" };
+            AccountDTO accountDto = new AccountDTO() { Name = "", Balance = -1 };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _accountService.Validate(accountDto)).Returns(false);
@@ -165,9 +161,9 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_UpdateAccount_ValidData_ReturnsNoContent()
         {
-            AccountDTO accountDto = new AccountDTO { Name = "Updated Account", Balance = 200, Currency = "USD", Color = "Red", AccountType = "Savings" };
-            Account account = new Account { ID = 1, Name = "Test Account" };
-            User user = new User { ID = 1, Name = "Test User" };
+            AccountDTO accountDto = new AccountDTO() { Name = "Updated Account", Balance = 200, Currency = "USD", Color = "Red", AccountType = "Savings" };
+            Account account = new Account() { ID = 1, Name = "Test Account" };
+            User user = new User() { ID = 1, Name = "Test User" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _accountService.Validate(accountDto)).Returns(true);
@@ -184,8 +180,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task AccountsController_DeleteAccount_ReturnsNoContent()
         {
-            User user = new User { ID = 1, Name = "Test User", TotalBalance = 100 };
-            Account account = new Account { ID = 1, Name = "Test Account", Balance = 100, User = user };
+            User user = new User() { ID = 1, Name = "Test User", TotalBalance = 100 };
+            Account account = new Account() { ID = 1, Name = "Test Account", Balance = 100, User = user };
 
             A.CallTo(() => _accountService.GetAccountByIdAsync(1)).Returns(Task.FromResult(account));
             A.CallTo(() => _accountService.DeleteAccountAsync(account)).Returns(Task.CompletedTask);

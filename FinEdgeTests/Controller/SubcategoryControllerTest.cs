@@ -26,7 +26,7 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task SubcategoryController_CreateSubcategory_InvalidData_ReturnsBadRequest()
         {
-            SubcategoryDTO subcategoryDto = new SubcategoryDTO { Name = "" };
+            SubcategoryDTO subcategoryDto = new SubcategoryDTO() { Name = "" };
 
             A.CallTo(() => _subcategoryService.Validate(subcategoryDto)).Returns(false);
 
@@ -38,8 +38,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task SubcategoryController_CreateSubcategory_ValidData_ReturnsCreated()
         {
-            SubcategoryDTO subcategoryDto = new SubcategoryDTO { Name = "Test Subcategory" };
-            User user = new User { ID = 1, Name = "Test User" };
+            SubcategoryDTO subcategoryDto = new SubcategoryDTO() { Name = "Test Subcategory" };
+            User user = new User() { ID = 1, Name = "Test User" };
             Category category = new Category { ID = 1, Name = "Test Category" };
 
             A.CallTo(() => _subcategoryService.Validate(subcategoryDto)).Returns(true);
@@ -55,7 +55,7 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task SubcategoryController_GetSubcategoriesForCategory_ReturnsOk()
         {
-            List<Subcategory> subcategories = new List<Subcategory>
+            List<Subcategory> subcategories = new List<Subcategory>()
             {
                 new Subcategory { ID = 1, Name = "Subcategory1" },
                 new Subcategory { ID = 2, Name = "Subcategory2" }
@@ -74,7 +74,7 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task SubcategoryController_UpdateSubcategory_InvalidData_ReturnsBadRequest()
         {
-            SubcategoryDTO subcategoryDto = new SubcategoryDTO { Name = "" };
+            SubcategoryDTO subcategoryDto = new SubcategoryDTO() { Name = "" };
 
             A.CallTo(() => _subcategoryService.Validate(subcategoryDto)).Returns(false);
 
@@ -86,8 +86,8 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task SubcategoryController_UpdateSubcategory_ValidData_ReturnsNoContent()
         {
-            SubcategoryDTO subcategoryDto = new SubcategoryDTO { Name = "Updated Subcategory" };
-            Subcategory subcategory = new Subcategory { ID = 1, Name = "Subcategory" };
+            SubcategoryDTO subcategoryDto = new SubcategoryDTO() { Name = "Updated Subcategory" };
+            Subcategory subcategory = new Subcategory() { ID = 1, Name = "Subcategory" };
 
             A.CallTo(() => _subcategoryService.Validate(subcategoryDto)).Returns(true);
             A.CallTo(() => _subcategoryService.GetSubcategoryByIdAsync(1)).Returns(Task.FromResult(subcategory));
@@ -101,7 +101,7 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task SubcategoryController_DeleteSubcategory_ReturnsNoContent()
         {
-            Subcategory subcategory = new Subcategory { ID = 1, Name = "Subcategory" };
+            Subcategory subcategory = new Subcategory() { ID = 1, Name = "Subcategory" };
 
             A.CallTo(() => _subcategoryService.GetSubcategoryByIdAsync(1)).Returns(Task.FromResult(subcategory));
             A.CallTo(() => _subcategoryService.DeleteSubcategoryAsync(subcategory)).Returns(Task.CompletedTask);
