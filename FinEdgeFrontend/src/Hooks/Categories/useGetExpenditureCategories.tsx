@@ -3,11 +3,18 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { getExpenditureCategoriesEndPoint } from "../../Utils/endpoints";
 import { CategoryResponse } from "../../Utils/Types";
 
-const usesGetExpenditureCategories = () => {
+const useGetExpenditureCategories = () => {
   const getExpenditureCategories = async () => {
     return await axios
       .get<CategoryResponse>(`${getExpenditureCategoriesEndPoint}`, { withCredentials: true })
-      .then((res: AxiosResponse<CategoryResponse>) => res.data)
+      .then((res: AxiosResponse<CategoryResponse>) => {
+        return {
+          ...res.data,
+          categories: res.data.categories.map((category) => ({
+            ...category,
+            dateCreated: new Date(category.dateCreated),
+          })),
+        }})
       .catch((err: AxiosError) => {
         throw new Error(`No categories found ${err.message}`);
       });
@@ -23,4 +30,4 @@ const usesGetExpenditureCategories = () => {
   return { data, isLoading, isError, error }
 }
 
-export default usesGetExpenditureCategories;
+export default useGetExpenditureCategories;

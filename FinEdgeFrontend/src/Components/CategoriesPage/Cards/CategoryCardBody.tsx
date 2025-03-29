@@ -19,7 +19,7 @@ const CategoryCardBody = ({ category }: {category: Category}) => {
         <div className="flex justify-between items-center">
           <span className="text-gray-600">Created</span>
           <span className="text-sm text-gray-500">
-            {new Date(category.dateCreated).toLocaleDateString("en-GB", {
+            {category.dateCreated.toLocaleDateString("en-GB", {
               day: "2-digit",
               month: "short",
               year: "numeric",
