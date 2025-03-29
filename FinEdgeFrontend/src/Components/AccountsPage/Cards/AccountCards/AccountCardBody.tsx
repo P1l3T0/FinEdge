@@ -1,4 +1,4 @@
-import { Account } from "../../../Utils/Types";
+import { Account } from "../../../../Utils/Types";
 
 const AccountCardBody = ({account}: {account: Account}) => {
   return (
@@ -13,7 +13,7 @@ const AccountCardBody = ({account}: {account: Account}) => {
         <div className="flex justify-between items-center">
           <span className="text-gray-600">Created</span>
           <span className="text-sm text-gray-500">
-            {new Date(account.dateCreated).toLocaleDateString("en-GB", {
+            {account.dateCreated.toLocaleDateString("en-GB", {
               day: "2-digit",
               month: "short",
               year: "numeric",

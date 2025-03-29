@@ -1,42 +1,32 @@
-import { useState } from "react";
 import { TransactionFilterProps } from "../../../Utils/Types";
 import { CompositeFilterDescriptor } from "@progress/kendo-data-query";
-import { Filter, Operators, TextFilter, NumericFilter, DateFilter, BooleanFilter, FieldSettings, FilterChangeEvent } from "@progress/kendo-react-data-tools";
+import { Filter, Operators, TextFilter, NumericFilter, DateFilter, FieldSettings, FilterChangeEvent } from "@progress/kendo-react-data-tools";
+import { useState } from "react";
 
 const fields: FieldSettings[] = [{
     name: "name",
-    label: "Transaction Name",
-    filter: TextFilter,
-    operators: Operators.text,
-  }, {
-    name: "accountName",
     label: "Account Name",
     filter: TextFilter,
     operators: Operators.text,
   }, {
-    name: "categoryName",
-    label: "Category Name",
-    filter: TextFilter,
-    operators: Operators.text,
-  }, {
-    name: "amount",
-    label: "Amount",
+    name: "balance",
+    label: "Balance",
     filter: NumericFilter,
     operators: Operators.numeric,
+  },  {
+    name: "currency",
+    label: "Currency",
+    filter: TextFilter,
+    operators: Operators.text 
   }, {
     name: "dateCreated",
     label: "Date Created",
     filter: DateFilter,
     operators: Operators.date,
-  }, {
-    name: "isRepeating",
-    label: "Is Repeating",
-    filter: BooleanFilter,
-    operators: Operators.boolean,
   }
 ];
 
-const TransactionFilter = ({ onFilterChange }: TransactionFilterProps) => {
+const AccountFilter = ({ onFilterChange }: TransactionFilterProps) => {
   const [filter, setFilter] = useState<CompositeFilterDescriptor>({
     logic: "and",
     filters: [],
@@ -52,4 +42,4 @@ const TransactionFilter = ({ onFilterChange }: TransactionFilterProps) => {
   );
 };
 
-export default TransactionFilter;
+export default AccountFilter;

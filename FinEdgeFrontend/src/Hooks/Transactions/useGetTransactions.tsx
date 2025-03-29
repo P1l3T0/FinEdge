@@ -6,9 +6,7 @@ import { TransactionResponse } from "../../Utils/Types";
 const useGetTransactions = () => {
   const getTransactions = async () => {
     return await axios
-      .get<TransactionResponse>(`${getTransactionEndPoint}`, {
-        withCredentials: true,
-      })
+      .get<TransactionResponse>(`${getTransactionEndPoint}`, { withCredentials: true })
       .then((res: AxiosResponse<TransactionResponse>) => {
         return {
           ...res.data,

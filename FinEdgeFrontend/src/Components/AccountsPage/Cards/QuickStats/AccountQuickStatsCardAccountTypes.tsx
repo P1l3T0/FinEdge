@@ -1,4 +1,4 @@
-import { AccountStats } from "../../../Utils/Types";
+import { AccountStats } from "../../../../Utils/Types";
 
 const AccountQuickStatsdAccountTypesCard = ({ data }: { data: AccountStats }) => {
   return (

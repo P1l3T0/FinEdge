@@ -1,5 +1,5 @@
-import { Account, AccountType } from "../../../Utils/Types";
-import { getEnumValueFromNumber } from "../../../Utils/Functions";
+import { Account, AccountType } from "../../../../Utils/Types";
+import { getEnumValueFromNumber } from "../../../../Utils/Functions";
 
 const AccountCardHeader = ({account}: {account: Account}) => {
   return (
