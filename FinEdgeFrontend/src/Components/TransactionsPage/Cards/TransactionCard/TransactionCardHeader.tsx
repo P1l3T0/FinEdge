@@ -1,7 +1,6 @@
 import { Transaction } from '../../../../Utils/Types'
 
 const TransactionCardHeader = ({transaction}: {transaction: Transaction}) => {
-  debugger
   return (
     <>
       <div className="flex justify-between items-center">

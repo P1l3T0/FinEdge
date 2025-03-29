@@ -21,7 +21,7 @@ const TransactionCards = ({ transactions }: { transactions: Transaction[] }) => 
         </Card>
       ))}
     </>
-  )
+  );
 }
 
 export default TransactionCards;
