@@ -53,6 +53,7 @@ namespace FinEdgeBackend.Controllers
                 CategoryID = category.ID,
                 Category = category,
                 CategoryName = category.Name,
+                Color = category.Color,
                 IsRepeating = transactionDto.IsRepeating,
                 NextRepeatDate = transactionDto.IsRepeating ? DateTime.UtcNow.AddMonths(1) : null
             });
@@ -180,7 +181,6 @@ namespace FinEdgeBackend.Controllers
             User currentUser = transaction.User!;
 
             await _transactionService.UpdateUserBalanceAsync(false, null, transaction, currentUser, category, account);
-
             await _transactionService.DeleteTransactionAsync(transaction);
 
             await _notificationService.CreateNotificationAsync(new Notification()

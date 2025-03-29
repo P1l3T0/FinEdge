@@ -244,6 +244,7 @@ export type Transaction = {
   amount: number;
   dateCreated: Date;
   isRepeating: boolean;
+  color: string;
 }
 
 export type TransactionResponse = {

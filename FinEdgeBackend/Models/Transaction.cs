@@ -22,6 +22,9 @@ namespace FinEdgeBackend.Models
         [Required]
         public bool IsRepeating { get; set; }
 
+        [Required]
+        public string? Color { get; set; }
+
         public DateTime? NextRepeatDate { get; set; }
 
         [Required]
