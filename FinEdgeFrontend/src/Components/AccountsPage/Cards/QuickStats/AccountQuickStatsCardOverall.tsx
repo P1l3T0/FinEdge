@@ -19,7 +19,7 @@ const AccountQuickStatsOverallCard = ({ data }: { data: AccountStats }) => {
           <div className="flex justify-between items-center">
             <span className="text-gray-600">Average Balance</span>
             <span className="text-xl font-bold text-green-600">
-              {data?.averageBalance} {data?.primaryCurrency}
+              {data?.averageBalance.toFixed(2)} {data?.primaryCurrency}
             </span>
           </div>
         </div>
