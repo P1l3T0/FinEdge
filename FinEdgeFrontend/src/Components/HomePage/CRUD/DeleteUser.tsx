@@ -1,8 +1,8 @@
-import { Button } from '@progress/kendo-react-all';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { deketeCurrentUserEnddPoint, logoutEndPoint } from "../../../Utils/endpoints";
 import { useNavigate } from "react-router-dom";
+import { Button } from '@progress/kendo-react-buttons';
 
 const DeleteUser = () => {
   const navigate = useNavigate();
@@ -44,14 +44,7 @@ const DeleteUser = () => {
 
   return (
     <>
-      <Button
-        type="button"
-        fillMode="solid"
-        themeColor={"error"}
-        onClick={handleDelete}
-      >
-        Delete
-      </Button>
+      <Button type="button" fillMode="solid" themeColor={"error"} onClick={handleDelete}>Delete</Button>
     </>
   );
 };

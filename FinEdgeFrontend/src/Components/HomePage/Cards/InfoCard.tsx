@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardBody } from "@progress/kendo-react-all";
+import { Card, CardHeader, CardTitle, CardBody } from "@progress/kendo-react-layout";
 
 type InfoCardProps = {
   title: string;

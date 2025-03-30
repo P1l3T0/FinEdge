@@ -1,4 +1,4 @@
-import { Card } from "@progress/kendo-react-all";
+import { Card } from "@progress/kendo-react-layout";
 import { Reports } from "../../../../Utils/Types"
 
 const OverviewCard = ({ isIncome, data }: { isIncome: boolean, data: Reports }) => {

@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader } from "@progress/kendo-react-all";
+import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 import useGetAccountStats from "../../../Hooks/Accounts/useGetAccountStats";
 import AccountQuickStatsdAccountTypesCard from "../Cards/QuickStats/AccountQuickStatsCardAccountTypes";
 import AccountQuickStatsHighestBalanceCard from "../Cards/QuickStats/AccountQuickStatsCardHighestBalance";

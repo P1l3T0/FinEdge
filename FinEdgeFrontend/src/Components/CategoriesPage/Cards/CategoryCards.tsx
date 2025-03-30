@@ -1,8 +1,8 @@
-import { Card, CardHeader, CardBody, CardFooter } from '@progress/kendo-react-all';
 import CategoryCardBody from './CategoryCardBody';
 import CategoryCardFooter from './CategoryCardFooter';
 import CategoryCardHeader from './CategoryCardHeader';
 import { Category } from '../../../Utils/Types';
+import { Card, CardHeader, CardBody, CardFooter } from '@progress/kendo-react-layout';
 
 const CategoryCards = ({ categories }: {categories: Category[]}) => {
   return (

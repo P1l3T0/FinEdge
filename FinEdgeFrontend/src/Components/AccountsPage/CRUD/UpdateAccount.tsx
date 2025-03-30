@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Window } from '@progress/kendo-react-dialogs';
-import { Button, ColorPicker, ColorPickerChangeEvent, ColorPickerView, DropDownList, DropDownListChangeEvent, TextBox, TextBoxChangeEvent } from '@progress/kendo-react-all';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { updateAccountEndPoint } from '../../../Utils/endpoints';
 import { getEnumValueFromNumber, accountType, currency } from '../../../Utils/Functions';
 import { Account, AccountDTO, AccountType } from '../../../Utils/Types';
+import { ColorPicker, ColorPickerChangeEvent, ColorPickerView, TextBox, TextBoxChangeEvent } from '@progress/kendo-react-inputs';
+import { Button } from '@progress/kendo-react-buttons';
+import { DropDownListChangeEvent, DropDownList } from '@progress/kendo-react-dropdowns';
 
 const UpdateAccount = ({ account }: { account: Account }) => {
   const queryClient = useQueryClient();
@@ -100,7 +102,7 @@ const UpdateAccount = ({ account }: { account: Account }) => {
 
             <div>
               <label className="text-sm text-gray-600 mb-1 block">Account Color</label>
-              <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={updatedAccount.color} />
+              <ColorPicker id="color-picker" views={['gradient', 'palette']} onChange={handleColorPickerChange} value={color} defaultValue={updatedAccount.color} />
             </div>
 
             <div className="flex justify-end gap-2 pt-5 border-t border-gray-200">

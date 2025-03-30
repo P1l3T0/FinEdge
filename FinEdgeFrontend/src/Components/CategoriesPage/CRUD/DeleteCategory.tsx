@@ -1,8 +1,8 @@
-import { Button } from "@progress/kendo-react-all";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { deleteCategoryEndPoint } from "../../../Utils/endpoints";
 import { Category } from "../../../Utils/Types";
+import { Button } from "@progress/kendo-react-buttons";
 
 const DeleteCategory = ({ category }: { category: Category }) => {
   const queryClient = useQueryClient();

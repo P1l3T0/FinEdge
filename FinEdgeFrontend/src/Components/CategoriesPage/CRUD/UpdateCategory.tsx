@@ -1,10 +1,13 @@
-import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownList, Window, Checkbox, CheckboxChangeEvent, ColorPickerChangeEvent, ColorPicker, ColorPickerView } from '@progress/kendo-react-all';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useState } from 'react';
 import { updateCategoryEndPoint } from '../../../Utils/endpoints';
 import { currency } from '../../../Utils/Functions';
 import { Category, CategoryDTO } from '../../../Utils/Types';
+import { Button } from '@progress/kendo-react-buttons';
+import { DropDownListChangeEvent, DropDownList } from '@progress/kendo-react-dropdowns';
+import { ColorPickerView, TextBoxChangeEvent, CheckboxChangeEvent, ColorPickerChangeEvent, TextBox, ColorPicker, Checkbox } from '@progress/kendo-react-inputs';
+import { Window } from '@progress/kendo-react-dialogs';
 
 const UpdateCategory = ({ category }: { category: Category }) => {
   const queryClient = useQueryClient();
@@ -101,7 +104,7 @@ const UpdateCategory = ({ category }: { category: Category }) => {
 
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Category Color</label>
-                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={updateCategory.color} />
+                <ColorPicker id="color-picker" views={['gradient', 'palette']} onChange={handleColorPickerChange} value={color} defaultValue={updateCategory.color} />
               </div>
 
               <div className="pt-2">

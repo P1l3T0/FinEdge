@@ -1,9 +1,9 @@
-import { BottomNavigation, BottomNavigationSelectEvent } from '@progress/kendo-react-all';
 import { userIcon, categorizeIcon, trackChangesEnableIcon, sparklesIcon, logoutIcon, infoCircleIcon, infoSolidIcon } from '@progress/kendo-svg-icons';
 import { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useLogout from '../../Hooks/Auth/useLogOut';
 import useGetNotifications from '../../Hooks/Notifications/useGetNotifications';
+import { BottomNavigationSelectEvent, BottomNavigation } from '@progress/kendo-react-layout';
 
 type BottomNavigationProps = {
   children: ReactNode;

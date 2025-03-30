@@ -1,10 +1,13 @@
-import { TextBoxChangeEvent, Button, TextBox, Window, DropDownList, DropDownListChangeEvent } from "@progress/kendo-react-all";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { updateCurrentUserEnddPoint } from "../../../Utils/endpoints";
 import { MethodologyType, UpdateDTO, User } from "../../../Utils/Types";
 import { getEnumValueFromNumber, methodologyTypes } from "../../../Utils/Functions";
+import { Button } from "@progress/kendo-react-buttons";
+import { DropDownListChangeEvent, DropDownList } from "@progress/kendo-react-dropdowns";
+import { TextBoxChangeEvent, TextBox } from "@progress/kendo-react-inputs";
+import { Window } from "@progress/kendo-react-dialogs";
 
 const UpdateUser = ({ user }: { user: User }) => {
   const queryClient = useQueryClient();

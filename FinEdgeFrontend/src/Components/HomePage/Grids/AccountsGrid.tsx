@@ -1,8 +1,10 @@
 import { CSVLink } from 'react-csv';
 import { useRef } from "react";
-import { Button, ExcelExport, Grid, GridCellProps, GridColumn, GridToolbar } from "@progress/kendo-react-all";
 import { Account, AccountType } from "../../../Utils/Types";
 import { getEnumValueFromNumber } from "../../../Utils/Functions";
+import { Button } from '@progress/kendo-react-buttons';
+import { Grid, GridCellProps, GridColumn, GridToolbar } from '@progress/kendo-react-grid';
+import { ExcelExport } from "@progress/kendo-react-excel-export";
 
 const AccountsGrid = ({ accounts }: { accounts: Account[] }) => {
   const _export = useRef<ExcelExport | null>(null);

@@ -1,7 +1,7 @@
-import { Button } from '@progress/kendo-react-all';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { deleteFinancialRecommendationEndPoint } from '../../Utils/endpoints';
+import { Button } from '@progress/kendo-react-buttons';
 
 const DeleteFinancialRecommendations = () => {
   const queryClient = useQueryClient();
