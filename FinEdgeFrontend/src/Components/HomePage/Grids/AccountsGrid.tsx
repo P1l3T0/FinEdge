@@ -17,7 +17,7 @@ const AccountsGrid = ({ accounts }: { accounts: Account[] }) => {
     const accountTypeValue: number = props.dataItem[props.field || ''];
     const accountTypeLabel: string = getEnumValueFromNumber(accountTypeValue, AccountType);
 
-    return <td>{accountTypeLabel}</td>;
+    return <td>{accountTypeLabel} ({accountTypeValue})</td>;
   };
 
   const dateCell = (props: GridCellProps) => {
@@ -35,19 +35,19 @@ const AccountsGrid = ({ accounts }: { accounts: Account[] }) => {
     <>
       <h2>Accounts</h2>
       <ExcelExport fileName="Accounts" data={accounts} ref={_export}>
-        <Grid data={accounts} scrollable="none">
+        <Grid data={accounts} navigatable={true} sortable={true} filterable={true} groupable={true} autoProcessData={true} dataItemKey="id">
           <GridToolbar>
             <Button themeColor={'primary'} type="button" onClick={hanleExcelExport} disabled={accounts.length === 0}>Export to Excel</Button>
             <Button themeColor={'primary'} type="button" disabled={accounts.length === 0}>
               <CSVLink filename="Accounts" data={accounts}>Export to CSV</CSVLink>
             </Button>
           </GridToolbar>
-          <GridColumn field="id" title="ID" />
+          <GridColumn field="id" title="ID" filter='numeric' />
           <GridColumn field="name" title="Name" />
-          <GridColumn field="balance" title="Balance" />
+          <GridColumn field="balance" title="Balance" filter='numeric' />
           <GridColumn field="currency" title="Currency" />
-          <GridColumn field="accountType" title="Account Type" cell={accountTypeCell} />
-          <GridColumn field="dateCreated" title="Date Created" cell={dateCell} />
+          <GridColumn field="accountType" title="Account Type" filter='numeric' cells={{ data: accountTypeCell }} />
+          <GridColumn field="dateCreated" title="Date Created" filter='date' cells={{ data: dateCell }} />
         </Grid>
       </ExcelExport>
     </>

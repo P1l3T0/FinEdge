@@ -7,7 +7,12 @@ const useGetAccounts = () => {
   const getAccounts = async () => {
     return await axios
       .get<Account[]>(`${getAllAccountsEndPoint}`, { withCredentials: true })
-      .then((res: AxiosResponse<Account[]>) => res.data)
+      .then((res: AxiosResponse<Account[]>) => {
+        return res.data.map((account) => ({
+          ...account,
+          dateCreated: new Date(account.dateCreated),
+        }));
+      })
       .catch((err: AxiosError) => {
         throw new Error(`No accounts found ${err.message}`);
       });

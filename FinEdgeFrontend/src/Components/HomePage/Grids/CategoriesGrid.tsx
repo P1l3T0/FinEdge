@@ -1,4 +1,4 @@
-import { Button, ExcelExport, Grid, GridCellProps, GridColumn, GridToolbar } from "@progress/kendo-react-all";
+import { Button, Checkbox, ExcelExport, Grid, GridCellProps, GridColumn, GridToolbar } from "@progress/kendo-react-all";
 import { Category } from "../../../Utils/Types";
 import { CSVLink } from "react-csv";
 import { useRef } from "react";
@@ -11,6 +11,16 @@ const CategoriesGrid = ({ categories }: { categories: Category[] }) => {
       _export.current.save();
     }
   };
+
+  const isIncomeCell = (props: GridCellProps) => {
+    const isIncomeValue: boolean = props.dataItem[props.field || ''];
+
+    return (
+      <td className="text-center align-middle">
+        <Checkbox checked={isIncomeValue} />
+      </td>
+    );
+  }
 
   const dateCell = (props: GridCellProps) => {
     const dateValue: Date = new Date(props.dataItem[props.field || '']);
@@ -27,24 +37,22 @@ const CategoriesGrid = ({ categories }: { categories: Category[] }) => {
     <>
       <h2>Categories</h2>
       <ExcelExport fileName="Categories" data={categories} ref={_export}>
-        <Grid data={categories} scrollable="none">
+        <Grid data={categories} navigatable={true} sortable={true} filterable={true} groupable={true} autoProcessData={true} dataItemKey="id">
           <GridToolbar>
-            <Button themeColor={"primary"} type="button" onClick={hanleExcelExport} disabled={categories.length === 0} >
-              Export to Excel
-            </Button>
+            <Button themeColor={"primary"} type="button" onClick={hanleExcelExport} disabled={categories.length === 0}>Export to Excel</Button>
             <Button themeColor={"primary"} type="button" disabled={categories.length === 0} >
               <CSVLink filename="Categories" data={categories}>
                 Export to CSV
               </CSVLink>
             </Button>
           </GridToolbar>
-          <GridColumn field="id" title="ID" />
+          <GridColumn field="id" title="ID" filter="numeric" />
           <GridColumn field="name" title="Name" />
-          <GridColumn field="balance" title="Balance" />
-          <GridColumn field="budget" title="Budget" />
+          <GridColumn field="balance" title="Balance" filter="numeric" />
+          <GridColumn field="budget" title="Budget" filter="numeric" />
           <GridColumn field="currency" title="Currency" />
-          <GridColumn field="isIncome" title="Is Income" />
-          <GridColumn field="dateCreated" title="Date Created" width="180px" cell={dateCell} />
+          <GridColumn field="isIncome" title="Is Income" filter="boolean" cells={{ data: isIncomeCell }} />
+          <GridColumn field="dateCreated" title="Date Created" filter="date" cells= {{ data: dateCell}} />
         </Grid>
       </ExcelExport>
     </>

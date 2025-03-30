@@ -1,3 +1,5 @@
+import { CompositeFilterDescriptor } from "@progress/kendo-react-all";
+
 //! Enums
 
 export enum MethodologyType {
@@ -295,4 +297,10 @@ export type AppNotification = {
   description: string;
   isRead: boolean;
   dateCreated: string;
+}
+
+// Filter
+
+export type TransactionFilterProps = {
+  onFilterChange: (filter: CompositeFilterDescriptor) => void;
 }
