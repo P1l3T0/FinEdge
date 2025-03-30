@@ -2,7 +2,6 @@ import { useState, SyntheticEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button, TextBox, TextBoxChangeEvent, InputSuffix, Tooltip } from "@progress/kendo-react-all";
 import { SvgIcon } from "@progress/kendo-react-common";
 import "@progress/kendo-theme-default/dist/default-ocean-blue.css";
 import { envelopeIcon, userIcon, passwordIcon } from "@progress/kendo-svg-icons";
@@ -10,6 +9,9 @@ import { registerEndPoint } from "../Utils/endpoints";
 import { RegisterDTO } from "../Utils/Types";
 import { isValidPassword, isValidEmail } from "../Utils/Functions";
 import Questions from "../Components/HomePage/Questions";
+import { Button } from "@progress/kendo-react-buttons";
+import { TextBoxChangeEvent, TextBox, InputSuffix } from "@progress/kendo-react-inputs";
+import { Tooltip } from "@progress/kendo-react-tooltip";
 
 const Register = () => {
   const navigate = useNavigate();

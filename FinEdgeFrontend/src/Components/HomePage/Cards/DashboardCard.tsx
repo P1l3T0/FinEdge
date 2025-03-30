@@ -1,4 +1,4 @@
-import { Card, CardBody } from "@progress/kendo-react-all";
+import { Card, CardBody } from "@progress/kendo-react-layout";
 
 type DashboardCardProps = { 
   children: React.ReactNode; 

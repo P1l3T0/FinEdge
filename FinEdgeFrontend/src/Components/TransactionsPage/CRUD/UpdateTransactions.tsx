@@ -1,10 +1,13 @@
 import { useState } from 'react'
-import { TextBoxChangeEvent, DropDownListChangeEvent, Button, TextBox, DropDownList, Window, CheckboxChangeEvent, Checkbox } from '@progress/kendo-react-all';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { updateTransactionEndPoint } from '../../../Utils/endpoints';
 import useGetNames from '../../../Hooks/Accounts/useGetNames';
 import { Transaction, TransactionDTO } from '../../../Utils/Types';
+import { Button } from '@progress/kendo-react-buttons';
+import { DropDownListChangeEvent, DropDownList } from '@progress/kendo-react-dropdowns';
+import { TextBoxChangeEvent, CheckboxChangeEvent, TextBox, Checkbox } from '@progress/kendo-react-inputs';
+import { Window } from '@progress/kendo-react-dialogs';
 
 const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
   const { data } = useGetNames();

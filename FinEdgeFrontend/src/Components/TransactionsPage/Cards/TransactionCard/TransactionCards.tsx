@@ -1,8 +1,8 @@
-import { Card, CardHeader, CardBody, CardFooter } from "@progress/kendo-react-all";
 import { Transaction } from "../../../../Utils/Types";
 import TransactionCardFooter from "./TransactionCardFooter";
 import TransactionCardBody from "./TransactionCardBody";
 import TransactionCardHeader from "./TransactionCardHeader";
+import { Card, CardHeader, CardBody, CardFooter } from "@progress/kendo-react-layout";
 
 const TransactionCards = ({ transactions }: { transactions: Transaction[] }) => {
   return (

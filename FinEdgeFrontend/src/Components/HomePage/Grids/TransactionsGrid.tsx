@@ -1,7 +1,10 @@
-import { Button, Checkbox, ExcelExport, Grid, GridCellProps, GridColumn, GridToolbar } from "@progress/kendo-react-all";
+import { Grid, GridCellProps, GridColumn, GridToolbar } from "@progress/kendo-react-grid";
 import { Transaction } from "../../../Utils/Types";
 import { useRef } from "react";
 import { CSVLink } from "react-csv";
+import { Button } from "@progress/kendo-react-buttons";
+import { ExcelExport } from "@progress/kendo-react-excel-export";
+import { Checkbox } from "@progress/kendo-react-inputs";
 
 const TransactionsGrid = ({ transactions }: { transactions: Transaction[] }) => {
   const _export = useRef<ExcelExport | null>(null);

@@ -4,10 +4,10 @@ import { ColorPicker, ColorPickerChangeEvent, ColorPickerView, TextBox, TextBoxC
 import { DropDownList, DropDownListChangeEvent, } from "@progress/kendo-react-dropdowns";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Card, CardHeader, CardBody } from "@progress/kendo-react-all";
 import { createAccountEndPoint } from "../../../Utils/endpoints";
 import { accountType, currency } from "../../../Utils/Functions";
 import { AccountDTO } from "../../../Utils/Types";
+import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 
 const CreateAccounts = () => {
   const queryClient = useQueryClient();
@@ -97,7 +97,7 @@ const CreateAccounts = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Account Color</label>
-                <ColorPicker id="color-picker" view="combo" onChange={handleColorPickerChange} value={color} defaultValue={account.color} />
+                <ColorPicker id="color-picker" views={['gradient', 'palette']} onChange={handleColorPickerChange} value={color} defaultValue={account.color} />
               </div>
               <div className="pt-4">
                 <Button id="add-account-button" themeColor="primary" onClick={handlerClick} className="w-full" size="large">Add Account</Button>

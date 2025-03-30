@@ -1,4 +1,4 @@
-import { CompositeFilterDescriptor } from "@progress/kendo-react-all";
+import { CompositeFilterDescriptor } from "@progress/kendo-data-query";
 
 //! Enums
 

@@ -1,8 +1,8 @@
-import { Button } from '@progress/kendo-react-all';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { deleteAccountEndPoint } from '../../../Utils/endpoints';
 import { Account } from '../../../Utils/Types';
+import { Button } from '@progress/kendo-react-buttons';
 
 const DeleteAccount = ({ account }: { account: Account }) => {
   const queryClient = useQueryClient();

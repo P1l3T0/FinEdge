@@ -1,4 +1,5 @@
-import { Card, CardHeader, CardBody, Chart, ChartTooltip, ChartCategoryAxis, ChartCategoryAxisItem, ChartSeries, ChartSeriesItem, ChartSeriesItemTooltip } from "@progress/kendo-react-all";
+import { Chart, ChartCategoryAxis, ChartCategoryAxisItem, ChartSeries, ChartSeriesItem, ChartSeriesItemTooltip } from "@progress/kendo-react-charts";
+import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 import useGetCategoryChartData from "../../../Hooks/Categories/useGetCategoryChartData";
 
 const CategoryBarChart = () => {
@@ -18,7 +19,6 @@ const CategoryBarChart = () => {
             <div>
               <h4 className="text-sm font-medium text-gray-700 mb-3">Top Categories by Balance</h4>
               <Chart style={{ height: 200 }}>
-                <ChartTooltip  />
                 <ChartCategoryAxis>
                   <ChartCategoryAxisItem />
                 </ChartCategoryAxis>

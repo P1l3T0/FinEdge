@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { TextBox, DropDownList, TextBoxChangeEvent, DropDownListChangeEvent, Button, Checkbox, CheckboxChangeEvent, Card, CardBody, CardHeader } from "@progress/kendo-react-all";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { createTransactionEndPoint } from "../../../Utils/endpoints";
 import useGetNames from "../../../Hooks/Accounts/useGetNames";
 import { TransactionDTO } from "../../../Utils/Types";
+import { Button } from "@progress/kendo-react-buttons";
+import { DropDownListChangeEvent, DropDownList } from "@progress/kendo-react-dropdowns";
+import { TextBoxChangeEvent, CheckboxChangeEvent, TextBox, Checkbox } from "@progress/kendo-react-inputs";
+import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 
 const CreateTransaction = () => {
   const queryClient = useQueryClient();

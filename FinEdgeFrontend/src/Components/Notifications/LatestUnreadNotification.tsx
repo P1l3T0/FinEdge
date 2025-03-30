@@ -1,8 +1,9 @@
-import { Fade, Notification as KendoNotification, NotificationGroup } from "@progress/kendo-react-all";
 import useGetLatestNotification from "../../Hooks/Notifications/useGetLatestUnreadNotification";
 import { getEnumValueFromNumber } from "../../Utils/Functions";
 import { AppNotification, NotificationType } from "../../Utils/Types";
 import { useEffect, useState } from "react";
+import { Notification as KendoNotification, NotificationGroup } from "@progress/kendo-react-notification";
+import { Fade } from "@progress/kendo-react-animation";
 
 const LatestUnreadNotification = () => {
   const { data, isLoading, isError, error } = useGetLatestNotification();

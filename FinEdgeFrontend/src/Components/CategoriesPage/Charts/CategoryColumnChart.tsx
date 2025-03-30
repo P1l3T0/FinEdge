@@ -1,4 +1,5 @@
-import { Card, CardHeader, CardBody, Chart, ChartTooltip, ChartCategoryAxis, ChartCategoryAxisItem, ChartSeries, ChartSeriesItem, ChartLegend, ChartValueAxis, ChartValueAxisItem, ChartSeriesItemTooltip } from "@progress/kendo-react-all";
+import { Chart, ChartLegend, ChartTooltip, ChartCategoryAxis, ChartCategoryAxisItem, ChartValueAxis, ChartValueAxisItem, ChartSeries, ChartSeriesItem, ChartSeriesItemTooltip } from "@progress/kendo-react-charts";
+import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 import useGetCategoryChartData from "../../../Hooks/Categories/useGetCategoryChartData";
 
 const CategoryColumnChart = () => {

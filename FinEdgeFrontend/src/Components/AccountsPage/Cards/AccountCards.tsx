@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, CardHeader } from '@progress/kendo-react-all';
+import { Card, CardBody, CardFooter, CardHeader } from '@progress/kendo-react-layout';
 import { Account } from '../../../Utils/Types';
 import AccountCardBody from './AccountCards/AccountCardBody';
 import AccountCardFooter from './AccountCards/AccountCardFooter';
