@@ -51,10 +51,16 @@ export const deleteTransactionEndPoint = `${transactionController}/delete`;
 
 //! Financial Recommendations
 export const createFinancialRecommendationEndPoint = `${financialRecommendationsController}/create`;
+export const createAccountRecommendationEndPoint = `${financialRecommendationsController}/create-account-recommendations`;
+export const createCategorylRecommendationEndPoint = `${financialRecommendationsController}/create`;
+export const createTransactionRecommendationEndPoint = `${financialRecommendationsController}/create`;
 export const deleteFinancialRecommendationEndPoint = `${financialRecommendationsController}/delete`;
 
 //! Prompt Suggestions
 export const getPromptSuggestionsEndPoint = `${promptSuggestionController}/get`;
+export const getAccountPromptSuggestionsEndPoint = `${promptSuggestionController}/get-account-suggestions`;
+export const getCategoryPromptSuggestionsEndPoint = `${promptSuggestionController}/get-category-suggestions`;
+export const getTransactionPromptSuggestionsEndPoint = `${promptSuggestionController}/get-transaction-suggestions`;
 
 // Notifications
 export const getNotificationsEndPoint = `${notificationController}/get-all`;
