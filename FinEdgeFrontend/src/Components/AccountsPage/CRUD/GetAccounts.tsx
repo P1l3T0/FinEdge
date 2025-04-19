@@ -3,6 +3,7 @@ import useGetAccounts from "../../../Hooks/Accounts/useGetAccounts";
 import AccountFilter from "./AccountFilter";
 import {CompositeFilterDescriptor, filterBy } from "@progress/kendo-data-query";
 import AccountCards from "../Cards/AccountCards";
+import AccountFAB from "../AIPrompt/AccountFAB";
 
 const GetAccounts = () => {
   const [filter, setFilter] = useState<CompositeFilterDescriptor>({
@@ -29,6 +30,7 @@ const GetAccounts = () => {
           </div>
         </div>
       </div>
+      <AccountFAB />
     </>
   );
 };
