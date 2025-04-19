@@ -4,6 +4,7 @@ import CategoryCards from "../Cards/CategoryCards";
 import { CompositeFilterDescriptor, filterBy } from "@progress/kendo-data-query";
 import { useState } from "react";
 import useGetExpenditureCategories from "../../../Hooks/Categories/useGetExpenditureCategories";
+import CategoryFAB from "../AIPrompt/CategoryFAB";
 
 const ExpenditureCategories = () => {
   const [filter, setFilter] = useState<CompositeFilterDescriptor>({
@@ -32,6 +33,8 @@ const ExpenditureCategories = () => {
         </div>
         <CategoriesDataCard data={data!} />
       </div>
+
+      <CategoryFAB />
     </>
   );
 };
