@@ -3,6 +3,7 @@ import TransactionCards from "../Cards/TransactionCard/TransactionCards";
 import { filterBy, CompositeFilterDescriptor } from "@progress/kendo-data-query";
 import TransactionFilter from "./TransactionFilter";
 import { useState } from "react";
+import TransactionFAB from "../AIPrompt/TransactionFAB";
 
 const GetTransactions = () => {
   const [filter, setFilter] = useState<CompositeFilterDescriptor>({
@@ -30,6 +31,8 @@ const GetTransactions = () => {
           </div>
         </div>
       </div>
+
+      <TransactionFAB />
     </>
   );
 };
