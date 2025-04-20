@@ -19,13 +19,44 @@ namespace FinEdgeBackend.Controllers
         private readonly IFinancialRecommendationService _financialRecommendationService = financialRecommendationService;
         private readonly INotificationService _notificationService = notificationService;
 
-        [HttpPost]
-        [Route("create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateFinancialRecommendation([FromBody] PromptRequest promptRequestData)
         {
-            User currentUser = await _userSerice.GetCurrentUserAsync();
+            return await GenerateRecommendation(promptRequestData, includeFilteredTransactions: true, scopeDescription: "Financial Recommendations",
+                ruleIntro: parsedDate => $"Recommendations based on data from {parsedDate.ToShortDateString()} to today."
+            );
+        }
 
-            if (!DateTime.TryParse(promptRequestData.DateString, out DateTime parsedDate))
+        [HttpPost("create-account-recommendations")]
+        public async Task<IActionResult> CreateAccountRecommendation([FromBody] PromptRequest promptRequestData)
+        {
+            return await GenerateRecommendation(promptRequestData, includeFilteredTransactions: false, scopeDescription: "Accounts",
+                ruleIntro: _ => "Focus only on the user's Accounts data."
+            );
+        }
+
+        [HttpPost("create-category-recommendations")]
+        public async Task<IActionResult> CreateCategoryRecommendation([FromBody] PromptRequest promptRequestData)
+        {
+            return await GenerateRecommendation(promptRequestData, includeFilteredTransactions: false, scopeDescription: "Categories",
+                ruleIntro: _ => "Focus only on the user's Categories data."
+            );
+        }
+
+        [HttpPost("create-transaction-recommendations")]
+        public async Task<IActionResult> CreateTransactionRecommendation([FromBody] PromptRequest promptRequestData)
+        {
+            return await GenerateRecommendation(promptRequestData, includeFilteredTransactions: false, scopeDescription: "Transactions",
+                ruleIntro: _ => "Focus only on the user's Transaction data."
+            );
+        }
+
+        private async Task<IActionResult> GenerateRecommendation(PromptRequest promptRequestData, bool includeFilteredTransactions, string scopeDescription, Func<DateTime, string> ruleIntro)
+        {
+            User currentUser = await _userSerice.GetCurrentUserAsync();
+            DateTime parsedDate = DateTime.Now;
+
+            if (includeFilteredTransactions && !DateTime.TryParse(promptRequestData.DateString, out parsedDate))
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
@@ -39,28 +70,27 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest();
             }
 
-            ICollection<Transaction> transactions = _transactionService.GetTransactionsFromSpecifiedDate(currentUser.Transactions, parsedDate);
-
             JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
 
             string accountsJson = JsonSerializer.Serialize(currentUser.Accounts, options);
             string categoriesJson = JsonSerializer.Serialize(currentUser.Categories, options);
-            string transactionsJson = JsonSerializer.Serialize(transactions, options);
+            string transactionsJson = includeFilteredTransactions
+                ? JsonSerializer.Serialize(_transactionService.GetTransactionsFromSpecifiedDate(currentUser.Transactions, parsedDate), options)
+                : JsonSerializer.Serialize(currentUser.Transactions, options);
 
             string allData = string.Join(",", accountsJson, categoriesJson, transactionsJson);
 
-            string rules = @$"I want your response to always be in the scope of the project, that is Financial Recommendations, any other out-of-scope prompts need to turneed down with a sentence like 'This request is out of scrope for me', 
-                        start with something like 'Recommendations based on data from {parsedDate.ToShortDateString()} to today (or similar sentences).";
+            string rules = @$"I want your response to always be in the scope of the project, that is {scopeDescription}, any other out-of-scope prompts need to be turned down with a sentence like 'This request is out of scope for me'. {ruleIntro(parsedDate)}";
             string textTweaks = @$"Please respond in short plain text (maximum of 3-4 sentences only), without any formatting, such as bold text, dashes, slashes, numbering, ordered/unordered list, or special characters.";
 
-            string prompt = string.Join(" ", promptRequestData.Prompt!, allData, rules, textTweaks).Trim();
+            string fullPrompt = string.Join(" ", promptRequestData.Prompt!, allData, rules, textTweaks).Trim();
 
-            GPTResponseDTO gPTResponse = await _gPTService.Ask(prompt, currentUser);
+            GPTResponseDTO gptResponse = await _gPTService.Ask(fullPrompt, currentUser);
 
             await _financialRecommendationService.CreateRecommendationAsync(new FinancialRecommendation()
             {
                 Title = promptRequestData.Prompt,
-                ResponseContent = gPTResponse.Response,
+                ResponseContent = gptResponse.Response,
                 UserID = currentUser.ID,
                 User = currentUser
             });
@@ -76,7 +106,6 @@ namespace FinEdgeBackend.Controllers
             });
 
             FinancialRecommendation latestRecommendation = _financialRecommendationService.GetLatestFinancialRecommendation(currentUser.FinancialRecommendations);
-
             return Ok(latestRecommendation);
         }
 

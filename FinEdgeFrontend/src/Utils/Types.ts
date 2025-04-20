@@ -281,6 +281,9 @@ type PromptOutput = {
 //! Financial Recommendations
 
 export type FinancialRecommendation = PromptOutput;
+export type AccountRecommendation = PromptOutput;
+export type CategoryRecommendation = PromptOutput;
+export type TransactionRecommendation = PromptOutput;
 
 export type PromptRequestData = {
   prompt: string;
