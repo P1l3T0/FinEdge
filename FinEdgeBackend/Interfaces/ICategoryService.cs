@@ -5,7 +5,7 @@ namespace FinEdgeBackend.Interfaces
 {
     public interface ICategoryService
     {
-        Task CreateCategoryAsync(Category category);
+        Task<Category> CreateCategoryAsync(Category category);
         Task UpdateCategoryAsync(CategoryDTO categoryDto, Category category);
         Task<Category> GetCategoryForCurrentUserByIdAsync(int categoryID, User currentUser);
         Task<Category> GetCategoryForCurrentUserByNameAsync(string categoryName, User currentUser);
