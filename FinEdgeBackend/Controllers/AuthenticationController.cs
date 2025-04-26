@@ -28,16 +28,6 @@ namespace FinEdgeBackend.Controllers
 
             User? user = await _authService.RegisterAsync(registerDto);
 
-            await _notificationService.CreateNotificationAsync(new Notification()
-            {
-                Title = $"User registered succesfuly!",
-                Description = $"{user.Name} {user.Surname} has regustered intto the system",
-                NotificationType = NotificationType.Success,
-                IsRead = false,
-                User = user,
-                UserID = user.ID
-            });
-
             return await GenerateAuthResponse(user);
         }
 

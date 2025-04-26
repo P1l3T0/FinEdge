@@ -70,16 +70,6 @@ namespace FinEdgeBackend.Controllers
                 NextRepeatDate = transactionDto.IsRepeating ? DateTime.UtcNow.AddMonths(1) : null
             });
 
-            await _notificationService.CreateNotificationAsync(new Notification()
-            {
-                Title = $"Transaction {transactionDto.Name} created successfully",
-                Description = $"Your transaction '{transactionDto.Name}' has been successfully created!",
-                NotificationType = NotificationType.Success,
-                IsRead = false,
-                User = currentUser,
-                UserID = currentUser.ID
-            });
-
             return Created();
         }
 

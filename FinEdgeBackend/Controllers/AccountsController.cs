@@ -66,16 +66,6 @@ namespace FinEdgeBackend.Controllers
                 AccountType = (AccountType)Enum.Parse(typeof(AccountType), accountDto.AccountType!),
             });
 
-            await _notificationService.CreateNotificationAsync(new Notification()
-            {
-                Title = $"Successfully created Account '{accountDto!.Name}'!",
-                Description = $"Your account '{accountDto!.Name}' has been successfully created and is now ready to use.",
-                NotificationType = NotificationType.Success,
-                IsRead = false,
-                User = currentUser,
-                UserID = currentUser.ID
-            });
-
             return Ok(account);
         }
 
@@ -93,9 +83,8 @@ namespace FinEdgeBackend.Controllers
         public async Task<IActionResult> GetAccounts()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
-            ICollection<Account> accounts = currentUser.Accounts!;
 
-            return Ok(accounts);
+            return Ok(currentUser.Accounts!);
         }
 
         [HttpGet]

@@ -80,16 +80,6 @@ namespace FinEdgeBackend.Controllers
                 }
             }
 
-            await _notificationService.CreateNotificationAsync(new Notification()
-            {
-                Title = $"Category '{categoryDto.Name}' created successfully!",
-                Description = $"Your category '{categoryDto.Name}' has been successfully created and is now ready to use",
-                NotificationType = NotificationType.Success,
-                IsRead = false,
-                User = currentUser,
-                UserID = currentUser.ID
-            });
-
             return Created();
         }
 
@@ -218,27 +208,6 @@ namespace FinEdgeBackend.Controllers
             });
 
             await _categoryService.DeleteCategoryAsync(category);
-
-            return NoContent();
-        }
-
-        [HttpDelete]
-        [Route("delete-all")]
-        public async Task<IActionResult> DeleteAllCategories()
-        {
-            User currentUser = await _userService.GetCurrentUserAsync();
-
-            await _categoryService.DeleteAllCategoriesAsync(currentUser.Categories!);
-
-            await _notificationService.CreateNotificationAsync(new Notification()
-            {
-                Title = "All Categories deleted successfully!",
-                Description = "All Categories have been permanently removed from the system.",
-                NotificationType = NotificationType.Success,
-                IsRead = false,
-                User = currentUser,
-                UserID = currentUser.ID
-            });
 
             return NoContent();
         }
