@@ -11,22 +11,12 @@ const StatisticCards = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         <StatCard title="Total Balance" value={userData?.totalBalance} />
-        <StatCard title="Monthly Income" value={reportsData?.monthlyIncome} subtitle={`Avg: $${reportsData?.monthlyIncomeAverage}`} valueColor="text-green-600" />
-        <StatCard title="Monthly Expenses" value={reportsData?.monthlySpendings} subtitle={`Avg: $${reportsData?.monthlySpendingsAverage}`} valueColor="text-red-600" />
-        <StatCard title="Weekly Overview" 
-          value={
-            <>
-              <p className="text-lg font-bold text-green-600">
-                +${reportsData?.weeklyIncome}
-              </p>
-              <p className="text-lg font-bold text-red-600">
-                -${reportsData?.weeklySpendings}
-              </p>
-            </>
-          }
-        />
+        <StatCard title="Weekly Income" value={reportsData?.weeklyIncome} subtitle={`Avg: ${reportsData?.weeklyIncomeAverage} BGN per day`} valueColor="text-green-600" />
+        <StatCard title="Weekly Spendings" value={reportsData?.weeklySpendings} subtitle={`Avg: ${reportsData?.weeklySpendingsAverage} BGN per day`} valueColor="text-red-600" />
+        <StatCard title="Monthly Expenses" value={reportsData?.monthlyIncome} subtitle={`Avg: ${reportsData?.monthlyIncomeAverage} BGN per day`} valueColor="text-green-600" />
+        <StatCard title="Monthly Expenses" value={reportsData?.monthlySpendings} subtitle={`Avg: ${reportsData?.monthlySpendingsAverage} BGN per day`} valueColor="text-red-600" />
       </div>
     </>
   )

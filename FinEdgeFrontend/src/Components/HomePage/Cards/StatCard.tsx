@@ -14,7 +14,7 @@ const StatCard = ({ title, value, subtitle, valueColor }: StatCardProps) => {
         <div className="space-y-2">
           <p className="text-sm text-gray-500">{title}</p>
           <span className={`text-2xl font-bold ${valueColor}`}>
-            {typeof value === "number" ? `$${value}` : value}
+            {typeof value === "number" ? `${value} BGN` : value}
           </span>
           {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
         </div>

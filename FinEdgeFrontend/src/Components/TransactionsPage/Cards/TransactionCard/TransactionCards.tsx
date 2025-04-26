@@ -8,7 +8,7 @@ const TransactionCards = ({ transactions }: { transactions: Transaction[] }) => 
   return (
     <>
       {transactions?.map((transaction, index) => (
-        <Card key={index}>
+        <Card key={index} className="shadow-md hover:shadow-xl duration-300 ease-in-out">
           <CardHeader>
             <TransactionCardHeader transaction={transaction} />
           </CardHeader>
