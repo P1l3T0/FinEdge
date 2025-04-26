@@ -18,7 +18,8 @@ const CreateCategory = () => {
     budget: 0,
     currency: currency[0],
     isIncome: false,
-    color: "rgba(255, 255, 255, 1)"
+    color: "rgba(255, 255, 255, 1)",
+    subcategories: ""
   });
 
   const handleTextBoxChange = async (e: TextBoxChangeEvent) => {
@@ -96,6 +97,13 @@ const CreateCategory = () => {
                   Budget
                 </label>
                 <TextBox id="budget" name="budget" type="number" min={0} placeholder="Enter category budget" onChange={handleTextBoxChange} size="large" />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">
+                  Subcategory
+                </label>
+                <TextBox id="subcategories" name="subcategories" type="text" placeholder="Enter subcategoeries seperated by comma or space" onChange={handleTextBoxChange} size="large" />
               </div>
 
               <div className="space-y-2">
