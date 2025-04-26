@@ -8,10 +8,11 @@ namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController(IUserService userService, INotificationService notificationService) : Controller
+    public class UserController(IUserService userService, INotificationService notificationService, ISubcategoryService subcategoryService) : Controller
     {
         private readonly IUserService _userService = userService;
         private readonly INotificationService _notificationService = notificationService;
+        private readonly ISubcategoryService _subcategoryService = subcategoryService;
 
         [HttpGet]
         [Route("get")]
@@ -26,16 +27,16 @@ namespace FinEdgeBackend.Controllers
         public async Task<IActionResult> GetAccountAndCategoryNamesForUser()
         {
             User currentUser = await _userService.GetCurrentUserAsync();
-            ICollection<Account> accounts = currentUser.Accounts;
-            ICollection<Category> categories = currentUser.Categories;
 
-            ICollection<string> accountNames = _userService.GetAccountNames(accounts);
-            ICollection<string> categoryNames = _userService.GetCategoryNames(categories);
+            ICollection<string> accountNames = _userService.GetAccountNames(currentUser.Accounts);
+            ICollection<string> categoryNames = _userService.GetCategoryNames(currentUser.Categories);
+            List<KeyValuePair<string, ICollection<string>>> subcategoryNames = _subcategoryService.GetSubcategoryNamesByCategory(currentUser.Categories);
 
             return Ok(new
             {
                 AccountNames = accountNames,
-                CategoryNames = categoryNames
+                CategoryNames = categoryNames,
+                SubcategoryNames = subcategoryNames
             });
         }
 

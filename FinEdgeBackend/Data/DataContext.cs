@@ -56,6 +56,12 @@ namespace FinEdgeBackend.Data
                 .HasForeignKey(t => t.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.Subcategory)
+                .WithMany(u => u.Transactions)
+                .HasForeignKey(t => t.SubcategoryID)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<CategorySnapshot>()
                 .HasOne(cs => cs.Category)
                 .WithMany(c => c.CategorySnapshots)

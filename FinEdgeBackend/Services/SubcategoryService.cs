@@ -31,13 +31,27 @@ namespace FinEdgeBackend.Services
             return subcategory!;
         }
 
+        public async Task<Subcategory> GetSubcategoryByNameAsync(Category category, string subcategoryName)
+        {
+            Subcategory? subcategory = await _dataContext.Subcategories.FirstOrDefaultAsync(sc => sc.Name == subcategoryName && sc.CategoryID == category.ID);
+
+            return subcategory!;
+        }
+
         public async Task<ICollection<Subcategory>> GetSubcategoriesByCategoryIdAsync(int categoryID)
         {
-            Category? category = await _dataContext.Categories
-                .Include(c => c.Subcategories)
-                .FirstOrDefaultAsync(c => c.ID == categoryID);
+            Category? category = await _dataContext.Categories.Include(c => c.Subcategories).FirstOrDefaultAsync(c => c.ID == categoryID);
 
             return category!.Subcategories!;
+        }
+
+        public List<KeyValuePair<string, ICollection<string>>> GetSubcategoryNamesByCategory(ICollection<Category> categories)
+        {
+            return categories.Select(category => new KeyValuePair<string, ICollection<string>>(
+                    category.Name!,
+                    category.Subcategories!.Select(sub => sub.Name!).ToList()
+                ))
+                .ToList();
         }
 
         public async Task DeleteSubcategoryAsync(Subcategory subcategory)

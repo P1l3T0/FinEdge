@@ -8,10 +8,12 @@ namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TransactionController(ITransactionService transactionService ,ICategoryService categoryService, IAccountService accountService, IUserService userService, INotificationService notificationService) : Controller
+    public class TransactionController(ITransactionService transactionService ,ICategoryService categoryService, ISubcategoryService subcategoryService,
+        IAccountService accountService, IUserService userService, INotificationService notificationService) : Controller
     {
         private readonly ITransactionService _transactionService = transactionService;
         private readonly ICategoryService _categoryService = categoryService;
+        private readonly ISubcategoryService _subcategoryService = subcategoryService;
         private readonly IAccountService _accountService = accountService;
         private readonly IUserService _userService = userService;
         private readonly INotificationService _notificationService = notificationService;
@@ -39,6 +41,13 @@ namespace FinEdgeBackend.Controllers
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
             Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
 
+            Subcategory? subcategory = null;
+
+            if (!string.IsNullOrEmpty(transactionDto.SubcategoryName) && category.HasSubcategories())
+            {
+                subcategory = await _subcategoryService.GetSubcategoryByNameAsync(category, transactionDto.SubcategoryName);
+            }
+
             await _transactionService.UpdateUserBalanceAsync(true, transactionDto, null, currentUser, category, account);
 
             await _transactionService.CreateTransactionAsync(new Transaction()
@@ -53,6 +62,9 @@ namespace FinEdgeBackend.Controllers
                 CategoryID = category.ID,
                 Category = category,
                 CategoryName = category.Name,
+                SubcategoryID = subcategory?.ID,
+                Subcategory = subcategory,
+                SubcategoryName = subcategory?.Name,
                 Color = category.Color,
                 IsRepeating = transactionDto.IsRepeating,
                 NextRepeatDate = transactionDto.IsRepeating ? DateTime.UtcNow.AddMonths(1) : null
@@ -60,7 +72,7 @@ namespace FinEdgeBackend.Controllers
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
-                Title = $"Transaction {transactionDto.Name} created successffuly",
+                Title = $"Transaction {transactionDto.Name} created successfully",
                 Description = $"Your transaction '{transactionDto.Name}' has been successfully created!",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
