@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FinEdgeBackend.Models
 {
@@ -18,6 +19,8 @@ namespace FinEdgeBackend.Models
 
         [Required]
         public string? CategoryName { get; set; }
+
+        public string? SubcategoryName { get; set; }
 
         [Required]
         public bool IsRepeating { get; set; }
@@ -38,6 +41,13 @@ namespace FinEdgeBackend.Models
 
         [JsonIgnore]
         public Category? Category { get; set; }
+
+        [AllowNull]
+        public int? SubcategoryID { get; set; }
+
+        [JsonIgnore]
+        [AllowNull]
+        public Subcategory? Subcategory { get; set; }
 
         [Required]
         public int UserID { get; set; }

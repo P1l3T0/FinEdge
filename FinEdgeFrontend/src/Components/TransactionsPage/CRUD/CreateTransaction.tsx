@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
+import { DropDownListChangeEvent, DropDownList } from "@progress/kendo-react-dropdowns";
+import { TextBoxChangeEvent, CheckboxChangeEvent, TextBox, Checkbox } from "@progress/kendo-react-inputs";
+import { Button } from "@progress/kendo-react-buttons";
+import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
+import useGetNames from "../../../Hooks/Accounts/useGetNames";
+import { TransactionDTO } from "../../../Utils/Types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { createTransactionEndPoint } from "../../../Utils/endpoints";
-import useGetNames from "../../../Hooks/Accounts/useGetNames";
-import { TransactionDTO } from "../../../Utils/Types";
-import { Button } from "@progress/kendo-react-buttons";
-import { DropDownListChangeEvent, DropDownList } from "@progress/kendo-react-dropdowns";
-import { TextBoxChangeEvent, CheckboxChangeEvent, TextBox, Checkbox } from "@progress/kendo-react-inputs";
-import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 
 const CreateTransaction = () => {
   const queryClient = useQueryClient();
@@ -18,16 +18,35 @@ const CreateTransaction = () => {
     amount: 0,
     accountName: "",
     categoryName: "",
+    subcategoryName: "",
     isRepeating: false,
   });
 
+  const [filteredSubcategories, setFilteredSubcategories] = useState<string[]>([]);
+
   useEffect(() => {
-    setTransaction({
-      ...transaction,
-      accountName: data?.accountNames[0]!,
-      categoryName: data?.categoryNames[0]!,
-    });
+    if (data) {
+      setTransaction({
+        ...transaction,
+        accountName: data.accountNames[0] ?? "",
+        categoryName: data.categoryNames[0] ?? "",
+        subcategoryName: data.subcategoryNames[0]?.value[0] ?? "",
+      });
+
+      setFilteredSubcategories(data.subcategoryNames[0]?.value ?? []);
+    }
   }, [data]);
+
+  useEffect(() => {
+    const selectedCategory = transaction.categoryName;
+    const subcategories = data?.subcategoryNames.find((subcategory) => subcategory.key === selectedCategory)?.value;
+
+    setFilteredSubcategories(subcategories ?? []);
+    setTransaction((prev) => ({
+      ...prev,
+      subcategoryName: subcategories?.[0] ?? "",
+    }));
+  }, [transaction.categoryName, data]);
 
   const handleTextBoxChange = (e: TextBoxChangeEvent) => {
     const trimmedValue = (e.value as string).trim();
@@ -39,10 +58,12 @@ const CreateTransaction = () => {
   };
 
   const handleDropDownChange = (e: DropDownListChangeEvent) => {
-    setTransaction({
+    const updatedTransaction = {
       ...transaction,
       [e.target.props.name as string]: e.value,
-    });
+    };
+
+    setTransaction(updatedTransaction);
   };
 
   const handleCheckBoxChange = async (e: CheckboxChangeEvent) => {
@@ -103,13 +124,18 @@ const CreateTransaction = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Account</label> 
+                <label className="text-sm font-medium text-gray-700">Account</label>
                 <DropDownList id="account-name" name="accountName" data={data?.accountNames} defaultValue={data?.accountNames[0] ?? "Create at least 1 account"} onChange={handleDropDownChange} size="large" />
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700">Category</label>
                 <DropDownList id="category-name" name="categoryName" data={data?.categoryNames} defaultValue={data?.categoryNames[0] ?? "Create at least 1 category"} onChange={handleDropDownChange} size="large" />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Subcategory</label>
+                <DropDownList id="subcategory-name" name="subcategoryName" data={filteredSubcategories} defaultValue={filteredSubcategories[0] ?? "No subcategories available"} onChange={handleDropDownChange} size="large" />
               </div>
 
               <div className="space-y-2">

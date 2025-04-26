@@ -10,12 +10,12 @@ const CategoryColumnChart = () => {
 
   return (
     <>
-      <Card className="bg-white" style={{ height: "28.7rem" }}>
+      <Card className="bg-white" >
         <CardHeader className="border-b border-gray-200 mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Balance vs Budget by Category</h3>
         </CardHeader>
         <CardBody>
-          <Chart style={{ height: 350 }}>
+          <Chart style={{ height: 435 }}>
             <ChartLegend visible={false} />
             <ChartTooltip />
             <ChartCategoryAxis>

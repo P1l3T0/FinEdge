@@ -10,6 +10,7 @@ namespace FinEdgeTests.Controller
     public class CategoryControllerTest
     {
         private readonly ICategoryService _categoryService;
+        private readonly ISubcategoryService _subcategoryService;
         private readonly IUserService _userService;
         private readonly INotificationService _notificationService;
         private readonly CategoryController _controller;
@@ -19,8 +20,9 @@ namespace FinEdgeTests.Controller
             _categoryService = A.Fake<ICategoryService>();
             _userService = A.Fake<IUserService>();
             _notificationService = A.Fake<INotificationService>();
+            _subcategoryService = A.Fake<ISubcategoryService>();
 
-            _controller = new CategoryController(_categoryService, _userService, _notificationService);
+            _controller = new CategoryController(_categoryService, _subcategoryService, _userService, _notificationService);
         }
 
         [Fact]
@@ -58,13 +60,14 @@ namespace FinEdgeTests.Controller
         [Fact]
         public async Task CategoryController_CreateCategory_ValidData_ReturnsCreated()
         {
-            CategoryDTO categoryDto = new CategoryDTO() { Name = "Test Category", Budget = 100, Currency = "USD", IsIncome = true, Color = "Blue" };
             User user = new User() { ID = 1, Name = "Test User" };
+            CategoryDTO categoryDto = new CategoryDTO() { Name = "Test Category", Budget = 100, Currency = "USD", IsIncome = true, Color = "Blue" };
+            Category category = new Category() { ID = 1, Name = "Test Category", Budget = 100, Currency = "USD", IsIncome = true, Color = "Blue" };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _categoryService.Validate(categoryDto)).Returns(true);
             A.CallTo(() => _categoryService.GetCategoryForCurrentUserByNameAsync(categoryDto.Name, user)).Returns(Task.FromResult<Category>(null));
-            A.CallTo(() => _categoryService.CreateCategoryAsync(A<Category>.Ignored)).Returns(Task.CompletedTask);
+            A.CallTo(() => _categoryService.CreateCategoryAsync(A<Category>.Ignored)).Returns(Task.FromResult<Category>(category));
             A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).Returns(Task.CompletedTask);
 
             IActionResult result = await _controller.CreateCategory(categoryDto);

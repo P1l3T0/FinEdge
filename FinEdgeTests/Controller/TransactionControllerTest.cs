@@ -3,6 +3,7 @@ using FinEdgeBackend.Controllers;
 using FinEdgeBackend.DTOs.Transactions;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Models;
+using FinEdgeBackend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinEdgeTests.Controller
@@ -14,6 +15,7 @@ namespace FinEdgeTests.Controller
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
         private readonly INotificationService _notificationService;
+        private readonly ISubcategoryService _subcategoryService;
         private readonly TransactionController _controller;
 
         public TransactionControllerTest()
@@ -23,8 +25,9 @@ namespace FinEdgeTests.Controller
             _accountService = A.Fake<IAccountService>();
             _userService = A.Fake<IUserService>();
             _notificationService = A.Fake<INotificationService>();
+            _subcategoryService = A.Fake<ISubcategoryService>();
 
-            _controller = new TransactionController(_transactionService, _categoryService, _accountService, _userService, _notificationService);
+            _controller = new TransactionController(_transactionService, _categoryService, _subcategoryService, _accountService, _userService, _notificationService);
         }
 
         [Fact]

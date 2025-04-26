@@ -12,14 +12,16 @@ namespace FinEdgeTests.Controller
     {
         private readonly IUserService _userService;
         private readonly INotificationService _notificationService;
+        private readonly ISubcategoryService _subcategoryService;
         private readonly UserController _controller;
 
         public UserControllerTest()
         {
             _userService = A.Fake<IUserService>();
             _notificationService = A.Fake<INotificationService>();
+            _subcategoryService = A.Fake<ISubcategoryService>();
 
-            _controller = new UserController(_userService, _notificationService);
+            _controller = new UserController(_userService, _notificationService, _subcategoryService);
         }
 
         [Fact]

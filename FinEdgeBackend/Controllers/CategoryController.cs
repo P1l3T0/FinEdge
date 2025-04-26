@@ -8,9 +8,10 @@ namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CategoryController(ICategoryService categoryService, IUserService userService, INotificationService notificationService) : Controller
+    public class CategoryController(ICategoryService categoryService, ISubcategoryService subcategoryService, IUserService userService, INotificationService notificationService) : Controller
     {
         private readonly ICategoryService _categoryService = categoryService;
+        private readonly ISubcategoryService _subcategoryService = subcategoryService;
         private readonly IUserService _userService = userService;
         private readonly INotificationService _notificationService = notificationService;
 
@@ -52,7 +53,7 @@ namespace FinEdgeBackend.Controllers
                 return BadRequest();
             }
 
-            await _categoryService.CreateCategoryAsync(new Category()
+            Category createdCategory = await _categoryService.CreateCategoryAsync(new Category()
             {
                 UserID = currentUser.ID,
                 User = currentUser,
@@ -63,6 +64,21 @@ namespace FinEdgeBackend.Controllers
                 Color = categoryDto.Color,
                 DateCreated = DateTime.Now
             });
+
+            if (!string.IsNullOrEmpty(categoryDto.Subcategories))
+            {
+                string[] categories = categoryDto.Subcategories.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string subcategoryName in categories)
+                {
+                    await _subcategoryService.CreateSubcategoryAsync(new Subcategory()
+                    {
+                        Name = subcategoryName,
+                        Category = createdCategory,
+                        CategoryID = createdCategory!.ID
+                    });
+                }
+            }
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {

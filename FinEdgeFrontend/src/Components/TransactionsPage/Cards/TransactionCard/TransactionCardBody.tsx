@@ -15,6 +15,12 @@ const TransactionCardBody = ({transaction}: {transaction: Transaction}) => {
           </span>
         </div>
         <div className="flex justify-between items-center">
+          <span className="text-gray-600">Subcategory</span>
+          <span className="text-base font-medium text-green-500">
+            {transaction.subcategoryName ? transaction.subcategoryName : ""}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
           <span className="text-gray-600">Repeating</span>
           <span className={`text-sm px-2 py-1 rounded-full ${transaction.isRepeating ? "bg-green-50 text-green-600" : "bg-gray-50 text-gray-600" }`}>
             {transaction.isRepeating ? "Yes" : "No"}

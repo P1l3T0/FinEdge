@@ -33,6 +33,11 @@ const fields: FieldSettings[] = [{
     label: "Is Repeating",
     filter: BooleanFilter,
     operators: Operators.boolean,
+  }, {
+    name: "subcategoryName",
+    label: "Subategory Name",
+    filter: TextFilter,
+    operators: Operators.text,
   }
 ];
 

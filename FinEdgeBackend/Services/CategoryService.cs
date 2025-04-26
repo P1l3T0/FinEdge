@@ -10,10 +10,12 @@ namespace FinEdgeBackend.Services
     {
         private readonly DataContext _dataContext = dataContext;
 
-        public async Task CreateCategoryAsync(Category category)
+        public async Task<Category> CreateCategoryAsync(Category category)
         {
             _dataContext.Categories.Add(category);
             await _dataContext.SaveChangesAsync();
+
+            return category;
         }
 
         public async Task UpdateCategoryAsync(CategoryDTO categoryDto, Category category)

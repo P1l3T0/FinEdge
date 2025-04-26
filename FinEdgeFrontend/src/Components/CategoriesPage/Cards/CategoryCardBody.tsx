@@ -17,6 +17,12 @@ const CategoryCardBody = ({ category }: {category: Category}) => {
           </span>
         </div>
         <div className="flex justify-between items-center">
+          <span className="text-gray-600">Subcategories</span>
+          <span className="text-s font-bold text-green-600">
+            {category.subcategories.map((subcategory) => subcategory.name).join(", ")}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
           <span className="text-gray-600">Created</span>
           <span className="text-sm text-gray-500">
             {category.dateCreated.toLocaleDateString("en-GB", {

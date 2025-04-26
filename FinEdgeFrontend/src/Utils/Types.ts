@@ -171,6 +171,7 @@ export type CategoryDTO = {
   budget: number;
   isIncome: boolean;
   color: string;
+  subcategories: string;
 }
 
 export type Category = {
@@ -183,6 +184,19 @@ export type Category = {
   isIncome: boolean;
   color: string;
   dateCreated: Date;
+  subcategories: Subcategory[];
+}
+
+type Subcategory = {
+  id: number;
+  name: string;
+  categoryID: number;
+  dateCreated: Date;
+}
+
+type SubcategoryDTO = {
+  key: string;
+  value: string[];
 }
 
 export type CategoryInfo = {
@@ -228,12 +242,14 @@ export type SankeyChartDTO = {
 export type Names = {
   accountNames: string[];
   categoryNames: string[];
+  subcategoryNames: SubcategoryDTO[];
 }
 
 export type TransactionDTO = {
   name: string;
   accountName: string;
   categoryName: string;
+  subcategoryName: string;
   amount: number;
   isRepeating: boolean;
 }
@@ -247,6 +263,7 @@ export type Transaction = {
   dateCreated: Date;
   isRepeating: boolean;
   color: string;
+  subcategoryName: string;
 }
 
 export type TransactionResponse = {
