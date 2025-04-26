@@ -13,5 +13,8 @@ namespace FinEdgeBackend.Models
 
         [JsonIgnore]
         public Category? Category { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Transaction>? Transactions { get; set; }
     }
 }

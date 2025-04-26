@@ -38,5 +38,10 @@ namespace FinEdgeBackend.Models
 
         [JsonIgnore]
         public ICollection<CategorySnapshot>? CategorySnapshots { get; set; } = new List<CategorySnapshot>();
+
+        public bool HasSubcategories()
+        {
+            return Subcategories != null && Subcategories.Count > 0;
+        }
     }
 }
