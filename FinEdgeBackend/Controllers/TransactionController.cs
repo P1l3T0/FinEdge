@@ -41,6 +41,21 @@ namespace FinEdgeBackend.Controllers
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
             Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
 
+            if (account.Balance <= transactionDto.Amount)
+            {
+                await _notificationService.CreateNotificationAsync(new Notification()
+                {
+                    Title = "Insufficient funds",
+                    Description = $"The account '{account.Name}' does not have enough funds to create this transaction.",
+                    NotificationType = NotificationType.Error,
+                    IsRead = false,
+                    User = currentUser,
+                    UserID = currentUser.ID
+                });
+
+                return BadRequest();
+            }
+
             Subcategory? subcategory = null;
 
             if (!string.IsNullOrEmpty(transactionDto.SubcategoryName) && category.HasSubcategories())
