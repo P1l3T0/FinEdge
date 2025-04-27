@@ -16,7 +16,6 @@ namespace FinEdgeTests.Controller
         private readonly IJwtService _jwtService;
         private readonly IAuthService _authService;
         private readonly IRefreshTokenService _refreshTokenService;
-        private readonly INotificationService _notificationService;
         private readonly AuthenticationController _controller;
 
         public AuthenticationControllerTest()
@@ -25,9 +24,8 @@ namespace FinEdgeTests.Controller
             _jwtService = A.Fake<IJwtService>();
             _authService = A.Fake<IAuthService>();
             _refreshTokenService = A.Fake<IRefreshTokenService>();
-            _notificationService = A.Fake<INotificationService>();
 
-            _controller = new AuthenticationController(_userService, _jwtService, _refreshTokenService, _authService, _notificationService);
+            _controller = new AuthenticationController(_userService, _jwtService, _refreshTokenService, _authService);
         }
 
         // Register
@@ -95,7 +93,6 @@ namespace FinEdgeTests.Controller
 
             A.CallTo(() => _userService.Validate(registerDTO.Email, registerDTO.Password, false)).Returns(true);
             A.CallTo(() => _authService.RegisterAsync(registerDTO)).Returns(Task.FromResult(fakeUser));
-            A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>._)).Returns(Task.CompletedTask);
             A.CallTo(() => _jwtService.GenerateAcessToken(fakeUser.ID)).Returns("fakeAccessToken");
             A.CallTo(() => _jwtService.GenerateRefreshToken(fakeUser.ID)).Returns("fakeRefreshToken");
             A.CallTo(() => _refreshTokenService.AddRefreshTokenAsync(A<RefreshToken>._));

@@ -68,12 +68,10 @@ namespace FinEdgeTests.Controller
             A.CallTo(() => _categoryService.Validate(categoryDto)).Returns(true);
             A.CallTo(() => _categoryService.GetCategoryForCurrentUserByNameAsync(categoryDto.Name, user)).Returns(Task.FromResult<Category>(null));
             A.CallTo(() => _categoryService.CreateCategoryAsync(A<Category>.Ignored)).Returns(Task.FromResult<Category>(category));
-            A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).Returns(Task.CompletedTask);
 
             IActionResult result = await _controller.CreateCategory(categoryDto);
 
             Assert.IsType<CreatedResult>(result);
-            A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -222,21 +220,6 @@ namespace FinEdgeTests.Controller
             A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).Returns(Task.CompletedTask);
 
             IActionResult result = await _controller.DeleteCategory(1);
-
-            Assert.IsType<NoContentResult>(result);
-            A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).MustHaveHappenedOnceExactly();
-        }
-
-        [Fact]
-        public async Task CategoryController_DeleteAllCategories_ReturnsNoContent()
-        {
-            User user = new User() { ID = 1, Name = "Test User", Categories = new List<Category> { new Category { Name = "Category1" }, new Category { Name = "Category2" } } };
-
-            A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
-            A.CallTo(() => _categoryService.DeleteAllCategoriesAsync(user.Categories)).Returns(Task.CompletedTask);
-            A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).Returns(Task.CompletedTask);
-
-            IActionResult result = await _controller.DeleteAllCategories();
 
             Assert.IsType<NoContentResult>(result);
             A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).MustHaveHappenedOnceExactly();

@@ -51,19 +51,17 @@ namespace FinEdgeTests.Controller
             TransactionDTO transactionDto = new TransactionDTO() { Name = "Test Transaction", Amount = 100, CategoryName = "Test Category", AccountName = "Test Account", IsRepeating = false };
             User user = new User() { ID = 1, Name = "Test User" };
             Category category = new Category() { ID = 1, Name = "Test Category" };
-            Account account = new Account() { ID = 1, Name = "Test Account" };
+            Account account = new Account() { ID = 1, Name = "Test Account", Balance = 101 };
 
             A.CallTo(() => _userService.GetCurrentUserAsync()).Returns(Task.FromResult(user));
             A.CallTo(() => _transactionService.Validate(transactionDto)).Returns(true);
             A.CallTo(() => _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName, user)).Returns(Task.FromResult(category));
             A.CallTo(() => _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName, user)).Returns(Task.FromResult(account));
             A.CallTo(() => _transactionService.CreateTransactionAsync(A<Transaction>.Ignored)).Returns(Task.CompletedTask);
-            A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).Returns(Task.CompletedTask);
 
             IActionResult result = await _controller.CreateTransaction(transactionDto);
 
             Assert.IsType<CreatedResult>(result);
-            A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]

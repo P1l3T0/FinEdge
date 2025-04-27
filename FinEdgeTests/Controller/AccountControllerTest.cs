@@ -66,12 +66,10 @@ namespace FinEdgeTests.Controller
             A.CallTo(() => _accountService.Validate(accountDto)).Returns(true);
             A.CallTo(() => _accountService.GetAccountForCurrentUserByNameAsync(accountDto.Name, user)).Returns(Task.FromResult<Account>(null));
             A.CallTo(() => _accountService.CreateAccountAsync(A<Account>.Ignored)).Returns(Task.CompletedTask);
-            A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).Returns(Task.CompletedTask);
 
             IActionResult result = await _controller.CreateAccount(accountDto);
 
             Assert.IsType<OkObjectResult>(result);
-            A.CallTo(() => _notificationService.CreateNotificationAsync(A<Notification>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
