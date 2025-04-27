@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { BrowserView, MobileView } from "react-device-detect";
 import useGetUser from "./Hooks/Auth/useGetUser";
-import DrawerContainer from "./Components/Navigation/DrawerContainer";
-import BottomNavigationContainer from "./Components/Navigation/BottomNavigationContainer";
+import DrawerContainer from "./Components/SharedComponents/DrawerContainer";
+import BottomNavigationContainer from "./Components/SharedComponents/BottomNavigationContainer";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import FinancialRecommendations from "./Pages/FinancialRecommendations";
