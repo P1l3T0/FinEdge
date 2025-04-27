@@ -44,16 +44,6 @@ namespace FinEdgeBackend.Services
             return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == true && t.User!.Equals(currentUser)).ToListAsync();
         }
 
-        public async Task<ICollection<Transaction>> GetAllTransactionsForAccountAsync(Account account)
-        {
-            return await _dataContext.Transactions.Where(t => t.Account!.Equals(account)).ToListAsync();
-        }
-
-        public async Task<ICollection<Transaction>> GetAllTransactionsForCategoryAsync(Category category)
-        {
-            return await _dataContext.Transactions.Where(t => t.Category!.Equals(category)).ToListAsync();
-        }
-
         public ICollection<Transaction> GetTransactionsFromSpecifiedDate(ICollection<Transaction> transactions, DateTime date)
         {
             return transactions.Where(t => t.DateCreated >= date).ToList();

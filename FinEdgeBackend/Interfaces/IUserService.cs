@@ -9,7 +9,6 @@ namespace FinEdgeBackend.Interfaces
         Task UpdateCurrentUserAsync(UpdateDTO updateDTO, User currentUser);
         Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserByIdAsync(int userID);
-        Task<User> GetUserByNameAsync(string name);
         Task<User> GetCurrentUserAsync();
         Task<ICollection<User>> GetAllUsersAsync();
         ICollection<string> GetAccountNames(ICollection<Account> accounts);

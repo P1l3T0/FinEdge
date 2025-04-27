@@ -1,5 +1,4 @@
 ﻿using FinEdgeBackend.Data;
-using FinEdgeBackend.DTOs;
 using FinEdgeBackend.DTOs.Accounts;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
@@ -50,12 +49,6 @@ namespace FinEdgeBackend.Services
                 .FirstOrDefaultAsync(a => a.Name == accountName && a.User!.Equals(currentUser));
 
             return account!;
-        }
-
-        public async Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser)
-        {
-            ICollection<Account> accounts = await _dataContext.Accounts.Where(a => a.User!.Equals(currentUser)).ToListAsync();
-            return accounts;
         }
 
         public async Task<ICollection<AccountChartDTO>> GetAccountChartDataAsync(User currentUser)

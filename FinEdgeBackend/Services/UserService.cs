@@ -53,12 +53,6 @@ namespace FinEdgeBackend.Services
             return user!;
         }
 
-        public async Task<User> GetUserByNameAsync(string name)
-        {
-            User? user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Name == name);
-            return user!;
-        }
-
         public async Task<User> GetUserByEmailAsync(string email)
         {
             User? user = await _dataContext.Users

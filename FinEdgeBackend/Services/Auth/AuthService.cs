@@ -1,5 +1,4 @@
-﻿using FinEdgeBackend.DTOs;
-using FinEdgeBackend.DTOs.User;
+﻿using FinEdgeBackend.DTOs.User;
 using FinEdgeBackend.Enums;
 using FinEdgeBackend.Interfaces;
 using FinEdgeBackend.Interfaces.Auth;

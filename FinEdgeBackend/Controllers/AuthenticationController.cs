@@ -3,19 +3,17 @@ using FinEdgeBackend.Models;
 using FinEdgeBackend.DTOs.User;
 using FinEdgeBackend.Interfaces.Auth;
 using FinEdgeBackend.Interfaces;
-using FinEdgeBackend.Enums;
 
 namespace FinEdgeBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AuthenticationController(IUserService userService, IJwtService jwtService, IRefreshTokenService refreshTokenService, IAuthService authService, INotificationService notificationService) : Controller
+    public class AuthenticationController(IUserService userService, IJwtService jwtService, IRefreshTokenService refreshTokenService, IAuthService authService) : Controller
     {
         private readonly IUserService _userService = userService;
         private readonly IJwtService _jwtService = jwtService;
         private readonly IAuthService _authService = authService;
         private readonly IRefreshTokenService _refreshTokenService = refreshTokenService;
-        private readonly INotificationService _notificationService = notificationService;
 
         [HttpPost]
         [Route("register")]

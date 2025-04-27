@@ -9,7 +9,6 @@ namespace FinEdgeBackend.Interfaces
         Task UpdateAccountAsync(AccountDTO accountDto, Account account);
         Task<Account> GetAccountByIdAsync(int accountID);
         Task<Account> GetAccountForCurrentUserByNameAsync(string accountName, User currentUser);
-        Task<ICollection<Account>> GetAllAccountsForCurrentUserAsync(User currentUser);
         Task<ICollection<AccountChartDTO>> GetAccountChartDataAsync(User currentUser);
         Task<AccountStatsDTO> GetAccountStatisticsAsync(User currentUser);
         Task DeleteAccountAsync(Account account);
