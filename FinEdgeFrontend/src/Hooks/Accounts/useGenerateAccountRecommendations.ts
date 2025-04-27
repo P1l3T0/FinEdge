@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AccountRecommendation, PromptRequestData } from "../../Utils/Types";
 import { createAccountRecommendationEndPoint } from "../../Utils/endpoints";
 
-const useGenerateAccountSuggestions = () => {
+const useGenerateAccountRecommendations = () => {
   const queryClient = useQueryClient();
 
   const [promptRequestData, setPromptRequestData] = useState<PromptRequestData>({
@@ -41,4 +41,4 @@ const useGenerateAccountSuggestions = () => {
   return { generateFinancialRecommendation };
 };
 
-export default useGenerateAccountSuggestions;
+export default useGenerateAccountRecommendations;

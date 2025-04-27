@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { AIPrompt, AIPromptView, AIPromptOutputView, promptViewDefaults, outputViewDefaults, AIPromptOutputInterface } from "@progress/kendo-react-conversational-ui";
 import useGetAccountPromptSuggestions from "../../../Hooks/FinancialRecommendations/useGetAccountPromptSuggestions";
-import useGenerateRecommendation from "../../../Hooks/Accounts/useGenerateAccountSuggestions";
+import useGenerateAccountRecommendations from "../../../Hooks/Accounts/useGenerateAccountRecommendations";
 
 const AccountAIPrompt = () => {
   const { data, isLoading, isError, error } = useGetAccountPromptSuggestions();
-  const { generateFinancialRecommendation } = useGenerateRecommendation();
+  const { generateFinancialRecommendation } = useGenerateAccountRecommendations();
 
   const [activeView, setActiveView] = useState<string>(promptViewDefaults.name);
   const [outputs, setOutputs] = useState<AIPromptOutputInterface[]>([]);
