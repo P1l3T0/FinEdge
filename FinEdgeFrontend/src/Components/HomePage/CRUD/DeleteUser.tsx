@@ -1,46 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
-import { deketeCurrentUserEnddPoint, logoutEndPoint } from "../../../Utils/endpoints";
-import { useNavigate } from "react-router-dom";
-import { Button } from '@progress/kendo-react-buttons';
+import { Button } from "@progress/kendo-react-buttons";
+import useDeleteUser from "../../../Hooks/User/useDeleteUser";
 
 const DeleteUser = () => {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const deleteUser = async () => {
-    await axios
-      .delete(`${deketeCurrentUserEnddPoint}`, { withCredentials: true })
-      .catch((err: AxiosError) => {});
-  };
-
-  const logOutUser = async () => {
-    await axios
-      .post(`${logoutEndPoint}`, {}, { withCredentials: true })
-      .then(() => navigate("/login"))
-      .catch((err: AxiosError) => {});
-  };
-
-  const deleteCurrentUser = useMutation({
-    mutationFn: deleteUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["accounts"] });
-      queryClient.invalidateQueries({ queryKey: ["notifications"] });
-    },
-  });
-
-  const logOut = useMutation({
-    mutationFn: logOutUser,
-    onSuccess: () => {
-      queryClient.setQueryData(["user"], null);
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-    },
-  });
-
-  const handleDelete = async () => {
-    logOut.mutateAsync();
-    deleteCurrentUser.mutateAsync();
-  };
+  const { handleDelete } = useDeleteUser();
 
   return (
     <>
