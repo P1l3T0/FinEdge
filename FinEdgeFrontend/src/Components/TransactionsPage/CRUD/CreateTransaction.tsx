@@ -1,105 +1,13 @@
-import { useEffect, useState } from "react";
-import { DropDownListChangeEvent, DropDownList } from "@progress/kendo-react-dropdowns";
-import { TextBoxChangeEvent, CheckboxChangeEvent, TextBox, Checkbox } from "@progress/kendo-react-inputs";
 import { Button } from "@progress/kendo-react-buttons";
+import { DropDownList } from "@progress/kendo-react-dropdowns";
+import { TextBox, Checkbox } from "@progress/kendo-react-inputs";
 import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
+import useCreateTransaction from "../../../Hooks/Transactions/useCreateTransaction";
 import useGetNames from "../../../Hooks/Accounts/useGetNames";
-import { TransactionDTO } from "../../../Utils/Types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosResponse, AxiosError } from "axios";
-import { createTransactionEndPoint } from "../../../Utils/endpoints";
 
 const CreateTransaction = () => {
-  const queryClient = useQueryClient();
-  const { data, isLoading, isError, error } = useGetNames();
-
-  const [transaction, setTransaction] = useState<TransactionDTO>({
-    name: "",
-    amount: 0,
-    accountName: "",
-    categoryName: "",
-    subcategoryName: "",
-    isRepeating: false,
-  });
-
-  const [filteredSubcategories, setFilteredSubcategories] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (data) {
-      setTransaction({
-        ...transaction,
-        accountName: data.accountNames[0] ?? "",
-        categoryName: data.categoryNames[0] ?? "",
-        subcategoryName: data.subcategoryNames[0]?.value[0] ?? "",
-      });
-
-      setFilteredSubcategories(data.subcategoryNames[0]?.value ?? []);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    const selectedCategory = transaction.categoryName;
-    const subcategories = data?.subcategoryNames.find((subcategory) => subcategory.key === selectedCategory)?.value;
-
-    setFilteredSubcategories(subcategories ?? []);
-    setTransaction((prev) => ({
-      ...prev,
-      subcategoryName: subcategories?.[0] ?? "",
-    }));
-  }, [transaction.categoryName, data]);
-
-  const handleTextBoxChange = (e: TextBoxChangeEvent) => {
-    const trimmedValue = (e.value as string).trim();
-
-    setTransaction({
-      ...transaction,
-      [e.target.name as string]: trimmedValue,
-    });
-  };
-
-  const handleDropDownChange = (e: DropDownListChangeEvent) => {
-    const updatedTransaction = {
-      ...transaction,
-      [e.target.props.name as string]: e.value,
-    };
-
-    setTransaction(updatedTransaction);
-  };
-
-  const handleCheckBoxChange = async (e: CheckboxChangeEvent) => {
-    setTransaction({
-      ...transaction,
-      [e.target.name as string]: e.value,
-    });
-  };
-
-  const createTransaction = async () => {
-    await axios
-      .post<TransactionDTO>(`${createTransactionEndPoint}`, transaction, {
-        withCredentials: true,
-      })
-      .then((res: AxiosResponse<TransactionDTO>) => res.data)
-      .catch((error: AxiosError) => {});
-  };
-
-  const { mutateAsync } = useMutation({
-    mutationFn: createTransaction,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["income-categories"] });
-      queryClient.invalidateQueries({ queryKey: ["expenditure-categories"] });
-      queryClient.invalidateQueries({ queryKey: ["accounts"] });
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      queryClient.invalidateQueries({ queryKey: ["reports"] });
-      queryClient.invalidateQueries({ queryKey: ["sankey-chart"] });
-    },
-  });
-
-  const handlerClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    mutateAsync();
-  };
+  const { isLoading, isError, error, data } = useGetNames();
+  const { filteredSubcategories, handleTextBoxChange, handleDropDownChange, handleCheckBoxChange, handleSubmit } = useCreateTransaction();
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {error?.message}</p>;
@@ -145,9 +53,7 @@ const CreateTransaction = () => {
               </div>
 
               <div className="pt-4">
-                <Button id="add-transaction-button" themeColor="primary" onClick={handlerClick} className="w-full" size="large">
-                  Add Transaction
-                </Button>
+                <Button id="add-transaction-button" themeColor="primary" onClick={handleSubmit} className="w-full" size="large">Add Transaction</Button>
               </div>
             </form>
           </div>
