@@ -1,80 +1,12 @@
-import { useState } from 'react'
-import { CategoryDTO } from '../../../Utils/Types';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
-import axios, { AxiosResponse, AxiosError } from 'axios';
-import { createCategoryEndPoint } from '../../../Utils/endpoints';
 import { currency } from '../../../Utils/Functions';
 import { Button } from '@progress/kendo-react-buttons';
-import { DropDownListChangeEvent, DropDownList } from '@progress/kendo-react-dropdowns';
-import { ColorPickerView, TextBoxChangeEvent, CheckboxChangeEvent, ColorPickerChangeEvent, TextBox, ColorPicker, Checkbox } from '@progress/kendo-react-inputs';
+import { DropDownList } from '@progress/kendo-react-dropdowns';
+import { TextBox, ColorPicker, Checkbox } from '@progress/kendo-react-inputs';
 import { Card, CardHeader, CardBody } from '@progress/kendo-react-layout';
+import useCreateCategory from '../../../Hooks/Categories/useCreateCategory';
 
 const CreateCategory = () => {
-  const queryClient = useQueryClient();
-
-  const [color, setColor] = useState<ColorPickerView>();
-  const [category, setCategory] = useState<CategoryDTO>({
-    name: "",
-    budget: 0,
-    currency: currency[0],
-    isIncome: false,
-    color: "rgba(255, 255, 255, 1)",
-    subcategories: ""
-  });
-
-  const handleTextBoxChange = async (e: TextBoxChangeEvent) => {
-    const trimmedValue = (e.value as string).trim();
-
-    setCategory({
-      ...category,
-      [e.target.name as string]: trimmedValue
-    })
-  }
-
-  const handleDropDownChange = async (e: DropDownListChangeEvent) => {
-    setCategory({
-      ...category,
-      [e.target.props.name as string]: e.value
-    })
-  }
-
-  const handleCheckBoxChange = async (e: CheckboxChangeEvent) => {
-    setCategory({
-      ...category,
-      [e.target.name as string]: e.value
-    })
-  }
-
-  const handleColorPickerChange = async (e: ColorPickerChangeEvent) => {
-    setColor(e.value as ColorPickerView);
-    setCategory({
-      ...category,
-      color: e.value
-    })
-  }
-
-  const createCategory = async () => {
-    await axios
-      .post<CategoryDTO>(`${createCategoryEndPoint}`, category, { withCredentials: true })
-      .then((res: AxiosResponse<CategoryDTO>) => res.data)
-      .catch((error: AxiosError) => {});
-  }
-
-  const { mutateAsync } = useMutation({
-    mutationFn: createCategory,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["income-categories"] });
-      queryClient.invalidateQueries({ queryKey: ["expenditure-categories"] });
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      queryClient.invalidateQueries({ queryKey: ["category-chart-data"] });
-    },
-  });
-
-  const handlerClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    mutateAsync();
-  }
+  const { color, category, handleTextBoxChange, handleDropDownChange, handleCheckBoxChange, handleColorPickerChange, handleSubmit } = useCreateCategory();
 
   return (
     <>
@@ -130,7 +62,7 @@ const CreateCategory = () => {
               </div>
 
               <div className="pt-4">
-                <Button id="add-category-button" themeColor="primary" onClick={handlerClick} className="w-full" size="large" >
+                <Button id="add-category-button" themeColor="primary" onClick={handleSubmit} className="w-full" size="large" >
                   Add Category
                 </Button>
               </div>
