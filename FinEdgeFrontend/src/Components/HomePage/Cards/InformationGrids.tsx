@@ -22,11 +22,11 @@ const InformationGrids = () => {
     <>
       <InfoCard title="Information" className="lg:col-span-2">
         <TabStrip selected={selected} onSelect={handleSelect}>
-          <TabStripTab title="Categories">
-            <CategoriesGrid categories={data?.categories!} />
-          </TabStripTab>
           <TabStripTab title="Accounts" >
             <AccountsGrid accounts={data?.accounts!} />
+          </TabStripTab>
+          <TabStripTab title="Categories">
+            <CategoriesGrid categories={data?.categories!} />
           </TabStripTab>
           <TabStripTab title="Transactions">
             <TransactionsGrid transactions={data?.transactions!} />

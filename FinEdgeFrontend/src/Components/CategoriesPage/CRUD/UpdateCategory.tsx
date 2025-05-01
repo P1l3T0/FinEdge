@@ -1,87 +1,17 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query';
-import axios, { AxiosResponse, AxiosError } from 'axios';
-import { useState } from 'react';
-import { updateCategoryEndPoint } from '../../../Utils/endpoints';
-import { currency } from '../../../Utils/Functions';
-import { Category, CategoryDTO } from '../../../Utils/Types';
-import { Button } from '@progress/kendo-react-buttons';
-import { DropDownListChangeEvent, DropDownList } from '@progress/kendo-react-dropdowns';
-import { ColorPickerView, TextBoxChangeEvent, CheckboxChangeEvent, ColorPickerChangeEvent, TextBox, ColorPicker, Checkbox } from '@progress/kendo-react-inputs';
-import { Window } from '@progress/kendo-react-dialogs';
+import { Button } from "@progress/kendo-react-buttons";
+import { DropDownList } from "@progress/kendo-react-dropdowns";
+import { TextBox, ColorPicker, Checkbox } from "@progress/kendo-react-inputs";
+import { Window } from "@progress/kendo-react-dialogs";
+import { currency } from "../../../Utils/Functions";
+import { Category } from "../../../Utils/Types";
+import useUpdateCategory from "../../../Hooks/Categories/useUpdateCategory";
 
 const UpdateCategory = ({ category }: { category: Category }) => {
-  const queryClient = useQueryClient();
-
-  const [color, setColor] = useState<ColorPickerView>();
-  const [visible, setVisible] = useState<boolean>(false);
-  const [updateCategory, setUpdateCategory] = useState<CategoryDTO>({
-    name: category.name,
-    currency: category.currency,
-    budget: category.budget,
-    isIncome: category.isIncome,
-    color: category.color
-  });
-
-  const toggleDialog = () => {
-    setVisible(!visible);
-  };
-
-  const handleTextBoxChange = async (e: TextBoxChangeEvent) => {
-    const trimmedValue = (e.value as string).trim();
-
-    setUpdateCategory({
-      ...updateCategory,
-      [e.target.name as string]: trimmedValue
-    })
-  }
-
-  const handleDropDownChange = async (e: DropDownListChangeEvent) => {
-    setUpdateCategory({
-      ...updateCategory,
-      [e.target.props.name as string]: e.value
-    })
-  }
-
-  const handleCheckBoxChange = async (e: CheckboxChangeEvent) => {
-    setUpdateCategory({
-      ...updateCategory,
-      [e.target.name as string]: e.value
-    })
-  }
-
-  const handleColorPickerChange = async (e: ColorPickerChangeEvent) => {
-    setColor(e.value as ColorPickerView);
-    setUpdateCategory({
-      ...updateCategory,
-      color: e.value
-    })
-  }
-
-  const updateAccount = async () => {
-    await axios
-      .put<CategoryDTO>(`${updateCategoryEndPoint}/${category.id}`, updateCategory, { withCredentials: true })
-      .then((res: AxiosResponse<CategoryDTO>) => res.data)
-      .catch((error: AxiosError) => {});
-  }
-
-  const { mutateAsync } = useMutation({
-    mutationFn: updateAccount,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["income-categories"], });
-      queryClient.invalidateQueries({ queryKey: ["expenditure-categories"] });
-      queryClient.invalidateQueries({ queryKey: ["category-chart-data"] });
-    },
-  });
-
-  const handleUpdate = async () => {
-    await mutateAsync();
-  }
+  const { color, visible, updatedCategory, toggleDialog, handleTextBoxChange, handleDropDownChange, handleCheckBoxChange, handleColorPickerChange, handleUpdate } = useUpdateCategory(category);
 
   return (
     <>
-      <Button type="button" fillMode="solid" themeColor={"info"} onClick={toggleDialog}>
-        Update
-      </Button>
+      <Button type="button" fillMode="solid" themeColor={"info"} onClick={toggleDialog}>Update</Button>
 
       {visible && (
         <Window title="Update Category" onClose={toggleDialog} initialHeight={415}>
@@ -104,7 +34,7 @@ const UpdateCategory = ({ category }: { category: Category }) => {
 
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Category Color</label>
-                <ColorPicker id="color-picker" views={['gradient', 'palette']} onChange={handleColorPickerChange} value={color} defaultValue={updateCategory.color} />
+                <ColorPicker id="color-picker" views={['gradient', 'palette']} onChange={handleColorPickerChange} value={color} defaultValue={updatedCategory.color} />
               </div>
 
               <div className="pt-2">
@@ -116,12 +46,8 @@ const UpdateCategory = ({ category }: { category: Category }) => {
             </div>
 
             <div className="flex justify-end gap-2 pt-5 border-t border-gray-200">
-              <Button type="button" themeColor="primary" onClick={handleUpdate}>
-                Save
-              </Button>
-              <Button type="button" themeColor="error" onClick={toggleDialog}>
-                Cancel
-              </Button>
+              <Button type="button" themeColor="primary" onClick={handleUpdate}>Save</Button>
+              <Button type="button" themeColor="error" onClick={toggleDialog}>Cancel</Button>
             </div>
           </form>
         </Window>

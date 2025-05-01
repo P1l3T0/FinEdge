@@ -287,7 +287,7 @@ export type Reports = {
 
 //! AIPrompt 
 
-type PromptOutput = {
+export type PromptOutput = {
   id: number;
   title: string;
   responseContent: string;

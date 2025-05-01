@@ -1,36 +1,17 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
-import { deleteTransactionEndPoint } from '../../../Utils/endpoints';
-import { Transaction } from '../../../Utils/Types';
 import { Button } from '@progress/kendo-react-buttons';
+import useDeleteTransaction from '../../../Hooks/Transactions/useDeleteTransaction';
+import { Transaction } from '../../../Utils/Types';
 
 const DeleteTransaction = ({ transaction }: { transaction: Transaction }) => {
-  const queryClient = useQueryClient();
+  const { handleDelete } = useDeleteTransaction();
 
-  const deleteTransaction = async () => {
-    await axios
-      .delete(`${deleteTransactionEndPoint}/${transaction.id}`, { withCredentials: true })
-      .catch((err: AxiosError) => {
-        throw new Error(`No transaction found ${err.message}`);
-      });
-  }
-
-  const { mutateAsync } = useMutation({
-    mutationFn: deleteTransaction,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["transactions"], });
-      queryClient.invalidateQueries({ queryKey: ["reports"] });
-      queryClient.invalidateQueries({ queryKey: ["sankey-chart"] });
-    },
-  });
-
-  const handleDelete = async () => {
-    mutateAsync();
-  }
+  const onDeleteClick = async () => {
+    await handleDelete(transaction.id);
+  };
 
   return (
     <>
-      <Button type="button" fillMode="solid" themeColor={'error'} onClick={handleDelete}>Delete</Button>
+      <Button type="button" fillMode="solid" themeColor={'error'} onClick={onDeleteClick}>Delete</Button>
     </>
   )
 }
