@@ -14,7 +14,7 @@ const UserProfile = () => {
   return (
     <>
       <DashboardCard className="hover:shadow-lg transition-shadow">
-        <div className="flex justify-between items-start">
+        <div className="justify-between items-start">
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-gray-900">Welcome, {data?.name}</h1>
             <p className="text-gray-600">{data?.email}</p>
