@@ -29,6 +29,7 @@ export const getAccountEndPoint = `${accountController}/get`;
 export const getAccountChartDataEndPoint = `${accountController}/get-chart-data`;
 export const getAccountStatisticsEndPoint = `${accountController}/get-statistics`;
 export const updateAccountEndPoint = `${accountController}/update`;
+export const transferBalanceToAccountEndPoint = `${accountController}/update/transfer`;
 export const deleteAccountEndPoint = `${accountController}/delete`;
 
 //! Categories

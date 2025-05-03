@@ -107,6 +107,11 @@ export type AccountDTO = {
   color: string;
 }
 
+export type AccountTransferDTO = {
+  targetAccountName: string;
+  amount: number;
+}
+
 export type Account = {
   id: number;
   userID: number;

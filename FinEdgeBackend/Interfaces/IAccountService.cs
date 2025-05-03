@@ -7,6 +7,7 @@ namespace FinEdgeBackend.Interfaces
     {
         Task CreateAccountAsync(Account account);
         Task UpdateAccountAsync(AccountDTO accountDto, Account account);
+        Task TransferBalanceBetweenAccountsAsync(Account sourceAccount, Account targetAccount, decimal amount);
         Task<Account> GetAccountByIdAsync(int accountID);
         Task<Account> GetAccountForCurrentUserByNameAsync(string accountName, User currentUser);
         Task<ICollection<AccountChartDTO>> GetAccountChartDataAsync(User currentUser);

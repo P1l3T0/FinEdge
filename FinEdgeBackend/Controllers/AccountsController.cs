@@ -145,6 +145,30 @@ namespace FinEdgeBackend.Controllers
             return NoContent();
         }
 
+        [HttpPut]
+        [Route("update/transfer/{accountID}")]
+        public async Task<IActionResult> TransferMoneyBetweenAccounts(int accountID, [FromBody] AccountTransferDTO accountDto)
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+
+            Account sourceAccount = await _accountService.GetAccountByIdAsync(accountID);
+            Account targetAccount = await _accountService.GetAccountForCurrentUserByNameAsync(accountDto.TargetAccountName!, currentUser);
+
+            await _accountService.TransferBalanceBetweenAccountsAsync(sourceAccount, targetAccount, accountDto.Amount);
+
+            await _notificationService.CreateNotificationAsync(new Notification()
+            {
+                Title = $"Account {targetAccount.Name} updated successfully!",
+                Description = $"Successfully transfered {accountDto.Amount}  BGN from {sourceAccount.Name} to {targetAccount.Name}",
+                NotificationType = NotificationType.Info,
+                IsRead = false,
+                User = currentUser,
+                UserID = currentUser.ID
+            });
+
+            return NoContent();
+        }
+
         [HttpDelete]
         [Route("delete/{accountID}")]
         public async Task<IActionResult> DeleteAccount(int accountID)

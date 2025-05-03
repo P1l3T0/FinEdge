@@ -33,6 +33,17 @@ namespace FinEdgeBackend.Services
             await _dataContext.SaveChangesAsync();
         }
 
+        public async Task TransferBalanceBetweenAccountsAsync(Account sourceAccount, Account targetAccount, decimal amount)
+        {
+            sourceAccount.Balance -= amount;
+            targetAccount.Balance += amount;
+
+            _dataContext.Accounts.Update(sourceAccount);
+            _dataContext.Accounts.Update(targetAccount);
+
+            await _dataContext.SaveChangesAsync();
+        }
+
         public async Task<Account> GetAccountByIdAsync(int accountID)
         {
             Account? account = await _dataContext.Accounts!
