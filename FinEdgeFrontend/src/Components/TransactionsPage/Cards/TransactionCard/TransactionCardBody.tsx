@@ -6,7 +6,7 @@ const TransactionCardBody = ({transaction}: {transaction: Transaction}) => {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <span className="text-gray-600">Amount</span>
-          <span className="text-xl font-bold">{transaction.amount}</span>
+          <span className="text-xl font-bold">{transaction.amount} BGN</span>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-gray-600">Account</span>

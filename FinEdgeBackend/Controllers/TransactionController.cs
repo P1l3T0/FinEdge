@@ -35,13 +35,14 @@ namespace FinEdgeBackend.Controllers
                     User = currentUser,
                     UserID = currentUser.ID
                 });
+
                 return BadRequest();
             }
 
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
             Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
 
-            if (account.Balance <= transactionDto.Amount)
+            if (!category.IsIncome && account.Balance <= transactionDto.Amount)
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {
@@ -171,9 +172,8 @@ namespace FinEdgeBackend.Controllers
             Transaction transaction = await _transactionService.GetTransactionByIdAsync(transactionID);
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
             Account dtoAccount = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
-            Account originalAccount = transaction.Account!;
 
-            await _transactionService.UpdateTranssactionAsync(transactionDto, transaction, category, dtoAccount, originalAccount, currentUser);
+            await _transactionService.UpdateTranssactionAsync(transactionDto, transaction, category, dtoAccount, transaction.Account!, currentUser);
 
             await _notificationService.CreateNotificationAsync(new Notification()
             {
@@ -193,11 +193,8 @@ namespace FinEdgeBackend.Controllers
         public async Task<IActionResult> DeleteTransaction(int transactionID)
         {
             Transaction transaction = await _transactionService.GetTransactionByIdAsync(transactionID);
-            Category category = transaction.Category!;
-            Account account = transaction.Account!;
-            User currentUser = transaction.User!;
 
-            await _transactionService.UpdateUserBalanceAsync(false, null, transaction, currentUser, category, account);
+            await _transactionService.UpdateUserBalanceAsync(false, null, transaction, transaction.User!, transaction.Category!, transaction.Account!);
             await _transactionService.DeleteTransactionAsync(transaction);
 
             await _notificationService.CreateNotificationAsync(new Notification()
@@ -206,8 +203,8 @@ namespace FinEdgeBackend.Controllers
                 Description = $"Transaction '{transaction.Name}' has been permanently removed from the system.",
                 NotificationType = NotificationType.Success,
                 IsRead = false,
-                User = currentUser,
-                UserID = currentUser.ID
+                User = transaction.User,
+                UserID = transaction.User!.ID
             });
 
             return NoContent();

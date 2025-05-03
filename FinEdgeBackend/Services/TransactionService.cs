@@ -31,17 +31,26 @@ namespace FinEdgeBackend.Services
 
         public async Task<ICollection<Transaction>> GetAllTransactionsAsync(User currentUser)
         {
-            return await _dataContext.Transactions.Where(t => t.User!.Equals(currentUser)).ToListAsync();
+            return await _dataContext.Transactions
+                .Where(t => t.User!.Equals(currentUser))
+                .OrderByDescending(t => t.DateCreated)
+                .ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllExpenditureTransactionsAsync(User currentUser)
         {
-            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == false && t.User!.Equals(currentUser)).ToListAsync();
+            return await _dataContext.Transactions
+                .Where(t => t.Category!.IsIncome == false && t.User!.Equals(currentUser))
+                .OrderByDescending(t => t.DateCreated)
+                .ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllIncomeTransactionsAsync(User currentUser)
         {
-            return await _dataContext.Transactions.Where(t => t.Category!.IsIncome == true && t.User!.Equals(currentUser)).ToListAsync();
+            return await _dataContext.Transactions
+                .Where(t => t.Category!.IsIncome == true && t.User!.Equals(currentUser))
+                .OrderByDescending(t => t.DateCreated)
+                .ToListAsync();
         }
 
         public ICollection<Transaction> GetTransactionsFromSpecifiedDate(ICollection<Transaction> transactions, DateTime date)
@@ -108,97 +117,104 @@ namespace FinEdgeBackend.Services
 
         public async Task UpdateTranssactionAsync(TransactionDTO transactionDto, Transaction transaction, Category category, Account newAccount, Account originalAccount, User currentUser)
         {
-            if (category.IsIncome)
+            decimal amountDifference = Math.Abs((decimal)(transactionDto.Amount - transaction.Amount)!);
+            bool isAmountIncreased = transactionDto.Amount > transaction.Amount;
+            bool isSameAccount = originalAccount.Equals(newAccount);
+
+            Action updateBalances = category.IsIncome
+                ? () => UpdateBalancesForIncomeTransaction(isAmountIncreased, amountDifference, currentUser, category, newAccount, originalAccount, isSameAccount, transactionDto.Amount, transaction.Amount)
+                : () => UpdateBalancesForExpenditureTransaction(isAmountIncreased, amountDifference, currentUser, category, newAccount, originalAccount, isSameAccount, transactionDto.Amount, transaction.Amount);
+
+            updateBalances();
+
+            UpdateTransactionDetails(transaction, transactionDto, newAccount, category);
+
+            _dataContext.Transactions.Update(transaction);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        private void UpdateBalancesForIncomeTransaction(bool isAmountIncreased, decimal amountDifference, User currentUser, 
+            Category category, Account newAccount, Account originalAccount, bool isSameAccount, decimal? newAmount, decimal? oldAmount)
+        {
+            if (isAmountIncreased)
             {
-                if (transactionDto.Amount > transaction.Amount) 
+                currentUser.TotalBalance += amountDifference;
+                category.Balance += amountDifference;
+
+                if (isSameAccount)
                 {
-                    decimal increase = Math.Abs((decimal)(transactionDto.Amount - transaction.Amount));
-
-                    currentUser.TotalBalance += increase;
-                    category.Balance += increase;
-
-                    if (originalAccount.Equals(newAccount))
-                    {
-                        newAccount.Balance += increase; 
-                    }
-                    else
-                    {
-                        originalAccount.Balance -= transaction.Amount; 
-                        newAccount.Balance += transactionDto.Amount;  
-                    }
-                }
-                else if (transactionDto.Amount < transaction.Amount) 
-                {
-                    decimal decrease = Math.Abs((decimal)(transactionDto.Amount - transaction.Amount));
-
-                    currentUser.TotalBalance -= decrease;
-                    category.Balance -= decrease;
-
-                    if (originalAccount.Equals(newAccount))
-                    {
-                        newAccount.Balance -= decrease; 
-                    }
-                    else
-                    {
-                        originalAccount.Balance -= transaction.Amount;
-                        newAccount.Balance += transactionDto.Amount; 
-                    }
+                    newAccount.Balance += amountDifference;
                 }
                 else
                 {
-                    if (!originalAccount.Equals(newAccount)) 
-                    {
-                        originalAccount.Balance -= transaction.Amount;
-                        newAccount.Balance += transactionDto.Amount; 
-                    }
+                    originalAccount.Balance -= oldAmount;
+                    newAccount.Balance += newAmount;
                 }
             }
-            else
+            else if (!isAmountIncreased)
             {
-                if (transactionDto.Amount > transaction.Amount) 
+                currentUser.TotalBalance -= amountDifference;
+                category.Balance -= amountDifference;
+
+                if (isSameAccount)
                 {
-                    decimal increase = Math.Abs((decimal)(transactionDto.Amount - transaction.Amount));
-
-                    currentUser.TotalBalance -= increase;
-                    category.Balance += increase;
-
-                    if (originalAccount.Equals(newAccount))
-                    {
-                        newAccount.Balance -= increase; 
-                    }
-                    else
-                    {
-                        originalAccount.Balance += transaction.Amount; 
-                        newAccount.Balance -= transactionDto.Amount;  
-                    }
+                    newAccount.Balance -= amountDifference;
                 }
-                else if (transactionDto.Amount < transaction.Amount) 
+                else
                 {
-                    decimal decrease = Math.Abs((decimal)(transactionDto.Amount - transaction.Amount));
-
-                    currentUser.TotalBalance += decrease;
-                    category.Balance -= decrease;
-
-                    if (originalAccount.Equals(newAccount))
-                    {
-                        newAccount.Balance += decrease; 
-                    }
-                    else
-                    {
-                        originalAccount.Balance += transaction.Amount; 
-                        newAccount.Balance -= transactionDto.Amount; 
-                    }
-                }
-                else 
-                {
-                    if (!originalAccount.Equals(newAccount))
-                    {
-                        originalAccount.Balance += transaction.Amount; 
-                        newAccount.Balance -= transactionDto.Amount; 
-                    }
+                    originalAccount.Balance -= oldAmount;
+                    newAccount.Balance += newAmount;
                 }
             }
+            else if (!isSameAccount)
+            {
+                originalAccount.Balance -= oldAmount;
+                newAccount.Balance += newAmount;
+            }
+        }
 
+        private void UpdateBalancesForExpenditureTransaction(bool isAmountIncreased, decimal amountDifference, User currentUser, 
+            Category category, Account newAccount, Account originalAccount, bool isSameAccount, decimal? newAmount, decimal? oldAmount)
+        {
+            if (isAmountIncreased)
+            {
+                currentUser.TotalBalance -= amountDifference;
+                category.Balance += amountDifference;
+
+                if (isSameAccount)
+                {
+                    newAccount.Balance -= amountDifference;
+                }
+                else
+                {
+                    originalAccount.Balance += oldAmount;
+                    newAccount.Balance -= newAmount;
+                }
+            }
+            else if (!isAmountIncreased)
+            {
+                currentUser.TotalBalance += amountDifference;
+                category.Balance -= amountDifference;
+
+                if (isSameAccount)
+                {
+                    newAccount.Balance += amountDifference;
+                }
+                else
+                {
+                    originalAccount.Balance += oldAmount;
+                    newAccount.Balance -= newAmount;
+                }
+            }
+            else if (!isSameAccount)
+            {
+                originalAccount.Balance += oldAmount;
+                newAccount.Balance -= newAmount;
+            }
+        }
+
+        private void UpdateTransactionDetails(Transaction transaction, TransactionDTO transactionDto, Account newAccount, Category category)
+        {
             transaction.Name = transactionDto.Name;
             transaction.Amount = transactionDto.Amount;
             transaction.AccountID = newAccount.ID;
@@ -208,9 +224,6 @@ namespace FinEdgeBackend.Services
             transaction.Category = category;
             transaction.CategoryName = category.Name;
             transaction.IsRepeating = transactionDto.IsRepeating;
-
-            _dataContext.Transactions.Update(transaction);
-            await _dataContext.SaveChangesAsync();
         }
 
         public async Task UpdateUserBalanceAsync(bool isNewTransaction, TransactionDTO? transactionDto, Transaction? transaction, User currentUser, Category category, Account account)

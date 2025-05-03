@@ -26,8 +26,7 @@ const GetTransactions = () => {
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="flex-grow">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            <TransactionCards transactions={filterBy(data?.incomeTransactions!, filter)} />
-            <TransactionCards transactions={filterBy(data?.expenditureTransactions!, filter)} />
+            <TransactionCards transactions={filterBy(data?.allTransactions!, filter)} />
           </div>
         </div>
       </div>
