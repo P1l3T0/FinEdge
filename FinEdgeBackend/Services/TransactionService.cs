@@ -224,6 +224,7 @@ namespace FinEdgeBackend.Services
             transaction.Category = category;
             transaction.CategoryName = category.Name;
             transaction.IsRepeating = transactionDto.IsRepeating;
+            transaction.DateCreated = DateTime.Parse(transactionDto.DateUpdated!);
         }
 
         public async Task UpdateUserBalanceAsync(bool isNewTransaction, TransactionDTO? transactionDto, Transaction? transaction, User currentUser, Category category, Account account)

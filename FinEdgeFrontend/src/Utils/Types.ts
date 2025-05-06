@@ -259,6 +259,10 @@ export type TransactionDTO = {
   isRepeating: boolean;
 }
 
+export type TransactionUpdateDTO = TransactionDTO | {
+  dateUpdated: string;
+}
+
 export type Transaction = {
   id: number;
   name: string;

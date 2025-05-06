@@ -8,5 +8,6 @@
         public string? SubcategoryName { get; set; }
         public decimal? Amount { get; set; }
         public bool IsRepeating { get; set; }
+        public string? DateUpdated { get; set; }
     }
 }

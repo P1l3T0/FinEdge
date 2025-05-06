@@ -5,17 +5,18 @@ import { Window } from "@progress/kendo-react-dialogs";
 import useUpdateTransaction from "../../../Hooks/Transactions/useUpdateTransaction";
 import useGetNames from "../../../Hooks/Accounts/useGetNames";
 import { Transaction } from "../../../Utils/Types";
+import { DatePicker } from "@progress/kendo-react-dateinputs";
 
 const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
   const { data } = useGetNames();
-  const { visible, toggleDialog, handleTextBoxChange, handleDropDownChange, handleCheckBoxChange, handleUpdate } = useUpdateTransaction(transaction);
+  const { visible, toggleDialog, handleTextBoxChange, handleDropDownChange, handleCheckBoxChange, handleDatePickerChange, handleUpdate } = useUpdateTransaction(transaction);
 
   return (
     <>
       <Button type="button" fillMode="solid" themeColor={"info"} onClick={toggleDialog}>Update</Button>
 
       {visible && (
-        <Window title="Update Transaction" onClose={toggleDialog} initialHeight={355}>
+        <Window title="Update Transaction" onClose={toggleDialog} initialHeight={410}>
           <form className="space-y-3">
             <div className="space-y-2">
               <div>
@@ -26,6 +27,11 @@ const UpdateTransaction = ({ transaction }: { transaction: Transaction }) => {
               <div>
                 <label className="text-sm text-gray-600 mb-1 block">Amount</label>
                 <TextBox id="amount" name="amount" type="number" min={0} placeholder="Transaction amount" defaultValue={transaction.amount} onChange={handleTextBoxChange} />
+              </div>
+
+              <div>
+                <label className="text-sm text-gray-600 mb-1 block">Date Updated</label>
+                <DatePicker id="date-updated" name="dateUpdated" width={200} max={new Date()} defaultValue={transaction.dateCreated} format={"dd/MM/yyyy"} onChange={handleDatePickerChange} />
               </div>
 
               <div>

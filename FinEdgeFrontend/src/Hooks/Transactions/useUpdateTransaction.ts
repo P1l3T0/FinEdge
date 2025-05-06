@@ -2,21 +2,23 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { updateTransactionEndPoint } from "../../Utils/endpoints";
-import { Transaction, TransactionDTO } from "../../Utils/Types";
+import { Transaction, TransactionUpdateDTO } from "../../Utils/Types";
 import { TextBoxChangeEvent, CheckboxChangeEvent } from "@progress/kendo-react-inputs";
 import { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
+import { DatePickerChangeEvent } from "@progress/kendo-react-dateinputs";
 
 const useUpdateTransaction = (transaction: Transaction) => {
   const queryClient = useQueryClient();
 
   const [visible, setVisible] = useState<boolean>(false);
-  const [updatedTransaction, setUpdatedTransaction] = useState<TransactionDTO>({
+  const [updatedTransaction, setUpdatedTransaction] = useState<TransactionUpdateDTO>({
     name: transaction.name,
     amount: transaction.amount,
     accountName: transaction.accountName,
     categoryName: transaction.categoryName,
     isRepeating: transaction.isRepeating,
     subcategoryName: "",
+    dateUpdated: transaction.dateCreated.toLocaleDateString("en-GB"),
   });
 
   const toggleDialog = () => {
@@ -46,6 +48,15 @@ const useUpdateTransaction = (transaction: Transaction) => {
     });
   };
 
+  const handleDatePickerChange = (e: DatePickerChangeEvent) => {
+    const dateString: string = `${e.value!.getDate()}-${e.value!.getMonth() + 1}-${e.value!.getFullYear()}`;
+
+    setUpdatedTransaction({
+      ...updatedTransaction,
+      [e.target.name as string]: dateString
+    });
+  }
+
   const updateTransaction = async () => {
     await axios
       .put(`${updateTransactionEndPoint}/${transaction.id}`, updatedTransaction, {
@@ -69,7 +80,7 @@ const useUpdateTransaction = (transaction: Transaction) => {
     await mutateAsync();
   };
 
-  return { visible, updatedTransaction, toggleDialog, handleTextBoxChange, handleDropDownChange, handleCheckBoxChange, handleUpdate };
+  return { visible, updatedTransaction, toggleDialog, handleTextBoxChange, handleDropDownChange, handleCheckBoxChange, handleDatePickerChange, handleUpdate };
 };
 
 export default useUpdateTransaction;
