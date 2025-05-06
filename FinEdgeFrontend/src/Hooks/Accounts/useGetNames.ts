@@ -15,12 +15,12 @@ const useGetNames = () => {
       });
   };
 
-  const expenditureCategoriesQuery = useQuery({
+  const accountAndCategoryNamesQuery = useQuery({
     queryKey: ["names"],
     queryFn: getAccountAndCategoryNames
   })
 
-  const { data, isLoading, isError, error } = expenditureCategoriesQuery;
+  const { data, isLoading, isError, error } = accountAndCategoryNamesQuery;
 
   return { data, isLoading, isError, error };
 }
