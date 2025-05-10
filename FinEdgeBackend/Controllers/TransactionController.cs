@@ -42,7 +42,7 @@ namespace FinEdgeBackend.Controllers
             Category category = await _categoryService.GetCategoryForCurrentUserByNameAsync(transactionDto.CategoryName!, currentUser);
             Account account = await _accountService.GetAccountForCurrentUserByNameAsync(transactionDto.AccountName!, currentUser);
 
-            if (!category.IsIncome && account.Balance <= transactionDto.Amount)
+            if (!category.IsIncome && account.Balance < transactionDto.Amount)
             {
                 await _notificationService.CreateNotificationAsync(new Notification()
                 {

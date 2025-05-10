@@ -40,7 +40,7 @@ const CategoriesGrid = ({ categories }: { categories: Category[] }) => {
     <>
       <h2>Categories</h2>
       <ExcelExport fileName="Categories" data={categories} ref={_export}>
-        <Grid data={categories} navigatable={true} sortable={true} filterable={true} groupable={true} autoProcessData={true} dataItemKey="id">
+        <Grid data={categories} navigatable={true} sortable={true} filterable={true} groupable={true} autoProcessData={true} pageable={true} dataItemKey="id">
           <GridToolbar>
             <Button themeColor={"primary"} type="button" onClick={hanleExcelExport} disabled={categories.length === 0}>Export to Excel</Button>
             <Button themeColor={"primary"} type="button" disabled={categories.length === 0} >

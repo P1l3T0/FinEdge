@@ -15,15 +15,15 @@ const TransactionsGrid = ({ transactions }: { transactions: Transaction[] }) => 
     }
   };
 
-    const isRepeatingCell = (props: GridCellProps) => {
-      const isIncomeValue: boolean = props.dataItem[props.field || ""];
+  const isRepeatingCell = (props: GridCellProps) => {
+    const isIncomeValue: boolean = props.dataItem[props.field || ""];
 
-      return (
-        <td className="text-center align-middle">
-          <Checkbox checked={isIncomeValue} />
-        </td>
-      );
-    };
+    return (
+      <td className="text-center align-middle">
+        <Checkbox checked={isIncomeValue} />
+      </td>
+    );
+  };
 
   const dateCell = (props: GridCellProps) => {
     const dateValue: Date = new Date(props.dataItem[props.field || '']);
@@ -40,7 +40,7 @@ const TransactionsGrid = ({ transactions }: { transactions: Transaction[] }) => 
     <>
       <h2>Transactions</h2>
       <ExcelExport fileName="Transactions" data={transactions} ref={_export}>
-        <Grid data={transactions} navigatable={true} sortable={true} filterable={true} groupable={true} autoProcessData={true} dataItemKey="id">
+        <Grid data={transactions} navigatable={true} sortable={true} filterable={true} groupable={true} autoProcessData={true} pageable={true} dataItemKey="id">
           <GridToolbar>
             <Button themeColor={'primary'} type="button" onClick={hanleExcelExport} disabled={transactions.length === 0}>Export to Excel</Button>
             <Button themeColor={'primary'} type="button" disabled={transactions.length === 0}>
