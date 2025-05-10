@@ -1,26 +1,36 @@
 import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 import { Sankey, SankeyLinkDefaults } from "@progress/kendo-react-charts";
 import useGetTransactionSankeyChartData from "../../../Hooks/Transactions/useGetCategorySankeyData";
+import { Button } from "@progress/kendo-react-buttons";
+import useSankeyExport from "../../../Hooks/Transactions/useSankeyExport";
 
 const TransactionSankeyChart = () => {
   const { data, isLoading, isError, error } = useGetTransactionSankeyChartData();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error!.message}</div>;
+  const { sankey, onPDFExport, onSVGExport, onImageExport } = useSankeyExport();
 
   const links: SankeyLinkDefaults = {
     colorType: "source",
   };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error!.message}</div>;
+
   return (
     <>
       <Card className="h-full">
         <CardHeader>
-          <h2 className="text-lg font-semibold text-gray-900">Budget Flow Visualization</h2>
+          <div className="flex justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">Transaction Sankey Chart</h2>
+            <div>
+              <Button className="mx-2" onClick={onPDFExport}>Export to PDF</Button>
+              <Button className="mx-2" onClick={onSVGExport}>Export to SVG</Button>
+              <Button className="mx-2" onClick={onImageExport}>Export to PNG</Button>
+            </div>
+          </div>
         </CardHeader>
         <CardBody>
           {data?.links.length! > 0 && data?.nodes.length! > 0 
-            ? <Sankey data={data!} links={links} style={{ width: "100%", height: "100%" }} />
+            ? <Sankey data={data!} links={links} ref={sankey} style={{ width: "100%", height: "100%" }} />
             : ""}
         </CardBody>
       </Card>
