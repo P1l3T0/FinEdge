@@ -35,7 +35,6 @@ const AccountsGrid = ({ accounts }: { accounts: Account[] }) => {
 
   return (
     <>
-      <h2>Accounts</h2>
       <ExcelExport fileName="Accounts" data={accounts} ref={_export}>
         <Grid data={accounts} navigatable={true} sortable={true} filterable={true} groupable={true} autoProcessData={true} pageable={true} dataItemKey="id">
           <GridToolbar>

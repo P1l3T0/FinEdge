@@ -16,11 +16,11 @@ const CategoryColumnChart = () => {
       <Card className="bg-white" >
         <CardHeader className="border-b border-gray-200 mb-4">
           <div className="flex justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Account Distribution</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Cactegory Distribution</h2>
             <div>
-              <Button className="mx-1" onClick={onPDFExport}>Export to PDF</Button>
-              <Button className="mx-1" onClick={onSVGExport}>Export to SVG</Button>
-              <Button className="mx-1" onClick={onImageExport}>Export to PNG</Button>
+              <Button className="mx-1" themeColor={'primary'} onClick={onPDFExport}>Export to PDF</Button>
+              <Button className="mx-1" themeColor={'primary'} onClick={onSVGExport}>Export to SVG</Button>
+              <Button className="mx-1" themeColor={'primary'} onClick={onImageExport}>Export to PNG</Button>
             </div>
           </div>
         </CardHeader>

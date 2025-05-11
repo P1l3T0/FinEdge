@@ -11,7 +11,7 @@ const CreateAccounts = () => {
   return (
     <>
       <Card>
-        <CardHeader className="border-b border-gray-200">
+        <CardHeader>
           <h2 className="text-lg font-semibold text-gray-900">Add Account</h2>
         </CardHeader>
         <CardBody>

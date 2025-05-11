@@ -38,7 +38,6 @@ const CategoriesGrid = ({ categories }: { categories: Category[] }) => {
 
   return (
     <>
-      <h2>Categories</h2>
       <ExcelExport fileName="Categories" data={categories} ref={_export}>
         <Grid data={categories} navigatable={true} sortable={true} filterable={true} groupable={true} autoProcessData={true} pageable={true} dataItemKey="id">
           <GridToolbar>

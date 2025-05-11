@@ -38,7 +38,6 @@ const TransactionsGrid = ({ transactions }: { transactions: Transaction[] }) => 
 
   return (
     <>
-      <h2>Transactions</h2>
       <ExcelExport fileName="Transactions" data={transactions} ref={_export}>
         <Grid data={transactions} navigatable={true} sortable={true} filterable={true} groupable={true} autoProcessData={true} pageable={true} dataItemKey="id">
           <GridToolbar>
