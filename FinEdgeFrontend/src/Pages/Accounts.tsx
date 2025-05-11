@@ -1,3 +1,4 @@
+import AccountFAB from "../Components/AccountsPage/AIPrompt/AccountFAB";
 import AccountPieChart from "../Components/AccountsPage/Charts/AccountPieChart";
 import QuickStats from "../Components/AccountsPage/Charts/AccountQuickStats";
 import CreateAccounts from "../Components/AccountsPage/CRUD/CreateAccount";
@@ -17,6 +18,7 @@ const Accounts = () => {
             </div>
             <div className="lg:col-span-1">
               <QuickStats />
+              <AccountFAB />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow">

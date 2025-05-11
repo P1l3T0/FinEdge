@@ -1,3 +1,4 @@
+import TransactionFAB from "../Components/TransactionsPage/AIPrompt/TransactionFAB";
 import CreateTransaction from "../Components/TransactionsPage/CRUD/CreateTransaction";
 import GetTransactions from "../Components/TransactionsPage/CRUD/GetTransactions";
 import TransactionReports from "../Components/TransactionsPage/Cards/TransactionReport/TransactionReports";
@@ -14,6 +15,7 @@ const Transactions = () => {
             </div>
             <div className="lg:col-span-3">
               <TransactionSankeyChart />
+              <TransactionFAB />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow">

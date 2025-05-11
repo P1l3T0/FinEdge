@@ -3,6 +3,7 @@ import IncomeCategories from "../Components/CategoriesPage/CRUD/IncomeCategories
 import CreateCategory from "../Components/CategoriesPage/CRUD/CreateCategory";
 import CategoryBarChart from "../Components/CategoriesPage/Charts/CategoryBarChart";
 import CategoryColumnChart from "../Components/CategoriesPage/Charts/CategoryColumnChart";
+import CategoryFAB from "../Components/CategoriesPage/AIPrompt/CategoryFAB";
 
 const Categories = () => {
   return (
@@ -19,6 +20,7 @@ const Categories = () => {
           </div>
           <div className="w-full">
             <CategoryBarChart />
+            <CategoryFAB />
           </div>
           <div className="bg-white rounded-lg shadow">
             <div className="p-4">
