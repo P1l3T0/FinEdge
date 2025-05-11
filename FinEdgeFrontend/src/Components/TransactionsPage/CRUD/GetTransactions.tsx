@@ -41,7 +41,9 @@ const GetTransactions = () => {
   return (
     <>
       <TransactionFilter onFilterChange={handleFilterChange} />
-      <ListView data={pagedData} item={TransactionCard} />
+      <div className="flex justify-between">
+        <ListView data={pagedData} item={TransactionCard} />
+      </div>
       <Pager className="k-listview-pager" skip={skip} take={take} onPageChange={handlePageChange} total={data?.allTransactions.length!} />
     </>
   );
