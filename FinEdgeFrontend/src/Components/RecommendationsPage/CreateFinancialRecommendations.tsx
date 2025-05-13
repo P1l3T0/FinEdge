@@ -4,7 +4,7 @@ import useGetPromptSuggestions from "../../Hooks/FinancialRecommendations/useGet
 import useGenerateRecommendationPagetRecommendations from "../../Hooks/FinancialRecommendations/useGenerateRecommendationPagetRecommendations";
 
 const CreateFinancialRecommendations = () => {
-  const { data, isLoading, isError, error } = useGetPromptSuggestions();
+  const { data } = useGetPromptSuggestions();
   const { handleDateChange, generateFinancialRecommendation } = useGenerateRecommendationPagetRecommendations();
 
   const handleDatePickerChange = (e: DatePickerChangeEvent) => {
@@ -12,9 +12,6 @@ const CreateFinancialRecommendations = () => {
       handleDateChange(e.value);
     }
   };
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
 
   return (
     <>

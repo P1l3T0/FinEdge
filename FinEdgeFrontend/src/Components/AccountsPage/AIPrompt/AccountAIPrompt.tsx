@@ -3,11 +3,8 @@ import useGenerateAccountRecommendations from "../../../Hooks/Accounts/useGenera
 import AIPromptComponent from "../../SharedComponents/AIPromptComponent";
 
 const AccountAIPrompt = () => {
-  const { data, isLoading, isError, error } = useGetAccountPromptSuggestions();
+  const { data } = useGetAccountPromptSuggestions();
   const { generateFinancialRecommendation } = useGenerateAccountRecommendations();
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error!.message}</p>;
 
   return (
     <AIPromptComponent promptSuggestions={data!} generateFinancialRecommendation={generateFinancialRecommendation} />

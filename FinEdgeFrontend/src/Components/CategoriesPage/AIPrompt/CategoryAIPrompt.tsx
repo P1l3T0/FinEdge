@@ -3,11 +3,8 @@ import useGetCategoryPromptSuggestions from "../../../Hooks/FinancialRecommendat
 import AIPromptComponent from "../../SharedComponents/AIPromptComponent";
 
 const CategoryAIPrompt = () => {
-  const { data, isLoading, isError, error } = useGetCategoryPromptSuggestions();
+  const { data } = useGetCategoryPromptSuggestions();
   const { generateCategoryRecommendation } = useGenerateCategoryRecommendations();
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error!.message}</p>;
 
   return (
     <AIPromptComponent promptSuggestions={data!} generateFinancialRecommendation={generateCategoryRecommendation} />
