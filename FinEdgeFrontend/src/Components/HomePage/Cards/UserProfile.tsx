@@ -14,26 +14,22 @@ const UserProfile = () => {
   return (
     <>
       <DashboardCard className="hover:shadow-lg transition-shadow">
-        <div className="justify-between items-start">
-          <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-gray-900">Welcome, {data?.name}</h1>
-            <p className="text-gray-600">{data?.email}</p>
-            <p className="text-sm text-gray-500">
-              Member since{" "}
-              {new Date(data!.dateCreated).toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              })}
-            </p>
-            <p className="text-sm text-gray-500">Methodology:{" "}
-              {getEnumValueFromNumber(parseInt(data!.methodologyType), MethodologyType)}
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <UpdateUser user={data!} />
-            <DeleteUser />
-          </div>
+        <div className="space-y-1">
+          <h1 className="text-2xl font-bold"> Welcome, {data?.name}</h1>
+          <p>{data?.email}</p>
+          <p>
+            Member since{" "}
+            {data!.dateCreated.toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })}
+          </p>
+          <p>Methodology:{" "} {getEnumValueFromNumber(parseInt(data!.methodologyType), MethodologyType)}</p>
+        </div>
+        <div className="flex gap-2">
+          <UpdateUser user={data!} />
+          <DeleteUser />
         </div>
       </DashboardCard>
     </>

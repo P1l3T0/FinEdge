@@ -69,7 +69,7 @@ export type User = {
   email: string;
   methodologyType: string;
   totalBalance: number;
-  dateCreated: string;
+  dateCreated: Date;
   accounts: Account[];
   categories: Category[];
   transactions: Transaction[];

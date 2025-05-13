@@ -7,7 +7,12 @@ const useGetUser = () => {
   const getUser = async () => {
     return await axios
       .get<User>(`${getCurrentUserEnddPoint}`, { withCredentials: true })
-      .then((res: AxiosResponse<User>) => res.data)
+      .then((res: AxiosResponse<User>) => {
+        return {
+          ...res.data,
+          dateCreated: new Date(res.data.dateCreated),
+        }
+      })
       .catch((err: AxiosError) => {});
   };
 

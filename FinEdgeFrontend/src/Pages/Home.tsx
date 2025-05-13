@@ -5,8 +5,8 @@ import InformationCharts from "../Components/HomePage/Cards/InformationCharts";
 
 const Home = () => {
   return (
-    <div className="bg-gray-50 p-6">
-      <div className="space-y-6">
+    <div className="bg-gray-50 p-3">
+      <div className="space-y-3">
         <UserProfile />
         <StatisticCards />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
