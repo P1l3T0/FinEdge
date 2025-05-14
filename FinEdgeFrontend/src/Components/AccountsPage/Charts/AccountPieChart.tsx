@@ -5,7 +5,7 @@ import { Button } from "@progress/kendo-react-buttons";
 import useChartExport from "../../../Hooks/Accounts/useChartExport";
 
 const AccountPieChart = () => {
-  const { data, isLoading, isError, error } = useGetAccountChartData();
+  const { data } = useGetAccountChartData();
   const { chart, onPDFExport, onSVGExport, onImageExport } = useChartExport();
 
   const labelContent = (e: any) => `${e.category}: ${e.value} BGN`;
@@ -20,9 +20,6 @@ const AccountPieChart = () => {
       </div>
     );
   };
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error!.message}</p>;
 
   return (
     <>

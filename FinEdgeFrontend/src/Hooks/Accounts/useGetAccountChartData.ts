@@ -19,9 +19,9 @@ const useGetAccountChartData = () => {
     queryFn: getAccountChartData,
   });
 
-  const { data, isLoading, isError, error } = accountsChartDataQuery;
+  const { data } = accountsChartDataQuery;
 
-  return { data, isLoading, isError, error };
+  return { data };
 };
 
 export default useGetAccountChartData;

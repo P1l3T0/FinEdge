@@ -23,9 +23,9 @@ const useGetAccounts = () => {
     queryFn: getAccounts
   })
 
-  const { data, isLoading, isError, error } = accountsQuery;
+  const { data } = accountsQuery;
 
-  return { data, isLoading, isError, error }
+  return { data }
 }
 
 export default useGetAccounts;

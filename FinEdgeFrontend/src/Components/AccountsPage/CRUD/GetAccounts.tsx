@@ -12,7 +12,7 @@ const GetAccounts = () => {
     filters: [],
   });
 
-  const { data, isLoading, isError, error } = useGetAccounts();
+  const { data } = useGetAccounts();
 
   const [page, setPage] = useState({
     skip: 0,
@@ -34,9 +34,6 @@ const GetAccounts = () => {
 
   const filteredData = filterBy(data || [], filter);
   const pagedData = filteredData.slice(skip, skip + take);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error!.message}</p>;
 
   return (
     <>

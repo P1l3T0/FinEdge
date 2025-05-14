@@ -18,9 +18,9 @@ const useGetAccountStats = () => {
     queryFn: getAccountStats,
   });
 
-  const { data, isLoading, isError, error } = statsQuery;
+  const { data } = statsQuery;
 
-  return { data, isLoading, isError, error };
+  return { data };
 };
 
 export default useGetAccountStats;

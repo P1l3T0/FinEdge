@@ -5,10 +5,7 @@ import AccountQuickStatsHighestBalanceCard from "../Cards/QuickStats/AccountQuic
 import AccountQuickStatsOverallCard from "../Cards/QuickStats/AccountQuickStatsCardOverall";
 
 const QuickStats = () => {
-  const { data, isLoading, isError, error } = useGetAccountStats();
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error!.message}</p>;
+  const { data } = useGetAccountStats();
 
   return (
     <>
