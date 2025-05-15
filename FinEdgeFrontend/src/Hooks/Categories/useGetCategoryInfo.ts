@@ -18,9 +18,9 @@ const useGetCategoryInfo = () => {
     queryFn: getCategoryInfo
   })
 
-  const { data, isLoading, isError, error } = categoriesInfoQuery;
+  const { data } = categoriesInfoQuery;
 
-  return { data, isLoading, isError, error }
+  return { data }
 }
 
 export default useGetCategoryInfo;

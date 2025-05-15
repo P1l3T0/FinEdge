@@ -3,15 +3,12 @@ import CategoriesPie from "./CategoriesPie";
 import { PanelBar, PanelBarItem } from "@progress/kendo-react-layout";
 
 const CategoriesInfo = () => {
-  const { data, isLoading, isError, error } = useGetCategoryInfo();
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  const { data } = useGetCategoryInfo();
 
   return (
     <>
       <PanelBar>
-        <PanelBarItem expanded={true} title="Expenses">
+        <PanelBarItem title="Expenses">
           <CategoriesPie data={data?.expenditureInfo!} title="Expenditure info" />
         </PanelBarItem>
         <PanelBarItem title="Income">

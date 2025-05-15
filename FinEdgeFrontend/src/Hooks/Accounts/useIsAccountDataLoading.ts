@@ -1,33 +1,29 @@
 // hooks/useAccountDataQueries.ts
-import { useQueries } from "@tanstack/react-query";
 import axios from "axios";
-import { Account, AccountStats, AccountChartData } from "../../Utils/Types";
+import { useQueries } from "@tanstack/react-query";
 import { getAllAccountsEndPoint, getAccountStatisticsEndPoint, getAccountChartDataEndPoint } from "../../Utils/endpoints";
 
 export const useAccountDataQueries = () => {
   const results = useQueries({
-    queries: [
-      {
+    queries: [{
         queryKey: ["accounts"],
         queryFn: async () => {
-          const res = await axios.get<Account[]>(getAllAccountsEndPoint, { withCredentials: true });
+          const res = await axios.get(getAllAccountsEndPoint, { withCredentials: true });
           return res.data.map((account: any) => ({
             ...account,
             dateCreated: new Date(account.dateCreated),
           }));
         },
-      },
-      {
+      }, {
         queryKey: ["accountStats"],
         queryFn: async () => {
-          const res = await axios.get<AccountStats>(getAccountStatisticsEndPoint, { withCredentials: true });
+          const res = await axios.get(getAccountStatisticsEndPoint, { withCredentials: true });
           return res.data;
         },
-      },
-      {
+      }, {
         queryKey: ["accountChartData"],
         queryFn: async () => {
-          const res = await axios.get<AccountChartData>(getAccountChartDataEndPoint, { withCredentials: true });
+          const res = await axios.get(getAccountChartDataEndPoint, { withCredentials: true });
           return res.data;
         },
       },
