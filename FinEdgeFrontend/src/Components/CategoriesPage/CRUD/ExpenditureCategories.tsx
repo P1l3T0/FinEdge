@@ -2,10 +2,10 @@ import useGetExpenditureCategories from "../../../Hooks/Categories/useGetExpendi
 import CategoriesList from "./CategoriesList";
 
 const ExpenditureCategories = () => {
-  const { data, isLoading, isError, error } = useGetExpenditureCategories();
+  const { data } = useGetExpenditureCategories();
 
   return (
-    <CategoriesList title="Expenditure Categories" data={data!} isLoading={isLoading} isError={isError} error={error} />
+    <CategoriesList title="Expenditure Categories" data={data!} />
   );
 };
 

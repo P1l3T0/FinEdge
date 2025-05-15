@@ -20,9 +20,9 @@ const useGetCategoryChartData = () => {
     queryFn: getCategoryChartData,
   });
 
-  const { data, isLoading, isError, error } = categoryChartQuery;
+  const { data } = categoryChartQuery;
 
-  return { data, isLoading, isError, error };
+  return { data };
 };
 
 export default useGetCategoryChartData;

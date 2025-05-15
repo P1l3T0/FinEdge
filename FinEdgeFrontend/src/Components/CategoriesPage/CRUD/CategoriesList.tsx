@@ -10,12 +10,9 @@ import { CategoryResponse } from "../../../Utils/Types";
 type CategoriesListProps = {
   title: string;
   data: CategoryResponse;
-  isLoading: boolean;
-  isError: boolean;
-  error: any;
 }
 
-const CategoriesList = ({ title, data, isLoading, isError, error }: CategoriesListProps) => {
+const CategoriesList = ({ title, data }: CategoriesListProps) => {
   const [filter, setFilter] = useState<CompositeFilterDescriptor>({
     logic: "and",
     filters: [],
@@ -41,9 +38,6 @@ const CategoriesList = ({ title, data, isLoading, isError, error }: CategoriesLi
 
   const filteredData = filterBy(data?.categories || [], filter);
   const pagedData = filteredData.slice(skip, skip + take);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error!.message}</p>;
 
   return (
     <>

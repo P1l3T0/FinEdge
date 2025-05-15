@@ -2,10 +2,10 @@ import useGetIncomeCategories from "../../../Hooks/Categories/useGetIncomeCatego
 import CategoriesList from "./CategoriesList";
 
 const IncomeCategories = () => {
-  const { data, isLoading, isError, error } = useGetIncomeCategories();
+  const { data } = useGetIncomeCategories();
 
   return (
-    <CategoriesList title="Income Categories" data={data!} isLoading={isLoading} isError={isError} error={error} />
+    <CategoriesList title="Income Categories" data={data!} />
   );
 };
 

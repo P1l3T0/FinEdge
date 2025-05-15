@@ -5,11 +5,8 @@ import { Button } from "@progress/kendo-react-buttons";
 import useChartExport from "../../../Hooks/Accounts/useChartExport";
 
 const CategoryColumnChart = () => {
-  const { data, isLoading, isError, error } = useGetCategoryChartData();
+  const { data } = useGetCategoryChartData();
   const { chart, onPDFExport, onSVGExport, onImageExport } = useChartExport();
-
-  if (isLoading) return <div>Loading chart data...</div>;
-  if (isError) return <div>Error: {error?.message}</div>;
 
   return (
     <>
