@@ -1,10 +1,24 @@
+import { Loader } from "@progress/kendo-react-indicators";
 import TransactionFAB from "../Components/TransactionsPage/AIPrompt/TransactionFAB";
 import CreateTransaction from "../Components/TransactionsPage/CRUD/CreateTransaction";
 import GetTransactions from "../Components/TransactionsPage/CRUD/GetTransactions";
 import TransactionReports from "../Components/TransactionsPage/Cards/TransactionReport/TransactionReports";
 import TransactionSankeyChart from "../Components/TransactionsPage/Charts/TransactionSankeyChart";
+import { useTransactionDataQueries } from "../Hooks/Transactions/useTransactionDataQueries ";
 
 const Transactions = () => {
+    const { isLoading, isError, error } = useTransactionDataQueries();
+
+    if (isLoading) {
+      return (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
+          <Loader type="converging-spinner" size="large" />
+        </div>
+      );
+    }
+
+    if (isError) console.log(error?.message);
+
   return (
     <>
       <div className="p-6 bg-gray-50">

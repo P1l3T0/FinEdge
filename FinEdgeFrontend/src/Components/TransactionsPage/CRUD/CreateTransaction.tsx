@@ -6,11 +6,8 @@ import useCreateTransaction from "../../../Hooks/Transactions/useCreateTransacti
 import useGetNames from "../../../Hooks/Accounts/useGetNames";
 
 const CreateTransaction = () => {
-  const { isLoading, isError, error, data } = useGetNames();
+  const { data } = useGetNames();
   const { filteredSubcategories, handleTextBoxChange, handleDropDownChange, handleCheckBoxChange, handleSubmit } = useCreateTransaction();
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
 
   return (
     <>

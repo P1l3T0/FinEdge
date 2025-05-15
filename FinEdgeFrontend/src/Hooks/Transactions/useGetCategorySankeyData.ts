@@ -18,9 +18,9 @@ const useGetTransactionSankeyChartData = () => {
     queryFn: getSankeyChartData,
   });
 
-  const { data, isLoading, isError, error } = sankeyChartQuery;
+  const { data } = sankeyChartQuery;
 
-  return { data, isLoading, isError, error, };
+  return { data };
 };
 
 export default useGetTransactionSankeyChartData;

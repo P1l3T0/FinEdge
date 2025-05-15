@@ -2,10 +2,7 @@ import useGetReports from "../../../../Hooks/Transactions/useGetReports";
 import OverviewCard from "./OverviewCard";
 
 const TransactionReports = () => {
-  const { data, isLoading, isError, error  } = useGetReports();
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  const { data  } = useGetReports();
 
   return (
     <>

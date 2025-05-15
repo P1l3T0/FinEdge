@@ -5,15 +5,12 @@ import { Button } from "@progress/kendo-react-buttons";
 import useSankeyExport from "../../../Hooks/Transactions/useSankeyExport";
 
 const TransactionSankeyChart = () => {
-  const { data, isLoading, isError, error } = useGetTransactionSankeyChartData();
+  const { data } = useGetTransactionSankeyChartData();
   const { sankey, onPDFExport, onSVGExport, onImageExport } = useSankeyExport();
 
   const links: SankeyLinkDefaults = {
     colorType: "source",
   };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error!.message}</div>;
 
   return (
     <>

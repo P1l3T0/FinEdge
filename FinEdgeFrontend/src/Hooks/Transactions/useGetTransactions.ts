@@ -36,9 +36,9 @@ const useGetTransactions = () => {
     queryFn: getTransactions,
   });
 
-  const { data, isLoading, isError, error } = transactionsQuery;
+  const { data } = transactionsQuery;
 
-  return { data, isLoading, isError, error };
+  return { data };
 };
 
 export default useGetTransactions;

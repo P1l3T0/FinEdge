@@ -7,7 +7,7 @@ import { ListView } from "@progress/kendo-react-listview";
 import TransactionCard from "../Cards/TransactionCard/TransactionCard";
 
 const GetTransactions = () => {
-  const { data, isLoading, isError, error } = useGetTransactions();
+  const { data } = useGetTransactions();
 
   const [filter, setFilter] = useState<CompositeFilterDescriptor>({
     logic: "and",
@@ -34,9 +34,6 @@ const GetTransactions = () => {
 
   const filteredData = filterBy(data?.allTransactions || [], filter);
   const pagedData = filteredData.slice(skip, skip + take);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
 
   return (
     <>

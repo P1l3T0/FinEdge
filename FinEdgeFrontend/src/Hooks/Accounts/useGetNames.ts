@@ -20,9 +20,9 @@ const useGetNames = () => {
     queryFn: getAccountAndCategoryNames
   })
 
-  const { data, isLoading, isError, error } = accountAndCategoryNamesQuery;
+  const { data } = accountAndCategoryNamesQuery;
 
-  return { data, isLoading, isError, error };
+  return { data };
 }
 
 export default useGetNames;

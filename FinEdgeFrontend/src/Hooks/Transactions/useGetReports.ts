@@ -18,9 +18,9 @@ const useGetReports = () => {
     queryFn: getReports
   })
 
-  const { data, isLoading, isError, error } = reportsQuery;
+  const { data } = reportsQuery;
 
-  return { data, isLoading, isError, error }
+  return { data }
 }
 
 export default useGetReports;
