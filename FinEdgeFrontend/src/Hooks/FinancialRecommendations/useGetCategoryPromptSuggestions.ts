@@ -17,9 +17,9 @@ const useGetCategoryPromptSuggestions = () => {
     queryFn: getCategoryPromptSuggestions,
   });
 
-  const { data, isLoading, isError, error } = categoryPromptSuggestionsQuery;
+  const { data } = categoryPromptSuggestionsQuery;
 
-  return { data, isLoading, isError, error }
+  return { data }
 }
 
 export default useGetCategoryPromptSuggestions;

@@ -22,9 +22,9 @@ const useGetUser = () => {
     enabled: !!document.cookie.includes("RefreshToken"),
   });
 
-  const { data, isLoading, isError, error } = userQuery;
+  const { data } = userQuery;
 
-  return { data, isLoading, isError, error };
+  return { data };
 };
 
 export default useGetUser;

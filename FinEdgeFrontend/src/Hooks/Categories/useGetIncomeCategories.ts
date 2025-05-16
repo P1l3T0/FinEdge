@@ -25,9 +25,9 @@ const useGetIncomeCategories = () => {
     queryFn: getIncomeCategories,
   });
 
-  const { data, isLoading, isError, error } = incomeCategoriesQuery;
+  const { data } = incomeCategoriesQuery;
 
-  return { data, isLoading, isError, error }
+  return { data }
 }
 
 export default useGetIncomeCategories;

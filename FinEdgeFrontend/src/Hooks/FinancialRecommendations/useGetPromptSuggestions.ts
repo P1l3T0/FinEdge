@@ -17,9 +17,9 @@ const useGetPromptSuggestions = () => {
     queryFn: getPromptSuggestions
   })
 
-  const { data, isLoading, isError, error } = promptSuggestionsQuery;
+  const { data } = promptSuggestionsQuery;
 
-  return { data, isLoading, isError, error }
+  return { data }
 }
 
 export default useGetPromptSuggestions;

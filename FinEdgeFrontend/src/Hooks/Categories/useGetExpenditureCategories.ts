@@ -25,9 +25,9 @@ const useGetExpenditureCategories = () => {
     queryFn: getExpenditureCategories,
   });
 
-  const { data, isLoading, isError, error } = expenditureCategoriesQuery;
+  const { data } = expenditureCategoriesQuery;
 
-  return { data, isLoading, isError, error }
+  return { data }
 }
 
 export default useGetExpenditureCategories;

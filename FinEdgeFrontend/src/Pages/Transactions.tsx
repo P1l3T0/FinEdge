@@ -7,17 +7,17 @@ import TransactionSankeyChart from "../Components/TransactionsPage/Charts/Transa
 import { useTransactionDataQueries } from "../Hooks/Transactions/useTransactionDataQueries ";
 
 const Transactions = () => {
-    const { isLoading, isError, error } = useTransactionDataQueries();
+  const { isLoading, isError, error } = useTransactionDataQueries();
 
-    if (isLoading) {
-      return (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
-          <Loader type="converging-spinner" size="large" />
-        </div>
-      );
-    }
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-100">
+        <Loader type="converging-spinner" size="large" />
+      </div>
+    );
+  }
 
-    if (isError) console.log(error?.message);
+  if (isError) console.log(error?.message);
 
   return (
     <>

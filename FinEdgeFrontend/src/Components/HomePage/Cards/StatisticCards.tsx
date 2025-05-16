@@ -3,11 +3,8 @@ import useGetUser from '../../../Hooks/Auth/useGetUser';
 import StatCard from './StatCard'
 
 const StatisticCards = () => {
-  const { data: userData, isLoading: userLoading, isError: userError, error: userErrorData } = useGetUser();
-  const { data: reportsData, isLoading: reportsLoading, isError: reportsError, error: reportsErrorData } = useGetReports();
-
-  if (userLoading || reportsLoading) return <p>Loading...</p>;
-  if (userError || reportsError) return <p>Error: {userErrorData?.message || reportsErrorData?.message}</p>;
+  const { data: userData } = useGetUser();
+  const { data: reportsData } = useGetReports();
 
   return (
     <>

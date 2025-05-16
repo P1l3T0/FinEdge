@@ -17,9 +17,9 @@ const useGetTransactionPromptSuggestions = () => {
     queryFn: getTransactionPromptSuggestions,
   });
 
-  const { data, isLoading, isError, error } = transactionPromptSuggestionsQuery;
+  const { data } = transactionPromptSuggestionsQuery;
 
-  return { data, isLoading, isError, error }
+  return { data }
 }
 
 export default useGetTransactionPromptSuggestions;

@@ -24,7 +24,7 @@ const useGetLatestNotification = () => {
     enabled: document.cookie.includes("RefreshToken"),
   });
 
-  const { data, isLoading, isError, error } = latestNotificationQuery;
+  const { data } = latestNotificationQuery;
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
@@ -45,7 +45,7 @@ const useGetLatestNotification = () => {
     };
   }, [queryClient]);
 
-  return { data, isLoading, isError, error };
+  return { data };
 };
 
 export default useGetLatestNotification;

@@ -17,9 +17,9 @@ const useGetAccountPromptSuggestions = () => {
     queryFn: getAccountPromptSuggestions,
   });
 
-  const { data, isLoading, isError, error } = accountPromptSuggestionsQuery;
+  const { data } = accountPromptSuggestionsQuery;
 
-  return { data, isLoading, isError, error }
+  return { data }
 }
 
 export default useGetAccountPromptSuggestions;

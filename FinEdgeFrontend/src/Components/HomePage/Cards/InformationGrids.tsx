@@ -7,16 +7,13 @@ import InfoCard from "./InfoCard";
 import { TabStrip, TabStripSelectEventArguments, TabStripTab } from "@progress/kendo-react-layout";
 
 const InformationGrids = () => {
-  const { data, isLoading, isError, error } = useGetUser();
+  const { data } = useGetUser();
 
   const [selected, setSelected] = useState<number>(0);
 
   const handleSelect = (e: TabStripSelectEventArguments) => {
     setSelected(e.selected);
   };
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error!.message}</p>;
 
   return (
     <>

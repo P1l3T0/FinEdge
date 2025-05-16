@@ -6,10 +6,7 @@ import DashboardCard from "./DashboardCard";
 import useGetUser from "../../../Hooks/Auth/useGetUser";
 
 const UserProfile = () => {
-  const { data, isLoading, isError, error } = useGetUser();
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error!.message}</p>;
+  const { data } = useGetUser();
 
   return (
     <>
