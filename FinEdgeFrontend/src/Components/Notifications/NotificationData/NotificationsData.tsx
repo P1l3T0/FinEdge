@@ -4,10 +4,7 @@ import useGetNotifications from "../../../Hooks/Notifications/useGetNotification
 import MarkNotificationAsRead from "./MarkNotificationAsRead";
 
 const NotificationsData = () => {
-  const { data, isLoading, isError, error } = useGetNotifications();
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  const { data, } = useGetNotifications();
 
   const getNotificationColor = (type: number): string => {
     switch(type) {

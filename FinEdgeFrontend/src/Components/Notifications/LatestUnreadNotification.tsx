@@ -6,7 +6,7 @@ import { Notification as KendoNotification, NotificationGroup } from "@progress/
 import { Fade } from "@progress/kendo-react-animation";
 
 const LatestUnreadNotification = () => {
-  const { data, isLoading, isError, error } = useGetLatestNotification();
+  const { data } = useGetLatestNotification();
   const [notification, setNotification] = useState<AppNotification | null>(null);
 
   useEffect(() => {
@@ -18,9 +18,6 @@ const LatestUnreadNotification = () => {
   const handleClose = () => {
     setNotification(null);
   }
-
-  if (isLoading) return null;
-  if (isError) return <p>Error: {error!.message}</p>;
 
   return (
     <>

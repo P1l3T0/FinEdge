@@ -22,7 +22,7 @@ const useGetNotifications = () => {
     queryFn: getNotifications,
   });
 
-  const { data, isLoading, isError, error } = notificationsQuery;
+  const { data } = notificationsQuery;
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
@@ -44,7 +44,7 @@ const useGetNotifications = () => {
     };
   }, [queryClient]);
 
-  return { data, isLoading, isError, error };
+  return { data };
 };
 
 export default useGetNotifications;
