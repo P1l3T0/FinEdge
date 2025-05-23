@@ -276,7 +276,9 @@ namespace FinEdgeBackend.Services
 
         public (decimal weeklyBalance, decimal weeklyAverage) GetWeeklyBalanceForTransactions(ICollection<Transaction> transactions)
         {
-            decimal weeklyBalance = transactions.Where(t => t.DateCreated >= DateTime.Now.AddDays(-7)).Sum(t => t.Amount ?? 0);
+            DateTime monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+
+            decimal weeklyBalance = transactions.Where(t => t.DateCreated >= monday).Sum(t => t.Amount ?? 0);
             decimal weeklyAverage = decimal.Round(weeklyBalance / 7, 2);
 
             return (weeklyBalance, weeklyAverage);
@@ -284,13 +286,14 @@ namespace FinEdgeBackend.Services
 
         public (decimal monthBalance, decimal monthAverage) GetMontlyBalanceForTransactions(ICollection<Transaction> transactions)
         {
-            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            DateTime endOfMonth = DateTime.Now;
-
             int daysInCurrentMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+            int daysPassedSinceStart = DateTime.Today.Day;
+
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime endOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, daysInCurrentMonth);
 
             decimal monthBalance = transactions.Where(t => t.DateCreated >= startOfMonth && t.DateCreated <= endOfMonth).Sum(t => t.Amount ?? 0);
-            decimal monthAverage = decimal.Round(monthBalance / daysInCurrentMonth, 2);
+            decimal monthAverage = decimal.Round(monthBalance / daysPassedSinceStart, 2);
 
             return (monthBalance, monthAverage);
         }

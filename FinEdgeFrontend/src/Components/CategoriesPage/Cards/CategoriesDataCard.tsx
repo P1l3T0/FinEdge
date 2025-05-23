@@ -4,7 +4,7 @@ import CategoryData from "./CategoryData";
 const CategoriesDataCard = ({data}: {data: CategoryResponse}) => {
   return (
     <>
-      <div className="w-full lg:w-1/4">
+      <div className="w-full lg:w-1/5">
         <div className="bg-white rounded-lg p-4 shadow top-4">
           <div>
             <CategoryData name="Balance" value={data.balance} />
