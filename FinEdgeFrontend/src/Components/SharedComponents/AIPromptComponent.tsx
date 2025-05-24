@@ -40,7 +40,7 @@ const AIPromptComponent = ({ generateFinancialRecommendation, promptSuggestions 
   };
 
   return (
-    <AIPrompt className="shadow-sm" activeView={activeView} onActiveViewChange={handleActiveViewChange} onPromptRequest={handlePromptRequest}>
+    <AIPrompt className="shadow-sm px-5 w-70 sm:w-90 md:w-139 " activeView={activeView} onActiveViewChange={handleActiveViewChange} onPromptRequest={handlePromptRequest}>
       <AIPromptView promptSuggestions={promptSuggestions} />
       <AIPromptOutputView outputs={outputs} showOutputRating={true} />
     </AIPrompt>
