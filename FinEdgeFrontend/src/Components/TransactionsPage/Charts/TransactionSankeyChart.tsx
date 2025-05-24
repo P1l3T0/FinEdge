@@ -17,7 +17,7 @@ const TransactionSankeyChart = () => {
       <Card className="h-full">
         <CardHeader>
           <div className="flex justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Transaction Sankey Chart</h2>
+            <h2 className="text-lg font-semibold">Transaction Sankey Chart</h2>
             <div>
               <Button className="mx-2" themeColor={'primary'} onClick={onPDFExport}>Export to PDF</Button>
               <Button className="mx-2" themeColor={'primary'} onClick={onSVGExport}>Export to SVG</Button>

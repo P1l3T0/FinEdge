@@ -14,12 +14,12 @@ const TransactionFAB = () => {
 
   return (
     <>
-      <FloatingActionButton ref={anchorRef} positionMode="absolute" 
+      <FloatingActionButton ref={anchorRef} positionMode="fixed" className="z-999"
         onClick={toggleAIPrompt} svgIcon={showAIPrompt ? xIcon : sparklesIcon}
-        alignOffset={{ x: 50, y: 50 }}/>
+        alignOffset={{ x: 25, y: 25 }}/>
       <Popup anchor={anchorRef.current?.element} show={showAIPrompt} 
-        popupAlign={{ vertical: "top", horizontal: "right" }}
-        anchorAlign={{ vertical: "bottom", horizontal: "left" }}>
+        popupAlign={{ vertical: "bottom", horizontal: "right" }}
+        anchorAlign={{ vertical: "top", horizontal: "left" }}>
         <TransactionAIPrompt />
       </Popup>
     </>
