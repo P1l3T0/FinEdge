@@ -2,6 +2,7 @@ import { DatePicker, DatePickerChangeEvent } from "@progress/kendo-react-dateinp
 import AIPromptComponent from "../SharedComponents/AIPromptComponent";
 import useGetPromptSuggestions from "../../Hooks/FinancialRecommendations/useGetPromptSuggestions";
 import useGenerateRecommendationPagetRecommendations from "../../Hooks/FinancialRecommendations/useGenerateRecommendationPagetRecommendations";
+import DeleteFinancialRecommendations from "./DeleteFinancialRecommendations";
 
 const CreateFinancialRecommendations = () => {
   const { data } = useGetPromptSuggestions();
@@ -15,8 +16,9 @@ const CreateFinancialRecommendations = () => {
 
   return (
     <>
-      <div className="mb-3">
+      <div className="mb-3 gap-2 flex">
         <DatePicker width={200} max={new Date()} onChange={handleDatePickerChange} className="m-6" />
+        <DeleteFinancialRecommendations />
       </div>
       <div>
         <AIPromptComponent promptSuggestions={data!} generateFinancialRecommendation={generateFinancialRecommendation} />
