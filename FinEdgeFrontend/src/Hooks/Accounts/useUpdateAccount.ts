@@ -21,7 +21,7 @@ const useUpdateAccount = (account: Account) => {
   });
 
   const toggleDialog = () => {
-    setVisible(!visible);
+    setVisible((visible) => !visible);
   };
 
   const handleTextBoxChange = async (e: TextBoxChangeEvent) => {

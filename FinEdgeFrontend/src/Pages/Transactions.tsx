@@ -23,12 +23,9 @@ const Transactions = () => {
       <div className="p-3 bg-gray-50">
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-            <div className="">
               <CreateTransaction />
-            </div>
             <div className="lg:col-span-3">
               <TransactionSankeyChart />
-              <TransactionFAB />
             </div>
           </div>
           <div className="bg-white rounded-lg shadow">
@@ -38,6 +35,7 @@ const Transactions = () => {
             </div>
           </div>
         </div>
+        <TransactionFAB />
       </div>
     </>
   );

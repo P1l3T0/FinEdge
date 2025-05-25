@@ -1,4 +1,5 @@
 import { AccountStats } from "../../../../Utils/Types";
+import AccountQucikStatsAccountTypeRow from "./AccountQucikStatsAccountTypeRow";
 
 const AccountQuickStatsdAccountTypesCard = ({ data }: { data: AccountStats }) => {
   return (
@@ -9,22 +10,10 @@ const AccountQuickStatsdAccountTypesCard = ({ data }: { data: AccountStats }) =>
           <div key={stat.type} className="space-y-2 p-3 bg-gray-50 rounded-lg">
             <div className="flex justify-between items-center">
               <span className="text-gray-600">{stat.type}</span>
-              <span className="text-sm text-gray-500">
-                {stat.accountCount} accounts
-              </span>
+              <span className="text-sm text-gray-500">{stat.accountCount}{" "}{stat.accountCount === 1 ? "account" : "accounts"}</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">Total</span>
-              <span className="font-semibold">
-                {stat.totalBalance} {data?.primaryCurrency}
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">Average</span>
-              <span className="font-semibold">
-                {stat.averageBalance} {data?.primaryCurrency}
-              </span>
-            </div>
+            <AccountQucikStatsAccountTypeRow label="Total" value={`${stat.totalBalance} ${data?.primaryCurrency}`} />
+            <AccountQucikStatsAccountTypeRow label="Average" value={`${stat.averageBalance} ${data?.primaryCurrency}`} />
           </div>
         ))}
       </div>

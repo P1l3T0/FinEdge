@@ -1,4 +1,4 @@
-import { Chart, ChartTitle, ChartLegend, ChartSeries, ChartSeriesItem, ChartSeriesLabels, ChartTooltip } from "@progress/kendo-react-charts";
+import { Chart, ChartLegend, ChartSeries, ChartSeriesItem, ChartSeriesLabels, ChartTooltip } from "@progress/kendo-react-charts";
 import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 import useGetAccountChartData from "../../../Hooks/Accounts/useGetAccountChartData";
 import { Button } from "@progress/kendo-react-buttons";
@@ -23,10 +23,10 @@ const AccountPieChart = () => {
 
   return (
     <>
-      <Card className="bg-white" style={{ height: "31.25rem" }}>
-        <CardHeader className="border-b border-gray-200">
+      <Card style={{ height: "31.1rem" }}>
+        <CardHeader>
           <div className="flex justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Account Distribution</h2>
+            <h2 className="text-lg font-semibold">Account Distribution</h2>
             <div>
               <Button className="mx-1" themeColor={'primary'} onClick={onPDFExport}>Export to PDF</Button>
               <Button className="mx-1" themeColor={'primary'} onClick={onSVGExport}>Export to SVG</Button>
@@ -36,7 +36,6 @@ const AccountPieChart = () => {
         </CardHeader>
         <CardBody>
           <Chart ref={chart}>
-            <ChartTitle text="Accounts by Type" />
             <ChartLegend position="bottom" />
             <ChartSeries>
               <ChartSeriesItem type="pie" data={data} categoryField="category" field="value">

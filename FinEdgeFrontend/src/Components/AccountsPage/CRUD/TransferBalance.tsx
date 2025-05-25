@@ -15,18 +15,17 @@ const TransferBalance = ({ account }: { account: Account }) => {
       <Button type="button" fillMode="solid" themeColor={'tertiary'} onClick={toggleDialog}>Transfer</Button>
 
       {visible && (
-        <Window title="Transfer Balance" onClose={toggleDialog} initialHeight={255}>
+        <Window title="Transfer Balance" onClose={toggleDialog} initialHeight={250}>
           <form className="space-y-3">
             <div className="space-y-2">
               <div>
-                <label className="text-sm text-gray-600 mb-1 block">Account Name</label>
+                <label className="mb-1 block">Account Name</label>
                 <DropDownList id="account-name" name="targetAccountName" data={data?.accountNames} defaultValue={account.name} onChange={handleDropDownChange} />
               </div>
               <div>
-                <label className="text-sm text-gray-600 mb-1 block">Ammount</label>
+                <label className="mb-1 block">Ammount</label>
                 <TextBox id="amount" name="amount" type="number" min={0} defaultValue={0} onChange={handleTextBoxChange} />
               </div>
-
             </div>
             <div className="flex justify-end gap-2 pt-5 border-t border-gray-200">
               <Button type="button" themeColor="primary" onClick={handleTransferBalance}>Transfer</Button>

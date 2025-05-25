@@ -21,29 +21,25 @@ const Accounts = () => {
 
   return (
     <>
-      <div className="p-6 bg-gray-50">
+      <div className="p-3 bg-gray-50">
         <div className="space-y-6">
-          <div className="gap-4 grid lg:grid-cols-4 md:grid-cols-1">
-            <div className="lg:col-span-1" >
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+            <div>
               <CreateAccounts />
             </div>
             <div className="lg:col-span-2">
               <AccountPieChart />
             </div>
-            <div className="lg:col-span-1">
               <QuickStats />
-              <AccountFAB />
-            </div>
           </div>
           <div className="bg-white rounded-lg shadow">
             <div className="p-4">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">My Accounts</h2>
-              <div className="my-3">
-                <GetAccounts />
-              </div>
+              <h2 className="text-lg font-semibold">My Accounts</h2>
+              <GetAccounts />
             </div>
           </div>
         </div>
+        <AccountFAB />
       </div>
     </>
   );
