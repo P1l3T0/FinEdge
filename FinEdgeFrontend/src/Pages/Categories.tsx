@@ -22,23 +22,22 @@ const Categories = () => {
 
   return (
     <>
-      <div className="p-6 bg-gray-50">
+      <div className="p-3 bg-gray-50">
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-            <div className="lg:col-span-1">
+            <div>
               <CreateCategory />
             </div>
             <div className="lg:col-span-3">
               <CategoryColumnChart />
             </div>
           </div>
-          <div className="w-full">
+          <div>
             <CategoryBarChart />
-            <CategoryFAB />
           </div>
           <div className="bg-white rounded-lg shadow">
             <div className="p-4">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">My Categories</h2>
+              <h2 className="text-lg font-semibold">My Categories</h2>
               <div>
                 <ExpenditureCategories />
                 <IncomeCategories />
@@ -46,6 +45,7 @@ const Categories = () => {
             </div>
           </div>
         </div>
+        <CategoryFAB />
       </div>
     </>
   );

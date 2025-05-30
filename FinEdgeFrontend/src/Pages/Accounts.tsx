@@ -30,7 +30,9 @@ const Accounts = () => {
             <div className="lg:col-span-2">
               <AccountPieChart />
             </div>
+            <div>
               <QuickStats />
+            </div>
           </div>
           <div className="bg-white rounded-lg shadow">
             <div className="p-4">

@@ -277,9 +277,10 @@ namespace FinEdgeBackend.Services
         public (decimal weeklyBalance, decimal weeklyAverage) GetWeeklyBalanceForTransactions(ICollection<Transaction> transactions)
         {
             DateTime monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+            int dayPassedSinceMonday = (int)(DateTime.Today - monday).TotalDays + 1;
 
             decimal weeklyBalance = transactions.Where(t => t.DateCreated >= monday).Sum(t => t.Amount ?? 0);
-            decimal weeklyAverage = decimal.Round(weeklyBalance / 7, 2);
+            decimal weeklyAverage = decimal.Round(weeklyBalance / dayPassedSinceMonday, 2);
 
             return (weeklyBalance, weeklyAverage);
         }

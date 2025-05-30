@@ -10,10 +10,10 @@ const CategoryBarChart = () => {
 
   return (
     <>
-      <Card className="bg-white">
-        <CardHeader className="border-b border-gray-200 mb-4">
+      <Card>
+        <CardHeader>
           <div className="flex justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Top Categories by Balance</h2>
+            <h2 className="text-lg font-semibold">Top Categories by Balance</h2>
             <div>
               <Button className="mx-1" themeColor={'primary'} onClick={onPDFExport}>Export to PDF</Button>
               <Button className="mx-1" themeColor={'primary'} onClick={onSVGExport}>Export to SVG</Button>
@@ -22,20 +22,16 @@ const CategoryBarChart = () => {
           </div>
         </CardHeader>
         <CardBody>
-          <div className="space-y-8">
-            <div>
-              <Chart style={{ height: 200 }} ref={chart}>
-                <ChartCategoryAxis>
-                  <ChartCategoryAxisItem />
-                </ChartCategoryAxis>
-                <ChartSeries>
-                  <ChartSeriesItem type="bar" field="balance" categoryField="name" color="color" data={data}>
-                    <ChartSeriesItemTooltip format="Balance: {0} BGN" />
-                  </ChartSeriesItem>
-                </ChartSeries>
-              </Chart>
-            </div>
-          </div>
+          <Chart ref={chart}>
+            <ChartCategoryAxis>
+              <ChartCategoryAxisItem />
+            </ChartCategoryAxis>
+            <ChartSeries>
+              <ChartSeriesItem type="bar" field="balance" categoryField="name" color="color" data={data}>
+                <ChartSeriesItemTooltip format="Balance: {0} BGN" />
+              </ChartSeriesItem>
+            </ChartSeries>
+          </Chart>
         </CardBody>
       </Card>
     </>

@@ -10,10 +10,10 @@ const CategoryColumnChart = () => {
 
   return (
     <>
-      <Card className="bg-white" >
-        <CardHeader className="border-b border-gray-200 mb-4">
+      <Card>
+        <CardHeader>
           <div className="flex justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Cactegory Distribution</h2>
+            <h2 className="text-lg font-semibold">Cactegory Distribution</h2>
             <div>
               <Button className="mx-1" themeColor={'primary'} onClick={onPDFExport}>Export to PDF</Button>
               <Button className="mx-1" themeColor={'primary'} onClick={onSVGExport}>Export to SVG</Button>
@@ -22,7 +22,7 @@ const CategoryColumnChart = () => {
           </div>
         </CardHeader>
         <CardBody>
-          <Chart style={{ height: 435 }} ref={chart}>
+          <Chart style={{ height: 450 }} ref={chart}>
             <ChartLegend visible={false} />
             <ChartTooltip />
             <ChartCategoryAxis>
