@@ -8,5 +8,6 @@
         public bool IsIncome { get; set; }
         public string Color { get; set; } = string.Empty;
         public string Currency { get; set; } = string.Empty;
+        public DateTime DateCreated { get; set; }
     }
 }

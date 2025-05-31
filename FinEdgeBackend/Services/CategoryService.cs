@@ -83,8 +83,9 @@ namespace FinEdgeBackend.Services
                 Budget = c.Budget ?? 0,
                 IsIncome = c.IsIncome,
                 Color = c.Color!,
-                Currency = c.Currency!
-            }).ToList();
+                Currency = c.Currency!,
+                DateCreated = c.DateCreated
+            }).OrderBy(c => c.DateCreated).ToList();
         }
 
         public async Task DeleteCategoryAsync(Category category)
