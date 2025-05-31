@@ -29,8 +29,7 @@ const Transactions = () => {
             </div>
           </div>
           <div className="bg-white rounded-lg shadow">
-            <div className="p-4">
-              <h2 className="text-lg font-semibold">My Transactions</h2>
+            <div className="p-2">
               <GetTransactions />
             </div>
           </div>

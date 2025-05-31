@@ -10,7 +10,7 @@ const TransactionCard = (props: ListViewItemProps) => {
 
   return (
     <>
-      <div className="m-4">
+      <div className="m-2">
         <Card key={transaction.id} className="shadow-md hover:shadow-xl duration-300 ease-in-out w-70 h-90">
           <CardHeader>
             <TransactionCardHeader transaction={transaction} />

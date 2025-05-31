@@ -5,6 +5,7 @@ import { Button } from "@progress/kendo-react-buttons";
 import useChartExport from "../../../Hooks/Accounts/useChartExport";
 
 const CategoryColumnChart = () => {
+  const month = new Date().toLocaleString('default', { month: 'long' });
   const { data } = useGetCategoryChartData();
   const { chart, onPDFExport, onSVGExport, onImageExport } = useChartExport();
 
@@ -13,7 +14,7 @@ const CategoryColumnChart = () => {
       <Card>
         <CardHeader>
           <div className="flex justify-between">
-            <h2 className="text-lg font-semibold">Cactegory Distribution</h2>
+            <h2 className="text-lg font-semibold">Cactegory Distribution - {month}</h2>
             <div>
               <Button className="mx-1" themeColor={'primary'} onClick={onPDFExport}>Export to PDF</Button>
               <Button className="mx-1" themeColor={'primary'} onClick={onSVGExport}>Export to SVG</Button>

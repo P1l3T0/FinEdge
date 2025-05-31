@@ -41,7 +41,7 @@ const CategoriesList = ({ title, data }: CategoriesListProps) => {
 
   return (
     <>
-      <h2 className="text-md font-semibold text-gray-600 mb-4 mt-4">{title}</h2>
+      <h2 className="font-semibold mt-2 mb-4">{title}</h2>
       <CategoryFilter onFilterChange={handleFilterChange} />
 
       <div className="flex lg:flex-row flex-col justify-between">

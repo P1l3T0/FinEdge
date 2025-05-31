@@ -36,12 +36,9 @@ const Categories = () => {
             <CategoryBarChart />
           </div>
           <div className="bg-white rounded-lg shadow">
-            <div className="p-4">
-              <h2 className="text-lg font-semibold">My Categories</h2>
-              <div>
-                <ExpenditureCategories />
-                <IncomeCategories />
-              </div>
+            <div className="p-2">
+              <ExpenditureCategories />
+              <IncomeCategories />
             </div>
           </div>
         </div>

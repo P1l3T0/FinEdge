@@ -10,7 +10,7 @@ const AccountCard = (props: ListViewItemProps) => {
 
   return (
     <>
-      <div className="mx-2">
+      <div className="m-2">
         <Card key={account.id} className="shadow-md hover:shadow-xl duration-300 ease-in-out w-70 h-65">
           <CardHeader>
             <AccountCardHeader account={account} />

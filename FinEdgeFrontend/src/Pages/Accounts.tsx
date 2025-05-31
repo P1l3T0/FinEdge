@@ -35,8 +35,7 @@ const Accounts = () => {
             </div>
           </div>
           <div className="bg-white rounded-lg shadow">
-            <div className="p-4">
-              <h2 className="text-lg font-semibold">My Accounts</h2>
+            <div className="p-2">
               <GetAccounts />
             </div>
           </div>

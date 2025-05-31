@@ -10,8 +10,8 @@ const CategoryCard = (props: ListViewItemProps) => {
 
   return (
     <>
-    <div className="mx-2">
-      <Card key={category.id} className="shadow-md hover:shadow-xl duration-300 ease-in-out w-70 h-80">
+    <div className="m-2">
+      <Card key={category.id} className="shadow-md hover:shadow-xl duration-300 ease-in-out w-75 h-85">
         <CardHeader>
           <CategoryCardHeader category={category} />
         </CardHeader>

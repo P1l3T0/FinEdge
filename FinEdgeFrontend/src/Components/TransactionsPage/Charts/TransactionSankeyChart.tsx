@@ -5,6 +5,7 @@ import { Button } from "@progress/kendo-react-buttons";
 import useSankeyExport from "../../../Hooks/Transactions/useSankeyExport";
 
 const TransactionSankeyChart = () => {
+  const month  = new Date().toLocaleString('default', { month: 'long' });
   const { data } = useGetTransactionSankeyChartData();
   const { sankey, onPDFExport, onSVGExport, onImageExport } = useSankeyExport();
 
@@ -17,7 +18,7 @@ const TransactionSankeyChart = () => {
       <Card className="h-full">
         <CardHeader>
           <div className="flex justify-between">
-            <h2 className="text-lg font-semibold">Transaction Sankey Chart</h2>
+            <h2 className="text-lg font-semibold">Transaction Distributions - {month}</h2>
             <div>
               <Button className="mx-2" themeColor={'primary'} onClick={onPDFExport}>Export to PDF</Button>
               <Button className="mx-2" themeColor={'primary'} onClick={onSVGExport}>Export to SVG</Button>
