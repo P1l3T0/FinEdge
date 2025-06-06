@@ -20,23 +20,33 @@ namespace FinEdgeBackend.Services
 
                     foreach (Transaction transaction in repeatingTransactions)
                     {
+                        User user = await _dataContext.Users.FirstOrDefaultAsync(u => u.ID == transaction.UserID) ?? throw new InvalidOperationException("User not found.");
+                        Account account = await _dataContext.Accounts.FirstOrDefaultAsync(a => a.ID == transaction.AccountID) ?? throw new InvalidOperationException("Account not found.");
+                        Category category = await _dataContext.Categories.FirstOrDefaultAsync(c => c.ID == transaction.CategoryID) ?? throw new InvalidOperationException("Category not found.");
+                        Subcategory? subcategory = transaction.SubcategoryID.HasValue
+                            ? await _dataContext.Subcategories.FirstOrDefaultAsync(s => s.ID == transaction.SubcategoryID.Value)
+                            : null;
+
                         Transaction newTransaction = new Transaction
                         {
+                            User = user,
                             UserID = transaction.UserID,
-                            AccountID = transaction.AccountID,
-                            AccountName = transaction.AccountName,
-                            CategoryID = transaction.CategoryID,
-                            CategoryName = transaction.CategoryName,
+                            Color = transaction.Color,
+                            Account = account,
+                            AccountID = account.ID,
+                            AccountName = account.Name,
+                            Category = category,
+                            CategoryID = category.ID,
+                            CategoryName = category.Name,
+                            Subcategory = subcategory,
+                            SubcategoryID = subcategory?.ID,
+                            SubcategoryName = subcategory?.Name,
                             Name = transaction.Name,
                             Amount = transaction.Amount,
                             DateCreated = transaction.NextRepeatDate!.Value,
                             IsRepeating = transaction.IsRepeating,
                             NextRepeatDate = transaction.NextRepeatDate.Value.AddMonths(1)
                         };
-
-                        User user = transaction.User!;
-                        Account account = transaction.Account!;
-                        Category category = transaction.Category!;
 
                         if (category.IsIncome)
                         {

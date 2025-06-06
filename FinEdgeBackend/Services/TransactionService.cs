@@ -31,26 +31,43 @@ namespace FinEdgeBackend.Services
 
         public async Task<ICollection<Transaction>> GetAllTransactionsAsync(User currentUser)
         {
+            DateTime startOfMonth = GetStartDate();
+
             return await _dataContext.Transactions
-                .Where(t => t.User!.Equals(currentUser))
+                .Where(t => t.User!.Equals(currentUser) && t.DateCreated >= startOfMonth)
                 .OrderByDescending(t => t.DateCreated)
                 .ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllExpenditureTransactionsAsync(User currentUser)
         {
+            DateTime startOfMonth = GetStartDate();
+
             return await _dataContext.Transactions
-                .Where(t => t.Category!.IsIncome == false && t.User!.Equals(currentUser))
+                .Where(t => t.Category!.IsIncome == false && t.User!.Equals(currentUser) && t.DateCreated >= startOfMonth)
                 .OrderByDescending(t => t.DateCreated)
                 .ToListAsync();
         }
 
         public async Task<ICollection<Transaction>> GetAllIncomeTransactionsAsync(User currentUser)
         {
+            DateTime startOfMonth = GetStartDate();
+
             return await _dataContext.Transactions
-                .Where(t => t.Category!.IsIncome == true && t.User!.Equals(currentUser))
+                .Where(t => t.Category!.IsIncome == true && t.User!.Equals(currentUser) && t.DateCreated >= startOfMonth)
                 .OrderByDescending(t => t.DateCreated)
                 .ToListAsync();
+        }
+
+        private DateTime GetStartDate()
+        {
+            DateTime today = DateTime.Today;
+            DateTime monday = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
+            DateTime startOfMonth = new DateTime(today.Year, today.Month, 1);
+
+            DateTime weekStart = monday > startOfMonth ? startOfMonth : monday;
+
+            return weekStart;
         }
 
         public ICollection<Transaction> GetTransactionsFromSpecifiedDate(ICollection<Transaction> transactions, DateTime date)
@@ -276,11 +293,15 @@ namespace FinEdgeBackend.Services
 
         public (decimal weeklyBalance, decimal weeklyAverage) GetWeeklyBalanceForTransactions(ICollection<Transaction> transactions)
         {
-            DateTime monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
-            int dayPassedSinceMonday = (int)(DateTime.Today - monday).TotalDays + 1;
+            DateTime today = DateTime.Today;
+            DateTime monday = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
+            DateTime startOfMonth = new DateTime(today.Year, today.Month, 1);
 
-            decimal weeklyBalance = transactions.Where(t => t.DateCreated >= monday).Sum(t => t.Amount ?? 0);
-            decimal weeklyAverage = decimal.Round(weeklyBalance / dayPassedSinceMonday, 2);
+            DateTime weekStart = monday > startOfMonth ? monday : startOfMonth;
+            int daysPassed = (today - weekStart).Days + 1;
+
+            decimal weeklyBalance = transactions.Where(t => t.DateCreated >= weekStart).Sum(t => t.Amount ?? 0);
+            decimal weeklyAverage = decimal.Round(weeklyBalance / daysPassed, 2);
 
             return (weeklyBalance, weeklyAverage);
         }

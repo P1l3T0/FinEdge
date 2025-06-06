@@ -89,12 +89,13 @@ builder.Services!.AddScoped<IAccountService, AccountService>();
 builder.Services!.AddScoped<ICategoryService, CategoryService>();
 builder.Services!.AddScoped<ISubcategoryService, SubcategoryService>();
 builder.Services!.AddScoped<ITransactionService, TransactionService>();
-builder.Services.AddScoped<ISnapshotService, SnapshotService>();
+builder.Services!.AddScoped<ISnapshotService, SnapshotService>();
 builder.Services!.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services!.AddScoped<IGPTService, GPTService>();
 builder.Services!.AddScoped<IFinancialRecommendationService, FinancialRecommendationService>();
 builder.Services!.AddScoped<IPromptSuggestionsService, PromptSuggestionsService>();
 builder.Services!.AddScoped<INotificationService, NotificationService>();
+builder.Services!.AddHostedService<CategoryResetService>();
 
 var app = builder.Build();
 

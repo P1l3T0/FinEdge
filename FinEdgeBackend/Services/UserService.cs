@@ -41,11 +41,13 @@ namespace FinEdgeBackend.Services
 
         public async Task<User> GetUserByIdAsync(int userID)
         {
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
             User? user = await _dataContext.Users
                 .Include(u => u.Accounts)
                 .Include(u => u.Categories)!
                     .ThenInclude(c => c.Subcategories)
-                .Include(u => u.Transactions)
+                .Include(u => u.Transactions.Where(t => t.DateCreated >= startOfMonth))
                 .Include(u => u.FinancialRecommendations)
                 .Include(u => u.Notifications)
                 .FirstOrDefaultAsync(u => u.ID == userID);
