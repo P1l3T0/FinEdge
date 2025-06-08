@@ -1,13 +1,11 @@
 import { useState, useEffect, SyntheticEvent } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { RegisterDTO } from "../../Utils/Types";
 import { registerEndPoint } from "../../Utils/endpoints";
 import { isValidEmail, isValidPassword } from "../../Utils/Functions";
 
 const useRegister = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const emailRegEx = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
@@ -61,7 +59,7 @@ const useRegister = () => {
   const registerUser = async () => {
     await axios
       .post<RegisterDTO>(`${registerEndPoint}`, user, { withCredentials: true })
-      .then(() => navigate("/home"))
+      .then(() => window.location.href = "/home")
       .catch((error: AxiosError) => {
         throw error;
       });

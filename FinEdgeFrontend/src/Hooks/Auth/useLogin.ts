@@ -1,13 +1,11 @@
 import { SyntheticEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
 import { LoginDTO } from "../../Utils/Types";
 import { loginEndPoint } from "../../Utils/endpoints";
 import { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 
 const useLogin = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [user, setUser] = useState<LoginDTO>({
@@ -27,7 +25,7 @@ const useLogin = () => {
   const loginUser = async () => {
     await axios
       .post<LoginDTO>(`${loginEndPoint}`, user, { withCredentials: true })
-      .then(() => navigate("/home"))
+      .then(() => window.location.href = "/home")
       .catch((error: AxiosError) => {
         throw error;
       });
