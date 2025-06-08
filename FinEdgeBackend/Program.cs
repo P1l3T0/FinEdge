@@ -1,17 +1,14 @@
-using DotNetEnv;
-using DotNetEnv.Configuration;
-using FinEdgeBackend.Data;
-using FinEdgeBackend.Interfaces;
-using FinEdgeBackend.Interfaces.Auth;
-using FinEdgeBackend.Services;
-using FinEdgeBackend.Services.Auth;
-using FinEdgeBackend.Services.Notifications;
-using Hangfire;
-using Hangfire.SqlServer;
+using FinEdgeData.Data;
+using FinEdgeServices.Services;
+using FinEdgeServices.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using DotNetEnv;
+using DotNetEnv.Configuration;
+using Hangfire;
+using Hangfire.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -114,10 +111,7 @@ app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    endpoints.MapHub<NotificationHub>("/notificationHub"); // Register SignalR hub
-});
+app.MapControllers();
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

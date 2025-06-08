@@ -1,4 +1,4 @@
-﻿using FinEdgeBackend.Interfaces;
+﻿using FinEdgeServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinEdgeBackend.Controllers

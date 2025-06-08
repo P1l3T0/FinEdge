@@ -1,6 +1,6 @@
 ﻿using FakeItEasy;
 using FinEdgeBackend.Controllers;
-using FinEdgeBackend.Interfaces;
+using FinEdgeServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinEdgeTests.Controller

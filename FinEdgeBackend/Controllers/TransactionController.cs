@@ -1,7 +1,7 @@
-﻿using FinEdgeBackend.DTOs.Transactions;
-using FinEdgeBackend.Enums;
-using FinEdgeBackend.Interfaces;
-using FinEdgeBackend.Models;
+﻿using FinEdgeData.DTOs;
+using FinEdgeData.Enums;
+using FinEdgeData.Models;
+using FinEdgeServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinEdgeBackend.Controllers

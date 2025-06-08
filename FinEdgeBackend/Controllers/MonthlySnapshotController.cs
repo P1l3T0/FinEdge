@@ -1,6 +1,6 @@
-﻿using FinEdgeBackend.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using FinEdgeServices.Interfaces;
 using Hangfire;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FinEdgeBackend.Controllers
 {

@@ -1,5 +1,5 @@
-﻿using FinEdgeBackend.Interfaces;
-using FinEdgeBackend.Models;
+﻿using FinEdgeData.Models;
+using FinEdgeServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinEdgeBackend.Controllers

@@ -1,9 +1,9 @@
-﻿using FakeItEasy;
+﻿using FinEdgeData.DTOs;
+using FinEdgeData.Models;
+using FinEdgeServices.Interfaces;
 using FinEdgeBackend.Controllers;
-using FinEdgeBackend.DTOs.Categories;
-using FinEdgeBackend.Interfaces;
-using FinEdgeBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using FakeItEasy;
 
 namespace FinEdgeTests.Controller
 {

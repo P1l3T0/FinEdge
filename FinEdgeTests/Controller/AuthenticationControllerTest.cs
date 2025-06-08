@@ -1,11 +1,10 @@
-﻿using FakeItEasy;
-using FinEdgeBackend.Interfaces.Auth;
-using FinEdgeBackend.Interfaces;
-using FinEdgeBackend.DTOs.User;
-using FinEdgeBackend.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using FinEdgeData.Enums;
+using FinEdgeData.DTOs;
+using FinEdgeData.Models;
+using FinEdgeServices.Interfaces;
 using FinEdgeBackend.Controllers;
-using FinEdgeBackend.Enums;
+using Microsoft.AspNetCore.Mvc;
+using FakeItEasy;
 using Microsoft.AspNetCore.Http;
 
 namespace FinEdgeTests.Controller

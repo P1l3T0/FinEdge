@@ -1,8 +1,7 @@
-﻿using FinEdgeBackend.DTOs;
-using FinEdgeBackend.Enums;
-using FinEdgeBackend.Interfaces;
-using FinEdgeBackend.Models;
-using FinEdgeBackend.Models.PromptData;
+﻿using FinEdgeData.DTOs;
+using FinEdgeData.Enums;
+using FinEdgeData.Models;
+using FinEdgeServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
