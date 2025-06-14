@@ -1,4 +1,4 @@
-import { Chart, ChartCategoryAxis, ChartCategoryAxisItem, ChartSeries, ChartSeriesItem, ChartSeriesItemTooltip } from "@progress/kendo-react-charts";
+import { Chart, ChartSeries, ChartSeriesItem, ChartSeriesItemTooltip, ChartTooltip } from "@progress/kendo-react-charts";
 import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 import useGetCategoryChartData from "../../../Hooks/Categories/useGetCategoryChartData";
 import { Button } from "@progress/kendo-react-buttons";
@@ -23,10 +23,8 @@ const CategoryBarChart = () => {
           </div>
         </CardHeader>
         <CardBody>
-          <Chart ref={chart}>
-            <ChartCategoryAxis>
-              <ChartCategoryAxisItem />
-            </ChartCategoryAxis>
+          <Chart pannable={true} zoomable={true} ref={chart}>
+            <ChartTooltip />
             <ChartSeries>
               <ChartSeriesItem type="bar" field="balance" categoryField="name" color="color" data={data}>
                 <ChartSeriesItemTooltip format="Balance: {0} BGN" />

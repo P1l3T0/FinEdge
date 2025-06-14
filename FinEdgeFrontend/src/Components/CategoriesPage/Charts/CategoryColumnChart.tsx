@@ -1,4 +1,4 @@
-import { Chart, ChartLegend, ChartTooltip, ChartCategoryAxis, ChartCategoryAxisItem, ChartValueAxis, ChartValueAxisItem, ChartSeries, ChartSeriesItem, ChartSeriesItemTooltip } from "@progress/kendo-react-charts";
+import { Chart, ChartLegend, ChartTooltip, ChartValueAxis, ChartValueAxisItem, ChartSeries, ChartSeriesItem, ChartSeriesItemTooltip } from "@progress/kendo-react-charts";
 import { Card, CardHeader, CardBody } from "@progress/kendo-react-layout";
 import useGetCategoryChartData from "../../../Hooks/Categories/useGetCategoryChartData";
 import { Button } from "@progress/kendo-react-buttons";
@@ -23,12 +23,9 @@ const CategoryColumnChart = () => {
           </div>
         </CardHeader>
         <CardBody>
-          <Chart style={{ height: 450 }} ref={chart}>
+          <Chart pannable={true}  zoomable={true} style={{ height: 450 }} ref={chart}>
             <ChartLegend visible={false} />
             <ChartTooltip />
-            <ChartCategoryAxis>
-              <ChartCategoryAxisItem />
-            </ChartCategoryAxis>
             <ChartValueAxis>
               <ChartValueAxisItem title={{ text: "Amount (BGN)" }} />
             </ChartValueAxis>
