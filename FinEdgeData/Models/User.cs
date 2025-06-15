@@ -29,10 +29,19 @@ namespace FinEdgeData.Models
         [Required]
         public MethodologyType MethodologyType { get; set; }
 
+        [JsonIgnore]
         public ICollection<Account> Accounts { get; set; } = new List<Account>();
+
+        [JsonIgnore]
         public ICollection<Category> Categories { get; set; } = new List<Category>();
+
+        [JsonIgnore]
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+
+        [JsonIgnore]
         public ICollection<FinancialRecommendation> FinancialRecommendations { get; set; } = new List<FinancialRecommendation>();
+
+        [JsonIgnore]
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     }
 }

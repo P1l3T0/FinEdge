@@ -23,6 +23,20 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpGet]
+        [Route("get/data")]
+        public async Task<IActionResult> GetDataForCurrentUser()
+        {
+            User currentUser = await _userService.GetCurrentUserAsync();
+
+            return Ok(new
+            {
+                Accounts = currentUser.Accounts!,
+                Categories = currentUser.Categories!,
+                Transactions = currentUser.Transactions!
+            });
+        }
+
+        [HttpGet]
         [Route("get/names")]
         public async Task<IActionResult> GetAccountAndCategoryNamesForUser()
         {
