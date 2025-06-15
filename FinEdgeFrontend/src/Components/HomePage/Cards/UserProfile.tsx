@@ -1,4 +1,3 @@
-import DeleteUser from "../CRUD/DeleteUser";
 import UpdateUser from "../CRUD/UpdateUser";
 import { getEnumValueFromNumber } from "../../../Utils/Functions";
 import { MethodologyType, User } from "../../../Utils/Types";
@@ -11,9 +10,7 @@ const UserProfile = ({user}: {user: User}) => {
         <div className="space-y-1">
           <h1 className="text-2xl font-bold"> Welcome, {user?.name}</h1>
           <p>{user?.email}</p>
-          <p>
-            Member since{" "}
-            {user!.dateCreated.toLocaleDateString("en-GB", {
+          <p>Member since{" "} {user!.dateCreated.toLocaleDateString("en-GB", {
               day: "2-digit",
               month: "long",
               year: "numeric",
@@ -21,10 +18,7 @@ const UserProfile = ({user}: {user: User}) => {
           </p>
           <p>Methodology:{" "} {getEnumValueFromNumber(parseInt(user!.methodologyType), MethodologyType)}</p>
         </div>
-        <div className="flex gap-2">
-          <UpdateUser user={user!} />
-          <DeleteUser />
-        </div>
+        <UpdateUser user={user!} />
       </DashboardCard>
     </>
   );

@@ -1,4 +1,3 @@
-// hooks/useUserDataQueries.ts
 import { useQueries } from "@tanstack/react-query";
 import axios from "axios";
 import { getTransactionReportsEndPoint, getCategoryInfoEndPoint, getDataForCurrentUserEnddPoint, getCurrentUserEnddPoint } from "../../Utils/endpoints";
