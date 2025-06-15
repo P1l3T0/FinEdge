@@ -6,7 +6,7 @@ import { Loader } from "@progress/kendo-react-indicators";
 import { useUserDataQueries } from "../Hooks/User/useIsUserDataLoading";
 
 const Home = () => {
-  const { isLoading, isError, error } = useUserDataQueries();
+  const { isLoading, isError, error, user, userData, reports, categoryInfo } = useUserDataQueries();
 
   if (isLoading) {
     return (
@@ -21,11 +21,11 @@ const Home = () => {
   return (
     <div className="bg-gray-50 p-3">
       <div className="space-y-3">
-        <UserProfile />
-        <StatisticCards />
+        <UserProfile user={user!} />
+        <StatisticCards user={user!} reports={reports!} />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <InformationGrids />
-          <InformationCharts />
+          <InformationGrids userData={userData!} />
+          <InformationCharts categoryInfoData={categoryInfo!} />
         </div>
       </div>
     </div>

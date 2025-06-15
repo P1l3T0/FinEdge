@@ -1,11 +1,12 @@
+import { CategoryInfo } from '../../../Utils/Types';
 import CategoriesInfo from '../Grids/CategoriesInfo';
 import InfoCard from './InfoCard';
 
-const InformationCharts = () => {
+const InformationCharts = ({categoryInfoData}: {categoryInfoData: CategoryInfo}) => {
   return (
     <>
       <InfoCard title="Expenditure Breakdown">
-        <CategoriesInfo />
+        <CategoriesInfo categoryInfoData={categoryInfoData} />
       </InfoCard>
     </>
   );

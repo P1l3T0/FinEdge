@@ -1,18 +1,16 @@
-import useGetCategoryInfo from "../../../Hooks/Categories/useGetCategoryInfo";
+import { CategoryInfo } from "../../../Utils/Types";
 import CategoriesPie from "./CategoriesPie";
 import { PanelBar, PanelBarItem } from "@progress/kendo-react-layout";
 
-const CategoriesInfo = () => {
-  const { data } = useGetCategoryInfo();
-
+const CategoriesInfo = ({categoryInfoData}: {categoryInfoData: CategoryInfo}) => {
   return (
     <>
       <PanelBar>
-        <PanelBarItem title="Expenses">
-          <CategoriesPie data={data?.expenditureInfo!} title="Expenditure info" />
+        <PanelBarItem title="Expenses" expanded={true}>
+          <CategoriesPie data={categoryInfoData?.expenditureInfo!} title="Expenditure info" />
         </PanelBarItem>
         <PanelBarItem title="Income">
-          <CategoriesPie data={data?.incomeInfo!} title="Income info" />
+          <CategoriesPie data={categoryInfoData?.incomeInfo!} title="Income info" />
         </PanelBarItem>
       </PanelBar>
     </>
