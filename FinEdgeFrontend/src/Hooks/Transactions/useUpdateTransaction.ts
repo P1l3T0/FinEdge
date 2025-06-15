@@ -73,6 +73,8 @@ const useUpdateTransaction = (transaction: Transaction) => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["reports"] });
       queryClient.invalidateQueries({ queryKey: ["sankey-chart"] });
+      queryClient.invalidateQueries({ queryKey: ["category-info"] });
+      queryClient.invalidateQueries({ queryKey: ["user-data"] });
     },
   });
 

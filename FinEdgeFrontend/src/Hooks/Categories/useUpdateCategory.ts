@@ -69,6 +69,8 @@ const useUpdateCategory = (category: Category) => {
       queryClient.invalidateQueries({ queryKey: ["income-categories"] });
       queryClient.invalidateQueries({ queryKey: ["expenditure-categories"] });
       queryClient.invalidateQueries({ queryKey: ["category-chart-data"] });
+      queryClient.invalidateQueries({ queryKey: ["category-info"] });
+      queryClient.invalidateQueries({ queryKey: ["user-data"] });
     },
   });
 

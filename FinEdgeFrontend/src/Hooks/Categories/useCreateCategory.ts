@@ -6,9 +6,11 @@ import { CategoryDTO } from "../../Utils/Types";
 import { ColorPickerView, TextBoxChangeEvent, CheckboxChangeEvent, ColorPickerChangeEvent } from "@progress/kendo-react-inputs";
 import { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 import { currency } from "../../Utils/Functions";
+import { useUserDataQueries } from "../User/useIsUserDataLoading";
 
 const useCreateCategory = () => {
   const queryClient = useQueryClient();
+  const { refetchUserData, refetchCategoryInfo } = useUserDataQueries();
 
   const [color, setColor] = useState<ColorPickerView>();
   const [category, setCategory] = useState<CategoryDTO>({
@@ -67,6 +69,8 @@ const useCreateCategory = () => {
       queryClient.invalidateQueries({ queryKey: ["expenditure-categories"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
       queryClient.invalidateQueries({ queryKey: ["category-chart-data"] });
+      refetchUserData();
+      refetchCategoryInfo();
     },
   });
 

@@ -6,10 +6,12 @@ import { TransactionDTO } from "../../Utils/Types";
 import { TextBoxChangeEvent, CheckboxChangeEvent } from "@progress/kendo-react-inputs";
 import { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 import useGetNames from "../Accounts/useGetNames";
+import { useUserDataQueries } from "../User/useIsUserDataLoading";
 
 const useCreateTransaction = () => {
   const queryClient = useQueryClient();
   const { data } = useGetNames();
+  const { refetchCategoryInfo } = useUserDataQueries();
 
   const [transaction, setTransaction] = useState<TransactionDTO>({
     name: "",
@@ -90,6 +92,9 @@ const useCreateTransaction = () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["reports"] });
       queryClient.invalidateQueries({ queryKey: ["sankey-chart"] });
+      queryClient.invalidateQueries({ queryKey: ["category-info"] });
+      queryClient.invalidateQueries({ queryKey: ["user-data"] });
+      refetchCategoryInfo();
     },
   });
 

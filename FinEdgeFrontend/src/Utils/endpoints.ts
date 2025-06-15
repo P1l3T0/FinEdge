@@ -19,6 +19,7 @@ export const refreshTokenEndPoint = `${authController}/refresh-token`;
 //! User
 export const getAccountAndCategoryNamesEnddPoint = `${userController}/get/names`;
 export const getCurrentUserEnddPoint = `${userController}/get`;
+export const getDataForCurrentUserEnddPoint = `${userController}/get/data`;
 export const updateCurrentUserEnddPoint = `${userController}/update`;
 export const deketeCurrentUserEnddPoint = `${userController}/delete`;
 

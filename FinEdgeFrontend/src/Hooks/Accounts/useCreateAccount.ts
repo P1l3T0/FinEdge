@@ -6,9 +6,11 @@ import { AccountDTO } from "../../Utils/Types";
 import { accountType, currency } from "../../Utils/Functions";
 import { ColorPickerChangeEvent, ColorPickerView, TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 import { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
+import { useUserDataQueries } from "../User/useIsUserDataLoading";
 
 const useCreateAccount = () => {
   const queryClient = useQueryClient();
+  const { refetchUserData } = useUserDataQueries();
 
   const [color, setColor] = useState<ColorPickerView>();
   const [account, setAccount] = useState<AccountDTO>({
@@ -56,6 +58,7 @@ const useCreateAccount = () => {
       queryClient.invalidateQueries({ queryKey: ["accountChartData"] });
       queryClient.invalidateQueries({ queryKey: ["accountStats"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      refetchUserData();
     },
   });
 

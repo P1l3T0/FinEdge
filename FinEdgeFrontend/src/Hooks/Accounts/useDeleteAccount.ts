@@ -20,6 +20,8 @@ const useDeleteAccount = () => {
       queryClient.invalidateQueries({ queryKey: ["accountChartData"] });
       queryClient.invalidateQueries({ queryKey: ["accountStats"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["category-info"] });
+      queryClient.invalidateQueries({ queryKey: ["user-data"] });
     },
   });
 

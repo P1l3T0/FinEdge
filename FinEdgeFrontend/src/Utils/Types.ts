@@ -70,10 +70,6 @@ export type User = {
   methodologyType: string;
   totalBalance: number;
   dateCreated: Date;
-  accounts: Account[];
-  categories: Category[];
-  transactions: Transaction[];
-  notifications: AppNotification[];
 }
 
 export type RegisterDTO = {
@@ -96,6 +92,12 @@ export type UpdateDTO = {
   email: string;
   password: string;
 }
+
+export type UserDataResponse = {
+  accounts: Account[];
+  categories: Category[];
+  transactions: Transaction[];
+};
 
 //! Account
 
