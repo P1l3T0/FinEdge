@@ -4,9 +4,15 @@ import axios, { AxiosError } from "axios";
 import { RegisterDTO } from "../../Utils/Types";
 import { registerEndPoint } from "../../Utils/endpoints";
 import { isValidEmail, isValidPassword } from "../../Utils/Functions";
+import useAuth from "./useAuth";
+import { useNavigate } from "react-router-dom";
+import { useUserDataQueries } from "../User/useIsUserDataLoading";
 
 const useRegister = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { login } = useAuth();
+  const { refetchUser, refetchCategoryInfo, refetchReports, refetchUserData } = useUserDataQueries();
 
   const emailRegEx = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
   const passwordRegEx = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,}$");
@@ -59,16 +65,23 @@ const useRegister = () => {
   const registerUser = async () => {
     await axios
       .post<RegisterDTO>(`${registerEndPoint}`, user, { withCredentials: true })
-      .then(() => window.location.href = "/home")
+      .then(() => {
+        navigate("/home");
+      })
       .catch((error: AxiosError) => {
         throw error;
       });
-  };
-
-  const { mutateAsync } = useMutation({
-    mutationFn: registerUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+    };
+    
+    const { mutateAsync } = useMutation({
+      mutationFn: registerUser,
+      onSuccess: () => {
+        login();
+        refetchUser();
+        refetchReports();
+        refetchUserData();
+        refetchCategoryInfo();
+        queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 

@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { BrowserView, MobileView } from "react-device-detect";
-import useGetUser from "./Hooks/Auth/useGetUser";
 import DrawerContainer from "./Components/SharedComponents/DrawerContainer";
 import BottomNavigationContainer from "./Components/SharedComponents/BottomNavigationContainer";
 import Register from "./Pages/Register";
@@ -13,13 +12,14 @@ import Categories from "./Pages/Categories";
 import Notifications from "./Pages/Notifications";
 import Transactions from "./Pages/Transactions";
 import PersistLogin from "./Components/Axios/Components/PersistLogin";
+import useAuth from "./Hooks/Auth/useAuth";
 
 function App() {
-  const { data } = useGetUser();
+  const { isUserLoggedIn } = useAuth();
 
   return (
     <>
-      {data ? (
+      {isUserLoggedIn ? (
         <BrowserRouter>
           <BrowserView>
             <DrawerContainer>

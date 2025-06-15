@@ -4,9 +4,15 @@ import axios, { AxiosError } from "axios";
 import { LoginDTO } from "../../Utils/Types";
 import { loginEndPoint } from "../../Utils/endpoints";
 import { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
+import useAuth from "./useAuth";
+import { useNavigate } from "react-router-dom";
+import { useUserDataQueries } from "../User/useIsUserDataLoading";
 
 const useLogin = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { login } = useAuth();
+  const { refetchUser, refetchCategoryInfo, refetchReports, refetchUserData } = useUserDataQueries();
 
   const [user, setUser] = useState<LoginDTO>({
     email: "",
@@ -25,7 +31,7 @@ const useLogin = () => {
   const loginUser = async () => {
     await axios
       .post<LoginDTO>(`${loginEndPoint}`, user, { withCredentials: true })
-      .then(() => window.location.href = "/home")
+      .then(() => navigate("/home"))
       .catch((error: AxiosError) => {
         throw error;
       });
@@ -34,6 +40,11 @@ const useLogin = () => {
   const { mutateAsync } = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
+      login();
+      refetchUser();
+      refetchReports();
+      refetchUserData();
+      refetchCategoryInfo();
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
     onError: (error: AxiosError) => {

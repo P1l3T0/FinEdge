@@ -137,6 +137,22 @@ namespace FinEdgeBackend.Controllers
         }
 
         [HttpDelete]
+        [Route("delete/{userID}")]
+        public async Task<IActionResult> DeleteUser(int userID)
+        {
+            User userToDelete = await _userService.GetUserByIdAsync(userID);
+
+            if (userToDelete is null)
+            {
+                return BadRequest("User does not exist!");
+            }
+
+            await _userService.DeleteUserAsync(userToDelete);
+
+            return NoContent();
+        }
+
+        [HttpDelete]
         [Route("delete-all")]
         public async Task<IActionResult> DeleteAllUsers()
         {
