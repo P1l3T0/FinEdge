@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { logoutEndPoint } from "../../Utils/endpoints";
 import useAuth from "./useAuth";
-import { useUserDataQueries } from "../User/useIsUserDataLoading";
+import { useUserDataQueries } from "../User/useUserDataQueries";
 
 const useLogout = () => {
   const navigate = useNavigate();

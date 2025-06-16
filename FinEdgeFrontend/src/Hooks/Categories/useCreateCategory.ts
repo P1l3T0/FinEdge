@@ -6,7 +6,7 @@ import { CategoryDTO } from "../../Utils/Types";
 import { ColorPickerView, TextBoxChangeEvent, CheckboxChangeEvent, ColorPickerChangeEvent } from "@progress/kendo-react-inputs";
 import { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 import { currency } from "../../Utils/Functions";
-import { useUserDataQueries } from "../User/useIsUserDataLoading";
+import { useUserDataQueries } from "../User/useUserDataQueries";
 
 const useCreateCategory = () => {
   const queryClient = useQueryClient();

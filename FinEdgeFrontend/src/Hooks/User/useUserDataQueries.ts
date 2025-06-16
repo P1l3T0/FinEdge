@@ -9,6 +9,7 @@ export const useUserDataQueries = () => {
         queryKey: ["reports"],
         refetchOnWindowFocus: false,
         refetchOnMount: false,
+        enabled: !!document.cookie.includes("RefreshToken"),
         queryFn: async () => {
           const res = await axios.get<Reports>(getTransactionReportsEndPoint, { withCredentials: true });
           return res.data;
@@ -17,6 +18,7 @@ export const useUserDataQueries = () => {
         queryKey: ["category-info"],
         refetchOnWindowFocus: false,
         refetchOnMount: false,
+        enabled: !!document.cookie.includes("RefreshToken"),
         queryFn: async () => {
           const res = await axios.get<CategoryInfo>(getCategoryInfoEndPoint, { withCredentials: true });
           return res.data;
@@ -25,6 +27,7 @@ export const useUserDataQueries = () => {
         queryKey: ["user-data"],
         refetchOnWindowFocus: false,
         refetchOnMount: false,
+        enabled: !!document.cookie.includes("RefreshToken"),
         queryFn: async () => {
           const res = await axios.get<UserDataResponse>(getDataForCurrentUserEnddPoint, { withCredentials: true });
           return res.data;
@@ -33,6 +36,7 @@ export const useUserDataQueries = () => {
         queryKey: ["user"],
         refetchOnWindowFocus: false,
         refetchOnMount: false,
+        enabled: !!document.cookie.includes("RefreshToken"),
         queryFn: async () => {
           const res = await axios.get<User>(getCurrentUserEnddPoint, { withCredentials: true });
           return {
@@ -40,7 +44,6 @@ export const useUserDataQueries = () => {
             dateCreated: new Date(res.data.dateCreated),
           };
         },
-        enabled: !!document.cookie.includes("RefreshToken"),
       },
     ],
   });

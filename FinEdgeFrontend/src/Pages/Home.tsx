@@ -3,7 +3,7 @@ import StatisticCards from "../Components/HomePage/Cards/StatisticCards";
 import InformationGrids from "../Components/HomePage/Cards/InformationGrids";
 import InformationCharts from "../Components/HomePage/Cards/InformationCharts";
 import { Loader } from "@progress/kendo-react-indicators";
-import { useUserDataQueries } from "../Hooks/User/useIsUserDataLoading";
+import { useUserDataQueries } from "../Hooks/User/useUserDataQueries";
 
 const Home = () => {
   const { isLoading, isError, error, user, userData, reports, categoryInfo } = useUserDataQueries();

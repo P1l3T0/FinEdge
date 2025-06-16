@@ -6,7 +6,7 @@ import { loginEndPoint } from "../../Utils/endpoints";
 import { TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
-import { useUserDataQueries } from "../User/useIsUserDataLoading";
+import { useUserDataQueries } from "../User/useUserDataQueries";
 
 const useLogin = () => {
   const navigate = useNavigate();

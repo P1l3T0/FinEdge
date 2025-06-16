@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import useAuth from "./useAuth";
 
 const useRefreshToken = () => {
-  const { setAuth } = useAuth();
+  //const { setAuth } = useAuth();
   const tokenRefreshTimeout = useRef<NodeJS.Timeout | null>(null);
   const cookies = document.cookie.split("=")[1];
   const [refreshToken, setRefreshToken] = useState<RefreshToken>({
@@ -16,11 +16,11 @@ const useRefreshToken = () => {
     const response = await axios.post(`${refreshTokenEndPoint}`, refreshToken, { withCredentials: true })
     const { username, newAccessToken, newRefreshToken, expiresIn } = response.data;
 
-    setAuth(prev => ({
-      ...prev,
-      username,
-      accessToken: newAccessToken,
-    }));
+    // setAuth(prev => ({
+    //   ...prev,
+    //   username,
+    //   accessToken: newAccessToken,
+    // }));
 
     setRefreshToken(newRefreshToken);
     setTokenRefreshTimer(expiresIn - 10);

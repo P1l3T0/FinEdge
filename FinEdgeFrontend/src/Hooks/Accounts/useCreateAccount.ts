@@ -6,7 +6,7 @@ import { AccountDTO } from "../../Utils/Types";
 import { accountType, currency } from "../../Utils/Functions";
 import { ColorPickerChangeEvent, ColorPickerView, TextBoxChangeEvent } from "@progress/kendo-react-inputs";
 import { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
-import { useUserDataQueries } from "../User/useIsUserDataLoading";
+import { useUserDataQueries } from "../User/useUserDataQueries";
 
 const useCreateAccount = () => {
   const queryClient = useQueryClient();

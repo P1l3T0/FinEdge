@@ -6,7 +6,7 @@ import { registerEndPoint } from "../../Utils/endpoints";
 import { isValidEmail, isValidPassword } from "../../Utils/Functions";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
-import { useUserDataQueries } from "../User/useIsUserDataLoading";
+import { useUserDataQueries } from "../User/useUserDataQueries";
 
 const useRegister = () => {
   const navigate = useNavigate();

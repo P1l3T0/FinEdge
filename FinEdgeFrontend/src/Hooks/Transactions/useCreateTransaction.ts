@@ -6,7 +6,7 @@ import { TransactionDTO } from "../../Utils/Types";
 import { TextBoxChangeEvent, CheckboxChangeEvent } from "@progress/kendo-react-inputs";
 import { DropDownListChangeEvent } from "@progress/kendo-react-dropdowns";
 import useGetNames from "../Accounts/useGetNames";
-import { useUserDataQueries } from "../User/useIsUserDataLoading";
+import { useUserDataQueries } from "../User/useUserDataQueries";
 
 const useCreateTransaction = () => {
   const queryClient = useQueryClient();
