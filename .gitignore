@@ -445,5 +445,6 @@ Migrations/
 
 # Ignore Environment files
 .env
+.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode
